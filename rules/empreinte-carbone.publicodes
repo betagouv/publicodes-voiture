@@ -1,0 +1,13 @@
+voiture:
+
+voiture . empreinte:
+  somme:
+    - fabrication
+    - utilisation
+  unité: kgCO2e/an
+
+voiture . empreinte . fabrication:
+  par défaut: 1000
+
+voiture . empreinte . utilisation:
+  par défaut: 20

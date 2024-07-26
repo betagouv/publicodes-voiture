@@ -1,6 +1,6 @@
 node_modules
 .yarn
-model-template.model.json
 index.d.ts
 index.js
 doc/dist/
+agir-voiture-publicodes.model.json

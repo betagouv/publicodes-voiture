@@ -17,7 +17,7 @@ const baseUrl =
   process.env.NODE_ENV === "development" ? "" : "/agir-voiture-publicodes"
 
 // The default rule to display when the user lands on the documentation
-const defaultRule = "dépenses primeur"
+const defaultRule = "voiture"
 
 function Documentation() {
   const url = useParams()["*"]
