@@ -5,7 +5,7 @@
   <p align="center">
    <a href="https://github.com/betagouv/agir-voiture-publicodes/issues">Report Bug</a>
    •
-   <a href="https://publicodes.github.io/agir-voiture-publicodes/">API docs</a>
+   <a href="https://betagouv.github.io/agir-voiture-publicodes/">API docs</a>
    •
    <a href="https://github.com/betagouv/agir-voiture-publicodes/blob/master/CONTRIBUTING.md">Contribute</a>
    •
@@ -13,8 +13,8 @@
   </p>
 
 Modèle de calcul pour le simulateur d'aide au changement de voiture d'Agir.
-</div>
 
+</div>
 
 > [!WARNING]
 > Ce projet est en cours d'expérimentation et n'est pas encore prêt pour une
