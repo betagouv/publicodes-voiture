@@ -13,13 +13,13 @@
   </p>
 
 Modèle de calcul pour le simulateur d'aide au changement de voiture d'Agir.
+</div>
+
 
 > [!WARNING]
 > Ce projet est en cours d'expérimentation et n'est pas encore prêt pour une
 > réutilisation en production. Voir le [document de travail](/specs.md) pour
 > plus d'informations sur le projet.
-
-</div>
 
 ## Usage
 
