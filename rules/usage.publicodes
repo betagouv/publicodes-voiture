@@ -27,9 +27,16 @@ usage . quotidien . distance calculée:
 
 usage . quotidien . distance:
   question: Combien de kilomètres parcourez-vous en moyenne par jours ?
-  # TODO: trouver une valeur par défaut plus pertinente
-  par défaut: 30
+  par défaut: 33
   unité: km/jour
+  # TODO: trouver une valeur par défaut plus récente ?
+  note: |
+    D'après [cette article du
+    Monde](https://www.lemonde.fr/les-decodeurs/article/2023/01/22/qui-pourrait-se-passer-de-sa-voiture-six-graphiques-pour-analyser-nos-trajets-du-quotidien_6158829_4355770.html)
+    s'appuyant sur la
+    [thèse](https://chair-energy-prosperity.org/publications/travail-de-these-decarboner-transports-dici-2050/)
+    d'Aurélien Bigo, les trajets du quotidien sont en moyenne de 33km/jour en
+    2019.
 
 usage . quotidien . nb personne:
   question: Combien de personnes en moyenne sont dans la voiture lors de ces trajets ?

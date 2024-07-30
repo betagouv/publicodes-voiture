@@ -1,43 +1,41 @@
-grand festival urbain:
-  titre: Grand festival en centre-ville
+aller-retours travail électrique ville:
+  titre: Aller-retours travail en ville (électrique)
   description: |
-    Grand festival (100 000 personnes) en centre-ville
+    Personne qui va travailler avec une petite voiture électrique en ville
   situation:
-    informations . nombre de festivaliers: 100000
-    informations . nombre de jours: 3
-    transport . public . accessible en transports en commun: oui
-    infrastructures . scénographie . nombre petites scènes: 2
-    infrastructures . scénographie . nombre grandes scènes: 4
+    voiture . motorisation: électrique
+    voiture . gabarit: petite
+    usage . quotidien . distance: 20
+    usage . quotidien . nb personne: 1
+    usage . vacances . distance: 0
 
-petit festival urbain:
-  titre: Petit festival en centre-ville
+grandes vacances familiales:
+  titre: Grandes vacances familiales (essence)
   description: |
-    Petit festival (moins de 3 000 personnes) en centre-ville
+    Personne qui utilise une voiture essence pour partir en vacances en
+    famille.
   situation:
-    informations . nombre de festivaliers: 3000
-    informations . nombre de jours: 3
-    transport . public . accessible en transports en commun: oui
-    infrastructures . scénographie . nombre petites scènes: 1
-    infrastructures . scénographie . nombre grandes scènes: 0
+    voiture . motorisation: thermique
+    voiture . thermique . carburant: essence E5 ou E10
+    voiture . gabarit: berline
+    usage . quotidien . distance: 5
+    usage . quotidien . nb personne: 2
+    usage . vacances . distance: 2000
+    usage . vacances . nb personne: 4
 
-grand festival rural:
-  titre: Grand festival en périphérie
+famille usage régulier:
+  titre: Usage régulier en famille (diesel)
   description: |
-    Grand festival (250 000 personnes) en périphérie
-  situation:
-    informations . nombre de festivaliers: 250000
-    informations . nombre de jours: 4
-    transport . public . accessible en transports en commun: non
-    infrastructures . scénographie . nombre petites scènes: 4
-    infrastructures . scénographie . nombre grandes scènes: 4
+    Personne qui utilise une voiture diesel pour les trajets quotidiens et
+    les vacances en famille.
 
-petit festival rural:
-  titre: Petit festival en périphérie
-  description: |
-    Petit festival (moins de 3 000 personnes) en périphérie
+    Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
+    et aller au travail.
   situation:
-    informations . nombre de festivaliers: 3000
-    informations . nombre de jours: 3
-    transport . public . accessible en transports en commun: non
-    infrastructures . scénographie . nombre petites scènes: 0
-    infrastructures . scénographie . nombre grandes scènes: 1
+    voiture . motorisation: thermique
+    voiture . thermique . carburant: gazole B7 ou B10
+    voiture . gabarit: berline
+    usage . quotidien . distance: 33
+    usage . quotidien . nb personne: 2.5
+    usage . vacances . distance: 2000
+    usage . vacances . nb personne: 4
