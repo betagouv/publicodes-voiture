@@ -1,0 +1,61 @@
+usage:
+  titre: Usage de la voiture
+  description: |
+    Pour affiner le calcul, il est nécessaire de préciser l'usage que vous
+    avez de votre voiture.
+
+usage . distance totale:
+  titre: Distance totale parcourue à l'année par votre voiture
+  somme:
+    - quotidien . distance calculée
+    - vacances . distance calculée
+  unité: km/an
+
+usage . quotidien:
+  titre: Usage quotidien
+  description: |
+    Renseignez les informations concernant l'usage au quotidien de votre
+    voiture.
+
+    Par exemple, pour aller au travail, faire les courses ou transporter vos
+    enfants à l'école.
+
+usage . quotidien . distance calculée:
+  titre: Distance parcourue par personne au quotidien
+  formule: (distance  * commun . jours par an) / nb personne
+  unité: km/an/personne
+
+usage . quotidien . distance:
+  question: Combien de kilomètres parcourez-vous en moyenne par jours ?
+  # TODO: trouver une valeur par défaut plus pertinente
+  par défaut: 30
+  unité: km/jour
+
+usage . quotidien . nb personne:
+  question: Combien de personnes en moyenne sont dans la voiture lors de ces trajets ?
+  par défaut: 1.5
+  unité: personne
+
+usage . vacances:
+  titre: Usage pour les vacances
+  description: |
+    Renseignez les informations concernant l'usage de votre voiture pour les
+    vacances.
+
+    Par exemple, les déplacements pour les vacances d'été ou d'hiver ou
+    encore pour les week-ends.
+
+usage . vacances . distance calculée:
+  titre: Distance parcourue par personne pour les vacances
+  formule: distance / nb personne
+  unité: km/an/personne
+
+usage . vacances . distance:
+  question: Combien de kilomètres parcourez-vous en moyenne pour vos vacances par an ?
+  par défaut: 500
+  unité: km/an
+
+usage . vacances . nb personne:
+  question: Combien de personnes en moyenne sont dans la voiture lors de ces trajets ?
+  par défaut: 3
+  unité: personne

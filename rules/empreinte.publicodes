@@ -6,4 +6,7 @@ empreinte:
     ngc . transport . voiture . gabarit:  voiture . gabarit
     ngc . transport . voiture . motorisation: voiture . motorisation
     ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+    ngc . transport . voiture . km: usage . distance totale
+    # le nombre de passagers est reflété dans la distance totale
+    ngc . transport . voiture . voyageurs: 1
   unité: kgCO2e/an

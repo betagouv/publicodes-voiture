@@ -13,7 +13,7 @@ voiture:
 
 voiture . motorisation:
   question: Quel type de voiture possédez-vous ?
-  par défaut: "'électrique'"
+  par défaut: "'thermique'"
   formule:
     une possibilité:
       choix obligatoire: oui
@@ -35,7 +35,7 @@ voiture . thermique:
   titre: Voiture thermique
 
 voiture . thermique . carburant:
-  question: Quel type de carburant votre voiture consomme-t-elle ?
+  question: Quel type de carburant utilise-t-elle ?
   applicable si:
     toutes ces conditions:
       - une de ces conditions:
@@ -102,7 +102,7 @@ voiture . thermique . carburant:
 
 
 voiture . gabarit:
-  question: Quel est le gabarit de la voiture ?
+  question: Quel est son gabarit ?
   formule:
     une possibilité:
       choix obligatoire: oui

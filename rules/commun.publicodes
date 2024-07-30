@@ -1,0 +1,7 @@
+importer!:
+  depuis:
+    nom: '@incubateur-ademe/publicodes-commun'
+    url: https://github.com/incubateur-ademe/publicodes-commun
+  dans: commun
+  les règles:
+    - jours par an
