@@ -16,12 +16,12 @@
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.2.1",
     "publicodes": "^1.4.0",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.7",
     "react-router-dom": "^6.15.0",
     "typescript": "^4.9.5",
-    "vite": "^5.1.4"
+    "vite": "^5.3.5"
   },
   "devDependencies": {
     "gh-pages": "^6.0.0"

@@ -10,6 +10,7 @@ import model from "../../index"
 
 // Instantiate the publicodes engine with the model
 const engine = new Engine(model)
+console.log("Engine instantiated")
 
 // The base URL of the application (in production, the app is served from a subdirectory of
 // the github pages repository, so we need to prefix all the URLs with the subdirectory)
@@ -17,7 +18,7 @@ const baseUrl =
   process.env.NODE_ENV === "development" ? "" : "/publicodes-voiture"
 
 // The default rule to display when the user lands on the documentation
-const defaultRule = "voiture"
+const defaultRule = "empreinte"
 
 function Documentation() {
   const url = useParams()["*"]
@@ -26,6 +27,7 @@ function Documentation() {
     Text: ({ children }) => <ReactMardown children={children} />,
   } as ComponentProps<typeof RulePage>["renderers"])
 
+  console.log(`Rendering rule ${url ?? defaultRule}`)
   return (
     <div>
       <RulePage
