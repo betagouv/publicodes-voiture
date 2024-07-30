@@ -20,12 +20,19 @@ try {
   process.exit(-1)
 }
 
-writeFileSync(modelDestPath, JSON.stringify(model, null, 2))
+const resolvedRules = Object.fromEntries(
+  Object.entries(engine.getParsedRules()).map(([dottedName, rule]) => {
+    delete rule.rawNode["avec"]
+    return [dottedName, rule.rawNode]
+  }),
+)
+
+writeFileSync(modelDestPath, JSON.stringify(resolvedRules))
 console.log(`✅ ${modelDestPath} generated`)
 
 const personas = getPersonas(model)
 
-writeFileSync(personasDestPath, JSON.stringify(personas, null, 2))
+writeFileSync(personasDestPath, JSON.stringify(personas))
 console.log(`✅ ${personasDestPath} generated`)
 
 const ui = getUI(model)
@@ -37,7 +44,7 @@ import rules from "./${modelDestPath}" assert { type: "json" };
 
 import personas from "./${personasDestPath}" assert { type: "json" };
 
-export const ui = ${JSON.stringify(ui, null, 2)};
+export const ui = ${JSON.stringify(ui)};
 
 export { personas };
 
