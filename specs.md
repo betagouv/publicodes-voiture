@@ -52,6 +52,8 @@ Voici les différentes informations nécessaires pour le calcul :
 - Coût d'achat (en €)
 - Coût d'entretien annuel (en €)
 
+- Voiture de fonction ?
+
 **Informations sur l'usage**:
 
 - Nombre de kilomètres parcourus par an (en km)
@@ -65,3 +67,15 @@ Voici les différentes informations nécessaires pour le calcul :
 Le type de trajet à pour but d'affiner l'estimation des coûts de la catégorie
 `Autres`, quelle est la fréquence d'utilisation d'autoroutes par exemple,
 etc... (Voir [futur.eco/cout-voiture](https://futur.eco/cout-voiture).
+
+### Interrogations
+
+- Comment connaitre le coût du plein/recharge ?
+- Comment bien collecter les trajets ?
+- Comment bien répartir l'empreinte de la construction en fonction du type
+  d'utilisation (location, libre service, etc...) ?
+  > Toute l'empreinte est attribuée au propriétaire du véhicule ?
+  > Dans NGC, l'empreinte de la construction est amortie au km parcouru.
+- Comment gérer les voitures de fonctions ?
+- Créer des personas en fonction des types de trajets ?
+- **Comment gérer le fait de posséder plusieurs voitures ?**

@@ -1,13 +1,22 @@
 voiture . coût:
   somme:
-    - achat
+    - achat lissé
     - entretien
     - carburant
     - extras
 
+voiture . coût . achat lissé:
+  par défaut: voiture . coût . achat / voiture . durée de vie
+  unité: €/an
+
 voiture . coût . achat:
   par défaut: 25000
   unité: €
+
+voiture . durée de vie:
+  par défaut: 15
+  unité: an
+
 
 voiture . coût . entretien:
   par défaut: 600

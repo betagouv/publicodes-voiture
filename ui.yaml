@@ -1,0 +1,15 @@
+# Define the [categories] of the application
+# The order of the categories is the order of the display
+categories:
+  voiture:
+    index: 0
+    sub: []
+  # usage:
+  #   index: 1
+  #   sub: []
+
+# Define the order of the questions by category
+questions:
+  voiture: [[voiture . motorisation]]
+
+  # usage: [[usage . nombre de km quotidiens], [usage . nombre de km vacances]]

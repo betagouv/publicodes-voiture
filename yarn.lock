@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@incubateur-ademe/nosgestesclimat@^2.5.6":
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/@incubateur-ademe/nosgestesclimat/-/nosgestesclimat-2.5.6.tgz#30c45bf00cbf9e92acb959f385d42bb431f691bd"
+  integrity sha512-wVN4J2rSl6/lbsIdQq8gMP0IfsYiqINzgNAshAWfKPkYlg2kOttOm76biI5LaHG9XV6fF3Y1tsK8qLQSz/nW+g==
+
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@isaacs/cliui/-/cliui-8.0.2.tgz#b37667b7bc181c168782259bab42474fbf52b550"
@@ -19,10 +24,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@publicodes/tools@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@publicodes/tools/-/tools-1.2.4.tgz#cf67c6395cc2d787a7bd403f4e183d2a4e93a2d9"
-  integrity sha512-n6+vACPfh9lOYu/IPjvsll4w/JUZ+vcMml5URGFod184PE9m5onaDtYqsDEExt5hhJ/hSQprKiYDqOnqsTZ3Mg==
+"@publicodes/tools@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@publicodes/tools/-/tools-1.2.5.tgz#ab3177a027d530718057600f78512473a392d8e7"
+  integrity sha512-Cv2nhqd8ucKhFNi6g9aiUqV+PghAdZXk0ECmzXUQjr7AWYVoQZo+/b6rnGcR5uuwg3HOoYqRY8sUenvz80I2sg==
   dependencies:
     "@types/node" "^18.11.18"
     glob "^10.4.1"

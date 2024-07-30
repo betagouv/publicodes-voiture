@@ -1,51 +1,77 @@
 import { writeFileSync } from "fs"
 import { getModelFromSource } from "@publicodes/tools/compilation"
 import Engine from "publicodes"
+import getUI from "./scripts/compile-ui.js"
+import getPersonas from "./scripts/compile-personas.js"
 
-// Could be any glob pattern to match your rule files
-const srcFiles = "rules/"
+const srcFiles = "rules/**/*.publicodes"
+const modelDestPath = "agir-voiture-publicodes.model.json"
+const personasDestPath = "agir-voiture-publicodes.personas.json"
 
-// The path where the model will be generated (should match <your-package-name>.model.json)
-const destPath = "agir-voiture-publicodes.model.json"
-
-// Resolves all rules and their dependencies into a single JSON object
 const model = getModelFromSource(srcFiles, { verbose: true })
 let engine
 
-// Try to create a new engine with the model to check for parsing errors
 try {
   engine = new Engine(model)
+  engine.evaluate("empreinte")
+  // engine.evaluate("coût")
 } catch (e) {
-  console.error(`❌ There is an error in the model:`)
-  console.error(e)
-  process.exit(1)
+  console.error(`❌ Model compilation failed:\n${e.message}\n`)
+  process.exit(-1)
 }
 
-// Write the model to the destination path
-writeFileSync(destPath, JSON.stringify(model))
-console.log(`✅ ${destPath} generated`)
+writeFileSync(modelDestPath, JSON.stringify(model, null, 2))
+console.log(`✅ ${modelDestPath} generated`)
 
-// Generate an index.js file to export the model
+const personas = getPersonas(model)
+
+writeFileSync(personasDestPath, JSON.stringify(personas, null, 2))
+console.log(`✅ ${personasDestPath} generated`)
+
+const ui = getUI(model)
+
 writeFileSync(
   "index.js",
-  `import rules from "./${destPath}" assert { type: "json" };
+  `
+import rules from "./${modelDestPath}" assert { type: "json" };
+
+import personas from "./${personasDestPath}" assert { type: "json" };
+
+export const ui = ${JSON.stringify(ui, null, 2)};
+
+export { personas };
 
 export default rules;
 `,
 )
 console.log(`✅ index.js generated`)
 
-// Generate an index.d.ts file to export the model types
-// where each rule name is a case in the DottedName type
 let indexDTypes = Object.keys(engine.getParsedRules()).reduce(
   (acc, dottedName) => acc + `| "${dottedName}"\n`,
-  `import { Rule } from "publicodes";
+  `
+import { Rule } from "publicodes";
 
 export type DottedName = 
 `,
 )
 
 indexDTypes += `
+
+declare let personas: {
+    [key: string]: {
+      titre: string;
+      description: string;
+      situation: Situation;
+    }
+}
+
+declare let ui: {
+  categories: Record<RuleName, {index: number, sub: RuleName[]}>;
+  questions: Record<RuleName, RuleName[][]>;
+}
+
+export { ui, personas }
+
 declare let rules: Record<DottedName, Rule>
 
 export default rules;

@@ -1,0 +1,32 @@
+importer!:
+  depuis:
+    nom: '@incubateur-ademe/nosgestesclimat'
+    url: https://github.com/incubateur-ademe/nosgestesclimat
+  dans: ngc
+  les règles:
+    - transport . voiture . motorisation
+
+voiture:
+  titre: |
+    Informations sur la voiture (type de moteur, consommation, etc...)
+
+voiture . motorisation:
+  question: Quel type de voiture possédez-vous ?
+  par défaut: "'thermique'"
+  formule:
+    une possibilité:
+      choix obligatoire: oui
+      possibilités:
+        - thermique
+        - hybride
+        - électrique
+
+  avec:
+    thermique:
+      titre: Thermique (diesel/essence/GPL)
+    électrique:
+      titre: Électrique
+    hybride:
+      titre: Hybride
+    # TODO: faire la distinction diesel/essence and hybride
+    # non-rechargeable/hybride rechargeable

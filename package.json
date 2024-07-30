@@ -27,7 +27,7 @@
     "postinstall": "yarn --cwd doc install"
   },
   "devDependencies": {
-    "@publicodes/tools": "^1.2.4"
+    "@publicodes/tools": "^1.2.5"
   },
   "peerDependencies": {
     "publicodes": "^1.4.0"
@@ -35,5 +35,8 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@incubateur-ademe/nosgestesclimat": "^2.5.6"
   }
 }
