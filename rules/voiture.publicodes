@@ -1,18 +1,19 @@
-importer!:
-  depuis:
-    nom: '@incubateur-ademe/nosgestesclimat'
-    url: https://github.com/incubateur-ademe/nosgestesclimat
-  dans: ngc
-  les règles:
-    - transport . voiture . motorisation
+#importer!:
+#  depuis:
+#    nom: '@incubateur-ademe/nosgestesclimat'
+#    url: https://github.com/incubateur-ademe/nosgestesclimat
+#  dans: ngc
+#  les règles:
 
 voiture:
-  titre: |
-    Informations sur la voiture (type de moteur, consommation, etc...)
+  titre: Informations sur la voiture
+  description: |
+    Pour calculer l'empreinte carbone de votre voiture, nous avons besoin de
+    quelques informations concernant le véhicule que vous utilisez.
 
 voiture . motorisation:
   question: Quel type de voiture possédez-vous ?
-  par défaut: "'thermique'"
+  par défaut: "'électrique'"
   formule:
     une possibilité:
       choix obligatoire: oui
@@ -30,3 +31,4 @@ voiture . motorisation:
       titre: Hybride
     # TODO: faire la distinction diesel/essence and hybride
     # non-rechargeable/hybride rechargeable
+

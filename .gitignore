@@ -3,4 +3,4 @@ node_modules
 index.d.ts
 index.js
 doc/dist/
-agir-voiture-publicodes.model.json
+voiture-publicodes.model.json
