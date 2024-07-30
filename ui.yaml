@@ -10,6 +10,14 @@ categories:
 
 # Define the order of the questions by category
 questions:
-  voiture: [[voiture . motorisation]]
+  voiture:
+    [
+      [
+        voiture . motorisation,
+        voiture . thermique . carburant,
+        voiture . gabarit,
+      ],
+    ]
+  usage: [[usage . nombre de km quotidiens, usage . nombre de km vacances]]
 
   # usage: [[usage . nombre de km quotidiens], [usage . nombre de km vacances]]

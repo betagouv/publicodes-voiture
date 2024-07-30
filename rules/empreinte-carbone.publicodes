@@ -1,29 +1,9 @@
-importer!:
-  depuis:
-    nom: '@incubateur-ademe/nosgestesclimat'
-    url: https://github.com/incubateur-ademe/nosgestesclimat
-  dans: ngc
-  les règles:
-   - transport . voiture
-   - transport . voiture . utilisateur: "'propriétaire'"
-   - transport . voiture . gabarit: "'berline'"
-   - transport . voiture . motorisation: voiture . motorisation
-   - transport . voiture . thermique . carburant: "'essence E5 ou E10'"
-
 empreinte:
   titre: Empreinte carbone de votre voiture
-  somme:
-    - fabrication
-    - utilisation
-  unité: kgCO2e/an
-
-empreinte . fabrication:
-  par défaut: 1000
-
-empreinte . utilisation:
   valeur: ngc . transport . voiture
   contexte:
     ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: "'berline'"
+    ngc . transport . voiture . gabarit:  voiture . gabarit
     ngc . transport . voiture . motorisation: voiture . motorisation
-    ngc . transport . voiture . thermique . carburant: "'essence E5 ou E10'"
+    ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+  unité: kgCO2e/an
