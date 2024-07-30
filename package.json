@@ -1,17 +1,17 @@
 {
-  "name": "agir-voiture-publicodes",
+  "name": "publicodes-voiture",
   "version": "1.0.3",
-  "repository": "git@github.com:betagouv/agir-voiture-publicodes.git",
-  "homepage": "https://github.com/betagouv/agir-voiture-publicodes#readme",
-  "description": "Modèle de calcul de l'impact environnemental et monétaire de la voiture",
+  "repository": "git@github.com:betagouv/publicodes-voiture.git",
+  "homepage": "https://github.com/betagouv/publicodes-voiture#readme",
+  "description": "Modèle de calcul de l'impact environnemental et du coût de la voiture",
   "authors": [
     "Emile Rolley <emile.rolley@tuta.io>"
   ],
   "bugs": {
-    "url": "https://github.com/betagouv/agir-voiture-publicodes/issues"
+    "url": "https://github.com/betagouv/publicodes-voiture/issues"
   },
   "files": [
-    "agir-voiture-publicodes.model.json",
+    "publicodes-voiture.model.json",
     "index.js",
     "index.d.ts"
   ],
@@ -20,7 +20,7 @@
   "type": "module",
   "types": "index.d.ts",
   "scripts": {
-    "clean": "rm -r agir-voiture-publicodes.model.json index.d.ts index.js",
+    "clean": "rm -r publicodes-voiture.model.json index.d.ts index.js",
     "build": "node build.js",
     "doc": "yarn run build && cd doc && yarn run dev",
     "doc:build": "yarn run build && cd doc && yarn run build",

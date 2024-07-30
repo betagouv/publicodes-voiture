@@ -1,9 +1,9 @@
 {
-  "name": "agir-voiture-publicodes",
+  "name": "publicodes-voiture",
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://betagouv.github.io/agir-voiture-publicodes",
+  "homepage": "https://betagouv.github.io/publicodes-voiture",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

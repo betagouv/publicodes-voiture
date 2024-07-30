@@ -14,7 +14,7 @@ const engine = new Engine(model)
 // The base URL of the application (in production, the app is served from a subdirectory of
 // the github pages repository, so we need to prefix all the URLs with the subdirectory)
 const baseUrl =
-  process.env.NODE_ENV === "development" ? "" : "/agir-voiture-publicodes"
+  process.env.NODE_ENV === "development" ? "" : "/publicodes-voiture"
 
 // The default rule to display when the user lands on the documentation
 const defaultRule = "voiture"
@@ -35,7 +35,7 @@ function Documentation() {
         engine={engine}
         renderers={renderers}
         language={"fr"}
-        npmPackage="agir-voiture-publicodes"
+        npmPackage="publicodes-voiture"
       />
     </div>
   )

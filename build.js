@@ -5,8 +5,8 @@ import getUI from "./scripts/compile-ui.js"
 import getPersonas from "./scripts/compile-personas.js"
 
 const srcFiles = "rules/**/*.publicodes"
-const modelDestPath = "agir-voiture-publicodes.model.json"
-const personasDestPath = "agir-voiture-publicodes.personas.json"
+const modelDestPath = "voiture-publicodes.model.json"
+const personasDestPath = "voiture-publicodes.personas.json"
 
 const model = getModelFromSource(srcFiles, { verbose: true })
 let engine
