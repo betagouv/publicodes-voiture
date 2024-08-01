@@ -1,7 +1,19 @@
-importer!:
-  depuis:
-    nom: '@incubateur-ademe/publicodes-commun'
-    url: https://github.com/incubateur-ademe/publicodes-commun
-  dans: commun
-  les règles:
-    - jours par an
+#importer!:
+#  depuis:
+#    nom: '@incubateur-ademe/publicodes-commun'
+#    url: https://github.com/incubateur-ademe/publicodes-commun
+#  dans: commun
+#  les règles:
+#    - jours par an
+
+commun:
+  titre: Publicodes commun
+  description: |
+    Ce modèle contient des règles de calcul partagées par plusieurs modèles
+    publicodes.
+
+commun . jours par an:
+  titre: Jours par an
+  formule:
+    unité: jour
+    valeur: 365
