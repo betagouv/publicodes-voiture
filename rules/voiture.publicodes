@@ -23,7 +23,7 @@ voiture . motorisation:
         - électrique
   avec:
     thermique:
-      titre: Thermique (diesel/essence/GPL)
+      titre: Thermique
     électrique:
       titre: Électrique
     hybride:
