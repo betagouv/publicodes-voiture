@@ -27,6 +27,7 @@
   "scripts": {
     "clean": "rm -r publicodes-voiture.model.json index.d.ts index.js",
     "build": "node build.js",
+    "generate": "node scripts/generate-empreinte.js",
     "doc": "yarn run build && cd doc && yarn run dev",
     "doc:build": "yarn run build && cd doc && yarn run build"
   },

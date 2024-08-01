@@ -3,6 +3,7 @@ import { getModelFromSource } from "@publicodes/tools/compilation"
 import Engine from "publicodes"
 import getUI from "./scripts/compile-ui.js"
 import getPersonas from "./scripts/compile-personas.js"
+import generateCombinations from "./scripts/generate-empreinte.js"
 
 const srcFiles = "rules/**/*.publicodes"
 const modelDestPath = "publicodes-voiture.model.json"
@@ -28,7 +29,10 @@ const resolvedRules = Object.fromEntries(
   }),
 )
 
-writeFileSync(modelDestPath, JSON.stringify(resolvedRules))
+generateCombinations(resolvedRules)
+console.log(`✅ Combinations generated`)
+
+writeFileSync(modelDestPath, JSON.stringify(resolvedRules, null, 2))
 console.log(`✅ ${modelDestPath} generated`)
 
 const personas = getPersonas(model)

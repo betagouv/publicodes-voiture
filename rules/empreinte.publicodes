@@ -14,6 +14,9 @@ ngc:
     CO2e.
 
 empreinte:
+  titre: Empreinte carbone
+
+empreinte . voiture:
   titre: Empreinte carbone de votre voiture
   description: |
     Empreinte carbone de l'utilisation de votre voiture par an et par
@@ -26,60 +29,5 @@ empreinte:
     ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
     ngc . transport . voiture . km: usage . distance totale
     # le nombre de passagers est reflété dans la distance totale
-    ngc . transport . voiture . voyageurs: 1
-  unité: kgCO2e/an/personne
-
-empreinte . petite électrique:
-  titre: Petite voiture électrique
-  valeur: ngc . transport . voiture
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: "'petite'"
-    ngc . transport . voiture . motorisation: "'électrique'"
-    ngc . transport . voiture . km: usage . distance totale
-    ngc . transport . voiture . voyageurs: 1
-  unité: kgCO2e/an/personne
-
-empreinte . moyenne électrique:
-  titre: Moyenne voiture électrique
-  valeur: ngc . transport . voiture
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: "'moyenne'"
-    ngc . transport . voiture . motorisation: "'électrique'"
-    ngc . transport . voiture . km: usage . distance totale
-    ngc . transport . voiture . voyageurs: 1
-  unité: kgCO2e/an/personne
-
-empreinte . VUL électrique:
-  titre: Véhicule Ultra Léger électrique
-  valeur: ngc . transport . voiture
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: "'VUL'"
-    ngc . transport . voiture . motorisation: "'électrique'"
-    ngc . transport . voiture . km: usage . distance totale
-    ngc . transport . voiture . voyageurs: 1
-  unité: kgCO2e/an/personne
-
-empreinte . berline électrique:
-  titre: Berline électrique
-  valeur: ngc . transport . voiture
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: "'berline'"
-    ngc . transport . voiture . motorisation: "'électrique'"
-    ngc . transport . voiture . km: usage . distance totale
-    ngc . transport . voiture . voyageurs: 1
-  unité: kgCO2e/an/personne
-
-empreinte . SUV électrique:
-  titre: SUV électrique
-  valeur: ngc . transport . voiture
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: "'SUV'"
-    ngc . transport . voiture . motorisation: "'électrique'"
-    ngc . transport . voiture . km: usage . distance totale
     ngc . transport . voiture . voyageurs: 1
   unité: kgCO2e/an/personne
