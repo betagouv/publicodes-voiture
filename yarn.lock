@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@incubateur-ademe/nosgestesclimat/-/nosgestesclimat-2.5.6.tgz#30c45bf00cbf9e92acb959f385d42bb431f691bd"
   integrity sha512-wVN4J2rSl6/lbsIdQq8gMP0IfsYiqINzgNAshAWfKPkYlg2kOttOm76biI5LaHG9XV6fF3Y1tsK8qLQSz/nW+g==
 
+"@incubateur-ademe/publicodes-commun@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@incubateur-ademe/publicodes-commun/-/publicodes-commun-1.1.5.tgz#6f5aeccd1bfda9856dc81702cde4102006f7ce8f"
+  integrity sha512-L9eHM53sabNPtWr7H9RbJCEUEMBf3RuWCjPJ7NKk5rQjprCTNAB72sWMW04/LUi/JzZH4CLizpvqt2Z+I3H3Kg==
+
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@isaacs/cliui/-/cliui-8.0.2.tgz#b37667b7bc181c168782259bab42474fbf52b550"

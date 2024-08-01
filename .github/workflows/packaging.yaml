@@ -1,12 +1,12 @@
 name: GitHub release and NPM publishing
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Build rules"]
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+    types:
+      - completed
 jobs:
   check_if_version_upgraded:
     name: Check if version upgrade
