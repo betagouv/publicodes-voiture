@@ -5,8 +5,9 @@ import getUI from "./scripts/compile-ui.js"
 import getPersonas from "./scripts/compile-personas.js"
 
 const srcFiles = "rules/**/*.publicodes"
-const modelDestPath = "voiture-publicodes.model.json"
-const personasDestPath = "voiture-publicodes.personas.json"
+const modelDestPath = "publicodes-voiture.model.json"
+const personasDestPath = "publicodes-voiture.personas.json"
+const uiDestPath = "publicodes-voiture.ui.json"
 
 const model = getModelFromSource(srcFiles, { verbose: true })
 let engine
@@ -37,6 +38,9 @@ console.log(`✅ ${personasDestPath} generated`)
 
 const ui = getUI(model)
 
+writeFileSync(uiDestPath, JSON.stringify(ui))
+console.log(`✅ ${uiDestPath} generated`)
+
 writeFileSync(
   "index.js",
   `
@@ -44,9 +48,9 @@ import rules from "./${modelDestPath}" assert { type: "json" };
 
 import personas from "./${personasDestPath}" assert { type: "json" };
 
-export const ui = ${JSON.stringify(ui)};
+import personas from "./${uiDestPath}" assert { type: "json" };
 
-export { personas };
+export { personas, ui };
 
 export default rules;
 `,

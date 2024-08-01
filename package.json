@@ -11,9 +11,11 @@
     "url": "https://github.com/betagouv/publicodes-voiture/issues"
   },
   "files": [
-    "publicodes-voiture.model.json",
     "index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "publicodes-voiture.model.json",
+    "publicodes-voiture.personas.json",
+    "publicodes-voiture.ui.json"
   ],
   "main": "index.js",
   "module": "index.js",

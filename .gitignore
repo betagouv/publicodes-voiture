@@ -3,5 +3,5 @@ node_modules
 index.d.ts
 index.js
 doc/dist/
-voiture-publicodes.model.json
-voiture-publicodes.personas.json
+publicodes-voiture.model.json
+publicodes-voiture.personas.json

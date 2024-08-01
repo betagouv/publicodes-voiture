@@ -1,7 +1,7 @@
 {
   "name": "publicodes-voiture",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.2",
   "private": true,
   "homepage": "https://betagouv.github.io/publicodes-voiture",
   "scripts": {
