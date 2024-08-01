@@ -48,7 +48,7 @@ import rules from "./${modelDestPath}" assert { type: "json" };
 
 import personas from "./${personasDestPath}" assert { type: "json" };
 
-import personas from "./${uiDestPath}" assert { type: "json" };
+import ui from "./${uiDestPath}" assert { type: "json" };
 
 export { personas, ui };
 
