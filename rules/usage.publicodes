@@ -4,7 +4,7 @@ usage:
     Pour affiner le calcul, il est nécessaire de préciser l'usage que vous
     avez de votre voiture.
 
-usage . distance totale:
+usage . distance annuelle:
   titre: Distance totale parcourue à l'année par votre voiture
   somme:
     - quotidien . distance calculée

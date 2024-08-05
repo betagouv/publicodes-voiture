@@ -21,13 +21,17 @@ empreinte . voiture:
   description: |
     Empreinte carbone de l'utilisation de votre voiture par an et par
     personne.
+
+    Nous utilisons le modèle de [Nos Gestes Climat](https://nosgestesclimat.fr)
+    pour calculer l'empreinte carbone de votre voiture.
   valeur: ngc . transport . voiture
   contexte:
     ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit:  voiture . gabarit
+    ngc . transport . voiture . gabarit: voiture . gabarit
     ngc . transport . voiture . motorisation: voiture . motorisation
     ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
-    ngc . transport . voiture . km: usage . distance totale
+    ngc . transport . voiture . km: usage . distance annuelle
+    ngc . transport . voiture . thermique . consommation aux 100: voiture . thermique . consommation
     # le nombre de passagers est reflété dans la distance totale
     ngc . transport . voiture . voyageurs: 1
   unité: kgCO2e/an/personne

@@ -5,22 +5,25 @@ import getUI from "./scripts/compile-ui.js"
 import getPersonas from "./scripts/compile-personas.js"
 import generateCombinations from "./scripts/generate-empreinte.js"
 
+function check(rules, step) {
+  try {
+    const engine = new Engine(rules)
+    engine.evaluate("empreinte")
+    engine.evaluate("coût")
+    return engine
+  } catch (e) {
+    console.error(`❌ Error at (${step}):\n${e.message}\n`)
+    process.exit(-1)
+  }
+}
+
 const srcFiles = "rules/**/*.publicodes"
 const modelDestPath = "publicodes-voiture.model.json"
 const personasDestPath = "publicodes-voiture.personas.json"
 const uiDestPath = "publicodes-voiture.ui.json"
 
 const model = getModelFromSource(srcFiles, { verbose: true })
-let engine
-
-try {
-  engine = new Engine(model)
-  engine.evaluate("empreinte")
-  // engine.evaluate("coût")
-} catch (e) {
-  console.error(`❌ Model compilation failed:\n${e.message}\n`)
-  process.exit(-1)
-}
+const engine = check(model, "base")
 
 const resolvedRules = Object.fromEntries(
   Object.entries(engine.getParsedRules()).map(([dottedName, rule]) => {
@@ -31,6 +34,8 @@ const resolvedRules = Object.fromEntries(
 
 generateCombinations(resolvedRules)
 console.log(`✅ Combinations generated`)
+
+check(resolvedRules, "generating combinations")
 
 writeFileSync(modelDestPath, JSON.stringify(resolvedRules, null, 2))
 console.log(`✅ ${modelDestPath} generated`)

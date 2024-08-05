@@ -17,8 +17,9 @@ questions:
     [
       [
         voiture . motorisation,
-        voiture . thermique . carburant,
         voiture . gabarit,
+        voiture . thermique . carburant,
+        voiture . thermique . consommation,
       ],
     ]
   usage . quotidien:

@@ -35,38 +35,62 @@ export default function generateCombinations(rules) {
     rules[`empreinte . ${motorisation}`] = {
       titre: `Ensemble des véhicules ${motorisation}`,
     }
+    rules[`coût . ${motorisation}`] = {
+      titre: `Ensemble des véhicules ${motorisation}`,
+    }
     for (const gabarit of gabarits) {
+      const contexteBaseEmission = {
+        "ngc . transport . voiture . utilisateur": "'propriétaire'",
+        "ngc . transport . voiture . gabarit": `'${gabarit}'`,
+        "ngc . transport . voiture . motorisation": `'${motorisation}'`,
+        "ngc . transport . voiture . km": "usage . distance annuelle",
+        "ngc . transport . voiture . voyageurs": 1,
+      }
+
+      const contexteBaseCost = {
+        "voiture . gabarit": `'${gabarit}'`,
+        "voiture . motorisation": `'${motorisation}'`,
+      }
+
       if (motorisation !== "électrique") {
         rules[`empreinte . ${motorisation} . ${gabarit}`] = {
+          titre: `Ensemble des ${gabarit} ${motorisation}`,
+        }
+        rules[`coût . ${motorisation} . ${gabarit}`] = {
           titre: `Ensemble des ${gabarit} ${motorisation}`,
         }
         for (const carburant of carburants) {
           rules[`empreinte . ${motorisation} . ${gabarit} . ${carburant}`] = {
             titre: `${gabarit} ${motorisation} (${carburant})`,
-            unité: "kgCO2eq/an/personne",
+            unité: "kgCO2eq/an",
             valeur: "ngc . transport . voiture",
             contexte: {
-              "ngc . transport . voiture . utilisateur": "'propriétaire'",
-              "ngc . transport . voiture . gabarit": `\'${gabarit}\'`,
-              "ngc . transport . voiture . motorisation": `'${motorisation}'`,
-              "ngc . transport . voiture . thermique . carburant": `'${carburant}'`,
-              "ngc . transport . voiture . km": "usage . distance totale",
-              "ngc . transport . voiture . voyageurs": 1,
+              ...contexteBaseEmission,
+              "voiture . thermique . carburant": `'${carburant}'`,
+            },
+          }
+          rules[`coût . ${motorisation} . ${gabarit} . ${carburant}`] = {
+            titre: `${gabarit} ${motorisation} (${carburant})`,
+            unité: "€/an",
+            valeur: "coût . voiture",
+            contexte: {
+              ...contexteBaseCost,
+              "voiture . thermique . carburant": `'${carburant}'`,
             },
           }
         }
       } else {
         rules[`empreinte . ${motorisation} . ${gabarit}`] = {
           titre: `${gabarit} ${motorisation}`,
-          unité: "kgCO2eq/an/personne",
+          unité: "kgCO2eq/an",
           valeur: "ngc . transport . voiture",
-          contexte: {
-            "ngc . transport . voiture . utilisateur": "'propriétaire'",
-            "ngc . transport . voiture . gabarit": `'${gabarit}'`,
-            "ngc . transport . voiture . motorisation": `'${motorisation}'`,
-            "ngc . transport . voiture . km": "usage . distance totale",
-            "ngc . transport . voiture . voyageurs": 1,
-          },
+          contexte: contexteBaseEmission,
+        }
+        rules[`coût . ${motorisation} . ${gabarit}`] = {
+          titre: `${gabarit} ${motorisation}`,
+          unité: "€/an",
+          valeur: "coût . voiture",
+          contexte: contexteBaseCost,
         }
       }
     }

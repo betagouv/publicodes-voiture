@@ -1,0 +1,29 @@
+coût:
+  titre: Coûts
+
+coût . voiture:
+  titre: Coût total de votre voiture
+  description: |
+    Coût total de votre voiture par an.
+
+    Nous utilisons le calcul du `coût au km` du modèle de
+    [futur.eco](https://futur.eco) pour calculer le coût total de votre
+    voiture.
+  formule: usage . distance annuelle * futureco . voiture . coûts au km
+  unité: €/an
+  contexte:
+    futureco . trajet . voyageurs: 1
+    futureco . voiture . consommation thermique: voiture . thermique . consommation
+    futureco . voiture . km annuels . par défaut: usage . distance annuelle
+    futureco . voiture . motorisation:
+      variations:
+        - si: voiture . motorisation = 'thermique'
+          alors:
+            variations:
+              - si: voiture . thermique . carburant = 'gazole B7 ou B10'
+                alors: "'diesel'"
+              - si: voiture . thermique . carburant = 'essence E5 ou E10'
+                alors: "'essence'"
+              - si: voiture . thermique . carburant = 'essence E85'
+                alors: "'biocarburant'"
+        - sinon: voiture . motorisation

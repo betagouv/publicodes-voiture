@@ -92,13 +92,17 @@ voiture . thermique . carburant:
 
   avec:
     gazole B7 ou B10:
-      titre: Gazole (B7 ou B10)
+      titre: Diesel
+      description: Gazole B7 ou B10
     essence E5 ou E10:
-      titre: Essence (E5 ou E10)
+      titre: Essence
+      description: Essence E5 ou E10
     essence E85:
-      titre: Essence E85 (biocarburants)
+      titre: Biocarburant
+      description:: Essence E85 (biocarburants)
     GPL:
-      titre: GPL (Gaz de Pétrole Liquéfiés)
+      titre: GPL
+      description: GPL (Gaz de Pétrole Liquéfiés)
 
 
 voiture . gabarit:
@@ -137,3 +141,30 @@ voiture . gabarit:
     SUV:
       titre: SUV
       description: Sport utility vehicle", type 4x4 urbain
+
+voiture . thermique . consommation:
+  question: Quelle est sa consommation moyenne ?
+  applicable si:
+    une de ces conditions:
+      - motorisation = 'thermique'
+      - motorisation = 'hybride'
+  par défaut: consommation estimée
+  unité: l/centkm
+  description: |
+    **💡 Si vous utilisez plusieurs voitures (par exemple dans le cas où vous
+    n'en possédez pas une), choisissez la réponse la plus représentative de
+    votre usage.**
+  suggestions:
+    5 l/100km: 5
+    7 l/100km: 7
+    9 l/100km: 9
+  note: Les suggestions de réponse sont à la louche, à préciser et sourcer.
+
+voiture . thermique . consommation . consommation estimée:
+  titre: Consommation éstimée par défaut
+  valeur: ngc . transport . voiture . thermique . consommation estimée
+  contexte:
+    ngc . transport . voiture . utilisateur: "'propriétaire'"
+    # NOTE: il faut seulement que distance soit supérieur à 0 pour que la règle
+    ngc . transport . voiture . km: usage . distance annuelle
+    ngc . transport . voiture . gabarit: voiture . gabarit
