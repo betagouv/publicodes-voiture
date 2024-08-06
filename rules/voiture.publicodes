@@ -4,6 +4,104 @@ voiture:
     Pour calculer l'empreinte carbone de votre voiture, nous avons besoin de
     quelques informations concernant le véhicule que vous utilisez.
 
+voiture . prix d'achat:
+  question: Quel est le prix d'achat de votre voiture ?
+  par défaut: estimé
+  unité: €
+
+voiture . prix d'achat . estimé:
+  titre: Prix d'achat estimé par défaut
+  formule:
+    variations:
+      - si: voiture . gabarit = 'petite'
+        alors:
+          variations:
+            - si: voiture . motorisation = 'thermique'
+              alors: 15000
+            - si: voiture . motorisation = 'hybride'
+              alors: 19000
+            - si: voiture . motorisation = 'électrique'
+              alors: 25000
+      - si: voiture . gabarit = 'moyenne'
+        alors:
+          variations:
+            - si: voiture . motorisation = 'thermique'
+              alors: 20000
+            - si: voiture . motorisation = 'hybride'
+              alors: 23000
+            - si: voiture . motorisation = 'électrique'
+              alors: 30000
+      - si: voiture . gabarit = 'berline'
+        alors:
+          variations:
+            - si: voiture . motorisation = 'thermique'
+              alors: 30000
+            - si: voiture . motorisation = 'hybride'
+              alors: 37000
+            - si: voiture . motorisation = 'électrique'
+              alors: 44000
+      - si: voiture . gabarit = 'SUV'
+        alors:
+          variations:
+            - si: voiture . motorisation = 'thermique'
+              alors: 32000
+            - si: voiture . motorisation = 'hybride'
+              alors: 38000
+            - si: voiture . motorisation = 'électrique'
+              alors: 47000
+      - si: voiture . gabarit = 'VUL'
+        alors:
+          variations:
+            - si: voiture . motorisation = 'thermique'
+              alors: 30000
+            - si: voiture . motorisation = 'hybride'
+              alors: 38000
+            - si: voiture . motorisation = 'électrique'
+              alors: 45000
+
+  unité: €
+  note: |
+    Estimation du prix d'achat moyen d'une voiture neuve en France en fonction
+    de son gabarit et de sa motorisation.
+
+    Peut de réelles sources fiables sur le prix moyen d'une voiture neuve pour
+    l'instant. Donc pour l'instant, nous avons estimé les prix d'achat en
+    fonction du modèle de voiture en 2016.
+
+    TODO: prendre le modèle le plus vendu pour chaque catégorie et regarder son
+    prix d'achat moyen en 2021.
+
+    Sources utilisées:
+      - [L'Argus](https://www.largus.fr/mondial/prix-renault-zoe-2016-tarifs-et-equipements-de-la-ze-40-8154399.html)
+
+
+voiture . thermique . consommation:
+  question: Quelle est sa consommation moyenne ?
+  applicable si:
+    une de ces conditions:
+      - motorisation = 'thermique'
+      - motorisation = 'hybride'
+  par défaut: consommation estimée
+  unité: l/centkm
+  description: |
+    **💡 Si vous utilisez plusieurs voitures (par exemple dans le cas où vous
+    n'en possédez pas une), choisissez la réponse la plus représentative de
+    votre usage.**
+  suggestions:
+    5 l/100km: 5
+    7 l/100km: 7
+    9 l/100km: 9
+  note: Les suggestions de réponse sont à la louche, à préciser et sourcer.
+
+voiture . thermique . consommation . consommation estimée:
+  titre: Consommation éstimée par défaut
+  valeur: ngc . transport . voiture . thermique . consommation estimée
+  contexte:
+    ngc . transport . voiture . utilisateur: "'propriétaire'"
+    # NOTE: il faut seulement que distance soit supérieur à 0 pour que la règle
+    ngc . transport . voiture . km: usage . distance annuelle
+    ngc . transport . voiture . gabarit: voiture . gabarit
+
 # NOTE:
 # Les questions suivantes sont des quasi copiées-collées de celles présentes
 # de le modèle de nosgestesclimat. C'est ainsi plus facile de contrôler les
@@ -28,7 +126,7 @@ voiture . motorisation:
       titre: Électrique
     hybride:
       titre: Hybride
-    # TODO: faire la distinction diesel/essence and hybride
+      # TODO: faire la distinction diesel/essence and hybride
     # non-rechargeable/hybride rechargeable
 
 voiture . thermique:
@@ -113,10 +211,10 @@ voiture . gabarit:
       possibilités:
         - petite
         - moyenne
-        - VUL
         - berline
         - SUV
-  par défaut: "'berline'"
+        - VUL
+  par défaut: "'moyenne'"
   note: |
     Nous considérons que la voiture par défaut est une "Berline", en témoigne
     [une étude menée par AAA
@@ -127,44 +225,17 @@ voiture . gabarit:
     millions de véhicules."
   avec:
     petite:
-      titre: Petite
+      titre: Citadine
       description: Citadine type Zoé, Fiat 500
     moyenne:
-      titre: Moyenne
+      titre: Monospace
       description: Modèle au dessus de la petite citadine, type Mégane, Golf
-    VUL:
-      titre: Véhicule utilitaire
-      description: Camionette de type Kangoo ou Partner jusqu'au Trafic et Vito
     berline:
       titre: Berline
       description: Une voiture longue, type 308, Tesla Model 3, Audi A3
     SUV:
       titre: SUV
       description: Sport utility vehicle", type 4x4 urbain
-
-voiture . thermique . consommation:
-  question: Quelle est sa consommation moyenne ?
-  applicable si:
-    une de ces conditions:
-      - motorisation = 'thermique'
-      - motorisation = 'hybride'
-  par défaut: consommation estimée
-  unité: l/centkm
-  description: |
-    **💡 Si vous utilisez plusieurs voitures (par exemple dans le cas où vous
-    n'en possédez pas une), choisissez la réponse la plus représentative de
-    votre usage.**
-  suggestions:
-    5 l/100km: 5
-    7 l/100km: 7
-    9 l/100km: 9
-  note: Les suggestions de réponse sont à la louche, à préciser et sourcer.
-
-voiture . thermique . consommation . consommation estimée:
-  titre: Consommation éstimée par défaut
-  valeur: ngc . transport . voiture . thermique . consommation estimée
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    # NOTE: il faut seulement que distance soit supérieur à 0 pour que la règle
-    ngc . transport . voiture . km: usage . distance annuelle
-    ngc . transport . voiture . gabarit: voiture . gabarit
+    VUL:
+      titre: Véhicule utilitaire
+      description: Camionette de type Kangoo ou Partner jusqu'au Trafic et Vito

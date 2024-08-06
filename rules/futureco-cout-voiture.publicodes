@@ -405,11 +405,16 @@ futureco . voiture . occasion:
   question: Avez-vous acheté votre voiture d'occasion ?
   par défaut: non
   description: |
-    L'achat d'occasion d'une voiture est très courant, car un achat neuf est onéreux et leur durée de vie est longue, 20 ans en moyenne. 
+    L'achat d'occasion d'une voiture est très courant, car un achat neuf est
+    onéreux et leur durée de vie est longue, 20 ans en moyenne. 
 
-    L'occasion permet de diminuer fortement le prix d'achat. Cela dit, au fur et à mesure que le prix neuf explose, atteignant 33 000 € en moyenne en 2023, les prix de l'occasion suivent mécaniquement la tendance. 
+    L'occasion permet de diminuer fortement le prix d'achat. Cela dit, au fur
+    et à mesure que le prix neuf explose, atteignant 33 000 € en moyenne en
+    2023, les prix de l'occasion suivent mécaniquement la tendance. 
 
-    À noter : l'achat d'occasion réduit la durée de vie, surtout pour les voitures thermiques. Il est donc très important de renseigner la date de fabrication d'une voiture achetée d'occasion.
+    À noter : l'achat d'occasion réduit la durée de vie, surtout pour les
+    voitures thermiques. Il est donc très important de renseigner la date de
+    fabrication d'une voiture achetée d'occasion.
 
 futureco . voiture . occasion . année de fabrication:
   question: Quelle est l'année de fabrication de votre voiture achetée d'occasion ?
@@ -456,11 +461,19 @@ futureco . voiture . prix d'achat:
 futureco . voiture . prix d'achat neuf . moyen en 2015:
   formule: 25000
   note: |
-    Nous prenons le prix moyen d'achat d'une voiture neuve en 2015, de façon approximative. Pourquoi 2015 ? Car nous sommes bientôt en 2014, que la durée de vie moyenne d'une voiture est de 20 ans, et nous l'approximons à 2015 pour rester sur une date de moité de décennie.
+    Nous prenons le prix moyen d'achat d'une voiture neuve en 2015, de façon
+    approximative. Pourquoi 2015 ? Car nous sommes bientôt en 2014, que la
+    durée de vie moyenne d'une voiture est de 20 ans, et nous l'approximons à
+    2015 pour rester sur une date de moité de décennie.
 
-    Nous l'estimons sur la base du graphique "Evolution prix moyen des autos" de [cet article](https://www.fiches-auto.fr/articles-auto/argent-economie/s-2499-l-incroyable-inflation-du-secteur-automobile.php) basé sur des données de l'Argus.
+    Nous l'estimons sur la base du graphique "Evolution prix moyen des autos"
+    de [cet
+    article](https://www.fiches-auto.fr/articles-auto/argent-economie/s-2499-l-incroyable-inflation-du-secteur-automobile.php)
+    basé sur des données de l'Argus.
 
-    À noter, il explose dans le temps : en 2023, il est de 33 000 euros. Oui, le prix *moyen* d'une voiture neuve en 2023 est de 33 000 €. [Source](https://www.automobile-magazine.fr/toute-l-actualite/article/38263-prix-moyen-dune-voiture-neuve-en-france-ca-pique).
+    À noter, il explose dans le temps : en 2023, il est de 33 000 euros. Oui,
+    le prix *moyen* d'une voiture neuve en 2023 est de 33 000 €.
+    [Source](https://www.automobile-magazine.fr/toute-l-actualite/article/38263-prix-moyen-dune-voiture-neuve-en-france-ca-pique).
 
 futureco . voiture . prix d'achat neuf:
   question: Quel est le prix d'achat neuf de la voiture, prime écologique déduite ?

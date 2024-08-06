@@ -22,7 +22,7 @@ usage . quotidien:
 
 usage . quotidien . distance calculée:
   titre: Distance parcourue par personne au quotidien
-  formule: (distance  * commun . jours par an) / nb personne
+  formule: distance * commun . jours par an / nb personne
   unité: km/an/personne
 
 usage . quotidien . distance:

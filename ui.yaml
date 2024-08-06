@@ -18,6 +18,7 @@ questions:
       [
         voiture . motorisation,
         voiture . gabarit,
+        voiture . prix d'achat,
         voiture . thermique . carburant,
         voiture . thermique . consommation,
       ],

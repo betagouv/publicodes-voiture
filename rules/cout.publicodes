@@ -15,6 +15,14 @@ coût . voiture:
     futureco . trajet . voyageurs: 1
     futureco . voiture . consommation thermique: voiture . thermique . consommation
     futureco . voiture . km annuels . par défaut: usage . distance annuelle
+    futureco . voiture . prix d'achat:
+      valeur:
+        # Permet de forcer l'utilisation du prix d'achat estimé lors des
+        # recalculs pour les combinaisons.
+        variations:
+          - si: voiture . prix d'achat
+            alors: voiture . prix d'achat
+          - sinon: voiture . prix d'achat . estimé
     futureco . voiture . motorisation:
       variations:
         - si: voiture . motorisation = 'thermique'
@@ -27,3 +35,4 @@ coût . voiture:
               - si: voiture . thermique . carburant = 'essence E85'
                 alors: "'biocarburant'"
         - sinon: voiture . motorisation
+

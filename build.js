@@ -10,6 +10,7 @@ function check(rules, step) {
     const engine = new Engine(rules)
     engine.evaluate("empreinte")
     engine.evaluate("coût")
+
     return engine
   } catch (e) {
     console.error(`❌ Error at (${step}):\n${e.message}\n`)
@@ -37,7 +38,7 @@ console.log(`✅ Combinations generated`)
 
 check(resolvedRules, "generating combinations")
 
-writeFileSync(modelDestPath, JSON.stringify(resolvedRules, null, 2))
+writeFileSync(modelDestPath, JSON.stringify(resolvedRules))
 console.log(`✅ ${modelDestPath} generated`)
 
 const personas = getPersonas(model)

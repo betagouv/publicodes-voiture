@@ -50,6 +50,8 @@ export default function generateCombinations(rules) {
       const contexteBaseCost = {
         "voiture . gabarit": `'${gabarit}'`,
         "voiture . motorisation": `'${motorisation}'`,
+        // We need to disable the rule to use the 'voiture . prix d'achat . estimé' instead
+        "voiture . prix d'achat": "non",
       }
 
       if (motorisation !== "électrique") {
