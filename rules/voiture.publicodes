@@ -7,6 +7,7 @@ voiture:
 voiture . prix d'achat:
   question: Quel est le prix d'achat de votre voiture ?
   par défaut: estimé
+  plancher: 1
   unité: €
 
 voiture . prix d'achat . estimé:
@@ -83,6 +84,7 @@ voiture . thermique . consommation:
       - motorisation = 'hybride'
   par défaut: consommation estimée
   unité: l/centkm
+  plancher: 1
   description: |
     **💡 Si vous utilisez plusieurs voitures (par exemple dans le cas où vous
     n'en possédez pas une), choisissez la réponse la plus représentative de

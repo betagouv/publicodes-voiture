@@ -29,6 +29,7 @@ usage . quotidien . distance:
   question: Combien de kilomètres parcourez-vous en moyenne par jours ?
   par défaut: 33
   unité: km/jour
+  plancher: 0
   # TODO: trouver une valeur par défaut plus récente ?
   note: |
     D'après [cette article du
@@ -41,6 +42,7 @@ usage . quotidien . distance:
 usage . quotidien . nb personne:
   question: Combien de personnes en moyenne sont dans la voiture lors de ces trajets ?
   par défaut: 1.5
+  plancher: 1
   unité: personne
 
 usage . vacances:
@@ -60,9 +62,12 @@ usage . vacances . distance calculée:
 usage . vacances . distance:
   question: Combien de kilomètres parcourez-vous en moyenne pour vos vacances par an ?
   par défaut: 500
+  plancher: 0
   unité: km/an
+
 
 usage . vacances . nb personne:
   question: Combien de personnes en moyenne sont dans la voiture lors de ces trajets ?
   par défaut: 3
+  plancher: 1
   unité: personne
