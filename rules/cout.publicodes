@@ -9,18 +9,21 @@ coût . voiture:
     Nous utilisons le calcul du `coût au km` du modèle de
     [futur.eco](https://futur.eco) pour calculer le coût total de votre
     voiture.
-  formule: usage . distance annuelle * futureco . voiture . coûts au km
+  formule: usage . km annuels * futureco . voiture . coûts au km
   unité: €/an
   contexte:
     futureco . trajet . voyageurs: 1
     futureco . voiture . consommation thermique: voiture . thermique . consommation
-    futureco . voiture . km annuels . par défaut: usage . distance annuelle
+    futureco . voiture . km annuels . par défaut: usage . km annuels
     futureco . voiture . prix d'achat:
       valeur:
         # Permet de forcer l'utilisation du prix d'achat estimé lors des
         # recalculs pour les combinaisons.
+        #
+        # Par défaut, si la personne n'a pas renseigné le prix d'achat, on avec
+        # le mécansime `plancher`, la règle `prix d'achat` est évaluée à 1.
         variations:
-          - si: voiture . prix d'achat
+          - si: voiture . prix d'achat > 1
             alors: voiture . prix d'achat
           - sinon: voiture . prix d'achat . estimé
     futureco . voiture . motorisation:
@@ -35,4 +38,8 @@ coût . voiture:
               - si: voiture . thermique . carburant = 'essence E85'
                 alors: "'biocarburant'"
         - sinon: voiture . motorisation
+    # TODO: manage hybride
+    futureco . trajet voiture . prix carburant: voiture . thermique . prix carburant
+    futureco . voiture . occasion: voiture . occasion
+    futureco . voiture . occasion . année de fabrication: voiture . occasion . année de fabrication
 

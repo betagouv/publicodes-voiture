@@ -5,3 +5,5 @@ index.js
 doc/dist/
 publicodes-voiture.model.json
 publicodes-voiture.personas.json
+publicodes-voiture.ui.json
+test.ts

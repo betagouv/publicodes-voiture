@@ -44,7 +44,7 @@ export default function generateAlternatives(rules) {
         "ngc . transport . voiture . utilisateur": "'propriétaire'",
         "ngc . transport . voiture . gabarit": `'${gabarit}'`,
         "ngc . transport . voiture . motorisation": `'${motorisation}'`,
-        "ngc . transport . voiture . km": "usage . distance annuelle",
+        "ngc . transport . voiture . km": "usage . km annuels",
         "ngc . transport . voiture . voyageurs": 1,
         "ngc . transport . voiture . thermique . consommation aux 100":
           "voiture . thermique . consommation",

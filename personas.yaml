@@ -23,7 +23,7 @@ grandes vacances familiales:
     usage . vacances . distance: 2000
     usage . vacances . nb personne: 4
 
-famille usage régulier:
+famille usage régulier diesel:
   titre: Usage régulier en famille (diesel)
   description: |
     Personne qui utilise une voiture diesel pour les trajets quotidiens et
@@ -35,6 +35,40 @@ famille usage régulier:
     voiture . motorisation: thermique
     voiture . thermique . carburant: gazole B7 ou B10
     voiture . gabarit: berline
+    usage . quotidien . distance: 33
+    usage . quotidien . nb personne: 2.5
+    usage . vacances . distance: 2000
+    usage . vacances . nb personne: 4
+
+famille usage régulier biocarburant:
+  titre: Usage régulier en famille (biocarburant)
+  description: |
+    Personne qui utilise une voiture diesel pour les trajets quotidiens et
+    les vacances en famille.
+
+    Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
+    et aller au travail.
+  situation:
+    voiture . motorisation: thermique
+    voiture . thermique . carburant: essence E85
+    voiture . gabarit: berline
+    usage . quotidien . distance: 33
+    usage . quotidien . nb personne: 2.5
+    usage . vacances . distance: 2000
+    usage . vacances . nb personne: 4
+
+famille usage régulier moyenne biocarburant:
+  titre: Usage régulier en famille (moyenne/biocarburant)
+  description: |
+    Personne qui utilise une voiture diesel pour les trajets quotidiens et
+    les vacances en famille.
+
+    Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
+    et aller au travail.
+  situation:
+    voiture . motorisation: thermique
+    voiture . thermique . carburant: essence E85
+    voiture . gabarit: moyenne
     usage . quotidien . distance: 33
     usage . quotidien . nb personne: 2.5
     usage . vacances . distance: 2000

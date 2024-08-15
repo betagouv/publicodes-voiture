@@ -4,11 +4,8 @@ categories:
   voiture:
     index: 0
     sub: []
-  usage . quotidien:
+  usage:
     index: 1
-    sub: []
-  usage . vacances:
-    index: 2
     sub: []
 
 # Define the order of the questions by category
@@ -16,14 +13,22 @@ questions:
   voiture:
     [
       [
-        voiture . motorisation,
         voiture . gabarit,
+        voiture . motorisation,
+        voiture . occasion,
+        voiture . occasion . année de fabrication,
         voiture . prix d'achat,
         voiture . thermique . carburant,
+        voiture . thermique . prix carburant,
         voiture . thermique . consommation,
       ],
     ]
-  usage . quotidien:
-    [[usage . quotidien . distance, usage . quotidien . nb personne]]
-  usage . vacances:
-    [[usage . vacances . distance, usage . vacances . nb personne]]
+  usage:
+    [
+      [
+        usage . km annuels . connus,
+        usage . km annuels . renseignés,
+        usage . km annuels . calculés . quotidien,
+        usage . km annuels . calculés . vacances,
+      ],
+    ]

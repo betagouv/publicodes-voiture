@@ -386,7 +386,9 @@ futureco . voiture . coût de possession:
 futureco . voiture . carte grise:
   formule: immatriculation / durée de vie . relative
   description: |
-    On ne peut rouler en France sans certificat d'immatriculation, aussi appelé carte grise. Son prix varie selon de nombreux paramètres (puissance fiscale, motorisation, département, etc).
+    On ne peut rouler en France sans certificat d'immatriculation, aussi appelé
+    carte grise. Son prix varie selon de nombreux paramètres (puissance
+    fiscale, motorisation, département, etc).
 
     Il semble qu'elle doivent être payée même pour un achat d'occasion.
 
@@ -406,11 +408,11 @@ futureco . voiture . occasion:
   par défaut: non
   description: |
     L'achat d'occasion d'une voiture est très courant, car un achat neuf est
-    onéreux et leur durée de vie est longue, 20 ans en moyenne. 
+    onéreux et leur durée de vie est longue, 20 ans en moyenne.
 
     L'occasion permet de diminuer fortement le prix d'achat. Cela dit, au fur
     et à mesure que le prix neuf explose, atteignant 33 000 € en moyenne en
-    2023, les prix de l'occasion suivent mécaniquement la tendance. 
+    2023, les prix de l'occasion suivent mécaniquement la tendance.
 
     À noter : l'achat d'occasion réduit la durée de vie, surtout pour les
     voitures thermiques. Il est donc très important de renseigner la date de
@@ -426,11 +428,18 @@ futureco . voiture . occasion . année de fabrication:
   par défaut: 2018
   unité: ''
   description: |
-    Chaque année d'âge d'une voiture en diminue le prix, avec une forte décôte les premières années. 
+    Chaque année d'âge d'une voiture en diminue le prix, avec une forte décôte
+    les premières années.
 
-    En parallèle, chaque année d'âge en diminue la durée de vie, en lien également avec son utilisation et son entretien. Nous prenons ce paramètre essentiel en compte pour estimer sa durée de vie restante et donc son prix d'achat amorti.
+    En parallèle, chaque année d'âge en diminue la durée de vie, en lien
+    également avec son utilisation et son entretien. Nous prenons ce paramètre
+    essentiel en compte pour estimer sa durée de vie restante et donc son prix
+    d'achat amorti.
   note: |
-    La valeur par moyenne ne nous est pas connue à ce stade. Nous prenons 2018 pour refleter le fait que beaucoup d'achats d'occasion sont des achats d'optimisation : j'achète du presque neuf après la décôte initiale importante.
+    La valeur par moyenne ne nous est pas connue à ce stade. Nous prenons 2018
+    pour refleter le fait que beaucoup d'achats d'occasion sont des achats
+    d'optimisation : j'achète du presque neuf après la décôte initiale
+    importante.
 
 futureco . voiture . occasion . prix d'achat:
   titre: Prix d'achat occasion
@@ -441,11 +450,17 @@ futureco . voiture . occasion . prix d'achat:
         alors: 5000 €
       - sinon: 15000 €
   description: |
-    Les prix de l'occasion ont explosé dans les années 2020. Le [prix médian atteint 22 000](https://www.lefigaro.fr/conjoncture/les-prix-des-vehicules-d-occasion-ont-flambe-de-43-7-depuis-2020-20230125) en 2022.
+    Les prix de l'occasion ont explosé dans les années 2020. Le [prix médian
+    atteint 22
+    000](https://www.lefigaro.fr/conjoncture/les-prix-des-vehicules-d-occasion-ont-flambe-de-43-7-depuis-2020-20230125)
+    en 2022.
 
-    La [côte Argus a du être changée](https://www.largus.fr/pros/actualite-automobile/occasion-la-cote-argus-r-evolue-pour-s-adapter-a-l-inflation-du-prix-des-voitures-30024370.html), ce qui n'était pas arrivé depuis 1930. 
+    La [côte Argus a du être
+    changée](https://www.largus.fr/pros/actualite-automobile/occasion-la-cote-argus-r-evolue-pour-s-adapter-a-l-inflation-du-prix-des-voitures-30024370.html),
+    ce qui n'était pas arrivé depuis 1930. 
 
-    Dans les suggestions, nous donnons cependant des prix plus bas pour prendre en compte que l'achat a été fait il y a plusieurs années.
+    Dans les suggestions, nous donnons cependant des prix plus bas pour prendre
+    en compte que l'achat a été fait il y a plusieurs années.
   suggestions:
     très faible: 5000 €
     médian: 15000 €
@@ -504,21 +519,31 @@ futureco . voiture . prix d'achat neuf:
 futureco . voiture . coût de possession . achat amorti:
   formule: prix d'achat / durée de vie . relative
   description: |
-    Cette méthode de calcul nous permet de ne pas devoir retrancher le prix de revente. C'est une autre méthode possible. Ici, nous considérons donc, et c'est théorique bien sûr, que chacun garde sa voiture jusqu'au bout de sa vie. C'est vrai pour la moyenne française, mais faux à titre individuel.
+    Cette méthode de calcul nous permet de ne pas devoir retrancher le prix de
+    revente. C'est une autre méthode possible. Ici, nous considérons donc, et
+    c'est théorique bien sûr, que chacun garde sa voiture jusqu'au bout de sa
+    vie. C'est vrai pour la moyenne française, mais faux à titre individuel.
 
-    La [méthode de u/h2o52](https://www.reddit.com/r/france/comments/14aswpe/le_vrai_coût_dun_kilomètre_parcouru_en_voiture/) considère elle un prix de revente.
+    La [méthode de
+    u/h2o52](https://www.reddit.com/r/france/comments/14aswpe/le_vrai_coût_dun_kilomètre_parcouru_en_voiture/)
+    considère elle un prix de revente.
 
 futureco . voiture . coût de possession . lavage:
   description: |
-    Les Français lavent en moyenne l'extérieur de leur voiture 6 fois par an. Plus de 50% des lavages sont faits dans une station service ou dédiée.
+    Les Français lavent en moyenne l'extérieur de leur voiture 6 fois par an.
+    Plus de 50% des lavages sont faits dans une station service ou dédiée.
 
-    Source https://www.commlc.com/salle-de-presse/elephant-bleu-b2c/item/infographie-pratiques-lavage.
+    Source
+    https://www.commlc.com/salle-de-presse/elephant-bleu-b2c/item/infographie-pratiques-lavage.
 
-    Faut de trouver des prix moyens de lavage, la prestation en soi étant très variable, nous prenons simplement un forfait minorant de 10€. 
+    Faut de trouver des prix moyens de lavage, la prestation en soi étant très
+    variable, nous prenons simplement un forfait minorant de 10€.
 
-    Le lavage à domicile est également compté à ce prix minorant, car il consomme beaucoup d'eau, de produits souvent dédiés et... de temps.
+    Le lavage à domicile est également compté à ce prix minorant, car il
+    consomme beaucoup d'eau, de produits souvent dédiés et... de temps.
 
-    Nous considérons que moins une voiture est utilisée en km à l'année, moins elle est lavée.
+    Nous considérons que moins une voiture est utilisée en km à l'année, moins
+    elle est lavée.
   formule: 10 € * 6 /an * ratio d'usage
 
 futureco . voiture . coût de possession . assurance:
@@ -709,20 +734,46 @@ futureco . voiture . coûts au km:
   description: |
     Le coût d'un mode de transport est souvent estimé au km.
 
-    Une fois calculé pour une voiture, il permet d'avoir le coût du trajet en un clin d'oeil. Par exemple pour une trajet de 100 km, on peut rapidement savoir qu'il coûte entre 30 € et 50 €.
+    Une fois calculé pour une voiture, il permet d'avoir le coût du trajet en
+    un clin d'oeil. Par exemple pour une trajet de 100 km, on peut rapidement
+    savoir qu'il coûte entre 30 € et 50 €.
 
   note: |
-    [Cette page de WWF](https://www.wwf.fr/agir-au-quotidien/le-prix-de-revient-au-kilometre-dun-vehicule-quest-ce-que-cest) cite des coûts bien plus élevés que ceux calculés ici. Malheureusement, ils n'ont mis en lien aucune source, rendant leurs chiffres inutiles.
+    [Cette page de
+    WWF](https://www.wwf.fr/agir-au-quotidien/le-prix-de-revient-au-kilometre-dun-vehicule-quest-ce-que-cest)
+    cite des coûts bien plus élevés que ceux calculés ici. Malheureusement, ils
+    n'ont mis en lien aucune source, rendant leurs chiffres inutiles.
 
-    [Ce rapport de l'Automobile Club](https://www.automobile-club.org/actualites/la-vie-de-l-aca/budget-de-l-automobiliste-de-l-aca-avril-2020) est intéressant. Mais outre le fait qu'il soit avant tout conçu pour être un plaidoyer anti-taxes, il semble considérer le coût d'une voiture sur sa première année d'achat neuf. C'est ce que je comprends de la ligne "achat moins repris" dans le [communiqué de presse](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019) qui représente plus d'1/10ème du prix d'achat neuf du véhicule, donc prenant en compte la décôte maximale des premières années. Ce n'est pas ce qui nous intéresse ici. 
+    [Ce rapport de l'Automobile
+    Club](https://www.automobile-club.org/actualites/la-vie-de-l-aca/budget-de-l-automobiliste-de-l-aca-avril-2020)
+    est intéressant. Mais outre le fait qu'il soit avant tout conçu pour être
+    un plaidoyer anti-taxes, il semble considérer le coût d'une voiture sur sa
+    première année d'achat neuf. C'est ce que je comprends de la ligne "achat
+    moins repris" dans le [communiqué de
+    presse](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019)
+    qui représente plus d'1/10ème du prix d'achat neuf du véhicule, donc
+    prenant en compte la décôte maximale des premières années. Ce n'est pas ce
+    qui nous intéresse ici.
 
-    C'est confirmé dans le rapport complet : "Achat d’un véhicule neuf, concomitamment à la revente (reprise) de l’ancien véhicule âgé de 4 ans". Il s'agit donc d'un comportement d'achat très dépensier et très polluant.
+    C'est confirmé dans le rapport complet : "Achat d’un véhicule neuf,
+    concomitamment à la revente (reprise) de l’ancien véhicule âgé de 4 ans".
+    Il s'agit donc d'un comportement d'achat très dépensier et très polluant.
 
-    L'Automobile Club Association donne des chiffres au kilomètre d'environ 0,7 € et donc des coûts annuels de possession d'une voiture de l'ordre de 6 000 €.
+    L'Automobile Club Association donne des chiffres au kilomètre d'environ 0,7
+    € et donc des coûts annuels de possession d'une voiture de l'ordre de 6 000
+    €.
 
-    Le rapport RAC (Réseau Action Climat) - ADETEC 2022 confirme nos chiffres avec une estimation moyenne de 35,5 centimes d'€ par km en 2022. Il montre une hausse très importante de 12 % entre 2019 et 2022. Son résumé est [disponible ici](https://reseauactionclimat.org/ll-y-a-urgence-a-transformer-notre-mobilite-du-quotidien/).
+    Le rapport RAC (Réseau Action Climat) - ADETEC 2022 confirme nos chiffres
+    avec une estimation moyenne de 35,5 centimes d'€ par km en 2022. Il montre
+    une hausse très importante de 12 % entre 2019 et 2022. Son résumé est
+    [disponible
+    ici](https://reseauactionclimat.org/ll-y-a-urgence-a-transformer-notre-mobilite-du-quotidien/).
 
-    Notons enfin que le site ViaMichelin.fr [a lancé en 2021 un calculateur de coût complet de la voiture](https://www.auto-moto.com/en-bref/viamichelin-nouvel-outil-calculer-cout-dusure-de-voiture-10029), mais il a été retiré, pour des raisons que l'on ignore, revenant à la comptabilité partielle du carburant et des péages.
+    Notons enfin que le site ViaMichelin.fr [a lancé en 2021 un calculateur de
+    coût complet de la
+    voiture](https://www.auto-moto.com/en-bref/viamichelin-nouvel-outil-calculer-cout-dusure-de-voiture-10029),
+    mais il a été retiré, pour des raisons que l'on ignore, revenant à la
+    comptabilité partielle du carburant et des péages.
 
   formule:
     somme:
@@ -747,9 +798,12 @@ futureco . voiture . coûts au km:
 
 futureco . voiture . coût instantané au km:
   description: |
-    C'est le coût qui remplace souvent de faion erronée le coût complet d'un km en voiture. 
+    C'est le coût qui remplace souvent de façon erronée le coût complet d'un km
+    en voiture.
 
-    Le coût instantané représente le coût que l'on a l'impression de payer, car on le paie le jour même où dans la semaine (si le plein d'essence ou d'électricité a été auparavant).
+    Le coût instantané représente le coût que l'on a l'impression de payer, car
+    on le paie le jour même où dans la semaine (si le plein d'essence ou
+    d'électricité a été auparavant).
   formule:
     variations:
       - si: motorisation = 'électrique'
@@ -789,7 +843,7 @@ futureco . voiture . motorisation:
 
 futureco . voiture . motorisation . électrique:
   icônes: ⚡️
-#voiture . motorisation . hybride:
+futureco . voiture . motorisation . hybride:
 futureco . voiture . motorisation . essence:
 futureco . voiture . motorisation . diesel:
 futureco . voiture . motorisation . biocarburant:
@@ -801,7 +855,8 @@ futureco . voiture . consommation thermique:
   par défaut: par défaut
   unité: l/100 km
   note: |
-    Les suggestions sont tirées de ce graphique ADEME https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne.
+    Les suggestions sont tirées de ce graphique ADEME
+    https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne.
 
     Il faudrait les faire évoluer en fonction de la motorisation essence / diesel.
   suggestions:
@@ -820,13 +875,11 @@ futureco . voiture . consommation thermique . par défaut:
         alors: 6.8 * 1.25
       - si: motorisation = 'hybride'
         alors: 4.5
-
   description: |
     Pour l'essence et le diesel, la source est Carlabelling par l'ADEME :
     https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne
 
     Pour l'hybride, on prend +25% par rapport à l'essence. Quelle est la source ?
-
   note: |
     Quid des consommations réelles ? Celles-ci sont probablement des
     consommations théoriques fournies par les constructeurs après des tests sur
@@ -840,11 +893,19 @@ futureco . voiture . motorisation . électrique . consommation:
   par défaut: 15
   unité: kWh/100 km
   description: |
-    Pour calculer la consommation, nous nous basons sur les données d'un test de la Renault Zoé, l'une des voitures électriques les plus présentes en France.
+    Pour calculer la consommation, nous nous basons sur les données d'un test
+    de la Renault Zoé, l'une des voitures électriques les plus présentes en
+    France.
   note: |
-    Ici, [un test intéressant en conditions réelle de la Renault Zoé](https://fr.motor1.com/reviews/518916/renault-zoe-test-consommation-reelle/), une des voitures électriques les plus vendues en Europe. Sa moyenne réelle calculée est de 11 kWh/100km/
+    Ici, [un test intéressant en conditions réelle de la Renault
+    Zoé](https://fr.motor1.com/reviews/518916/renault-zoe-test-consommation-reelle/),
+    une des voitures électriques les plus vendues en Europe. Sa moyenne réelle
+    calculée est de 11 kWh/100km/
 
-    Pourtant, [cet autre test](https://www.automobile-propre.com/supertest-renault-zoe-r135-les-consommations-autonomies-et-performances-mesurees/) trouve une valeur totalement différente : 16,5 kWh/100km ! La différence est vraiment étonnante.
+    Pourtant, [cet autre
+    test](https://www.automobile-propre.com/supertest-renault-zoe-r135-les-consommations-autonomies-et-performances-mesurees/)
+    trouve une valeur totalement différente : 16,5 kWh/100km ! La différence
+    est vraiment étonnante.
 
     Nous retenons donc une valeur plutôt majorante de 15 kWh/km.
 
@@ -853,15 +914,17 @@ futureco . voiture . distance standardisée: durée standardisée * km annuels
 futureco . voiture . durée standardisée:
   formule: 20 ans
   description: |
-    Une durée de vie qu'on pourrait qualifier de standard pour faire des comparaisons entre voiture électrique et thermique. 
+    Une durée de vie qu'on pourrait qualifier de standard pour faire des
+    comparaisons entre voiture électrique et thermique.
 
-    On prend simplement la durée minorante de la thermique, et on l'arrondit à 20 ans pour plus de simplicité.
+    On prend simplement la durée minorante de la thermique, et on l'arrondit à
+    20 ans pour plus de simplicité.
 
 futureco . voiture . durée de vie . relative:
   titre: Durée de vie estimée depuis le dernier achat
   description: |
     Si le propriétaire actuel a acheté la voiture neuve, sa durée de vie
-    relative est la durée de vie moyenne d'une voiture. 
+    relative est la durée de vie moyenne d'une voiture.
 
     S'il l'a achetée d'occasion, on retranche la durée de possession d'un
     ancien propriétaire pour estimer le coût amorti de possession du
@@ -885,39 +948,80 @@ futureco . voiture . durée de vie . relative:
       - sinon: durée de vie
 
 futureco . voiture . durée de vie:
-  description: |
-    Attention à ne pas confondre durée de possession et durée de vie ! Un citoyen peut garder une voiture 5 ans en moyenne, mais elle continue d'exister et de rouler. 
-
-    Ainsi la durée de vie (durée avant d'aller à la casse) est estimée à 19 ans pour une thermique, et bien plus pour une électrique.
-  note: |
-    Notre source pour la voiture thermique est un article de [l'Argus](https://www.largus.fr/actualite-automobile/le-top-15-des-voitures-envoyees-a-la-casse-10348407.html) qui cite un rapport de l'ADEME de 2018.
-
-    Concernant la voiture thermique, le critère limitant est souvent le moteur. Par définition du moteur thermique à explosion, ce composant est soumis à des pressions physiques énormes, le moteur électrique lui étant bien plus durable.
-
-    À noter, il y a des chances que les voitures au faible kilométrage annuel durent plus longtemps. Comme on le dit dans la section `km annuels`, certains prétendent pourtant qu'une voiture qui ne roule pas, s'use aussi. On pourrait cependant intégrer un bonus de durée de vie aux voitures peu utilisées... mais cela entre en contradiction avec d'autres arguments : quid des Zones à Faible Émission, qui accélèrent l'obsolescence légale des vieilles voitures, qui sont par définition toutes thermiques ? Quid de l'obsolescence des pièces de rechange pour des voitures de 25 ans d'âge ? Si vous disposez de réponses qualifiées à ces questions, contactez-nous !
-
-    ### Voiture électrique
-
-    La voiture électrique a aussi sa faiblesse : la batterie. Il est compliqué d'obtenir des informations sur la durée de vie des batteries de voiture, notamment car les modèles actuels n'ont en général pas encore 10 ans. Cela dit, il semblerait que leur durée de vie prenne à défaut les prévisions pessimistes. 
-
-    [Ainsi](https://www.caranddriver.com/research/a31875141/electric-car-battery-life/) Tesla estime la durée de vie de ses batteries à 300 000 km environ. Hyundai propose une garantie de 10 ans ou 180 000 km. La batterie ne semble donc pas un facteur limitant par rapport au thermique, mais un facteur limitant par rapport à la durée de vie de la voiture elle-même. Carbone4 [estime que la durée de vie de la batterie est de 15 à 20 ans](https://www.carbone4.com/analyse-faq-voiture-electrique).
-
-    Or, la batterie ne coûte qu'un tiers du prix neuf de la voiture, selon l'exemple de la Zoé à 30 000 € dont la batterie vaut 9 000 €. Nous pourrions donc parier sur une durée de vie de la voiture électrique potentiellement deux fois plus longue que celle de la voiture thermique... mais ce serait oublier que ce secteur est fortement soumis à des modes, en plus de l'évolution technologique relative.
-
-    D'où le chiffre de durée de vie estimé à 30 ans pour une voiture électrique.
-
-    Pourtant, des imprévus peuvent venir perturber ces notes positives : dans [cet article de Reuters](https://www.reuters.com/business/autos-transportation/scratched-ev-battery-your-insurer-may-have-junk-whole-car-2023-03-20/), on apprend que des voitures électriques accidentées pourraient aller directement à la poubelle, en particulier les Teslas, qui ont intégré leur batterie dans le chassis, la batterie n'étant pas vraiment réparable. Quelle proportion des voitures sont ainsi lourdement accidentées ? 1 % ? 5 % ? Quelle proportion de cette proportion n'est pas réparable ?
-
-    ### Durée de vie et distribution des km par tranche d'âge
-
-    Il est fort probable que plus les voitures sont récentes, plus elles font des km. Ainsi, notre calcul est biaisé : les voitures les plus rentabilisées, les plus vieilles, sont les moins actives, et le km est sous-estimé. À creuser.
-
   formule:
     variations:
       - si: motorisation = 'électrique'
         alors: 30
       - sinon: 19
   unité: an
+  description: |
+    Attention à ne pas confondre durée de possession et durée de vie ! Un
+    citoyen peut garder une voiture 5 ans en moyenne, mais elle continue
+    d'exister et de rouler.
+
+    Ainsi la durée de vie (durée avant d'aller à la casse) est estimée à 19 ans
+    pour une thermique, et bien plus pour une électrique.
+  note: |
+    Notre source pour la voiture thermique est un article de
+    [l'Argus](https://www.largus.fr/actualite-automobile/le-top-15-des-voitures-envoyees-a-la-casse-10348407.html)
+    qui cite un rapport de l'ADEME de 2018.
+
+    Concernant la voiture thermique, le critère limitant est souvent le moteur.
+    Par définition du moteur thermique à explosion, ce composant est soumis à
+    des pressions physiques énormes, le moteur électrique lui étant bien plus
+    durable.
+
+    À noter, il y a des chances que les voitures au faible kilométrage annuel
+    durent plus longtemps. Comme on le dit dans la section `km annuels`,
+    certains prétendent pourtant qu'une voiture qui ne roule pas, s'use aussi.
+    On pourrait cependant intégrer un bonus de durée de vie aux voitures peu
+    utilisées... mais cela entre en contradiction avec d'autres arguments :
+    quid des Zones à Faible Émission, qui accélèrent l'obsolescence légale des
+    vieilles voitures, qui sont par définition toutes thermiques ? Quid de
+    l'obsolescence des pièces de rechange pour des voitures de 25 ans d'âge ?
+    Si vous disposez de réponses qualifiées à ces questions, contactez-nous !
+
+    ### Voiture électrique
+
+    La voiture électrique a aussi sa faiblesse : la batterie. Il est compliqué
+    d'obtenir des informations sur la durée de vie des batteries de voiture,
+    notamment car les modèles actuels n'ont en général pas encore 10 ans. Cela
+    dit, il semblerait que leur durée de vie prenne à défaut les prévisions
+    pessimistes.
+
+    [Ainsi](https://www.caranddriver.com/research/a31875141/electric-car-battery-life/)
+    Tesla estime la durée de vie de ses batteries à 300 000 km environ. Hyundai
+    propose une garantie de 10 ans ou 180 000 km. La batterie ne semble donc
+    pas un facteur limitant par rapport au thermique, mais un facteur limitant
+    par rapport à la durée de vie de la voiture elle-même. Carbone4 [estime que
+    la durée de vie de la batterie est de 15 à 20
+    ans](https://www.carbone4.com/analyse-faq-voiture-electrique).
+
+    Or, la batterie ne coûte qu'un tiers du prix neuf de la voiture, selon
+    l'exemple de la Zoé à 30 000 € dont la batterie vaut 9 000 €. Nous
+    pourrions donc parier sur une durée de vie de la voiture électrique
+    potentiellement deux fois plus longue que celle de la voiture thermique...
+    mais ce serait oublier que ce secteur est fortement soumis à des modes, en
+    plus de l'évolution technologique relative.
+
+    D'où le chiffre de durée de vie estimé à 30 ans pour une voiture
+    électrique.
+
+    Pourtant, des imprévus peuvent venir perturber ces notes positives : dans
+    [cet article de
+    Reuters](https://www.reuters.com/business/autos-transportation/scratched-ev-battery-your-insurer-may-have-junk-whole-car-2023-03-20/),
+    on apprend que des voitures électriques accidentées pourraient aller
+    directement à la poubelle, en particulier les Teslas, qui ont intégré leur
+    batterie dans le chassis, la batterie n'étant pas vraiment réparable.
+    Quelle proportion des voitures sont ainsi lourdement accidentées ? 1 % ? 5
+    % ? Quelle proportion de cette proportion n'est pas réparable ?
+
+    ### Durée de vie et distribution des km par tranche d'âge
+
+    Il est fort probable que plus les voitures sont récentes, plus elles font
+    des km. Ainsi, notre calcul est biaisé : les voitures les plus
+    rentabilisées, les plus vieilles, sont les moins actives, et le km est
+    sous-estimé. À creuser.
 
 futureco . voiture . km annuels . par défaut:
   valeur: 12223 km/an
@@ -984,11 +1088,14 @@ futureco . voiture . km annuels:
 
 futureco . voiture . km prévisionnels:
   titre: Kilomètres prévisionnels sur toute la durée de vie
-  note: |
-    Il existe de nombreuses sources qui parlent de façon très approximative et peu sourcée d'une durée comprise entre 150 000 et 500 000 km. Nous sommes nombreux à avoir en tête la durée de vie de 250 000 km.
-
-    Faut de données sur les km des voitures à la casse, nous l'estimons via cette formule.
   formule: durée de vie * km annuels
+  note: |
+    Il existe de nombreuses sources qui parlent de façon très approximative et
+    peu sourcée d'une durée comprise entre 150 000 et 500 000 km. Nous sommes
+    nombreux à avoir en tête la durée de vie de 250 000 km.
+
+    Faute de données sur les km des voitures à la casse, nous l'estimons via
+    cette formule.
 
 futureco . voiture . coût de possession au km:
   formule: coût de possession / km annuels

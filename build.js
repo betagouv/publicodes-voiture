@@ -3,7 +3,7 @@ import { getModelFromSource } from "@publicodes/tools/compilation"
 import Engine from "publicodes"
 import getUI from "./scripts/compile-ui.js"
 import getPersonas from "./scripts/compile-personas.js"
-import generateCombinations from "./scripts/generate-empreinte.js"
+import generateAlternatives from "./scripts/generate-alternatives.js"
 
 function check(rules, step) {
   try {
@@ -33,10 +33,10 @@ const resolvedRules = Object.fromEntries(
   }),
 )
 
-generateCombinations(resolvedRules)
+generateAlternatives(resolvedRules)
 console.log(`✅ Combinations generated`)
 
-check(resolvedRules, "generating combinations")
+check(resolvedRules, "generating alternatives")
 
 writeFileSync(modelDestPath, JSON.stringify(resolvedRules))
 console.log(`✅ ${modelDestPath} generated`)

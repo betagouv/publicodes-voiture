@@ -4,33 +4,56 @@ usage:
     Pour affiner le calcul, il est nécessaire de préciser l'usage que vous
     avez de votre voiture.
 
-usage . distance annuelle:
-  titre: Distance totale parcourue à l'année par votre voiture
-  somme:
-    - quotidien . distance calculée
-    - vacances . distance calculée
+    Si vous connaissez la distance totale parcourue à l'année, vous pouvez
+    renseigner cette information. Sinon, vous pouvez renseigner la distance
+    parcourue au quotidien et pour les vacances qui seront ensuite cumulées.
+
+
+usage . km annuels:
+  titre: Distance totale parcourue à l'année
+  valeur:
+    variations:
+      - si: km annuels . connus
+        alors: km annuels . renseignés
+      - sinon: km annuels . calculés
+
+usage . km annuels . connus:
+  question: Connaissez-vous la distance totale que vous parcourez à l'année ?
+  par défaut: oui
   unité: km/an
 
-usage . quotidien:
-  titre: Usage quotidien
+usage . km annuels . renseignés:
+  applicable si: km annuels . connus
+  question: Kilomètres parcourus à l'année
+  par défaut: futureco . voiture . km annuels . par défaut
+  unité: km/an
+  plancher: 0
+
+usage . km annuels . calculés:
+  titre: Cumul des distances parcourues au quotidien et pour les vacances
+  non applicable si: km annuels . connus
+  somme:
+    - quotidien
+    - vacances
+  unité: km/an
+
+usage . km annuels . calculés . quotidien:
+  question: Combien de kilomètres parcourez-vous en moyenne par jours ?
+  par défaut: 33
+  unité: km/jour
+  plancher: 0
+  suggestions:
+    jamais: 0 km/jour
+    régulièrement: 10 km/jour
+    de temps en temps: 30 km/semaine
+    pour les courses: 5 km/semaine
+  # TODO: trouver une valeur par défaut plus récente ?
   description: |
     Renseignez les informations concernant l'usage au quotidien de votre
     voiture.
 
     Par exemple, pour aller au travail, faire les courses ou transporter vos
     enfants à l'école.
-
-usage . quotidien . distance calculée:
-  titre: Distance parcourue par personne au quotidien
-  formule: distance * commun . jours par an / nb personne
-  unité: km/an/personne
-
-usage . quotidien . distance:
-  question: Combien de kilomètres parcourez-vous en moyenne par jours ?
-  par défaut: 33
-  unité: km/jour
-  plancher: 0
-  # TODO: trouver une valeur par défaut plus récente ?
   note: |
     D'après [cette article du
     Monde](https://www.lemonde.fr/les-decodeurs/article/2023/01/22/qui-pourrait-se-passer-de-sa-voiture-six-graphiques-pour-analyser-nos-trajets-du-quotidien_6158829_4355770.html)
@@ -39,35 +62,21 @@ usage . quotidien . distance:
     d'Aurélien Bigo, les trajets du quotidien sont en moyenne de 33km/jour en
     2019.
 
-usage . quotidien . nb personne:
-  question: Combien de personnes en moyenne sont dans la voiture lors de ces trajets ?
-  par défaut: 1.5
-  plancher: 1
-  unité: personne
 
-usage . vacances:
+usage . km annuels . calculés . vacances:
   titre: Usage pour les vacances
+  question: Combien de kilomètres parcourez-vous en moyenne pour vos vacances par an ?
+  par défaut: 500
+  plancher: 0
+  unité: km/an
+  suggestions:
+    jamais: 0 km/an
+    Pour les vacances d'été: 500 km/an
+    Toutes les vacances: 1000 km/an
+    Tous les week-ends: 1000 km/an
   description: |
     Renseignez les informations concernant l'usage de votre voiture pour les
     vacances.
 
     Par exemple, les déplacements pour les vacances d'été ou d'hiver ou
     encore pour les week-ends.
-
-usage . vacances . distance calculée:
-  titre: Distance parcourue par personne pour les vacances
-  formule: distance / nb personne
-  unité: km/an/personne
-
-usage . vacances . distance:
-  question: Combien de kilomètres parcourez-vous en moyenne pour vos vacances par an ?
-  par défaut: 500
-  plancher: 0
-  unité: km/an
-
-
-usage . vacances . nb personne:
-  question: Combien de personnes en moyenne sont dans la voiture lors de ces trajets ?
-  par défaut: 3
-  plancher: 1
-  unité: personne
