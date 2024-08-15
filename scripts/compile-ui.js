@@ -30,14 +30,6 @@ export default function getUI(model) {
       console.error(`(ui:questions) rule [${question}] not in model`)
       error = true
     }
-    for (const sub of ui.questions[question]) {
-      for (const q of sub) {
-        if (!(q in model)) {
-          console.error(`(ui:questions:${question}) rule [${q}] not in model`)
-          error = true
-        }
-      }
-    }
   }
 
   if (error) {

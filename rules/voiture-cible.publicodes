@@ -1,0 +1,60 @@
+voiture . cible:
+  titre: Voiture envisagée
+  description: |
+    Afin de vous proposer des alternatives en cohérence avec votre projet de
+    mobilité, nous avons besoin de connaître quelques informations sur la
+    voiture que vous envisagez d'acquérir.
+
+voiture . cible . achat envisagé:
+  question: Envisagez-vous d'acheter une voiture ?
+  par défaut:
+    variations:
+      - si: usage . km annuels < 1000
+        alors: non
+      - sinon: oui
+  description: |
+    La voiture la plus écologique et économique est celle que l'on n'achète
+    pas.
+
+    Nous considérons qu'avec un usage inférieur à 1000 km/an (arbitraire pour
+    l'instant), il est plus intéressant de recourir à des solutions de mobilité
+    alternatives.
+
+voiture . cible . borne de recharge:
+  question: Avez-vous la possibilité d'installer une borne de recharge chez vous ?
+  applicable si: achat envisagé
+  par défaut: oui
+  description: |
+    TODO: détailler les différentes possibilités de recharge, les aides, démarches, etc.
+
+# TODO: to factorize with voiture . gabarit
+voiture . cible . gabarit:
+  applicable si: achat envisagé
+  question: Quel gabarit de voiture envisagez-vous ?
+  formule:
+    une possibilité:
+      choix obligatoire: oui
+      possibilités:
+        - petite
+        - moyenne
+        - berline
+        - SUV
+        - VUL
+  par défaut: "'moyenne'"
+  avec:
+    petite:
+      titre: Citadine
+      description: Citadine type Zoé, Fiat 500
+    moyenne:
+      titre: Monospace
+      description: Modèle au dessus de la petite citadine, type Mégane, Golf
+    berline:
+      titre: Berline
+      description: Une voiture longue, type 308, Tesla Model 3, Audi A3
+    SUV:
+      titre: SUV
+      description: Sport utility vehicle", type 4x4 urbain
+    VUL:
+      titre: Véhicule utilitaire
+      description: Camionette de type Kangoo ou Partner jusqu'au Trafic et Vito
+

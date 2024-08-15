@@ -88,7 +88,7 @@ declare let personas: {
 
 declare let ui: {
   categories: Record<RuleName, {index: number, sub: RuleName[]}>;
-  questions: Record<RuleName, RuleName[][]>;
+  questions: Record<RuleName, RuleName[]>;
 }
 
 export { ui, personas }

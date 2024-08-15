@@ -7,28 +7,33 @@ categories:
   usage:
     index: 1
     sub: []
+  voiture . cible:
+    index: 2
+    sub: []
 
 # Define the order of the questions by category
 questions:
   voiture:
     [
-      [
-        voiture . gabarit,
-        voiture . motorisation,
-        voiture . occasion,
-        voiture . occasion . année de fabrication,
-        voiture . prix d'achat,
-        voiture . thermique . carburant,
-        voiture . thermique . prix carburant,
-        voiture . thermique . consommation,
-      ],
+      voiture . gabarit,
+      voiture . motorisation,
+      voiture . occasion,
+      voiture . occasion . année de fabrication,
+      voiture . prix d'achat,
+      voiture . thermique . carburant,
+      voiture . thermique . prix carburant,
+      voiture . thermique . consommation,
     ]
   usage:
     [
-      [
-        usage . km annuels . connus,
-        usage . km annuels . renseignés,
-        usage . km annuels . calculés . quotidien,
-        usage . km annuels . calculés . vacances,
-      ],
+      usage . km annuels . connus,
+      usage . km annuels . renseignés,
+      usage . km annuels . calculés . quotidien,
+      usage . km annuels . calculés . vacances,
+    ]
+  voiture . cible:
+    [
+      voiture . cible . achat envisagé,
+      voiture . cible . gabarit,
+      voiture . cible . borne de recharge,
     ]
