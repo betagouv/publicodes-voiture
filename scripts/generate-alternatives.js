@@ -1,8 +1,9 @@
 /**
- * Script to generate all the combinations of the carbon emissions
+ * Script to generate all the possible combinations of carburants, gabarits and
+ * motorisations
  */
 
-export default function generateCombinations(rules) {
+export default function generateAlternatives(rules) {
   const carburants = Object.keys(rules).flatMap((key) => {
     if (
       key.startsWith("voiture . thermique . carburant") &&
@@ -45,6 +46,8 @@ export default function generateCombinations(rules) {
         "ngc . transport . voiture . motorisation": `'${motorisation}'`,
         "ngc . transport . voiture . km": "usage . distance annuelle",
         "ngc . transport . voiture . voyageurs": 1,
+        "ngc . transport . voiture . thermique . consommation aux 100":
+          "voiture . thermique . consommation",
       }
 
       const contexteBaseCost = {
@@ -68,7 +71,7 @@ export default function generateCombinations(rules) {
             valeur: "ngc . transport . voiture",
             contexte: {
               ...contexteBaseEmission,
-              "voiture . thermique . carburant": `'${carburant}'`,
+              "ngc . transport . voiture . thermique . carburant": `'${carburant}'`,
             },
           }
           rules[`coût . ${motorisation} . ${gabarit} . ${carburant}`] = {
