@@ -40,6 +40,8 @@ export default function generateAlternatives(rules) {
       titre: `Ensemble des véhicules ${motorisation}`,
     }
     for (const gabarit of gabarits) {
+      const gabaritTitle =
+        rules[`voiture . gabarit . ${gabarit}`]?.titre ?? gabarit
       const contexteBaseEmission = {
         "ngc . transport . voiture . utilisateur": "'propriétaire'",
         "ngc . transport . voiture . gabarit": `'${gabarit}'`,
@@ -65,8 +67,12 @@ export default function generateAlternatives(rules) {
           titre: `Ensemble des ${gabarit} ${motorisation}`,
         }
         for (const carburant of carburants) {
+          const carburantTitle =
+            rules[`voiture . thermique . carburant . ${carburant}`]?.titre ??
+            carburant
+
           rules[`empreinte . ${motorisation} . ${gabarit} . ${carburant}`] = {
-            titre: `${gabarit} ${motorisation} (${carburant})`,
+            titre: `${gabaritTitle} ${motorisation} (${carburantTitle})`,
             unité: "kgCO2eq/an",
             valeur: "ngc . transport . voiture",
             contexte: {
@@ -75,7 +81,7 @@ export default function generateAlternatives(rules) {
             },
           }
           rules[`coût . ${motorisation} . ${gabarit} . ${carburant}`] = {
-            titre: `${gabarit} ${motorisation} (${carburant})`,
+            titre: `${gabaritTitle} ${motorisation} (${carburantTitle})`,
             unité: "€/an",
             valeur: "coût . voiture",
             contexte: {
@@ -86,13 +92,13 @@ export default function generateAlternatives(rules) {
         }
       } else {
         rules[`empreinte . ${motorisation} . ${gabarit}`] = {
-          titre: `${gabarit} ${motorisation}`,
+          titre: `${gabaritTitle} ${motorisation}`,
           unité: "kgCO2eq/an",
           valeur: "ngc . transport . voiture",
           contexte: contexteBaseEmission,
         }
         rules[`coût . ${motorisation} . ${gabarit}`] = {
-          titre: `${gabarit} ${motorisation}`,
+          titre: `${gabaritTitle} ${motorisation}`,
           unité: "€/an",
           valeur: "coût . voiture",
           contexte: contexteBaseCost,
