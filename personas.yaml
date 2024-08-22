@@ -1,3 +1,5 @@
+# TODO: check if the rules are still valid at compile time
+
 aller-retours travail électrique ville:
   titre: Aller-retours travail en ville (électrique)
   description: |
@@ -5,9 +7,9 @@ aller-retours travail électrique ville:
   situation:
     voiture . motorisation: électrique
     voiture . gabarit: petite
-    usage . quotidien . distance: 20
-    usage . quotidien . nb personne: 1
-    usage . vacances . distance: 0
+    usage . km annuels . connus: non
+    usage . km annuels . calculés . quotidien: 20
+    usage . km annuels . calculés . vacances: 0
 
 grandes vacances familiales:
   titre: Grandes vacances familiales (essence)
@@ -18,10 +20,9 @@ grandes vacances familiales:
     voiture . motorisation: thermique
     voiture . thermique . carburant: essence E5 ou E10
     voiture . gabarit: berline
-    usage . quotidien . distance: 5
-    usage . quotidien . nb personne: 2
-    usage . vacances . distance: 2000
-    usage . vacances . nb personne: 4
+    usage . km annuels . connus: non
+    usage . km annuels . calculés . quotidien: 5
+    usage . km annuels . calculés . vacances: 2000
 
 famille usage régulier diesel:
   titre: Usage régulier en famille (diesel)
@@ -35,10 +36,9 @@ famille usage régulier diesel:
     voiture . motorisation: thermique
     voiture . thermique . carburant: gazole B7 ou B10
     voiture . gabarit: berline
-    usage . quotidien . distance: 33
-    usage . quotidien . nb personne: 2.5
-    usage . vacances . distance: 2000
-    usage . vacances . nb personne: 4
+    usage . km annuels . connus: non
+    usage . km annuels . calculés . quotidien: 33
+    usage . km annuels . calculés . vacances: 2000
 
 famille usage régulier biocarburant:
   titre: Usage régulier en famille (biocarburant)
@@ -52,10 +52,9 @@ famille usage régulier biocarburant:
     voiture . motorisation: thermique
     voiture . thermique . carburant: essence E85
     voiture . gabarit: berline
-    usage . quotidien . distance: 33
-    usage . quotidien . nb personne: 2.5
-    usage . vacances . distance: 2000
-    usage . vacances . nb personne: 4
+    usage . km annuels . connus: non
+    usage . km annuels . calculés . quotidien: 33
+    usage . km annuels . calculés . vacances: 2000
 
 famille usage régulier moyenne biocarburant:
   titre: Usage régulier en famille (moyenne/biocarburant)
@@ -69,7 +68,6 @@ famille usage régulier moyenne biocarburant:
     voiture . motorisation: thermique
     voiture . thermique . carburant: essence E85
     voiture . gabarit: moyenne
-    usage . quotidien . distance: 33
-    usage . quotidien . nb personne: 2.5
-    usage . vacances . distance: 2000
-    usage . vacances . nb personne: 4
+    usage . km annuels . connus: non
+    usage . km annuels . calculés . quotidien: 33
+    usage . km annuels . calculés . vacances: 2000
