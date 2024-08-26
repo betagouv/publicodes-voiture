@@ -25,12 +25,17 @@ voiture . cible . borne de recharge:
   applicable si: achat envisagé
   par défaut: oui
   description: |
-    TODO: détailler les différentes possibilités de recharge, les aides, démarches, etc.
+    Répondez "non" uniquement si vous vous êtes déjà renseigné sur la
+    possibilité d'installer une borne de recharge chez vous et que cela
+    est impossible.
 
 # TODO: to factorize with voiture . gabarit
 voiture . cible . gabarit:
   applicable si: achat envisagé
   question: Quel gabarit de voiture envisagez-vous ?
+  description: |
+    Renseignez le gabarit de voiture que vous envisagez d'acheter afin de vous
+    proposer des alternatives en cohérence avec votre projet de mobilité.
   formule:
     une possibilité:
       choix obligatoire: oui

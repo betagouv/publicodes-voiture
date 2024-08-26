@@ -21,6 +21,9 @@ usage . km annuels . connus:
   question: Connaissez-vous la distance totale que vous parcourez à l'année ?
   par défaut: oui
   unité: km/an
+  description: |
+    Répondez "non" pour renseigner la distance parcourue au quotidien et pour
+    les vacances.
 
 usage . km annuels . renseignés:
   applicable si: km annuels . connus
@@ -38,7 +41,7 @@ usage . km annuels . calculés:
   unité: km/an
 
 usage . km annuels . calculés . quotidien:
-  question: Combien de kilomètres parcourez-vous en moyenne par jours ?
+  question: Kilomètres parcourus en moyenne par jours
   par défaut: 33
   unité: km/jour
   plancher: 0
@@ -50,10 +53,8 @@ usage . km annuels . calculés . quotidien:
   # TODO: trouver une valeur par défaut plus récente ?
   description: |
     Renseignez les informations concernant l'usage au quotidien de votre
-    voiture.
-
-    Par exemple, pour aller au travail, faire les courses ou transporter vos
-    enfants à l'école.
+    voiture (ex: aller au travail, faire les courses ou transporter vos enfants
+    à l'école).
   note: |
     D'après [cette article du
     Monde](https://www.lemonde.fr/les-decodeurs/article/2023/01/22/qui-pourrait-se-passer-de-sa-voiture-six-graphiques-pour-analyser-nos-trajets-du-quotidien_6158829_4355770.html)
@@ -65,7 +66,7 @@ usage . km annuels . calculés . quotidien:
 
 usage . km annuels . calculés . vacances:
   titre: Usage pour les vacances
-  question: Combien de kilomètres parcourez-vous en moyenne pour vos vacances par an ?
+  question: Kilomètres parcourus en moyenne pour vos vacances à l'année
   par défaut: 500
   plancher: 0
   unité: km/an
@@ -76,7 +77,5 @@ usage . km annuels . calculés . vacances:
     Tous les week-ends: 1000 km/an
   description: |
     Renseignez les informations concernant l'usage de votre voiture pour les
-    vacances.
-
-    Par exemple, les déplacements pour les vacances d'été ou d'hiver ou
-    encore pour les week-ends.
+    vacances (ex: trajets pour les vacances d'été ou d'hiver ou encore pour les
+    week-ends).

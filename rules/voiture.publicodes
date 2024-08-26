@@ -14,6 +14,9 @@ voiture . prix d'achat:
   par défaut: estimé
   plancher: 1
   unité: €
+  description: |
+    Renseignez le montant que vous avez payé pour l'achat de votre voiture
+    (hors primes ou aides à l'achat) qu'elle soit neuve ou d'occasion.
 
 voiture . occasion:
   titre: Achat d'occasion
@@ -25,8 +28,9 @@ voiture . occasion . année de fabrication:
   # alt: Quel âge avait la voiture lors de son achat ?
   # alt: Quel km au compteur avait la voiture lors de son achat ?
   par défaut: 2018
-  unité: ''
   description: |
+    Permet d'amortir le calcul sur la durée de vie restante de la voiture.
+  note: |
     Chaque année d'âge d'une voiture en diminue le prix, avec une forte décôte
     les premières années.
 
@@ -34,7 +38,9 @@ voiture . occasion . année de fabrication:
     également avec son utilisation et son entretien. Nous prenons ce paramètre
     essentiel en compte pour estimer sa durée de vie restante et donc son prix
     d'achat amorti.
-  note: |
+
+    ---
+
     La valeur par moyenne ne nous est pas connue à ce stade. Nous prenons 2018
     pour refleter le fait que beaucoup d'achats d'occasion sont des achats
     d'optimisation : j'achète du presque neuf après la décôte initiale
@@ -115,14 +121,14 @@ voiture . thermique . consommation:
   par défaut: consommation estimée
   unité: l/100km
   plancher: 1
-  description: |
-    **💡 Si vous utilisez plusieurs voitures (par exemple dans le cas où vous
-    n'en possédez pas une), choisissez la réponse la plus représentative de
-    votre usage.**
   suggestions:
     5 l/100km: 5
     7 l/100km: 7
     9 l/100km: 9
+  description: |
+    Renseignez la consommation moyenne de votre voiture en litre par 100 km tel
+    que renseigné par le constructeur. Si vous ne la connaissez pas, vous
+    pouvez laisser la valeur par défaut.
   note: Les suggestions de réponse sont à la louche, à préciser et sourcer.
 
 voiture . thermique . consommation . consommation estimée:
@@ -180,7 +186,7 @@ voiture . thermique . carburant:
         - essence E85
         - GPL
   par défaut: "'essence E5 ou E10'"
-  description: |
+  note: |
     Pour comprendre les différents types de carburants, [cet article
     pédagogique](https://www.francetvinfo.fr/economie/automobile/essence/les-carburants-changent-de-nom-a-la-pompe-voici-comment-vous-y-retrouver_2967013.html)
     est très utile.
@@ -194,7 +200,9 @@ voiture . thermique . carburant:
     > l'empreinte climat au litre, la consommation en litre par 100km elle
     > aussi varie. Veillez à saisir une consommation au litre basée sur votre
     > moyenne réelle.
-  note: |
+
+    ---
+
     La domination du couple gazole-essence est écrasante
     [source](https://www.leprogres.fr/magazine-automobile/2021/03/27/quels-sont-les-carburants-les-plus-utilises-dans-votre-commune).
 
@@ -229,7 +237,7 @@ voiture . thermique . carburant:
       description: Essence E5 ou E10
     essence E85:
       titre: Biocarburant
-      description:: Essence E85 (biocarburants)
+      description: Essence E85 (biocarburants)
     GPL:
       titre: GPL
       description: GPL (Gaz de Pétrole Liquéfiés)
@@ -247,6 +255,16 @@ voiture . gabarit:
         - SUV
         - VUL
   par défaut: "'moyenne'"
+  description: |
+    Si vous ne savez pas quel gabarit choisir, vous pouvez penser à la taille
+    comme (petite, moyenne, grande, 4x4 urbain, camionnette).
+
+ # description: |
+ #   - Citadine : petite voiture, type Zoé, Fiat 500
+ #   - Monospace : modèle au dessus de la petite citadine, type Mégane, Golf
+ #   - Berline : une voiture longue, type 308, Tesla Model 3, Audi A3
+ #   - SUV : "Sport utility vehicle", type 4x4 urbain
+ #   - VUL : camionette de type Kangoo ou Partner jusqu'au Trafic et Vito
   note: |
     Nous considérons que la voiture par défaut est une "Berline", en témoigne
     [une étude menée par AAA
@@ -279,6 +297,9 @@ voiture . thermique . prix carburant:
       - motorisation = 'thermique'
       - motorisation = 'hybride'
   par défaut: prix carburant moyen
+  description: |
+    Renseignez le prix moyen du carburant que vous avez dû payer cette année.
+    Si vous ne le connaissez pas, vous pouvez laisser la valeur par défaut.
   unité: €/l
 
 voiture . thermique . prix carburant moyen:
