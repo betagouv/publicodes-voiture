@@ -13,12 +13,23 @@ coût . voiture:
   unité: €/an
   contexte:
     futureco . trajet . voyageurs: 1
-    futureco . voiture . consommation thermique: voiture . thermique . consommation
+    futureco . voiture . consommation thermique:
+      valeur:
+        # TODO: factoriser avec empreinte
+        # Permet de forcer l'utilisation de la consommation estimée lors des
+        # recalculs pour les alternatives.
+        #
+        # Par défaut, si la personne n'a pas renseigné le prix d'achat, on avec
+        # le mécansime `plancher`, la règle `prix d'achat` est évaluée à 1.
+        variations:
+          - si: voiture . thermique . consommation > 1
+            alors: voiture . thermique . consommation
+          - sinon: voiture . thermique . consommation . consommation estimée
     futureco . voiture . km annuels . par défaut: usage . km annuels
     futureco . voiture . prix d'achat:
       valeur:
         # Permet de forcer l'utilisation du prix d'achat estimé lors des
-        # recalculs pour les combinaisons.
+        # recalculs pour les alternatives.
         #
         # Par défaut, si la personne n'a pas renseigné le prix d'achat, on avec
         # le mécansime `plancher`, la règle `prix d'achat` est évaluée à 1.

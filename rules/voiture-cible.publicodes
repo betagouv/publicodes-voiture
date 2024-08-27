@@ -45,7 +45,8 @@ voiture . cible . gabarit:
         - berline
         - SUV
         - VUL
-  par défaut: "'moyenne'"
+  # NOTE: est-ce que l'on a envie de pousser vers un gabarit plus petit ?
+  par défaut: voiture . gabarit
   avec:
     petite:
       titre: Citadine

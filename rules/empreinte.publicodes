@@ -32,6 +32,16 @@ empreinte . voiture:
     ngc . transport . voiture . motorisation: voiture . motorisation
     ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
     ngc . transport . voiture . km: usage . km annuels
-    ngc . transport . voiture . thermique . consommation aux 100: voiture . thermique . consommation
+    ngc . transport . voiture . thermique . consommation aux 100:
+      valeur:
+        # Permet de forcer l'utilisation de la consommation estimée lors des
+        # recalculs pour les alternatives.
+        #
+        # Par défaut, si la personne n'a pas renseigné le prix d'achat, on avec
+        # le mécansime `plancher`, la règle `prix d'achat` est évaluée à 1.
+        variations:
+          - si: voiture . thermique . consommation > 1
+            alors: voiture . thermique . consommation
+          - sinon: voiture . thermique . consommation . consommation estimée
     ngc . transport . voiture . voyageurs: 1
   unité: kgCO2e/an

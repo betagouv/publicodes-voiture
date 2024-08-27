@@ -42,21 +42,13 @@ export default function generateAlternatives(rules) {
     for (const gabarit of gabarits) {
       const gabaritTitle =
         rules[`voiture . gabarit . ${gabarit}`]?.titre ?? gabarit
-      const contexteBaseEmission = {
-        "ngc . transport . voiture . utilisateur": "'propriétaire'",
-        "ngc . transport . voiture . gabarit": `'${gabarit}'`,
-        "ngc . transport . voiture . motorisation": `'${motorisation}'`,
-        "ngc . transport . voiture . km": "usage . km annuels",
-        "ngc . transport . voiture . voyageurs": 1,
-        "ngc . transport . voiture . thermique . consommation aux 100":
-          "voiture . thermique . consommation",
-      }
-
-      const contexteBaseCost = {
+      const baseContexte = {
         "voiture . gabarit": `'${gabarit}'`,
         "voiture . motorisation": `'${motorisation}'`,
-        // We need to disable the rule to use the 'voiture . prix d'achat . estimé' instead
+        // Needed to force the use of the 'voiture . prix d'achat . estimé'
         "voiture . prix d'achat": "non",
+        // Needed to force the use of the 'voiture . thermique . consommation . estimée'
+        "voiture . thermique . consommation": "non",
       }
 
       if (motorisation !== "électrique") {
@@ -74,10 +66,10 @@ export default function generateAlternatives(rules) {
           rules[`empreinte . ${motorisation} . ${gabarit} . ${carburant}`] = {
             titre: `${gabaritTitle} ${motorisation} (${carburantTitle})`,
             unité: "kgCO2eq/an",
-            valeur: "ngc . transport . voiture",
+            valeur: "empreinte . voiture",
             contexte: {
-              ...contexteBaseEmission,
-              "ngc . transport . voiture . thermique . carburant": `'${carburant}'`,
+              ...baseContexte,
+              "voiture . thermique . carburant": `'${carburant}'`,
             },
           }
           rules[`coût . ${motorisation} . ${gabarit} . ${carburant}`] = {
@@ -85,7 +77,7 @@ export default function generateAlternatives(rules) {
             unité: "€/an",
             valeur: "coût . voiture",
             contexte: {
-              ...contexteBaseCost,
+              ...baseContexte,
               "voiture . thermique . carburant": `'${carburant}'`,
             },
           }
@@ -94,14 +86,14 @@ export default function generateAlternatives(rules) {
         rules[`empreinte . ${motorisation} . ${gabarit}`] = {
           titre: `${gabaritTitle} ${motorisation}`,
           unité: "kgCO2eq/an",
-          valeur: "ngc . transport . voiture",
-          contexte: contexteBaseEmission,
+          valeur: "empreinte . voiture",
+          contexte: baseContexte,
         }
         rules[`coût . ${motorisation} . ${gabarit}`] = {
           titre: `${gabaritTitle} ${motorisation}`,
           unité: "€/an",
           valeur: "coût . voiture",
-          contexte: contexteBaseCost,
+          contexte: baseContexte,
         }
       }
     }

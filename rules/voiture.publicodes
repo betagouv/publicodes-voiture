@@ -137,8 +137,6 @@ voiture . thermique . consommation . consommation estimée:
   unité: l/100km
   contexte:
     ngc . transport . voiture . utilisateur: "'propriétaire'"
-    # NOTE: il faut seulement que distance soit supérieur à 0 pour que la règle
-    ngc . transport . voiture . km: usage . km annuels
     ngc . transport . voiture . gabarit: voiture . gabarit
     ngc . transport . voiture . motorisation: voiture . motorisation
     ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
@@ -254,17 +252,10 @@ voiture . gabarit:
         - berline
         - SUV
         - VUL
-  par défaut: "'moyenne'"
+  par défaut: "'berline'"
   description: |
     Si vous ne savez pas quel gabarit choisir, vous pouvez penser à la taille
     comme (petite, moyenne, grande, 4x4 urbain, camionnette).
-
- # description: |
- #   - Citadine : petite voiture, type Zoé, Fiat 500
- #   - Monospace : modèle au dessus de la petite citadine, type Mégane, Golf
- #   - Berline : une voiture longue, type 308, Tesla Model 3, Audi A3
- #   - SUV : "Sport utility vehicle", type 4x4 urbain
- #   - VUL : camionette de type Kangoo ou Partner jusqu'au Trafic et Vito
   note: |
     Nous considérons que la voiture par défaut est une "Berline", en témoigne
     [une étude menée par AAA
