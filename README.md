@@ -44,7 +44,7 @@ engine.evaluate("empreinte carbone . voiture . essence")
 
 #### Compiler le modèle
 
-> Les règles publicodes du modèle sont disponible dans le workspace
+> Les règles publicodes du modèle sont disponible dans le dossier
 > [`rules/`](https://github.com/betagouv/publicodes-voiture/tree/main/rules).
 
 Pour installer les dépendances et compiler tous les fichiers `.publicodes` en
@@ -58,8 +58,8 @@ yarn build
 
 #### Lancer la documentation
 
-> Le code de la documentation est disponible dans le workspace
-> [`doc/`](https://github.com/betagouv/publicodes-voiture/tree/main/doc).
+> Le code de la documentation est disponible dans le dossier
+> [`online-doc/`](https://github.com/betagouv/publicodes-voiture/tree/main/online-doc).
 
 Pour lancer l'app React en local permettant de parcourir la documentation du
 modèle, il suffit d'exécuter la commande suivante :
