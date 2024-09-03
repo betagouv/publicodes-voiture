@@ -46,6 +46,7 @@ voiture . occasion . année de fabrication:
     d'optimisation : j'achète du presque neuf après la décôte initiale
     importante.
 
+# TODO: prendre en compte l'achat d'occasion
 voiture . prix d'achat . estimé:
   titre: Prix d'achat estimé par défaut
   formule:
@@ -140,6 +141,60 @@ voiture . thermique . consommation . consommation estimée:
     ngc . transport . voiture . gabarit: voiture . gabarit
     ngc . transport . voiture . motorisation: voiture . motorisation
     ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+
+voiture . électrique:
+  titre: Voiture électrique
+
+voiture . électrique . consommation:
+  question: Quelle est sa consommation électrique moyenne ?
+  applicable si:
+    une de ces conditions:
+      - motorisation = 'électrique'
+      - motorisation = 'hybride'
+  par défaut: consommation estimée
+  unité: kWh/100km
+  description: |
+    Renseignez la consommation moyenne de votre voiture en kWh par 100 km tel
+    que renseigné par le constructeur. Si vous ne la connaissez pas, vous
+    pouvez laisser la valeur par défaut.
+
+voiture . électrique . consommation estimée:
+  titre: Consommation estimée par défaut
+  valeur: ngc . transport . voiture . électrique . consommation estimée
+  unité: kWh/100km
+  contexte:
+    ngc . transport . voiture . utilisateur: "'propriétaire'"
+    ngc . transport . voiture . gabarit: voiture . gabarit
+
+voiture . électrique . prix kWh:
+  question: Quel est le prix du kWh ?
+  applicable si: motorisation = 'électrique'
+  par défaut: estimé
+  unité: €/kWh
+  description: |
+    Cette question n'est pas évidente sachant que les lieux de recharges sont
+    nombreux et que les tarifs varient.
+
+    Cela dit, il se peut que vous la rechargiez en grand majorité à un
+    endroit précis, souvent votre maison, ce qui simplifie la saisie.
+
+    Si vous ne savez pas, vous pouvez laisser la valeur par défaut.
+
+voiture . électrique . prix kWh . estimé:
+  titre: Prix du kWh estimé par défaut
+  applicable si: motorisation = 'électrique'
+  formule:
+    somme:
+      - électricité . TRV HC * 85%
+      - électricité . TRV HP * 15%
+  unité: €/kWh
+  note: |
+    On fait ici la même hypothèse que celle faite dans la note d'analyse
+    [_Voiture électrique : à quel coût
+    ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
+    de France Stratégie : l'essentiel des recharges à domicile est effectuée la
+    nuit.
+
 
 # NOTE:
 # Les questions suivantes sont des quasi copiées-collées de celles présentes
@@ -311,13 +366,6 @@ voiture . thermique . prix carburant moyen:
     [prix-carburants-info.fr](https://prix-carburants-info.fr/) le 15 août
     2024. Le site utilise les données de [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
 
-# TODO
+#FIXME: compléter
 voiture . durée de vie:
-  question: Depuis combien de temps possédez-vous votre voiture ?
-  par défaut: 5
-  unité: an
-  plancher: 1
-  note: |
-    La durée de vie moyenne d'une voiture en France est de 8 ans
-    [source](https://www.lefigaro.fr/automobile/2019/01/02/30002-20190102ARTFIG00002-les-francais-gardent-leurs-voitures-plus-longtemps.php).
-
+  valeur: 20 an

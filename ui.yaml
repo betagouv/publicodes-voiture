@@ -12,6 +12,7 @@ categories:
     sub: []
 
 # Define the order of the questions by category
+# TODO: at compile time, log a warning with all unreferenced questions
 questions:
   voiture:
     [

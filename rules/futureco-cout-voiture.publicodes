@@ -386,16 +386,20 @@ futureco . voiture . coût de possession:
 futureco . voiture . carte grise:
   formule: immatriculation / durée de vie . relative
   description: |
-    On ne peut rouler en France sans certificat d'immatriculation, aussi appelé
-    carte grise. Son prix varie selon de nombreux paramètres (puissance
-    fiscale, motorisation, département, etc).
+    On ne peut rouler en France sans certificat d'immatriculation, aussi
+    appelé carte grise. Son prix varie selon de nombreux paramètres
+    (puissance fiscale, motorisation, département, etc).
 
     Il semble qu'elle doivent être payée même pour un achat d'occasion.
 
 futureco . voiture . carte grise . immatriculation:
   description: |
 
-    Le chiffre de 300 € correspond à une Clio diesel ou essence de 5cv fiscaux achetée 25 000 € immatriculée dans le département d'Îlle-et-Vilaine (35) sur [le calculateur officiel de l'État](https://www.service-public.fr/simulateur/calcul/cout-certificat-immatriculation#main). Il descend à 15 € pour une voiture électrique.
+    Le chiffre de 300 € correspond à une Clio diesel ou essence de 5cv
+    fiscaux achetée 25 000 € immatriculée dans le département
+    d'Îlle-et-Vilaine (35) sur [le calculateur officiel de
+    l'État](https://www.service-public.fr/simulateur/calcul/cout-certificat-immatriculation#main).
+    Il descend à 15 € pour une voiture électrique.
   formule:
     variations:
       - si: motorisation = 'électrique'
@@ -549,30 +553,49 @@ futureco . voiture . coût de possession . lavage:
 futureco . voiture . coût de possession . assurance:
   question: Quel est le coût annuel de l'assurance ?
   note: |
-    Certains contrats offrent probablement des prix plus bas pour les petits rouleurs. La valeur moyenne pourrait donc être proratisée. Libre à chacun de renseigner son prix précis en attendant.
+    Certains contrats offrent probablement des prix plus bas pour les petits
+    rouleurs. La valeur moyenne pourrait donc être proratisée. Libre à chacun
+    de renseigner son prix précis en attendant.
   description: |
-    Le prix moyen et les suggestions de prix d'assurance voiture sont listés ici https://selectra.info/assurance/assurance-auto/tarif.
+    Le prix moyen et les suggestions de prix d'assurance voiture sont listés
+    ici https://selectra.info/assurance/assurance-auto/tarif.
   par défaut: 610 €/an
   suggestions:
-    premier prix (au tiers): 527 €/an
+    assurance obligatoire (au tiers): 527 €/an
     haut de gamme (tous risques): 733 €/an
 
 futureco . voiture . coût de possession . entretien thermique:
   titre: Coûts d'entretien
   question: Quel est le coût annuel d'entretien de la voiture ?
   description: |
-    Le [Mag de l'auto nous dit](https://www.lemagdelauto.com/dossier-1-combien-coute-voiture-annee.html) entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour les gros rouleurs, ils l'estiment à 1700 €.
+    Le [Mag de l'auto nous
+    dit](https://www.lemagdelauto.com/dossier-1-combien-coute-voiture-annee.html)
+    entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour
+    les gros rouleurs, ils l'estiment à 1700 €.
 
-    Un certain nombre d'entretiens sont imposés par la loi, tels que le contrôle technique. 
+    Un certain nombre d'entretiens sont imposés par la loi, tels que le
+    contrôle technique. 
 
-    Pour le reste, le propriétaire a une marge de manoeuvre sur la somme consacrée à l'entretien, mais gardons en tête qu'un déficit d'entretien peut se payer par une explosion des coûts : le renouvellement de la voiture doit se faire plus rapidement !
+    Pour le reste, le propriétaire a une marge de manoeuvre sur la somme
+    consacrée à l'entretien, mais gardons en tête qu'un déficit d'entretien
+    peut se payer par une explosion des coûts : le renouvellement de la voiture
+    doit se faire plus rapidement !
 
   note: |
-    C'est une source de mauvaise qualité, qui ne décortique pas ses calculs, et ne les source pas. Nous devons trouver mieux, et probablement reconstruire nous-mêmes le prix paramétré.
+    C'est une source de mauvaise qualité, qui ne décortique pas ses calculs, et
+    ne les source pas. Nous devons trouver mieux, et probablement reconstruire
+    nous-mêmes le prix paramétré.
 
-    Cette autre source, [une étude par le cabinet ADETEC](https://mobilidoc.fr/document-407) en 2018, donne un coût d'entretien de ~ 1200 € par an. Cela confirme notre ordre de grandeur.
+    Cette autre source, [une étude par le cabinet
+    ADETEC](https://mobilidoc.fr/document-407) en 2018, donne un coût
+    d'entretien de ~ 1200 € par an. Cela confirme notre ordre de grandeur.
 
-    Une troisième source, l'étude ["Budget de l'automobiliste"](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019) de l'Automobile Club nous dit que pour une Clio essence, `Le poste Entretien a progressé de 7,7 % pour atteindre 939 €, à cause de l'explosion du prix des pièces détachées`. Cela confirme à nouveau l'ordre de grandeur de 1000 € par an.
+    Une troisième source, l'étude ["Budget de
+    l'automobiliste"](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019)
+    de l'Automobile Club nous dit que pour une Clio essence, `Le poste
+    Entretien a progressé de 7,7 % pour atteindre 939 €, à cause de l'explosion
+    du prix des pièces détachées`. Cela confirme à nouveau l'ordre de grandeur
+    de 1000 € par an.
   par défaut: 1000 €/an
   suggestions:
     petit rouleur: 840 €/an
@@ -619,9 +642,13 @@ futureco . voiture . coût de possession . entretien moyen:
   description: L'estimation des gains de coût d'entretien d'une voiture électrique varie fortement. [Cet article](https://www.caradisiac.com/cout-d-entretien-des-ve-neuves-ou-d-occasion-on-economise-ou-pas-alors-202126.htm) nous permet de déduire une estimation grossière de -30%.
 
   note: |
-    CF la note de `entretien thermique` : il faudra paramétrer ces facteurs. En particulier, les voitures plus chères coûtent plus cher à entretenir.
+    CF la note de `entretien thermique` : il faudra paramétrer ces facteurs.
+    En particulier, les voitures plus chères coûtent plus cher à entretenir.
 
-    La batterie est aussi à étudier, mais pour l'instant nous la rangeons plutôt dans le prix d'achat ramené à la durée de vie. Mais la durée de vie d'une VE, batterie comprise, étonne chaque année encore plus par sa longévité.
+    La batterie est aussi à étudier, mais pour l'instant nous la rangeons
+    plutôt dans le prix d'achat ramené à la durée de vie. Mais la durée de
+    vie d'une VE, batterie comprise, étonne chaque année encore plus par sa
+    longévité.
 
 
 # -----------
@@ -633,9 +660,12 @@ futureco . voiture . coût de possession . entretien moyen:
 futureco . voiture . coûts divers:
   titre: Coûts divers annuels voiture
   description: |
-    Tout ce qui n'est pas instantané et inévitable, ni lié à la possession d'une voiture. 
+    Tout ce qui n'est pas instantané et inévitable, ni lié à la possession
+    d'une voiture. 
 
-    Par exemple, quand on loue une voiture, on peut conduire en infraction et les PV seront évidemment pour notre pomme. En général, on n'a pas à laver l'extérieur de la voiture, mais cela dépend.
+    Par exemple, quand on loue une voiture, on peut conduire en infraction et
+    les PV seront évidemment pour notre pomme. En général, on n'a pas à laver
+    l'extérieur de la voiture, mais cela dépend.
 
   formule:
     somme:
@@ -646,18 +676,26 @@ futureco . voiture . coûts divers:
 futureco . voiture . coûts divers . parking:
   question: Quel est le coût annuel de l'ensemble des frais de parking ?
   description: |
-    En fonction de l'usage, des trajets, les coûts de parking peuvent être énormes. 
+    En fonction de l'usage, des trajets, les coûts de parking peuvent être
+    énormes. 
 
-    On pense bien sûr à la fameuse place gratuite qu'on ne trouve pas en ville, réduits à payer un parking au sous-sol. 
+    On pense bien sûr à la fameuse place gratuite qu'on ne trouve pas en
+    ville, réduits à payer un parking au sous-sol. 
 
-    Mais le coût le plus important reste la location du parking pour votre voiture quand elle dort chez vous, unutilisée, chaque nuit.
+    Mais le coût le plus important reste la location du parking pour votre
+    voiture quand elle dort chez vous, unutilisée, chaque nuit.
 
-    À Paris, ce montant dépasse les 100 €/mois. Dans des métropoles comme Rennes, ils peuvent dépasser les 50 € / mois.
-
+    À Paris, ce montant dépasse les 100 €/mois. Dans des métropoles comme
+    Rennes, ils peuvent dépasser les 50 € / mois.
   note: |
-    Cette composante "à demeure" devrait être intégrée dans la catégorie "possession" et devrait inclure le coût immobilier (location ou achat) du garage.
+    Cette composante "à demeure" devrait être intégrée dans la catégorie
+    "possession" et devrait inclure le coût immobilier (location ou achat) du
+    garage.
 
-    Quand une maison vaut 500 000 € à l'achat, le garage n'est aucunement gratuit. Supposons qu'il coûte 1/5 ème du prix, et que la maison n'est jamais cédée. Cela représente par exemple 100 000 € pour 50 ans, donc 600 000 km, soit 17 centimes par km parcouru. Aïe.
+    Quand une maison vaut 500 000 € à l'achat, le garage n'est aucunement
+    gratuit. Supposons qu'il coûte 1/5 ème du prix, et que la maison n'est
+    jamais cédée. Cela représente par exemple 100 000 € pour 50 ans, donc 600
+    000 km, soit 17 centimes par km parcouru. Aïe.
   par défaut: 100 €/an
   suggestions:
     Occasionnel: 50 €/an

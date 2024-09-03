@@ -23,7 +23,10 @@ const modelDestPath = "publicodes-voiture.model.json"
 const personasDestPath = "publicodes-voiture.personas.json"
 const uiDestPath = "publicodes-voiture.ui.json"
 
-const model = getModelFromSource(srcFiles, { verbose: true })
+const model = getModelFromSource(srcFiles, {
+  verbose: true,
+  ignore: ["./rules/futureco-cout-voiture.publicodes"],
+})
 const engine = check(model, "base")
 
 const resolvedRules = Object.fromEntries(

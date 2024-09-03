@@ -236,6 +236,11 @@ réutilisant le modèle.
 d'entretiens) et d'autre part l'empreinte (empreinte de construction amortie +
 empreinte utilisation).**
 
+## Ressources
+
+- [_Voiture électrique à quel coûts ?_ (France Stratégie)](https://www.strategie.gouv.fr/publications/voiture-electrique-cout)
+- [_Chiffres clés des transports - Édition 2023_ (SDES)](https://www.statistiques.developpement-durable.gouv.fr/chiffres-cles-des-transports-edition-2023?list-chiffres=true)
+
 ---
 
 <details>
