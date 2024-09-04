@@ -11,7 +11,11 @@ voiture:
 
 voiture . prix d'achat:
   question: Quel est le prix d'achat de votre voiture ?
-  par défaut: estimé
+  par défaut:
+    variations:
+      - si: voiture . occasion
+        alors: prix d'achat . estimé * occasion . décote
+      - sinon: prix d'achat . estimé
   plancher: 1
   unité: €
   description: |
@@ -23,28 +27,14 @@ voiture . occasion:
   question: Est-ce une voiture d'occasion ?
   par défaut: non
 
-voiture . occasion . année de fabrication:
-  question: Quelle est son année de fabrication ?
-  # alt: Quel âge avait la voiture lors de son achat ?
-  # alt: Quel km au compteur avait la voiture lors de son achat ?
-  par défaut: 2018
+voiture . occasion . décote:
+  titre: Décote du prix d'achat
+  valeur: 40 %
   description: |
-    Permet d'amortir le calcul sur la durée de vie restante de la voiture.
-  note: |
-    Chaque année d'âge d'une voiture en diminue le prix, avec une forte décôte
-    les premières années.
+    Décote moyenne du prix d'achat d'une voiture d'occasion par rapport à une
+    voiture neuve.
 
-    En parallèle, chaque année d'âge en diminue la durée de vie, en lien
-    également avec son utilisation et son entretien. Nous prenons ce paramètre
-    essentiel en compte pour estimer sa durée de vie restante et donc son prix
-    d'achat amorti.
-
-    ---
-
-    La valeur par moyenne ne nous est pas connue à ce stade. Nous prenons 2018
-    pour refleter le fait que beaucoup d'achats d'occasion sont des achats
-    d'optimisation : j'achète du presque neuf après la décôte initiale
-    importante.
+    TODO: trouver une source fiable pour cette valeur.
 
 # TODO: prendre en compte l'achat d'occasion
 voiture . prix d'achat . estimé:
@@ -361,11 +351,31 @@ voiture . thermique . prix carburant moyen:
         alors: 0.837
       - si: carburant = 'GPL'
         alors: 0.959
-  description: |
+  note: |
+    ### Source
+
     Données récupérées sur
     [prix-carburants-info.fr](https://prix-carburants-info.fr/) le 15 août
-    2024. Le site utilise les données de [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
+    2024.
+    Le site utilise les données de
+    [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
 
-#FIXME: compléter
-voiture . durée de vie:
-  valeur: 20 an
+voiture . durée de détention:
+  question: Depuis combien de temps possédez-vous votre voiture ?
+  par défaut: 5.5
+  unité: an
+  description: |
+    Renseignez la durée totale de détention de votre voiture. Si vous la
+    possédez depuis 5 ans et que vous comptez encore la garder 4 ans,
+    renseignez 9 ans.
+  note: |
+    La durée de détention défini la durée sur la quelle amortir le prix
+    d'achat.
+
+    ### Source
+
+    Nous utilisons une valeur par défaut de 5,5 ans correspondant à la durée
+    de détention moyenne en 2020 (valeur relativement stable depuis 2015)
+    selon [_La sécurité routière en France - bilan de l'année 2021_ (ONISR
+    2022)](https://www.onisr.securite-routiere.gouv.fr/sites/default/files/2022-09/74-75%20Le%20parc%20automobile%20des%20m%C3%A9nages%20V5.pdf).
+

@@ -106,8 +106,11 @@ problème de cohérence du calcul et potentiellement des règles de conversions
 compliquant encore une fois le calcul et la compréhension que l'on peut s'en
 faire.
 
+Le choix de la fonction d'amortissement du prix d'achat sur la durée de vie est
+également discutable pour notre modèle.
+
 Afin d'éviter ces limitations il semblerait plus judicieux de réécrire le
-modèle dans une nouvelle version plus cohérente.
+modèle dans une nouvelle version.
 
 ### Première version - v1
 
@@ -215,7 +218,7 @@ Si oui, elle devient une _meilleure_ alternative si le coût de location pour
 toute la durée d'utilisation de la voiture louée est inférieur à la durée
 d'amortissement d'une alternative correspondante à la voiture louée ?
 
-### Garder sa voiture actuelle ?
+#### Garder sa voiture actuelle ?
 
 Garder sa voiture actuelle serait uniquement intéressant si le fait d'en
 changer entraine un coût et une empreinte supérieur :
@@ -225,7 +228,7 @@ alternative . garder sa voiture actuelle:
   valeur: durée d'amortissement > durée de vie présumée de la voiture
 ```
 
-### Conclusion intermédiaire
+#### Conclusion intermédiaire
 
 En commençant à réfléchir sur ce que signifie _meilleure alternative_, il semblerait
 que c'est peut-être rentrer trop dans le détails et laisser cette notion au client
@@ -236,10 +239,100 @@ réutilisant le modèle.
 d'entretiens) et d'autre part l'empreinte (empreinte de construction amortie +
 empreinte utilisation).**
 
+### Amortissement du prix d'achat
+
+> **Remarque** : cette réflexion ne devrait-elle pas être déplacée directement
+> dans la note de la règle correspondante ?
+
+Le prix d'achat d'une voiture qu'elle soit neuve ou d'occasion représente une
+part importante du coût total du véhicule. De nombreuses méthodes existe pour
+l'amortir : amortissement linéaire sur toute la durée de vie ou sur la durée
+d'utilisation, non-linéaire en _payant_ plus les premières années, amorti en
+retranchant le prix de revente. L'amortissement sur la durée de vie peut se
+faire en années ou bien en km parcourus. Pour ce modèle un choix doit donc être
+tranché.
+
+Côté empreinte carbone, de nombreuses itérations ont été faites (voir la [page
+dédiée](https://nosgestesclimat.fr/documentation/transport/voiture/amortissement))
+avant de conclure sur un **amortissement du véhicule en fonction du nombre de
+km parcourus, au regard du nombre de km maximal correspondant au gabarit du
+véhicule**.
+
+Dans le modèle de Futur.eco, c'est l'amortissement linéaire sur la durée de vie
+en années de la voiture en faisant l'hypothèse **qu'en moyenne la voiture est
+gardée jusqu'au bout de sa vie**.
+
+Si à l'échelle d'une voiture, il est probable qu'elle roule jusqu'à la fin de
+sa vie, (c'est-à-dire qu'elle ne soit plus en état de fonctionner), à l'échelle
+d'un.e conducteurice cela semble peu probable. En effet, selon le [bilan de
+2021 de
+l'ONSIR](https://www.onisr.securite-routiere.gouv.fr/sites/default/files/2022-09/74-75%20Le%20parc%20automobile%20des%20m%C3%A9nages%20V5.pdf), la durée de
+détention n'est que de 5,5 ans alors que l'âge moyen des voitures hors d'usage (VHU)
+est de 19 ans (voir
+cet [article](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu).
+
+> **Remarque** : nous observons un fort écart entre l'âge moyen des VHU (19
+> ans) et l'âge moyen des véhicules du parc automobile des ménages (9 ans).
+> Cela serait dû au fait que les voitures en fin de vie n'appartiennent plus
+> aux ménages et seraient stockées chez des concessionnaire ou autre points de
+> reventes avant d'être considéré comme étant hors d'usage ?
+
+Le problème si l'on souhaite prendre en compte la durée d'utilisation pour
+amortir le coût de l'achat il faudrait également prendre en compte le prix de
+revente du véhicule et ainsi amortir uniquement `prix d'achat - prix de
+revente`. Cependant, il n'est pas aisé d'avoir une méthode générale pour ce
+calcul.
+
+Afin d'avoir une cohérence entre le calcul de l'empreinte carbone et du coût il
+pourrait être judicieux d'opter pour la même méthodologie que NGC. Cependant,
+dans le modèle de NGC l'amortissement est effectué sur la durée de vie en km de
+la voiture. Ce qui semble pertinent pour l'ACV à l'échelle de la voiture mais
+si la ou le propriétaire ne la détient seulement pendant 5 ans, il serait
+logique de répartir la charge de l'empreinte aux différent.es propriétaires et
+éviter un double comptage.
+
+**Conclusion**
+
+**Partir pour un amortissement linéaire du prix d'achat sur la durée
+d'utilisation semble être une solution simple est compréhensible** bien
+qu'augmentant significativement le coût annuel par rapport au modèle de
+Futur.eco.
+
+Avec ce choix, des questions peuvent se poser :
+
+- Souhaitons-nous appliquer la même fonction d'amortissement pour le calcul de
+  l'empreinte de la construction ? Est-ce pertinent ?
+- Comment refléter le prix de la revente de la voiture dans le prix des
+  alternatives ?
+- Pour l'occasion, la différence se fera donc uniquement sur le
+  prix d'achat lui-même et non plus sur la durée de vie relative comme c'est le
+  cas pour le modèle de Futur.eco, mais ce n'est pas forcément un problème.
+
+> **Remarque** : pour l'empreinte carbone, nous pourrions considérer que la les
+> émissions de la construction sont uniquement de la responsabilité de
+> l'acheteureuse. Comment le signifier au niveau des résultats ? En
+> amortissement linéairement sur la durée de vie pour l'achat d'une voiture
+> neuve et pour l'occasion ne pas la décompter ? Comment faire pour reporter
+> cette _dette d'empreinte_ lors d'un futur achat ?
+
+### Quid des réglementation et interdiction sur des catégories de véhicules ?
+
 ## Ressources
 
 - [_Voiture électrique à quel coûts ?_ (France Stratégie)](https://www.strategie.gouv.fr/publications/voiture-electrique-cout)
+- [_Bilan annuel des transports en 2022_ (SDES)](https://www.statistiques.developpement-durable.gouv.fr/le-parc-automobile-des-menages-en-2023-moins-de-voitures-pour-les-plus-modestes-plus-souvent)
 - [_Chiffres clés des transports - Édition 2023_ (SDES)](https://www.statistiques.developpement-durable.gouv.fr/chiffres-cles-des-transports-edition-2023?list-chiffres=true)
+- [_Infographies Prix des péages : visualisez l'augmentation des tarifs en 2023, autoroute par autoroute_ (Franceinfo)](https://www.francetvinfo.fr/economie/automobile/infographies-prix-des-peages-visualisez-l-augmentation-des-tarifs-en-2023-autoroute-par-autoroute_5917970.html)
+- [_La Sécurité routière en France - Bilan de l'année 2021_ (ONISR)](https://www.onisr.securite-routiere.gouv.fr/sites/default/files/2022-09/74-75%20Le%20parc%20automobile%20des%20m%C3%A9nages%20V5.pdf)
+- [_Les voitures des Français n’ont jamais été aussi anciennes, selon une étude_ (Le Figaro)](https://www.lefigaro.fr/conjoncture/les-voitures-des-francais-n-ont-jamais-ete-aussi-anciennes-selon-une-etude-20230831)
+- [_38,9 millions de voitures en circulation en France au 1er janvier 2023_ (SDES)](https://www.statistiques.developpement-durable.gouv.fr/389-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2023)
+- [_Analyse de cycle de vie appliquée a un véhicule ou un équipement automobile - Préconisations méthodologiques_ (PFA)](https://pfa-auto.fr/wp-content/uploads/2023/04/DT_Me%CC%81thodologie_2023_V15_FRANCAIS.pdf)
+- [_Véhicules hors d'usage (VHU)_ (ADEME)](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu)
+
+### Modèles existants
+
+- [calculis.net](https://calculis.net/cout-km)
+- [toutcalculer.com](https://www.toutcalculer.com/automobile/cout-kilometre-moto-voiture.php)
 
 ---
 

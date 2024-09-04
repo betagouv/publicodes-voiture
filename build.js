@@ -8,8 +8,8 @@ import generateAlternatives from "./scripts/generate-alternatives.js"
 function check(rules, step) {
   try {
     const engine = new Engine(rules)
-    engine.evaluate("empreinte")
-    engine.evaluate("coût")
+    engine.evaluate("empreinte . voiture")
+    engine.evaluate("coûts . voiture")
 
     return engine
   } catch (e) {

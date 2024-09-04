@@ -36,7 +36,7 @@ export default function generateAlternatives(rules) {
     rules[`empreinte . ${motorisation}`] = {
       titre: `Ensemble des véhicules ${motorisation}`,
     }
-    rules[`coût . ${motorisation}`] = {
+    rules[`coûts . ${motorisation}`] = {
       titre: `Ensemble des véhicules ${motorisation}`,
     }
     for (const gabarit of gabarits) {
@@ -55,7 +55,7 @@ export default function generateAlternatives(rules) {
         rules[`empreinte . ${motorisation} . ${gabarit}`] = {
           titre: `Ensemble des ${gabarit} ${motorisation}`,
         }
-        rules[`coût . ${motorisation} . ${gabarit}`] = {
+        rules[`coûts . ${motorisation} . ${gabarit}`] = {
           titre: `Ensemble des ${gabarit} ${motorisation}`,
         }
         for (const carburant of carburants) {
@@ -72,10 +72,10 @@ export default function generateAlternatives(rules) {
               "voiture . thermique . carburant": `'${carburant}'`,
             },
           }
-          rules[`coût . ${motorisation} . ${gabarit} . ${carburant}`] = {
+          rules[`coûts . ${motorisation} . ${gabarit} . ${carburant}`] = {
             titre: `${gabaritTitle} ${motorisation} (${carburantTitle})`,
             unité: "€/an",
-            valeur: "coût . voiture",
+            valeur: "coûts . voiture",
             contexte: {
               ...baseContexte,
               "voiture . thermique . carburant": `'${carburant}'`,
@@ -89,10 +89,10 @@ export default function generateAlternatives(rules) {
           valeur: "empreinte . voiture",
           contexte: baseContexte,
         }
-        rules[`coût . ${motorisation} . ${gabarit}`] = {
+        rules[`coûts . ${motorisation} . ${gabarit}`] = {
           titre: `${gabaritTitle} ${motorisation}`,
           unité: "€/an",
-          valeur: "coût . voiture",
+          valeur: "coûts . voiture",
           contexte: baseContexte,
         }
       }

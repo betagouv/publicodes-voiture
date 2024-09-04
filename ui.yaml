@@ -17,8 +17,8 @@ questions:
   voiture:
     [
       voiture . occasion,
-      voiture . occasion . année de fabrication,
       voiture . gabarit,
+      voiture . durée de détention,
       voiture . prix d'achat,
       voiture . motorisation,
       voiture . thermique . carburant,
