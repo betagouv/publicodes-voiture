@@ -15,26 +15,20 @@ categories:
 # TODO: at compile time, log a warning with all unreferenced questions
 questions:
   voiture:
-    [
-      voiture . occasion,
-      voiture . gabarit,
-      voiture . durée de détention,
-      voiture . prix d'achat,
-      voiture . motorisation,
-      voiture . thermique . carburant,
-      voiture . thermique . prix carburant,
-      voiture . thermique . consommation,
-    ]
+    - voiture . occasion
+    - voiture . gabarit
+    - voiture . durée de détention
+    - voiture . prix d'achat
+    - voiture . motorisation
+    - voiture . thermique . carburant
+    - voiture . thermique . prix carburant
+    - voiture . thermique . consommation
   usage:
-    [
-      usage . km annuels . connus,
-      usage . km annuels . renseignés,
-      usage . km annuels . calculés . quotidien,
-      usage . km annuels . calculés . vacances,
-    ]
+    - usage . km annuels . connus
+    - usage . km annuels . renseignés
+    - usage . km annuels . calculés . quotidien
+    - usage . km annuels . calculés . vacances
   voiture . cible:
-    [
-      voiture . cible . achat envisagé,
-      voiture . cible . gabarit,
-      voiture . cible . borne de recharge,
-    ]
+    - voiture . cible . achat envisagé
+    - voiture . cible . gabarit
+    - voiture . cible . borne de recharge

@@ -63,44 +63,47 @@ voiture . occasion . décote:
 
 voiture . prix d'achat . estimé:
   titre: Prix d'achat estimé par défaut
+  decription: |
+    Prix d'achat moyen d'une voiture neuve en fonction du gabarit et de sa
+    motorisation.
   formule:
     variations:
       - si: voiture . gabarit = 'petite'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 15000
-            - si: voiture . motorisation = 'hybride'
               alors: 19000
+            - si: voiture . motorisation = 'hybride'
+              alors: 22000
             - si: voiture . motorisation = 'électrique'
-              alors: 25000
+              alors: 32000
       - si: voiture . gabarit = 'moyenne'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 20000
+              alors: 31000
             - si: voiture . motorisation = 'hybride'
-              alors: 23000
+              alors: 34000
             - si: voiture . motorisation = 'électrique'
-              alors: 30000
+              alors: 40000
       - si: voiture . gabarit = 'berline'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 30000
+              alors: 38000
             - si: voiture . motorisation = 'hybride'
-              alors: 37000
+              alors: 42000
             - si: voiture . motorisation = 'électrique'
-              alors: 44000
+              alors: 48000
       - si: voiture . gabarit = 'SUV'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 32000
+              alors: 40000
             - si: voiture . motorisation = 'hybride'
-              alors: 38000
+              alors: 44000
             - si: voiture . motorisation = 'électrique'
-              alors: 47000
+              alors: 50000
       - si: voiture . gabarit = 'VUL'
         alors:
           variations:
@@ -110,21 +113,39 @@ voiture . prix d'achat . estimé:
               alors: 38000
             - si: voiture . motorisation = 'électrique'
               alors: 45000
-      - sinon: 10
   unité: €
   note: |
-    Estimation du prix d'achat moyen d'une voiture neuve en France en fonction
-    de son gabarit et de sa motorisation.
+    La valeur du prix d'achat moyen d'une voiture neuve est importante pour le
+    calcul des coûts des alternatives et non vraiment pour le calcul de la
+    voiture actuelle. En effet, le prix d'achat de la voiture actuelle pourra
+    facilement être renseigné par l'utilisateurice. C'est pourquoi nous avons
+    choisi de nous baser sur des valeurs d'achat de voitures récentes, car ce
+    seront elles qui seront les plus susceptibles d'être achetées en
+    remplacement de la voiture actuelle.
 
-    Peut de réelles sources fiables sur le prix moyen d'une voiture neuve pour
-    l'instant. Donc pour l'instant, nous avons estimé les prix d'achat en
-    fonction du modèle de voiture en 2016.
+    Il est **très difficile de trouver une valeur moyenne pour le prix d'achat
+    car il y a de grand écarts entre les gammes de voitures**, les valeurs sont
+    donc à prendre avec du recul et pose un problème sur la précision de
+    l'estimation notamment pou les alternatives.
 
-    TODO: prendre le modèle le plus vendu pour chaque catégorie et regarder son
-    prix d'achat moyen en 2021.
+    ### Sources
 
-    Sources utilisées:
-      - [L'Argus](https://www.largus.fr/mondial/prix-renault-zoe-2016-tarifs-et-equipements-de-la-ze-40-8154399.html)
+    Pour déterminer un prix d'achat moyen, nous avons utilisé le
+    [script](https://github.com/betagouv/publicodes-voiture/blob/main/scripts/prix-voiture.js)
+    avec les données récupérées sur le comparateur [Que
+    Choisir](https://www.quechoisir.org/comparatif-voiture-citadine-n3).
+
+    Autres sources utilisées:
+    - [_Le tarif des autos neuves par segment_ (Kidioui)](https://voiture.kidioui.fr/voiture-neuve/3.html)
+    - [L'Argus](https://www.largus.fr)
+    - [Caroom](https://www.caroom.fr/guide/voiture-propre/electrique/carrosserie/suv)
+
+    #### Pistes d'amélioration
+
+    Nous pourrions aller plus loin en prenant en compte les différents
+    carburants. Il faudrait alors trouver une source le détaillant. Cependant,
+    pour une première version, cela nous semble suffisant.
+
 
 
 voiture . thermique . consommation:
@@ -326,17 +347,27 @@ voiture . gabarit:
     Si vous ne savez pas quel gabarit choisir, vous pouvez penser à la taille
     comme (petite, moyenne, grande, 4x4 urbain, camionnette).
   note: |
-    Nous considérons que la voiture par défaut est une "Berline", en témoigne
-    [une étude menée par AAA
-    Data](https://www.alphabet.com/fr-fr/parc-automobile-roulant-les-donnees-cles)
-    qui indique que "Si les SUV ont représenté 38 % des ventes de véhicules en
-    2019, ils ne représentent que 16 % de la totalité des véhicules en
-    circulation, loin derrière les berlines qui comptent pour 58 %, soit 23
-    millions de véhicules."
+    ### Sur le choix des gabarits
+
+    Nous avons choisi de distinguer les types de voiture par leur gabarit. Cela
+    fait référence aux [segments
+    automobiles](https://fr.wikipedia.org/wiki/Classification_des_automobiles)
+    définis par des lettres en Europe (A, B, etc...).
+
+    Ne semblant pas y avoir de dénomination faisant consensus entre les
+    différents acteurs du secteur automobile (concessionnaires, site
+    constructeur, journalisme auto, Car Labelling, etc...), nous avons fait le
+    choix de garder la même division en 5 catégories et valeur par défaut que
+    celle utilisée par [Nos Gestes
+    Climat](https://nosgestesclimat.fr/documentation/transport/voiture/gabarit)
+    pour plus de compatibilité et de simplicité.
+
+    Nous avons tout de même choisit de les renommer pour facilité la
+    compréhension des utilisateurices.
   avec:
     petite:
       titre: Citadine
-      description: Citadine type Zoé, Fiat 500
+      description: Citadine type Zoé, Fiat 500, Clio
     moyenne:
       titre: Monospace
       description: Modèle au dessus de la petite citadine, type Mégane, Golf

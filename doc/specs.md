@@ -315,6 +315,27 @@ Avec ce choix, des questions peuvent se poser :
 > neuve et pour l'occasion ne pas la décompter ? Comment faire pour reporter
 > cette _dette d'empreinte_ lors d'un futur achat ?
 
+### Estimation du prix d'achat
+
+Pour le calcul des coûts de la voiture actuelle, il n'est pas nécessaire d'être
+très précis sur le prix d'achat puisqu'il pourra être facilement renseigné par
+l'utilisateurice. En revanche, **pour les alternatives, il est nécessaire
+d'avoir une estimation relativement précise du prix d'achat** pour pouvoir
+calculer les coûts. Or, **les prix varient énormément en fonction des modèles**
+au sein même d'une même catégorie de véhicule et il est difficile de trouver
+des sources et une méthodologie pour estimer ces prix en fonction du gabarit
+et du type de motorisation.
+
+**Il serait donc peut-être nécessaire de demander en plus la gamme de prix
+envisagé par l'utilisateurice pour les alternatives (entrée de gamme, milieu de
+gamme, luxe) pour pouvoir calculer une estimation plus précise des coûts**.
+Reste, à savoir comment déterminer les prix pour ces gammes en fonction du
+gabarit et de la motorisation.
+
+### Amortissement de l'empreinte de la construction
+
+TODO
+
 ### Quid des réglementation et interdiction sur des catégories de véhicules ?
 
 ## Ressources
