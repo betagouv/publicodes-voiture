@@ -29,14 +29,38 @@ voiture . occasion:
 
 voiture . occasion . décote:
   titre: Décote du prix d'achat
-  valeur: 40 %
+  valeur: 60 %
   description: |
     Décote moyenne du prix d'achat d'une voiture d'occasion par rapport à une
     voiture neuve.
+  note: |
+    Selon cet
+    [article](https://www.carizy.com/blog/article/decote-voiture-impacts) ou
+    [celui-ci](https://www.fiches-auto.fr/articles-auto/argent-economie/s-2952-decote-d-une-voiture-variables-et-estimation.php),
+    on peut estimer une valeur moyenne de décote dégressive au fur et à mesure
+    de sa mise en circulation : 
 
-    TODO: trouver une source fiable pour cette valeur.
+    | Temps écoulé depuis la mise en circulation  | Décote moyenne |
+    |---------------------------------------------|----------------|
+    | 1 an                                        | 20-25%         |
+    | 2 ans                                       | 15%            |
+    | 3 ans                                       | 10-12%         |
+    | 4 ans                                       | 10%            |
+    | 5 ans et plus                               | 5-7%           |
 
-# TODO: prendre en compte l'achat d'occasion
+    Récupérer l'information sur l'âge de la voiture d'occasion à l'achat afin
+    de calculer la décote compliquerait à la fois la saisie et le calcul. Nous
+    considérons que la plus-value de l'information ne justifie pas la
+    complexité supplémentaire car de toute façon, la décote permet d'estimer le
+    prix d'achat par défaut qui pourra être modifié par l'utilisateurice.
+
+    Nous prenons donc un **âge moyen d'achat d'une voiture d'occasion
+    correspondant à la durée de détention moyenne d'une voiture (5 ans)** qui
+    semble correspondre à l'âge moyen d'une voiture d'occasion selon [cette
+    publication du
+    SDES](https://www.statistiques.developpement-durable.gouv.fr/immatriculations-des-voitures-particulieres-en-2023-rebond-dans-le-neuf-mais-un-marche-de-loccasion)
+    pour ainsi éstimer une décote moyenne de ~60%.
+
 voiture . prix d'achat . estimé:
   titre: Prix d'achat estimé par défaut
   formule:
