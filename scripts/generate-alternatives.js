@@ -45,18 +45,33 @@ export default function generateAlternatives(rules) {
       const baseContexte = {
         "voiture . gabarit": `'${gabarit}'`,
         "voiture . motorisation": `'${motorisation}'`,
-        // Needed to force the use of the 'voiture . prix d'achat . estimé'
-        "voiture . prix d'achat": "non",
-        // Needed to force the use of the 'voiture . thermique . consommation . estimée'
-        "voiture . thermique . consommation": "non",
+        "voiture . électrique . consommation électricité": {
+          valeur: "voiture . électrique . consommation estimée",
+          contexte: {
+            "voiture . gabarit": `'${gabarit}'`,
+          },
+        },
       }
 
-      if (motorisation !== "électrique") {
+      if (motorisation === "électrique") {
         rules[`empreinte . ${motorisation} . ${gabarit}`] = {
-          titre: `Ensemble des ${gabarit} ${motorisation}`,
+          titre: `${gabaritTitle} ${motorisation}`,
+          unité: "kgCO2eq/an",
+          valeur: "empreinte . voiture",
+          contexte: baseContexte,
         }
         rules[`coûts . ${motorisation} . ${gabarit}`] = {
-          titre: `Ensemble des ${gabarit} ${motorisation}`,
+          titre: `${gabaritTitle} ${motorisation}`,
+          unité: "€/an",
+          valeur: "coûts . voiture",
+          contexte: baseContexte,
+        }
+      } else {
+        rules[`empreinte . ${motorisation} . ${gabarit}`] = {
+          titre: `Ensemble des ${gabaritTitle} ${motorisation}`,
+        }
+        rules[`coûts . ${motorisation} . ${gabarit}`] = {
+          titre: `Ensemble des ${gabaritTitle} ${motorisation}`,
         }
         for (const carburant of carburants) {
           const carburantTitle =
@@ -70,6 +85,14 @@ export default function generateAlternatives(rules) {
             contexte: {
               ...baseContexte,
               "voiture . thermique . carburant": `'${carburant}'`,
+              "voiture . thermique . consommation carburant": {
+                valeur: "voiture . thermique . consommation estimée",
+                contexte: {
+                  "voiture . gabarit": `'${gabarit}'`,
+                  "voiture . motorisation": `'${motorisation}'`,
+                  "voiture . thermique . carburant": `'${carburant}'`,
+                },
+              },
             },
           }
           rules[`coûts . ${motorisation} . ${gabarit} . ${carburant}`] = {
@@ -79,21 +102,16 @@ export default function generateAlternatives(rules) {
             contexte: {
               ...baseContexte,
               "voiture . thermique . carburant": `'${carburant}'`,
+              "voiture . thermique . consommation carburant": {
+                valeur: "voiture . thermique . consommation estimée",
+                contexte: {
+                  "voiture . gabarit": `'${gabarit}'`,
+                  "voiture . motorisation": `'${motorisation}'`,
+                  "voiture . thermique . carburant": `'${carburant}'`,
+                },
+              },
             },
           }
-        }
-      } else {
-        rules[`empreinte . ${motorisation} . ${gabarit}`] = {
-          titre: `${gabaritTitle} ${motorisation}`,
-          unité: "kgCO2eq/an",
-          valeur: "empreinte . voiture",
-          contexte: baseContexte,
-        }
-        rules[`coûts . ${motorisation} . ${gabarit}`] = {
-          titre: `${gabaritTitle} ${motorisation}`,
-          unité: "€/an",
-          valeur: "coûts . voiture",
-          contexte: baseContexte,
         }
       }
     }

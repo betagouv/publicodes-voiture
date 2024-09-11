@@ -14,15 +14,15 @@ categories:
 # Définition des questions par catégorie
 questions:
   voiture:
-    - voiture . occasion
     - voiture . gabarit
     - voiture . durée de détention
+    - voiture . occasion
     - voiture . prix d'achat
     - voiture . motorisation
     - voiture . thermique . carburant
-    - voiture . thermique . consommation
+    - voiture . thermique . consommation carburant
     - voiture . thermique . prix carburant
-    - voiture . électrique . consommation
+    - voiture . électrique . consommation électricité
     - voiture . électrique . prix kWh
     - coûts . voiture . coûts de possession . entretien
     - coûts . voiture . coûts de possession . assurance

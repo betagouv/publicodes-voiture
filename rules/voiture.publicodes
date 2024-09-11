@@ -59,7 +59,7 @@ voiture . occasion . décote:
     semble correspondre à l'âge moyen d'une voiture d'occasion selon [cette
     publication du
     SDES](https://www.statistiques.developpement-durable.gouv.fr/immatriculations-des-voitures-particulieres-en-2023-rebond-dans-le-neuf-mais-un-marche-de-loccasion)
-    pour ainsi éstimer une décote moyenne de ~60%.
+    pour ainsi estimer une décote moyenne de ~60%.
 
 voiture . prix d'achat . estimé:
   titre: Prix d'achat estimé par défaut
@@ -116,17 +116,17 @@ voiture . prix d'achat . estimé:
   unité: €
   note: |
     La valeur du prix d'achat moyen d'une voiture neuve est importante pour le
-    calcul des coûts des alternatives et non vraiment pour le calcul de la
+    calcul des coûts des alternatives et pas vraiment pour le calcul de la
     voiture actuelle. En effet, le prix d'achat de la voiture actuelle pourra
-    facilement être renseigné par l'utilisateurice. C'est pourquoi nous avons
-    choisi de nous baser sur des valeurs d'achat de voitures récentes, car ce
+    facilement être renseigné par l'utilisateurice. C'est **pourquoi nous avons
+    choisi de nous baser sur des valeurs d'achat de voitures récentes**, car ce
     seront elles qui seront les plus susceptibles d'être achetées en
     remplacement de la voiture actuelle.
 
     Il est **très difficile de trouver une valeur moyenne pour le prix d'achat
     car il y a de grand écarts entre les gammes de voitures**, les valeurs sont
     donc à prendre avec du recul et pose un problème sur la précision de
-    l'estimation notamment pou les alternatives.
+    l'estimation notamment pour les alternatives.
 
     ### Sources
 
@@ -144,9 +144,16 @@ voiture . prix d'achat . estimé:
 
     Nous pourrions aller plus loin en prenant en compte les différents
     carburants. Il faudrait alors trouver une source le détaillant. Cependant,
-    pour une première version, cela nous semble suffisant.
+    l'écart de prix n'est peut-être pas assez significatif pour justifier la
+    complexité supplémentaire.
 
-voiture . thermique . consommation:
+    Il serait également **nécessaire de trouver un moyen d'affiner l'estimation
+    du prix d'achat pour les alternatives** en se basant sur d'autres critères,
+    comme par exemple la **gamme du véhicule envisagée** (entré de gamme,
+    milieu de gamme, haut de gamme). Il faudra là aussi trouver une source
+    permettant de préciser le prix d'achat en fonction de ce critère.
+
+voiture . thermique . consommation carburant:
   question: Quelle est sa consommation moyenne ?
   applicable si:
     une de ces conditions:
@@ -159,21 +166,21 @@ voiture . thermique . consommation:
     Renseignez la consommation moyenne de votre voiture en litre aux 100 km tel
     que renseigné par le constructeur. Si vous ne la connaissez pas, vous
     pouvez laisser la valeur par défaut.
-  avec:
-    consommation estimée:
-      titre: Consommation éstimée par défaut
-      valeur: ngc . transport . voiture . thermique . consommation estimée
-      unité: l/100km
-      contexte:
-        ngc . transport . voiture . utilisateur: "'propriétaire'"
-        ngc . transport . voiture . gabarit: voiture . gabarit
-        ngc . transport . voiture . motorisation: voiture . motorisation
-        ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+
+voiture . thermique . consommation estimée:
+  titre: Consommation estimée par défaut
+  valeur: ngc . transport . voiture . thermique . consommation estimée
+  unité: l/100km
+  contexte:
+    ngc . transport . voiture . utilisateur: "'propriétaire'"
+    ngc . transport . voiture . gabarit: voiture . gabarit
+    ngc . transport . voiture . motorisation: voiture . motorisation
+    ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
 
 voiture . électrique:
   titre: Voiture électrique
 
-voiture . électrique . consommation:
+voiture . électrique . consommation électricité:
   question: Quelle est sa consommation électrique moyenne ?
   applicable si:
     une de ces conditions:
@@ -181,18 +188,19 @@ voiture . électrique . consommation:
       - motorisation = 'hybride'
   par défaut: consommation estimée
   unité: kWh/100km
+  plancher: 1
   description: |
     Renseignez la consommation moyenne de votre voiture en kWh par 100 km tel
     que renseigné par le constructeur. Si vous ne la connaissez pas, vous
     pouvez laisser la valeur par défaut.
-  avec:
-    consommation estimée:
-      titre: Consommation estimée par défaut
-      valeur: ngc . transport . voiture . électrique . consommation estimée
-      unité: kWh/100km
-      contexte:
-        ngc . transport . voiture . utilisateur: "'propriétaire'"
-        ngc . transport . voiture . gabarit: voiture . gabarit
+
+voiture . électrique . consommation estimée:
+  titre: Consommation estimée par défaut
+  valeur: ngc . transport . voiture . électrique . consommation estimée
+  unité: kWh/100km
+  contexte:
+    ngc . transport . voiture . utilisateur: "'propriétaire'"
+    ngc . transport . voiture . gabarit: voiture . gabarit
 
 voiture . électrique . prix kWh:
   question: Quel est le prix du kWh ?
@@ -381,6 +389,7 @@ voiture . thermique . prix carburant:
       - motorisation = 'thermique'
       - motorisation = 'hybride'
   par défaut: prix carburant moyen
+  plancher: 0
   description: |
     Renseignez le prix moyen du carburant que vous avez dû payer cette année.
     Si vous ne le connaissez pas, vous pouvez laisser la valeur par défaut.
@@ -411,6 +420,7 @@ voiture . thermique . prix carburant moyen:
 voiture . durée de détention:
   question: Depuis combien de temps possédez-vous votre voiture ?
   par défaut: 5.5
+  plancher: 0
   unité: an
   description: |
     Renseignez la durée totale de détention de votre voiture. Si vous la

@@ -54,9 +54,15 @@ coûts . voiture . coûts de possession . contrôle technique:
 
 
 coûts . voiture . coûts de possession . entretien:
-  titre: Coût annuel de l'entretien de votre voiture
-  question: En moyenne, combien payez-vous pour l'entretien de votre voiture par an ?
+  question: Combien coûte l'entretien de votre voiture ?
+  description: |
+    Renseignez le coût annuel moyen de l'entretien de votre voiture hors
+    contrôle technique. Cela comprend les réparations occasionnelles,
+    changement de batterie, etc...
+    Si vous ne connaissez pas ce coût, vous pouvez laisser la valeur par
+    défaut.
   par défaut: entretien estimé
+  plancher: 0
   unité: €/an
 
 coûts . voiture . coûts de possession . entretien estimé:
@@ -114,9 +120,13 @@ coûts . voiture . coûts de possession . entretien thermique moyen:
     comptabilisé à part).
 
 coûts . voiture . coûts de possession . assurance:
-  titre: Coût annuel de votre assurance
-  question: Coût annuel de votre assurance ?
+  question: Quel est le coût de l'assurance de votre voiture ? 
+  description: |
+    Renseignez le coût annuel de l'assurance de votre voiture. Si vous ne
+    connaissez pas ce coût, vous pouvez laisser la valeur par défaut.
   par défaut: assurance estimée
+  plancher: 0
+  unité: €/an
 
 coûts . voiture . coûts de possession . assurance estimée:
   titre: Coût annuel estimé de l'assurance
@@ -220,42 +230,42 @@ coûts . voiture . coûts d'utilisation . consommation:
   titre: Coût de la consommation annuelle
   valeur: consommation au km * usage . km annuels
 
-coûts . voiture . coûts d'utilisation . consommation au km:
+coûts . voiture . coûts d'utilisation . consommation . consommation au km:
   titre: Coût de la consommation au km
   formule:
     variations:
       - si: voiture . motorisation = 'électrique'
-        alors: consommation au km . électrique
+        alors: électrique
       - si: voiture . motorisation = 'thermique'
-        alors: consommation au km . thermique
+        alors: thermique
       - si: voiture . motorisation = 'hybride'
-        alors: consommation au km . hybride
+        alors: hybride
   unité: €/km
   note: |
     Pour les voitures hybrides nous faisons la même hypothèse que pour la
     note d'analyse [_Voiture électrique : à quel coût
     ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
     de France Stratégie.
+  avec:
+    thermique:
+      valeur: voiture . thermique . consommation carburant * voiture . thermique . prix carburant / 100
+      unité: €/km
 
-coûts . voiture . coûts d'utilisation . consommation au km . thermique:
-  valeur: voiture . thermique . consommation * voiture . thermique . prix carburant / 100
-  unité: €/km
+    électrique:
+      valeur: voiture . électrique . consommation électricité * voiture . électrique . prix kWh / 100
+      unité: €/km
 
-coûts . voiture . coûts d'utilisation . consommation au km . électrique:
-  valeur: voiture . électrique . consommation * voiture . électrique . prix kWh / 100
-  unité: €/km
-
-coûts . voiture . coûts d'utilisation . consommation au km . hybride:
-  formule:
-    somme:
-      - consommation au km . thermique * 75%
-      - consommation au km . électrique * 25%
-  unité: €/km
-  note: |
-    Pour les voitures hybrides nous faisons la même hypothèse que pour la
-    note d'analyse [_Voiture électrique : à quel coût
-    ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
-    de France Stratégie.
+    hybride:
+      formule:
+        somme:
+          - consommation au km . thermique * 75%
+          - consommation au km . électrique * 25%
+      unité: €/km
+      note: |
+        Pour les voitures hybrides nous faisons la même hypothèse que pour la
+        note d'analyse [_Voiture électrique : à quel coût
+        ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
+        de France Stratégie.
 
 coûts . voiture . coûts d'utilisation . stationnement:
   question: Combien coûte le stationnement de votre voiture ?
@@ -263,6 +273,7 @@ coûts . voiture . coûts d'utilisation . stationnement:
     Renseignez le coût annuel associé au stationnement de votre voiture
     (parking, garage, place payante, etc...).
   par défaut: 50 €/mois
+  plancher: 0
   unité: €/an
   note: |
     Valeur par défaut basée sur le [baromètre de
@@ -280,8 +291,12 @@ coûts . voiture . coûts d'utilisation . stationnement:
 
 coûts . voiture . coûts d'utilisation . péage:
   titre: Coût annuel lié aux péages
-  question: Combien payez-vous en moyenne pour les péages par an ?
-  par défaut: estimé
+  question: Combien payez-vous en moyenne pour les péages ?
+  par défaut: 
+    valeur: estimé
+    arrondi: oui
+  plancher: 0
+  unité: €/an
   avec:
     estimé:
       titre: Coût annuel estimé des péages
@@ -302,7 +317,7 @@ coûts . voiture . coûts d'utilisation . péage:
         comparant l'évolution des tarifs des autoroutes entre 2022 et 2023.
 
 coûts . voiture . coûts d'utilisation . contraventions:
-  question: Quel le coût des contraventions que vous devez payer en moyenne par an ?
+  question: Quel le coût des contraventions que vous payez ?
   description: |
     Il s'agit ici de toutes les contraventions qui surviennent : parking,
     vitesse, ivresse, feu cassé, stop grillé, etc.
@@ -312,6 +327,8 @@ coûts . voiture . coûts d'utilisation . contraventions:
   par défaut:
     valeur: recettes annuelles 2022 / parc français 2022
     arrondi: oui
+  unité: €/an
+  plancher: 0
   note: |
     Cette question n'est pas évidente, mais elle est néanmoins non négligeable.
     Les recettes des amendes diverses de circulation [ont atteint 1,8 milliards

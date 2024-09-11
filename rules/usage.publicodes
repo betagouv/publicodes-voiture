@@ -37,7 +37,7 @@ usage . km annuels . estimés:
   formule:
     variations:
       - si: voiture . thermique . carburant = 'gazole B7 ou B10'
-        alors: 953
+        alors: 9535
       - si: voiture . thermique . carburant = 'essence E5 ou E10'
         alors: 13975
       - sinon: (13975 + 9535) / 2

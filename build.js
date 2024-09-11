@@ -45,12 +45,10 @@ writeFileSync(modelDestPath, JSON.stringify(resolvedRules))
 console.log(`✅ ${modelDestPath} generated`)
 
 const personas = getPersonas(model)
-
 writeFileSync(personasDestPath, JSON.stringify(personas))
 console.log(`✅ ${personasDestPath} generated`)
 
 const ui = getUI(model)
-
 writeFileSync(uiDestPath, JSON.stringify(ui))
 console.log(`✅ ${uiDestPath} generated`)
 

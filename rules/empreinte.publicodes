@@ -33,16 +33,16 @@ empreinte . voiture:
         # Permet de forcer l'utilisation de la consommation estimée lors des
         # recalculs pour les alternatives.
         variations:
-          - si: voiture . thermique . consommation > 1
-            alors: voiture . thermique . consommation
-          - sinon: voiture . thermique . consommation . consommation estimée
+          - si: voiture . thermique . consommation carburant > 1
+            alors: voiture . thermique . consommation carburant
+          - sinon: voiture . thermique . consommation estimée
     ngc . transport . voiture . électrique . consommation aux 100:
       valeur:
         # Permet de forcer l'utilisation de la consommation estimée lors des
         # recalculs pour les alternatives.
         variations:
-          - si: voiture . électrique . consommation > 1
-            alors: voiture . électrique . consommation
-          - sinon: voiture . électrique . consommation . consommation estimée
+          - si: voiture . électrique . consommation électricité > 1 
+            alors: voiture . électrique . consommation électricité 
+          - sinon: voiture . électrique . consommation estimée
     # On souhaite estimer l'empreinte total de la voiture et non par personne.
     ngc . transport . voiture . voyageurs: 1
