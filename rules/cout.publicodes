@@ -211,18 +211,16 @@ coûts . voiture . coûts d'utilisation:
     - consommation
     - stationnement
     - péage
-    # TODO: à ajouter ? 
-    # - lavage
-    # - amendes et contraventions
-    # - permis de conduire
+    - contraventions
+    - permis de conduire
 
   unité: €/an
 
-coûts . voiture . consommation:
+coûts . voiture . coûts d'utilisation . consommation:
   titre: Coût de la consommation annuelle
   valeur: consommation au km * usage . km annuels
 
-coûts . voiture . consommation au km:
+coûts . voiture . coûts d'utilisation . consommation au km:
   titre: Coût de la consommation au km
   formule:
     variations:
@@ -239,15 +237,15 @@ coûts . voiture . consommation au km:
     ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
     de France Stratégie.
 
-coûts . voiture . consommation au km . thermique:
+coûts . voiture . coûts d'utilisation . consommation au km . thermique:
   valeur: voiture . thermique . consommation * voiture . thermique . prix carburant / 100
   unité: €/km
 
-coûts . voiture . consommation au km . électrique:
+coûts . voiture . coûts d'utilisation . consommation au km . électrique:
   valeur: voiture . électrique . consommation * voiture . électrique . prix kWh / 100
   unité: €/km
 
-coûts . voiture . consommation au km . hybride:
+coûts . voiture . coûts d'utilisation . consommation au km . hybride:
   formule:
     somme:
       - consommation au km . thermique * 75%
@@ -259,7 +257,7 @@ coûts . voiture . consommation au km . hybride:
     ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
     de France Stratégie.
 
-coûts . voiture . stationnement:
+coûts . voiture . coûts d'utilisation . stationnement:
   question: Combien coûte le stationnement de votre voiture ?
   description: |
     Renseignez le coût annuel associé au stationnement de votre voiture
@@ -280,25 +278,106 @@ coûts . voiture . stationnement:
     voiture électrique souhaitant bénéficier d'une borne de recharge, mais
     nous n'avons pas encore de données pour le confirmer.
 
-coûts . voiture . péage:
+coûts . voiture . coûts d'utilisation . péage:
   titre: Coût annuel lié aux péages
   question: Combien payez-vous en moyenne pour les péages par an ?
   par défaut: estimé
+  avec:
+    estimé:
+      titre: Coût annuel estimé des péages
+      formule:
+        produit:
+          - prix au km
+          - usage . km annuels
+          - usage . km annuels . part autoroute
 
-coûts . voiture . péage . estimé:
-  titre: Coût annuel estimé des péages
-  formule:
-    produit:
-      - prix au km
-      - usage . km annuels
-      - usage . km annuels . part autoroute
+    prix au km:
+      titre: Prix moyen du péage au km
+      valeur: 0.17194424757025703 €/km
+      note: |
+        Valeur moyenne calculée à l'aide du script
+        [`cout-autoroute.js`](https://github.com/betagouv/publicodes-voiture/blob/main/scripts/cout-autoroute.js)
+        utilisant lui-même les données de [France
+        Infos](https://www.francetvinfo.fr/economie/automobile/infographies-prix-des-peages-visualisez-l-augmentation-des-tarifs-en-2023-autoroute-par-autoroute_5917970.html)
+        comparant l'évolution des tarifs des autoroutes entre 2022 et 2023.
 
-coûts . voiture . péage . prix au km:
-  titre: Prix moyen du péage au km
-  valeur: 0.17194424757025703 €/km
+coûts . voiture . coûts d'utilisation . contraventions:
+  question: Quel le coût des contraventions que vous devez payer en moyenne par an ?
+  description: |
+    Il s'agit ici de toutes les contraventions qui surviennent : parking,
+    vitesse, ivresse, feu cassé, stop grillé, etc.
+
+    Bien sûr, le respect du code de la route varie énormément d'une personne à
+    l'autre, à vous d'estimer la votre.
+  par défaut:
+    valeur: recettes annuelles 2022 / parc français 2022
+    arrondi: oui
   note: |
-    Valeur moyenne calculée à l'aide du script
-    [`cout-autoroute.js`](https://github.com/betagouv/publicodes-voiture/blob/main/scripts/cout-autoroute.js)
-    utilisant lui-même les données de [France
-    Infos](https://www.francetvinfo.fr/economie/automobile/infographies-prix-des-peages-visualisez-l-augmentation-des-tarifs-en-2023-autoroute-par-autoroute_5917970.html)
-    comparant l'évolution des tarifs des autoroutes entre 2022 et 2023.
+    Cette question n'est pas évidente, mais elle est néanmoins non négligeable.
+    Les recettes des amendes diverses de circulation [ont atteint 1,8 milliards
+    d'euros en
+    [2022](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15),
+    dont 1 milliard pour les seuls radars (excès de vitesse). Ce qui donne 46€
+    par voiture et par an !
+
+    ### Source
+
+    Règle récupérée du modèle de calcul de [futur.eco](https://futur.eco/cout-voiture).
+
+    ### Piste d'amélioration
+    
+    Idéalement, il faudrait trouver le montant moyen payé par français par an.
+
+  avec:
+    recettes annuelles 2022:
+      description: |
+        Montant prévisionnel des recettes des amendes en circulation en 2022
+        selon un [rapport de la Cour des
+        comptes](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15)
+      valeur: 1784 millions de voiture.€/an
+
+    parc français 2022:
+      valeur: 38.7 millions de voiture
+      description: |
+        Nombre de voiture en circulation en France au 1er janvier 2022 selon le
+        [SDES](https://www.statistiques.developpement-durable.gouv.fr/387-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2022).
+
+
+coûts . voiture . coûts d'utilisation . permis de conduire:
+  formule: coût d'obtention / durée d'utilisation
+  unité: €/an
+  note: |
+    ### Source
+
+    Règle récupérée du modèle de [futur.eco](https://futur.eco/cout-voiture).
+  avec:
+    durée d'utilisation: durée de vie en bonne santé - âge d'obtention
+
+    âge d'obtention: 19 an
+
+    durée de vie en bonne santé:
+      valeur: 66 an
+      note: |
+        ### Source
+        - [_Espérance de vie en bonne santé : 67 ans pour les femmes, 65,6 ans
+          pour les hommes_
+          (vie-publique.fr)](https://www.vie-publique.fr/en-bref/288403-esperance-de-vie-en-bonne-sante-67-ans-femmes-656-ans-hommes)
+
+    coût d'obtention:
+      valeur: 1804 €
+      description: |
+        Sans conducteur avec permis, pas de km parcourus en voiture individuelle
+        !
+
+        Bien sûr, on peut se dire "Non mais tous les Français passent le permis
+        de toutes façon". Certes, une majorité le passe, mais avec le même
+        raisonnement, on prétend que tous les Français ont une voiture de toute
+        façon... et on en revient à un coût totalement sous-estimé.
+      note: |
+        ### Source
+
+        Le prix est tiré d'une [étude de l'UFC-Que Choisir de
+        2016](https://www.bfmtv.com/auto/combien-coute-le-permis-de-conduire-en-france_AV-202303270437.html)
+        qui semble rester encore réaliste selon
+        [BFMTV](https://www.bfmtv.com/auto/combien-coute-le-permis-de-conduire-en-france_AV-202303270437.html).
+

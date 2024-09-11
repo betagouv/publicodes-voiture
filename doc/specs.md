@@ -329,8 +329,30 @@ et du type de motorisation.
 **Il serait donc peut-être nécessaire de demander en plus la gamme de prix
 envisagé par l'utilisateurice pour les alternatives (entrée de gamme, milieu de
 gamme, luxe) pour pouvoir calculer une estimation plus précise des coûts**.
-Reste, à savoir comment déterminer les prix pour ces gammes en fonction du
+Reste à savoir comment déterminer les prix pour ces gammes en fonction du
 gabarit et de la motorisation.
+
+Une autre solution serait de **comparer les alternatives avec sans coût
+d'achat** et se baser uniquement sur les autres paramètres.
+
+Nous pourrions également envisager de **demander le prix envisagé pour l'achat de
+la nouvelle voiture cible**.
+
+### Contraventions
+
+Le montant des recettes liées aux amendes de circulation s'élève à 1,8
+milliards d'euros en 2022 selon la [Cour des
+comptes](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15).
+Ce poste n'est donc pas à négliger dans le calcul des coûts d'une voiture.
+Cependant, la valeur par défaut de 46 euros par an (calculée en divisant le
+montant total des recettes par le nombre de voiture en circulation) doit
+pouvoir être ajustée par l'utilisateurice, en effet, la montant de ces coûts
+doivent fortement varier en fonction des personnes.
+
+Si cela ne **semble pas être un problème pour la version autonome du simulateur**
+pour laquelle aucune information renseignées par le l'utilisateurice ne sort de
+son navigateur, **ce n'est pas forcément le cas pour une intégration dans Agir
+qui aura la mains sur les données renseignées**.
 
 ### Amortissement de l'empreinte de la construction
 
@@ -349,6 +371,7 @@ TODO
 - [_38,9 millions de voitures en circulation en France au 1er janvier 2023_ (SDES)](https://www.statistiques.developpement-durable.gouv.fr/389-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2023)
 - [_Analyse de cycle de vie appliquée a un véhicule ou un équipement automobile - Préconisations méthodologiques_ (PFA)](https://pfa-auto.fr/wp-content/uploads/2023/04/DT_Me%CC%81thodologie_2023_V15_FRANCAIS.pdf)
 - [_Véhicules hors d'usage (VHU)_ (ADEME)](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu)
+- [_Compte d’affectation spéciale « Contrôle de la circulation et du stationnement routiers »_, 2022 (Cour des comptes)](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15)
 
 ### Modèles existants
 
