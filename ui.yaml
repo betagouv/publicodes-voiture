@@ -11,8 +11,7 @@ categories:
     index: 2
     sub: []
 
-# Define the order of the questions by category
-# TODO: at compile time, log a warning with all unreferenced questions
+# Définition des questions par catégorie
 questions:
   voiture:
     - voiture . occasion
@@ -21,13 +20,20 @@ questions:
     - voiture . prix d'achat
     - voiture . motorisation
     - voiture . thermique . carburant
-    - voiture . thermique . prix carburant
     - voiture . thermique . consommation
+    - voiture . thermique . prix carburant
+    - voiture . électrique . consommation
+    - voiture . électrique . prix kWh
+    - coûts . voiture . coûts de possession . entretien
+    - coûts . voiture . coûts de possession . assurance
   usage:
     - usage . km annuels . connus
     - usage . km annuels . renseignés
     - usage . km annuels . calculés . quotidien
     - usage . km annuels . calculés . vacances
+    - coûts . voiture . coûts d'utilisation . stationnement
+    - coûts . voiture . coûts d'utilisation . péage
+    - coûts . voiture . coûts d'utilisation . contraventions
   voiture . cible:
     - voiture . cible . achat envisagé
     - voiture . cible . gabarit

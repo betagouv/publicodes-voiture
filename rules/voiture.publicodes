@@ -146,8 +146,6 @@ voiture . prix d'achat . estimé:
     carburants. Il faudrait alors trouver une source le détaillant. Cependant,
     pour une première version, cela nous semble suffisant.
 
-
-
 voiture . thermique . consommation:
   question: Quelle est sa consommation moyenne ?
   applicable si:
@@ -157,25 +155,20 @@ voiture . thermique . consommation:
   par défaut: consommation estimée
   unité: l/100km
   plancher: 1
-  suggestions:
-    5 l/100km: 5
-    7 l/100km: 7
-    9 l/100km: 9
   description: |
-    Renseignez la consommation moyenne de votre voiture en litre par 100 km tel
+    Renseignez la consommation moyenne de votre voiture en litre aux 100 km tel
     que renseigné par le constructeur. Si vous ne la connaissez pas, vous
     pouvez laisser la valeur par défaut.
-  note: Les suggestions de réponse sont à la louche, à préciser et sourcer.
-
-voiture . thermique . consommation . consommation estimée:
-  titre: Consommation éstimée par défaut
-  valeur: ngc . transport . voiture . thermique . consommation estimée
-  unité: l/100km
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: voiture . gabarit
-    ngc . transport . voiture . motorisation: voiture . motorisation
-    ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+  avec:
+    consommation estimée:
+      titre: Consommation éstimée par défaut
+      valeur: ngc . transport . voiture . thermique . consommation estimée
+      unité: l/100km
+      contexte:
+        ngc . transport . voiture . utilisateur: "'propriétaire'"
+        ngc . transport . voiture . gabarit: voiture . gabarit
+        ngc . transport . voiture . motorisation: voiture . motorisation
+        ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
 
 voiture . électrique:
   titre: Voiture électrique
@@ -192,14 +185,14 @@ voiture . électrique . consommation:
     Renseignez la consommation moyenne de votre voiture en kWh par 100 km tel
     que renseigné par le constructeur. Si vous ne la connaissez pas, vous
     pouvez laisser la valeur par défaut.
-
-voiture . électrique . consommation estimée:
-  titre: Consommation estimée par défaut
-  valeur: ngc . transport . voiture . électrique . consommation estimée
-  unité: kWh/100km
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: voiture . gabarit
+  avec:
+    consommation estimée:
+      titre: Consommation estimée par défaut
+      valeur: ngc . transport . voiture . électrique . consommation estimée
+      unité: kWh/100km
+      contexte:
+        ngc . transport . voiture . utilisateur: "'propriétaire'"
+        ngc . transport . voiture . gabarit: voiture . gabarit
 
 voiture . électrique . prix kWh:
   question: Quel est le prix du kWh ?
