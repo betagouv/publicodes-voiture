@@ -28,9 +28,30 @@ usage . km annuels . connus:
 usage . km annuels . renseignés:
   applicable si: km annuels . connus
   question: Kilomètres parcourus à l'année
-  par défaut: futureco . voiture . km annuels . par défaut
+  par défaut: estimés
   unité: km/an
   plancher: 0
+
+usage . km annuels . estimés:
+  titre: Distance moyenne parcourue à l'année
+  formule:
+    variations:
+      - si: voiture . thermique . carburant = 'gazole B7 ou B10'
+        alors: 9535
+      - si: voiture . thermique . carburant = 'essence E5 ou E10'
+        alors: 13975
+      - sinon: (13975 + 9535) / 2
+  unité: km/an
+  note: |
+    ### Source
+
+    Selon le [_Bilan annuel des transports en 2022_
+    (SDES)](https://www.statistiques.developpement-durable.gouv.fr/media/6822/download?inline)
+
+    ### Pistes d'amélioration
+
+    Il serait intéressant de trouver une source détaillant les distances
+    moyennes pour les voitures électriques et hybrides.
 
 usage . km annuels . calculés:
   titre: Cumul des distances parcourues au quotidien et pour les vacances
@@ -63,7 +84,6 @@ usage . km annuels . calculés . quotidien:
     d'Aurélien Bigo, les trajets du quotidien sont en moyenne de 33km/jour en
     2019.
 
-
 usage . km annuels . calculés . vacances:
   titre: Usage pour les vacances
   question: Kilomètres parcourus en moyenne pour vos vacances à l'année
@@ -79,3 +99,11 @@ usage . km annuels . calculés . vacances:
     Renseignez les informations concernant l'usage de votre voiture pour les
     vacances (ex: trajets pour les vacances d'été ou d'hiver ou encore pour les
     week-ends).
+
+usage . km annuels . part autoroute:
+  titre: Moyenne de la part des kilomètres parcourus à l'année sur autoroute
+  valeur: 30%
+  notes: |
+    Selon la figure G1-1 du [_Bilan annuel des transports en 2022_
+    (SDES)](https://www.statistiques.developpement-durable.gouv.fr/media/6822/download?inline),
+    la cirulation routière par réseau routier.

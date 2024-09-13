@@ -1,0 +1,25 @@
+électricité:
+
+électricité . TRV base:
+  titre: Tarif réglementé de vente (TRV) (Tarif Bleu d'EDF - Base)
+  valeur: 0.2516 €/kWh
+  note : |
+    Tarif réglementé de vente (TRV) de l'électricité au 14 août 2024 selon la
+    grille tarifaire renseignée sur [hello
+    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite).
+
+électricité . TRV HC:
+  titre: Tarif réglementé de vente (TRV) (Tarif Bleu d'EDF - Heures Creuses)
+  valeur: 0.2068 €/kWh
+  note: |
+    Tarif réglementé de vente (TRV) de l'électricité au 14 août 2024 selon la
+    grille tarifaire renseignée sur [hello
+    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite).
+
+électricité . TRV HP:
+  titre: Tarif réglementé de vente (TRV) (Tarif Bleu d'EDF - Heures Pleines)
+  valeur: 0.27 €/kWh
+  note: |
+    Tarif réglementé de vente (TRV) de l'électricité au 14 août 2024 selon la
+    grille tarifaire renseignée sur [hello
+    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite).

@@ -8,8 +8,8 @@ import generateAlternatives from "./scripts/generate-alternatives.js"
 function check(rules, step) {
   try {
     const engine = new Engine(rules)
-    engine.evaluate("empreinte")
-    engine.evaluate("coût")
+    engine.evaluate("empreinte . voiture")
+    engine.evaluate("coûts . voiture")
 
     return engine
   } catch (e) {
@@ -23,7 +23,10 @@ const modelDestPath = "publicodes-voiture.model.json"
 const personasDestPath = "publicodes-voiture.personas.json"
 const uiDestPath = "publicodes-voiture.ui.json"
 
-const model = getModelFromSource(srcFiles, { verbose: true })
+const model = getModelFromSource(srcFiles, {
+  verbose: true,
+  ignore: ["./rules/futureco-cout-voiture.publicodes"],
+})
 const engine = check(model, "base")
 
 const resolvedRules = Object.fromEntries(
@@ -42,12 +45,10 @@ writeFileSync(modelDestPath, JSON.stringify(resolvedRules))
 console.log(`✅ ${modelDestPath} generated`)
 
 const personas = getPersonas(model)
-
 writeFileSync(personasDestPath, JSON.stringify(personas))
 console.log(`✅ ${personasDestPath} generated`)
 
 const ui = getUI(model)
-
 writeFileSync(uiDestPath, JSON.stringify(ui))
 console.log(`✅ ${uiDestPath} generated`)
 

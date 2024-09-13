@@ -11,29 +11,30 @@ categories:
     index: 2
     sub: []
 
-# Define the order of the questions by category
+# Définition des questions par catégorie
 questions:
   voiture:
-    [
-      voiture . occasion,
-      voiture . occasion . année de fabrication,
-      voiture . gabarit,
-      voiture . prix d'achat,
-      voiture . motorisation,
-      voiture . thermique . carburant,
-      voiture . thermique . prix carburant,
-      voiture . thermique . consommation,
-    ]
+    - voiture . gabarit
+    - voiture . durée de détention
+    - voiture . occasion
+    - voiture . prix d'achat
+    - voiture . motorisation
+    - voiture . thermique . carburant
+    - voiture . thermique . consommation carburant
+    - voiture . thermique . prix carburant
+    - voiture . électrique . consommation électricité
+    - voiture . électrique . prix kWh
+    - coûts . voiture . coûts de possession . entretien
+    - coûts . voiture . coûts de possession . assurance
   usage:
-    [
-      usage . km annuels . connus,
-      usage . km annuels . renseignés,
-      usage . km annuels . calculés . quotidien,
-      usage . km annuels . calculés . vacances,
-    ]
+    - usage . km annuels . connus
+    - usage . km annuels . renseignés
+    - usage . km annuels . calculés . quotidien
+    - usage . km annuels . calculés . vacances
+    - coûts . voiture . coûts d'utilisation . stationnement
+    - coûts . voiture . coûts d'utilisation . péage
+    - coûts . voiture . coûts d'utilisation . contraventions
   voiture . cible:
-    [
-      voiture . cible . achat envisagé,
-      voiture . cible . gabarit,
-      voiture . cible . borne de recharge,
-    ]
+    - voiture . cible . achat envisagé
+    - voiture . cible . gabarit
+    - voiture . cible . borne de recharge

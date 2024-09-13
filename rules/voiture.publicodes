@@ -11,7 +11,11 @@ voiture:
 
 voiture . prix d'achat:
   question: Quel est le prix d'achat de votre voiture ?
-  par défaut: estimé
+  par défaut:
+    variations:
+      - si: voiture . occasion
+        alors: prix d'achat . estimé * occasion . décote
+      - sinon: prix d'achat . estimé
   plancher: 1
   unité: €
   description: |
@@ -23,69 +27,83 @@ voiture . occasion:
   question: Est-ce une voiture d'occasion ?
   par défaut: non
 
-voiture . occasion . année de fabrication:
-  question: Quelle est son année de fabrication ?
-  # alt: Quel âge avait la voiture lors de son achat ?
-  # alt: Quel km au compteur avait la voiture lors de son achat ?
-  par défaut: 2018
+voiture . occasion . décote:
+  titre: Décote du prix d'achat
+  valeur: 60 %
   description: |
-    Permet d'amortir le calcul sur la durée de vie restante de la voiture.
+    Décote moyenne du prix d'achat d'une voiture d'occasion par rapport à une
+    voiture neuve.
   note: |
-    Chaque année d'âge d'une voiture en diminue le prix, avec une forte décôte
-    les premières années.
+    Selon cet
+    [article](https://www.carizy.com/blog/article/decote-voiture-impacts) ou
+    [celui-ci](https://www.fiches-auto.fr/articles-auto/argent-economie/s-2952-decote-d-une-voiture-variables-et-estimation.php),
+    on peut estimer une valeur moyenne de décote dégressive au fur et à mesure
+    de sa mise en circulation : 
 
-    En parallèle, chaque année d'âge en diminue la durée de vie, en lien
-    également avec son utilisation et son entretien. Nous prenons ce paramètre
-    essentiel en compte pour estimer sa durée de vie restante et donc son prix
-    d'achat amorti.
+    | Temps écoulé depuis la mise en circulation  | Décote moyenne |
+    |---------------------------------------------|----------------|
+    | 1 an                                        | 20-25%         |
+    | 2 ans                                       | 15%            |
+    | 3 ans                                       | 10-12%         |
+    | 4 ans                                       | 10%            |
+    | 5 ans et plus                               | 5-7%           |
 
-    ---
+    Récupérer l'information sur l'âge de la voiture d'occasion à l'achat afin
+    de calculer la décote compliquerait à la fois la saisie et le calcul. Nous
+    considérons que la plus-value de l'information ne justifie pas la
+    complexité supplémentaire car de toute façon, la décote permet d'estimer le
+    prix d'achat par défaut qui pourra être modifié par l'utilisateurice.
 
-    La valeur par moyenne ne nous est pas connue à ce stade. Nous prenons 2018
-    pour refleter le fait que beaucoup d'achats d'occasion sont des achats
-    d'optimisation : j'achète du presque neuf après la décôte initiale
-    importante.
+    Nous prenons donc un **âge moyen d'achat d'une voiture d'occasion
+    correspondant à la durée de détention moyenne d'une voiture (5 ans)** qui
+    semble correspondre à l'âge moyen d'une voiture d'occasion selon [cette
+    publication du
+    SDES](https://www.statistiques.developpement-durable.gouv.fr/immatriculations-des-voitures-particulieres-en-2023-rebond-dans-le-neuf-mais-un-marche-de-loccasion)
+    pour ainsi estimer une décote moyenne de ~60%.
 
 voiture . prix d'achat . estimé:
   titre: Prix d'achat estimé par défaut
+  decription: |
+    Prix d'achat moyen d'une voiture neuve en fonction du gabarit et de sa
+    motorisation.
   formule:
     variations:
       - si: voiture . gabarit = 'petite'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 15000
-            - si: voiture . motorisation = 'hybride'
               alors: 19000
+            - si: voiture . motorisation = 'hybride'
+              alors: 22000
             - si: voiture . motorisation = 'électrique'
-              alors: 25000
+              alors: 32000
       - si: voiture . gabarit = 'moyenne'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 20000
+              alors: 31000
             - si: voiture . motorisation = 'hybride'
-              alors: 23000
+              alors: 34000
             - si: voiture . motorisation = 'électrique'
-              alors: 30000
+              alors: 40000
       - si: voiture . gabarit = 'berline'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 30000
+              alors: 38000
             - si: voiture . motorisation = 'hybride'
-              alors: 37000
+              alors: 42000
             - si: voiture . motorisation = 'électrique'
-              alors: 44000
+              alors: 48000
       - si: voiture . gabarit = 'SUV'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 32000
+              alors: 40000
             - si: voiture . motorisation = 'hybride'
-              alors: 38000
+              alors: 44000
             - si: voiture . motorisation = 'électrique'
-              alors: 47000
+              alors: 50000
       - si: voiture . gabarit = 'VUL'
         alors:
           variations:
@@ -95,24 +113,47 @@ voiture . prix d'achat . estimé:
               alors: 38000
             - si: voiture . motorisation = 'électrique'
               alors: 45000
-      - sinon: 10
   unité: €
   note: |
-    Estimation du prix d'achat moyen d'une voiture neuve en France en fonction
-    de son gabarit et de sa motorisation.
+    La valeur du prix d'achat moyen d'une voiture neuve est importante pour le
+    calcul des coûts des alternatives et pas vraiment pour le calcul de la
+    voiture actuelle. En effet, le prix d'achat de la voiture actuelle pourra
+    facilement être renseigné par l'utilisateurice. C'est **pourquoi nous avons
+    choisi de nous baser sur des valeurs d'achat de voitures récentes**, car ce
+    seront elles qui seront les plus susceptibles d'être achetées en
+    remplacement de la voiture actuelle.
 
-    Peut de réelles sources fiables sur le prix moyen d'une voiture neuve pour
-    l'instant. Donc pour l'instant, nous avons estimé les prix d'achat en
-    fonction du modèle de voiture en 2016.
+    Il est **très difficile de trouver une valeur moyenne pour le prix d'achat
+    car il y a de grand écarts entre les gammes de voitures**, les valeurs sont
+    donc à prendre avec du recul et pose un problème sur la précision de
+    l'estimation notamment pour les alternatives.
 
-    TODO: prendre le modèle le plus vendu pour chaque catégorie et regarder son
-    prix d'achat moyen en 2021.
+    ### Sources
 
-    Sources utilisées:
-      - [L'Argus](https://www.largus.fr/mondial/prix-renault-zoe-2016-tarifs-et-equipements-de-la-ze-40-8154399.html)
+    Pour déterminer un prix d'achat moyen, nous avons utilisé le
+    [script](https://github.com/betagouv/publicodes-voiture/blob/main/scripts/prix-voiture.js)
+    avec les données récupérées sur le comparateur [Que
+    Choisir](https://www.quechoisir.org/comparatif-voiture-citadine-n3).
 
+    Autres sources utilisées:
+    - [_Le tarif des autos neuves par segment_ (Kidioui)](https://voiture.kidioui.fr/voiture-neuve/3.html)
+    - [L'Argus](https://www.largus.fr)
+    - [Caroom](https://www.caroom.fr/guide/voiture-propre/electrique/carrosserie/suv)
 
-voiture . thermique . consommation:
+    #### Pistes d'amélioration
+
+    Nous pourrions aller plus loin en prenant en compte les différents
+    carburants. Il faudrait alors trouver une source le détaillant. Cependant,
+    l'écart de prix n'est peut-être pas assez significatif pour justifier la
+    complexité supplémentaire.
+
+    Il serait également **nécessaire de trouver un moyen d'affiner l'estimation
+    du prix d'achat pour les alternatives** en se basant sur d'autres critères,
+    comme par exemple la **gamme du véhicule envisagée** (entré de gamme,
+    milieu de gamme, haut de gamme). Il faudra là aussi trouver une source
+    permettant de préciser le prix d'achat en fonction de ce critère.
+
+voiture . thermique . consommation carburant:
   question: Quelle est sa consommation moyenne ?
   applicable si:
     une de ces conditions:
@@ -121,18 +162,13 @@ voiture . thermique . consommation:
   par défaut: consommation estimée
   unité: l/100km
   plancher: 1
-  suggestions:
-    5 l/100km: 5
-    7 l/100km: 7
-    9 l/100km: 9
   description: |
-    Renseignez la consommation moyenne de votre voiture en litre par 100 km tel
+    Renseignez la consommation moyenne de votre voiture en litre aux 100 km tel
     que renseigné par le constructeur. Si vous ne la connaissez pas, vous
     pouvez laisser la valeur par défaut.
-  note: Les suggestions de réponse sont à la louche, à préciser et sourcer.
 
-voiture . thermique . consommation . consommation estimée:
-  titre: Consommation éstimée par défaut
+voiture . thermique . consommation estimée:
+  titre: Consommation estimée par défaut
   valeur: ngc . transport . voiture . thermique . consommation estimée
   unité: l/100km
   contexte:
@@ -140,6 +176,61 @@ voiture . thermique . consommation . consommation estimée:
     ngc . transport . voiture . gabarit: voiture . gabarit
     ngc . transport . voiture . motorisation: voiture . motorisation
     ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+
+voiture . électrique:
+  titre: Voiture électrique
+
+voiture . électrique . consommation électricité:
+  question: Quelle est sa consommation électrique moyenne ?
+  applicable si:
+    une de ces conditions:
+      - motorisation = 'électrique'
+      - motorisation = 'hybride'
+  par défaut: consommation estimée
+  unité: kWh/100km
+  plancher: 1
+  description: |
+    Renseignez la consommation moyenne de votre voiture en kWh par 100 km tel
+    que renseigné par le constructeur. Si vous ne la connaissez pas, vous
+    pouvez laisser la valeur par défaut.
+
+voiture . électrique . consommation estimée:
+  titre: Consommation estimée par défaut
+  valeur: ngc . transport . voiture . électrique . consommation estimée
+  unité: kWh/100km
+  contexte:
+    ngc . transport . voiture . utilisateur: "'propriétaire'"
+    ngc . transport . voiture . gabarit: voiture . gabarit
+
+voiture . électrique . prix kWh:
+  question: Quel est le prix du kWh ?
+  applicable si: motorisation = 'électrique'
+  par défaut: estimé
+  unité: €/kWh
+  description: |
+    Cette question n'est pas évidente sachant que les lieux de recharges sont
+    nombreux et que les tarifs varient.
+
+    Cela dit, il se peut que vous la rechargiez en grand majorité à un
+    endroit précis, souvent votre maison, ce qui simplifie la saisie.
+
+    Si vous ne savez pas, vous pouvez laisser la valeur par défaut.
+
+voiture . électrique . prix kWh . estimé:
+  titre: Prix du kWh estimé par défaut
+  applicable si: motorisation = 'électrique'
+  formule:
+    somme:
+      - électricité . TRV HC * 85%
+      - électricité . TRV HP * 15%
+  unité: €/kWh
+  note: |
+    On fait ici la même hypothèse que celle faite dans la note d'analyse
+    [_Voiture électrique : à quel coût
+    ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
+    de France Stratégie : l'essentiel des recharges à domicile est effectuée la
+    nuit.
+
 
 # NOTE:
 # Les questions suivantes sont des quasi copiées-collées de celles présentes
@@ -257,17 +348,27 @@ voiture . gabarit:
     Si vous ne savez pas quel gabarit choisir, vous pouvez penser à la taille
     comme (petite, moyenne, grande, 4x4 urbain, camionnette).
   note: |
-    Nous considérons que la voiture par défaut est une "Berline", en témoigne
-    [une étude menée par AAA
-    Data](https://www.alphabet.com/fr-fr/parc-automobile-roulant-les-donnees-cles)
-    qui indique que "Si les SUV ont représenté 38 % des ventes de véhicules en
-    2019, ils ne représentent que 16 % de la totalité des véhicules en
-    circulation, loin derrière les berlines qui comptent pour 58 %, soit 23
-    millions de véhicules."
+    ### Sur le choix des gabarits
+
+    Nous avons choisi de distinguer les types de voiture par leur gabarit. Cela
+    fait référence aux [segments
+    automobiles](https://fr.wikipedia.org/wiki/Classification_des_automobiles)
+    définis par des lettres en Europe (A, B, etc...).
+
+    Ne semblant pas y avoir de dénomination faisant consensus entre les
+    différents acteurs du secteur automobile (concessionnaires, site
+    constructeur, journalisme auto, Car Labelling, etc...), nous avons fait le
+    choix de garder la même division en 5 catégories et valeur par défaut que
+    celle utilisée par [Nos Gestes
+    Climat](https://nosgestesclimat.fr/documentation/transport/voiture/gabarit)
+    pour plus de compatibilité et de simplicité.
+
+    Nous avons tout de même choisit de les renommer pour facilité la
+    compréhension des utilisateurices.
   avec:
     petite:
       titre: Citadine
-      description: Citadine type Zoé, Fiat 500
+      description: Citadine type Zoé, Fiat 500, Clio
     moyenne:
       titre: Monospace
       description: Modèle au dessus de la petite citadine, type Mégane, Golf
@@ -288,6 +389,7 @@ voiture . thermique . prix carburant:
       - motorisation = 'thermique'
       - motorisation = 'hybride'
   par défaut: prix carburant moyen
+  plancher: 0
   description: |
     Renseignez le prix moyen du carburant que vous avez dû payer cette année.
     Si vous ne le connaissez pas, vous pouvez laisser la valeur par défaut.
@@ -306,18 +408,32 @@ voiture . thermique . prix carburant moyen:
         alors: 0.837
       - si: carburant = 'GPL'
         alors: 0.959
-  description: |
+  note: |
+    ### Source
+
     Données récupérées sur
     [prix-carburants-info.fr](https://prix-carburants-info.fr/) le 15 août
-    2024. Le site utilise les données de [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
+    2024.
+    Le site utilise les données de
+    [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
 
-# TODO
-voiture . durée de vie:
+voiture . durée de détention:
   question: Depuis combien de temps possédez-vous votre voiture ?
-  par défaut: 5
+  par défaut: 5.5
+  plancher: 0
   unité: an
-  plancher: 1
+  description: |
+    Renseignez la durée totale de détention de votre voiture. Si vous la
+    possédez depuis 5 ans et que vous comptez encore la garder 4 ans,
+    renseignez 9 ans.
   note: |
-    La durée de vie moyenne d'une voiture en France est de 8 ans
-    [source](https://www.lefigaro.fr/automobile/2019/01/02/30002-20190102ARTFIG00002-les-francais-gardent-leurs-voitures-plus-longtemps.php).
+    La durée de détention défini la durée sur la quelle amortir le prix
+    d'achat.
+
+    ### Source
+
+    Nous utilisons une valeur par défaut de 5,5 ans correspondant à la durée
+    de détention moyenne en 2020 (valeur relativement stable depuis 2015)
+    selon [_La sécurité routière en France - bilan de l'année 2021_ (ONISR
+    2022)](https://www.onisr.securite-routiere.gouv.fr/sites/default/files/2022-09/74-75%20Le%20parc%20automobile%20des%20m%C3%A9nages%20V5.pdf).
 

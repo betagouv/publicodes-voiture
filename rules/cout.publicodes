@@ -1,56 +1,400 @@
-coût:
-  titre: Coûts
+coûts:
 
-coût . voiture:
-  titre: Coût total de votre voiture
+coûts . voiture:
+  titre: Coûts annuels de votre voiture
   description: |
-    Coût total de votre voiture par an.
-
-    Nous utilisons le calcul du `coût au km` du modèle de
-    [futur.eco](https://futur.eco) pour calculer le coût total de votre
-    voiture.
-  formule: usage . km annuels * futureco . voiture . coûts au km
+    Coûts répartis entre les coûts liés à la possession d'une voiture (achat,
+    assurance, etc...) et les coûts liés à son utilisation (carburant,
+    entretien, etc...).
+  formule:
+    somme:
+      - coûts de possession
+      - coûts d'utilisation
   unité: €/an
-  contexte:
-    futureco . trajet . voyageurs: 1
-    futureco . voiture . consommation thermique:
-      valeur:
-        # TODO: factoriser avec empreinte
-        # Permet de forcer l'utilisation de la consommation estimée lors des
-        # recalculs pour les alternatives.
-        #
-        # Par défaut, si la personne n'a pas renseigné le prix d'achat, on avec
-        # le mécansime `plancher`, la règle `prix d'achat` est évaluée à 1.
-        variations:
-          - si: voiture . thermique . consommation > 1
-            alors: voiture . thermique . consommation
-          - sinon: voiture . thermique . consommation . consommation estimée
-    futureco . voiture . km annuels . par défaut: usage . km annuels
-    futureco . voiture . prix d'achat:
-      valeur:
-        # Permet de forcer l'utilisation du prix d'achat estimé lors des
-        # recalculs pour les alternatives.
-        #
-        # Par défaut, si la personne n'a pas renseigné le prix d'achat, on avec
-        # le mécansime `plancher`, la règle `prix d'achat` est évaluée à 1.
-        variations:
-          - si: voiture . prix d'achat > 1
-            alors: voiture . prix d'achat
-          - sinon: voiture . prix d'achat . estimé
-    futureco . voiture . motorisation:
-      variations:
-        - si: voiture . motorisation = 'thermique'
-          alors:
-            variations:
-              - si: voiture . thermique . carburant = 'gazole B7 ou B10'
-                alors: "'diesel'"
-              - si: voiture . thermique . carburant = 'essence E5 ou E10'
-                alors: "'essence'"
-              - si: voiture . thermique . carburant = 'essence E85'
-                alors: "'biocarburant'"
-        - sinon: voiture . motorisation
-    # TODO: manage hybride
-    futureco . trajet voiture . prix carburant: voiture . thermique . prix carburant
-    futureco . voiture . occasion: voiture . occasion
-    futureco . voiture . occasion . année de fabrication: voiture . occasion . année de fabrication
+  note: |
+    ### Historique
+
+    Ce modèle de calcul des coûts d'une voiture utilisait dans sa première version
+    le modèle de [futur.eco](https://futur.eco/cout-voiture) permettant de calculer
+    le coût au km d'un trajet en voiture. Cependant, des limitations sont apparues
+    et le modèle a été réécrit en changeant notamment de fonction d'amortissement.
+
+    Une partie des valeurs ont été reprises du modèle de
+    [futur.eco](https://futur.eco/cout-voiture) et le modèle reste une source
+    d'inspiration.
+
+coûts . voiture . coûts de possession:
+  titre: Coûts de possession annuels
+  description: |
+    Ensemble des coûts liés à la possession d'une voiture et qui peuvent par
+    conséquent, être négligés dans le calcul des coûts d'une voiture louée par
+    exemple.
+  formule:
+    somme:
+      - achat amorti
+      - contrôle technique
+      - entretien
+      - assurance
+      - certificat d'immatriculation amorti
+  unité: €/an
+
+coûts . voiture . coûts de possession . contrôle technique:
+  titre: Coût annuel du contrôle technique
+  valeur: 85 € / 2 an
+  note: |
+    Le contrôle technique est obligatoire tous les deux ans pour les voitures
+    de plus de 4 ans (voir
+    [economie.gouv.fr](https://www.economie.gouv.fr/dgccrf/Publications/Vie-pratique/Fiches-pratiques/Vehicule-automobile-controle-technique)).
+
+    ### Sources
+
+    La valeur moyenne du contrôle technique est estimée à 85 € en 2024 à
+    partir des données de l'API
+    [data.economie.gouv.fr/explore/embed/dataset/prix-controle-technique/](https://data.economie.gouv.fr/explore/embed/dataset/prix-controle-technique/analyze/?dataChart=eyJxdWVyaWVzIjpbeyJjb25maWciOnsiZGF0YXNldCI6InByaXgtY29udHJvbGUtdGVjaG5pcXVlIiwib3B0aW9ucyI6e319LCJjaGFydHMiOlt7ImFsaWduTW9udGgiOnRydWUsInR5cGUiOiJiYXIiLCJmdW5jIjoiQVZHIiwieUF4aXMiOiJwcml4X3Zpc2l0ZSIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6IiM0NDcwNDkifV0sInhBeGlzIjoiY2F0X2VuZXJnaWVfaWQiLCJtYXhwb2ludHMiOm51bGwsInRpbWVzY2FsZSI6IiIsInNvcnQiOiIiLCJzZXJpZXNCcmVha2Rvd25UaW1lc2NhbGUiOiIifV0sImRpc3BsYXlMZWdlbmQiOnRydWUsImFsaWduTW9udGgiOnRydWUsInRpbWVzY2FsZSI6IiJ9) :
+
+
+coûts . voiture . coûts de possession . entretien:
+  question: Combien coûte l'entretien de votre voiture ?
+  description: |
+    Renseignez le coût annuel moyen de l'entretien de votre voiture hors
+    contrôle technique. Cela comprend les réparations occasionnelles,
+    changement de batterie, etc...
+    Si vous ne connaissez pas ce coût, vous pouvez laisser la valeur par
+    défaut.
+  par défaut: entretien estimé
+  plancher: 0
+  unité: €/an
+
+coûts . voiture . coûts de possession . entretien estimé:
+  titre: Estimation du coût d'entretien moyen
+  description: |
+    Estimation du coût d'entretien moyen de votre voiture par an en prenant
+    en compte les révisions annuelles et les réparations occasionnelles.
+  formule:
+    variations:
+      - si: voiture . motorisation = 'hybride'
+        alors: entretien thermique moyen * 90%
+      - si: voiture . motorisation = 'électrique'
+        alors: entretien thermique moyen * 80%
+      - sinon: entretien thermique moyen
+  note: |
+    Il n'existe pour l'instant pas de sources détaillées sur le coût
+    d'entretien. Pour une première estimation, nous avons considéré un coût
+    d'entretien moyen et appliqué un ratio en fonction de la motorisation du
+    véhicule comme cela est fait dans la note d'analyse [_Voiture électrique :
+    à quel coût
+    ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
+    de France Stratégie.
+
+    ### Pistes d'amélioration
+
+    De nombreux articles estiment le coût d'entretien en fonction des km
+    parcourus. Par exemple, la fréquence recommandée pour effectuer une
+    vidange varie entre 7000 et 30 000 km parcourus en fonction des sources
+    et du type de véhicule. Se pose donc la question des sources à utiliser
+    et de la façon de répartir ces coûts en fonction des km annuels
+    parcourus.
+
+    Le modèle de
+    [Futur.eco](https://futur.eco/documentation/voyage/voiture/co%C3%BBt-de-possession/entretien?lu=oui)
+    prend en compte un ratio d'usage pour diminuer les coûts d'entretien pour
+    les voitures roulant peu. Pour l'instant, nous utilisons des coûts fixes
+    pour l'entretien basé sur la note d'analyse [_Voiture électrique : à quel
+    coût
+    ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
+    de France Stratégie afin de simplifier le calcul.
+
+    Dans une future version, nous pourrions essayer de rentrer dans le détail
+    et de proposer une modélisation plus fine des coûts d'entretien en fonction
+    des km parcourus et avoir une division plus fine des coûts d'entretien en
+    sous-postes.
+
+coûts . voiture . coûts de possession . entretien thermique moyen:
+  titre: Coût d'entretien moyen d'une voiture thermique
+  valeur: 1250 €/an
+  note: |
+    Valeur moyenne retenue dans la note d'analyse [_Voiture électrique : à quel
+    coût
+    ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
+    de France Stratégie (en retranchant le coût du contrôle technique qui est
+    comptabilisé à part).
+
+coûts . voiture . coûts de possession . assurance:
+  question: Quel est le coût de l'assurance de votre voiture ? 
+  description: |
+    Renseignez le coût annuel de l'assurance de votre voiture. Si vous ne
+    connaissez pas ce coût, vous pouvez laisser la valeur par défaut.
+  par défaut: assurance estimée
+  plancher: 0
+  unité: €/an
+
+coûts . voiture . coûts de possession . assurance estimée:
+  titre: Coût annuel estimé de l'assurance
+  formule:
+    variations:
+      - si: voiture . motorisation = 'électrique'
+        alors: 520 €/an
+      - sinon: 640 €/an
+  note: |
+    Estimation du coût annuel de l'assurance de votre voiture en fonction de
+    sa motorisation. Les primes d'assurance peuvent varier en fonction de
+    plusieurs critères (âge, lieu de résidence, etc...). Nous avons pris en
+    compte une prime moyenne pour une voiture thermique et une prime moyenne
+    pour une voiture électrique.
+
+    ### Sources
+
+    - [LesFurets.com](https://www.lesfurets.com/assurance-auto/types-vehicules/voiture-propre/electrique)
+
+coûts . voiture . coûts de possession . achat amorti:
+  titre: Coût annuel de l'achat de votre voiture
+  formule: voiture . prix d'achat / voiture . durée de détention
+  note: |
+    Le prix d'achat d'une voiture qu'elle soit neuve ou d'occasion représente
+    un facteur important du coût total du véhicule. Le choix de la fonction
+    d'amortissement est par conséquent crucial pour le calcul du coût annuel.
+
+    De nombreuses méthodes existe pour définir cette fonction : amortissement
+    linéaire sur toute la durée de vie ou sur la durée d'utilisation,
+    non-linéaire en _payant_ plus les premières années, amorti en retranchant
+    le prix de revente. L'amortissement sur la durée de vie peut se faire en
+    années ou bien en km parcourus.
+
+    Nous avons donc du faire un choix et avons décidé de choisir un
+    **amortissement linéaire sur la durée de détention**.
+
+    ### Historique de ce choix
+
+    La première version du modèle pour le calcul des coûts d'une voiture était
+    basée sur le modèle de [futur.eco](https://futur.eco/cout-voiture) qui
+    utilise un amortissement linéaire sur la durée de vie en années de la
+    voiture, en faisant l'hypothèse qu'en moyenne la voiture est gardée
+    jusqu'au bout de sa vie.
+
+    Si à l'échelle d'une voiture, il est probable qu'elle roule jusqu'à la fin de
+    sa vie, (c'est-à-dire qu'elle ne soit plus en état de fonctionner), à l'échelle
+    d'un.e conducteurice cela semble peu probable. En effet, selon le [bilan de
+    2021 de
+    l'ONSIR](https://www.onisr.securite-routiere.gouv.fr/sites/default/files/2022-09/74-75%20Le%20parc%20automobile%20des%20m%C3%A9nages%20V5.pdf), la durée de
+    détention n'est que de 5,5 ans alors que l'âge moyen des voitures hors d'usage (VHU)
+    est de 19 ans (voir
+    cet [article](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu)).
+
+    De plus, ce choix d'amortissement peut se justifier dans le contexte du
+    calcul du coût d'un trajet arbitraire (comme c'est le cas pour futur.eco).
+    Contexte qui ne permet de savoir facilement à ce moment là qu'elle sera la
+    durée de détention du véhicule. Or, dans le contexte d'un questionnement
+    sur le remplacement d'un véhicule, il est plus probable que la durée de
+    détention soit connue.
+
+coûts . voiture . coûts de possession . certificat d'immatriculation amorti:
+  titre: Coût annuel du certificat d'immatriculation
+  formule: certificat d'immatriculation / voiture . durée de détention
+
+# TODO: a compléter
+coûts . voiture . coûts de possession . certificat d'immatriculation:
+  titre: Coût  du certificat d'immatriculation (ex-carte grise)
+  formule:
+    variations:
+      - si: voiture . motorisation = 'électrique'
+        alors: 15 €
+      - sinon: 300 €
+  note: |
+    En attendant la remise en service du [simulateur de
+    l'État](https://www.service-public.fr/simulateur/calcul/cout-certificat-immatriculation),
+    nous utilisons la règle récupérée du modèle de
+    [Futur.eco](https://futur.eco/documentation/voyage/voiture/carte-grise/immatriculation).
+
+    ### Améliorations futur
+
+    A terme, il serait intéressant d'utiliser l'API du simulateur pour
+    récupérer et calculer le coût moyen du certificat d'immatriculation en
+    fonction du type de véhicule et si il est d'occasion.
+
+coûts . voiture . coûts d'utilisation:
+  titre: Coûts d'utilisation annuels
+  description: |
+    Ensemble des coûts liés à l'utilisation d'une voiture et qui peuvent par
+    conséquent, être pris en compte dans le calcul des coûts d'une voiture
+    louée ou partagée.
+  somme:
+    - consommation
+    - stationnement
+    - péage
+    - contraventions
+    - permis de conduire
+
+  unité: €/an
+
+coûts . voiture . coûts d'utilisation . consommation:
+  titre: Coût de la consommation annuelle
+  valeur: consommation au km * usage . km annuels
+
+coûts . voiture . coûts d'utilisation . consommation . consommation au km:
+  titre: Coût de la consommation au km
+  formule:
+    variations:
+      - si: voiture . motorisation = 'électrique'
+        alors: électrique
+      - si: voiture . motorisation = 'thermique'
+        alors: thermique
+      - si: voiture . motorisation = 'hybride'
+        alors: hybride
+  unité: €/km
+  note: |
+    Pour les voitures hybrides nous faisons la même hypothèse que pour la
+    note d'analyse [_Voiture électrique : à quel coût
+    ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
+    de France Stratégie.
+  avec:
+    thermique:
+      valeur: voiture . thermique . consommation carburant * voiture . thermique . prix carburant / 100
+      unité: €/km
+
+    électrique:
+      valeur: voiture . électrique . consommation électricité * voiture . électrique . prix kWh / 100
+      unité: €/km
+
+    hybride:
+      formule:
+        somme:
+          - consommation au km . thermique * 75%
+          - consommation au km . électrique * 25%
+      unité: €/km
+      note: |
+        Pour les voitures hybrides nous faisons la même hypothèse que pour la
+        note d'analyse [_Voiture électrique : à quel coût
+        ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
+        de France Stratégie.
+
+coûts . voiture . coûts d'utilisation . stationnement:
+  question: Combien coûte le stationnement de votre voiture ?
+  description: |
+    Renseignez le coût annuel associé au stationnement de votre voiture
+    (parking, garage, place payante, etc...).
+  par défaut: 50 €/mois
+  plancher: 0
+  unité: €/an
+  note: |
+    Valeur par défaut basée sur le [baromètre de
+    Yespark](https://www.yespark.fr/prix-parking?k=car).
+
+    ### Pistes d'amélioration
+
+    Peut de données sont disponibles sur le coût moyen qu'un.e conducteurice
+    dépense pour le stationnement de sa voiture. Il serait intéressant de
+    trouver des informations plus précises.
+
+    _A priori_, le coût de stationnement peut être plus élevé pour une
+    voiture électrique souhaitant bénéficier d'une borne de recharge, mais
+    nous n'avons pas encore de données pour le confirmer.
+
+coûts . voiture . coûts d'utilisation . péage:
+  titre: Coût annuel lié aux péages
+  question: Combien payez-vous en moyenne pour les péages ?
+  par défaut: 
+    valeur: estimé
+    arrondi: oui
+  plancher: 0
+  unité: €/an
+  avec:
+    estimé:
+      titre: Coût annuel estimé des péages
+      formule:
+        produit:
+          - prix au km
+          - usage . km annuels
+          - usage . km annuels . part autoroute
+
+    prix au km:
+      titre: Prix moyen du péage au km
+      valeur: 0.17194424757025703 €/km
+      note: |
+        Valeur moyenne calculée à l'aide du script
+        [`cout-autoroute.js`](https://github.com/betagouv/publicodes-voiture/blob/main/scripts/cout-autoroute.js)
+        utilisant lui-même les données de [France
+        Infos](https://www.francetvinfo.fr/economie/automobile/infographies-prix-des-peages-visualisez-l-augmentation-des-tarifs-en-2023-autoroute-par-autoroute_5917970.html)
+        comparant l'évolution des tarifs des autoroutes entre 2022 et 2023.
+
+coûts . voiture . coûts d'utilisation . contraventions:
+  question: Quel le coût des contraventions que vous payez ?
+  description: |
+    Il s'agit ici de toutes les contraventions qui surviennent : parking,
+    vitesse, ivresse, feu cassé, stop grillé, etc.
+
+    Bien sûr, le respect du code de la route varie énormément d'une personne à
+    l'autre, à vous d'estimer la votre.
+  par défaut:
+    valeur: recettes annuelles 2022 / parc français 2022
+    arrondi: oui
+  unité: €/an
+  plancher: 0
+  note: |
+    Cette question n'est pas évidente, mais elle est néanmoins non négligeable.
+    Les recettes des amendes diverses de circulation [ont atteint 1,8 milliards
+    d'euros en
+    [2022](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15),
+    dont 1 milliard pour les seuls radars (excès de vitesse). Ce qui donne 46€
+    par voiture et par an !
+
+    ### Source
+
+    Règle récupérée du modèle de calcul de [futur.eco](https://futur.eco/cout-voiture).
+
+    ### Piste d'amélioration
+    
+    Idéalement, il faudrait trouver le montant moyen payé par français par an.
+
+  avec:
+    recettes annuelles 2022:
+      description: |
+        Montant prévisionnel des recettes des amendes en circulation en 2022
+        selon un [rapport de la Cour des
+        comptes](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15)
+      valeur: 1784 millions de voiture.€/an
+
+    parc français 2022:
+      valeur: 38.7 millions de voiture
+      description: |
+        Nombre de voiture en circulation en France au 1er janvier 2022 selon le
+        [SDES](https://www.statistiques.developpement-durable.gouv.fr/387-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2022).
+
+
+coûts . voiture . coûts d'utilisation . permis de conduire:
+  formule: coût d'obtention / durée d'utilisation
+  unité: €/an
+  note: |
+    ### Source
+
+    Règle récupérée du modèle de [futur.eco](https://futur.eco/cout-voiture).
+  avec:
+    durée d'utilisation: durée de vie en bonne santé - âge d'obtention
+
+    âge d'obtention: 19 an
+
+    durée de vie en bonne santé:
+      valeur: 66 an
+      note: |
+        ### Source
+        - [_Espérance de vie en bonne santé : 67 ans pour les femmes, 65,6 ans
+          pour les hommes_
+          (vie-publique.fr)](https://www.vie-publique.fr/en-bref/288403-esperance-de-vie-en-bonne-sante-67-ans-femmes-656-ans-hommes)
+
+    coût d'obtention:
+      valeur: 1804 €
+      description: |
+        Sans conducteur avec permis, pas de km parcourus en voiture individuelle
+        !
+
+        Bien sûr, on peut se dire "Non mais tous les Français passent le permis
+        de toutes façon". Certes, une majorité le passe, mais avec le même
+        raisonnement, on prétend que tous les Français ont une voiture de toute
+        façon... et on en revient à un coût totalement sous-estimé.
+      note: |
+        ### Source
+
+        Le prix est tiré d'une [étude de l'UFC-Que Choisir de
+        2016](https://www.bfmtv.com/auto/combien-coute-le-permis-de-conduire-en-france_AV-202303270437.html)
+        qui semble rester encore réaliste selon
+        [BFMTV](https://www.bfmtv.com/auto/combien-coute-le-permis-de-conduire-en-france_AV-202303270437.html).
 

@@ -5,3 +5,10 @@ importer!:
   dans: commun
   les règles:
     - jours par an
+
+
+commun . voiture:
+
+commun . voiture . parc français 2022:
+  titre: Nombre de voiture en circulation en France au 1er janvier 2022
+  valeur: 38.7 millions de voiture
