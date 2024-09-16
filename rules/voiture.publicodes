@@ -8,13 +8,13 @@ voiture:
 
     Cependant, plus vous renseignerez de champs, plus l'estimation sera précise.
 
-
 voiture . prix d'achat:
   question: Quel est le prix d'achat de votre voiture ?
   par défaut:
     variations:
       - si: voiture . occasion
-        alors: prix d'achat . estimé * occasion . décote
+        #FIXME: décote depend de prix d'achat -> non applicable.
+        alors: prix d'achat . estimé * décote
       - sinon: prix d'achat . estimé
   plancher: 1
   unité: €
@@ -26,40 +26,6 @@ voiture . occasion:
   titre: Achat d'occasion
   question: Est-ce une voiture d'occasion ?
   par défaut: non
-
-voiture . occasion . décote:
-  titre: Décote du prix d'achat
-  valeur: 60 %
-  description: |
-    Décote moyenne du prix d'achat d'une voiture d'occasion par rapport à une
-    voiture neuve.
-  note: |
-    Selon cet
-    [article](https://www.carizy.com/blog/article/decote-voiture-impacts) ou
-    [celui-ci](https://www.fiches-auto.fr/articles-auto/argent-economie/s-2952-decote-d-une-voiture-variables-et-estimation.php),
-    on peut estimer une valeur moyenne de décote dégressive au fur et à mesure
-    de sa mise en circulation : 
-
-    | Temps écoulé depuis la mise en circulation  | Décote moyenne |
-    |---------------------------------------------|----------------|
-    | 1 an                                        | 20-25%         |
-    | 2 ans                                       | 15%            |
-    | 3 ans                                       | 10-12%         |
-    | 4 ans                                       | 10%            |
-    | 5 ans et plus                               | 5-7%           |
-
-    Récupérer l'information sur l'âge de la voiture d'occasion à l'achat afin
-    de calculer la décote compliquerait à la fois la saisie et le calcul. Nous
-    considérons que la plus-value de l'information ne justifie pas la
-    complexité supplémentaire car de toute façon, la décote permet d'estimer le
-    prix d'achat par défaut qui pourra être modifié par l'utilisateurice.
-
-    Nous prenons donc un **âge moyen d'achat d'une voiture d'occasion
-    correspondant à la durée de détention moyenne d'une voiture (5 ans)** qui
-    semble correspondre à l'âge moyen d'une voiture d'occasion selon [cette
-    publication du
-    SDES](https://www.statistiques.developpement-durable.gouv.fr/immatriculations-des-voitures-particulieres-en-2023-rebond-dans-le-neuf-mais-un-marche-de-loccasion)
-    pour ainsi estimer une décote moyenne de ~60%.
 
 voiture . prix d'achat . estimé:
   titre: Prix d'achat estimé par défaut
@@ -221,8 +187,8 @@ voiture . électrique . prix kWh . estimé:
   applicable si: motorisation = 'électrique'
   formule:
     somme:
-      - électricité . TRV HC * 85%
-      - électricité . TRV HP * 15%
+      - prix électricité . TRV HC * 85%
+      - prix électricité . TRV HP * 15%
   unité: €/kWh
   note: |
     On fait ici la même hypothèse que celle faite dans la note d'analyse
@@ -325,8 +291,8 @@ voiture . thermique . carburant:
       titre: Essence
       description: Essence E5 ou E10
     essence E85:
-      titre: Biocarburant
-      description: Essence E85 (biocarburants)
+      titre: Essence (E85)
+      description: Essence E85
     GPL:
       titre: GPL
       description: GPL (Gaz de Pétrole Liquéfiés)
@@ -417,23 +383,58 @@ voiture . thermique . prix carburant moyen:
     Le site utilise les données de
     [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
 
-voiture . durée de détention:
-  question: Depuis combien de temps possédez-vous votre voiture ?
-  par défaut: 5.5
-  plancher: 0
-  unité: an
+voiture . âge:
+  titre: Âge de la voiture
+  description: |
+    Âge de la voiture depuis sa première mise en circulation.
+
+    Cette valeur permet de calculer la décote de la voiture qui a un impact
+    important sur le prix d'achat.
+  valeur: commun . année courante - année de fabrication
+
+voiture . année de fabrication:
+  titre: Année de fabrication de la voiture
+  question: Quelle est son année de fabrication ?
+  description: |
+    Renseignez l'année de fabrication de votre voiture. 
+  par défaut: 
+    variations:
+      - si: occasion
+        alors: commun . année courante - âge moyen d'une voiture d'occasion
+      - sinon: commun . année courante - durée de détention moyenne
+  plafond: commun . année courante
+  plancher: 1900
+  arrondi: oui
+  avec:
+    âge moyen d'une voiture d'occasion:
+      description: |
+        Âge moyen des véhicules échangés sur le marché de l'occasion en 2023
+        estimé à 10,5 ans selon [cette publication du
+        SDES](https://www.statistiques.developpement-durable.gouv.fr/immatriculations-des-voitures-particulieres-en-2023-rebond-dans-le-neuf-mais-un-marche-de-loccasion).
+      valeur: 10.5 an
+
+# TODO: ajouter un warning si la durée de détention est supérieure à l'âge de la voiture.
+voiture . durée de détention totale:
+  question: Combien de temps envisagez-vous de garder votre voiture au total ?
   description: |
     Renseignez la durée totale de détention de votre voiture. Si vous la
     possédez depuis 5 ans et que vous comptez encore la garder 4 ans,
     renseignez 9 ans.
+  par défaut: durée de détention moyenne
+  plancher: 0
+  unité: an
   note: |
     La durée de détention défini la durée sur la quelle amortir le prix
     d'achat.
 
+voiture . durée de détention moyenne:
+  description: |
+    Durée de détention moyenne d'une voiture en France en 2022.
+  valeur: 5.5 an
+  note: |
     ### Source
 
     Nous utilisons une valeur par défaut de 5,5 ans correspondant à la durée
     de détention moyenne en 2020 (valeur relativement stable depuis 2015)
     selon [_La sécurité routière en France - bilan de l'année 2021_ (ONISR
     2022)](https://www.onisr.securite-routiere.gouv.fr/sites/default/files/2022-09/74-75%20Le%20parc%20automobile%20des%20m%C3%A9nages%20V5.pdf).
-

@@ -45,6 +45,14 @@ export default function generateAlternatives(rules) {
       const baseContexte = {
         "voiture . gabarit": `'${gabarit}'`,
         "voiture . motorisation": `'${motorisation}'`,
+        // FIXME: could a cleaner solution could be found to use estimated values?
+        "voiture . prix d'achat": {
+          valeur: "voiture . prix d'achat . estimé",
+          contexte: {
+            "voiture . gabarit": `'${gabarit}'`,
+            "voiture . motorisation": `'${motorisation}'`,
+          },
+        },
         "voiture . électrique . consommation électricité": {
           valeur: "voiture . électrique . consommation estimée",
           contexte: {

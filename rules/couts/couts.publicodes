@@ -148,7 +148,7 @@ coûts . voiture . coûts de possession . assurance estimée:
 
 coûts . voiture . coûts de possession . achat amorti:
   titre: Coût annuel de l'achat de votre voiture
-  formule: voiture . prix d'achat / voiture . durée de détention
+  formule: (voiture . prix d'achat - valeur résiduelle) / voiture . durée de détention totale
   note: |
     Le prix d'achat d'une voiture qu'elle soit neuve ou d'occasion représente
     un facteur important du coût total du véhicule. Le choix de la fonction
@@ -163,7 +163,7 @@ coûts . voiture . coûts de possession . achat amorti:
     Nous avons donc du faire un choix et avons décidé de choisir un
     **amortissement linéaire sur la durée de détention**.
 
-    ### Historique de ce choix
+    #### Historique de ce choix
 
     La première version du modèle pour le calcul des coûts d'une voiture était
     basée sur le modèle de [futur.eco](https://futur.eco/cout-voiture) qui
@@ -186,10 +186,20 @@ coûts . voiture . coûts de possession . achat amorti:
     durée de détention du véhicule. Or, dans le contexte d'un questionnement
     sur le remplacement d'un véhicule, il est plus probable que la durée de
     détention soit connue.
-
+  avec:
+    valeur résiduelle:
+      titre: Valeur résiduelle du véhicule à la revente
+      description: |
+        Prix estimé de revente de votre voiture à la fin de son utilisation,
+        permettant ainsi d'amortir uniquement la différence entre le prix
+        d'achat et la valeur résiduelle.
+      valeur: voiture . prix d'achat * décote
+      contexte:
+        décote . durée décote: voiture . durée de détention totale
+        
 coûts . voiture . coûts de possession . certificat d'immatriculation amorti:
   titre: Coût annuel du certificat d'immatriculation
-  formule: certificat d'immatriculation / voiture . durée de détention
+  formule: certificat d'immatriculation / voiture . durée de détention totale
 
 # TODO: a compléter
 coûts . voiture . coûts de possession . certificat d'immatriculation:

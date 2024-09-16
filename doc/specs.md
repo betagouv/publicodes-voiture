@@ -315,6 +315,14 @@ Avec ce choix, des questions peuvent se poser :
 > neuve et pour l'occasion ne pas la décompter ? Comment faire pour reporter
 > cette _dette d'empreinte_ lors d'un futur achat ?
 
+#### Durée de détention
+
+Ayant choisit un amortissement linéaire du prix d'achat sur la durée de
+détention, il est nécessaire de déterminer cette durée de détention.
+Or, trouver la bonne formulation afin de signifier que **cette durée
+comprend à la fois le temps écoulé depuis l'achat mais également
+le temps restant avant la revente n'est pas évident**.
+
 ### Estimation du prix d'achat
 
 Pour le calcul des coûts de la voiture actuelle, il n'est pas nécessaire d'être
@@ -433,3 +441,4 @@ Le type de trajet à pour but d'affiner l'estimation des coûts de la catégorie
 etc... (Voir [futur.eco/cout-voiture](https://futur.eco/cout-voiture).
 
 <details>
+```

@@ -1,0 +1,57 @@
+# NOTE: on pourrait vouloir extraire le prix d'achat comme paramètre pour
+# rendre le modèle plus générique. Cependant, pour l'instant il est possible
+# d'écraser la règle `voiture . prix d'achat` dans un `contexte`. Pour
+# l'instant, par soucis de performance, nous privilégions cette solution pour
+# éviter les les recaculs inutiles.
+décote:
+  titre: Calcul de la décote d'une voiture
+  description: |
+    Ce modèle permet de calculer la décote moyenne d'une voiture en fonction de
+    son âge.
+
+    La décote est une estimation de la perte de valeur d'un bien, ici d'une
+    voiture, au fil du temps. Elle s'explique par l'usure du véhicule, son
+    obsolescence, l'évolution des normes environnementales, etc...
+
+    A noter que le prix d'une voiture peut grandement varier en fonction du
+    modèle, de l'état du véhicule et que seul une comparaison avec les prix du
+    marché à un instant donné permettra de déterminer le prix de vente réel.
+    Par conséquent, **la décote calculée ici est une estimation moyenne**.
+  formule:
+    variations:
+      - si: durée décote <= 1
+        alors: 20%
+      - si: durée décote <= 2
+        alors: 35%
+      - si: durée décote <= 3
+        alors: 45%
+      - si: durée décote <= 4
+        alors: 55%
+      - sinon: 60%
+  note: |
+    ### Sources
+
+    Selon cet
+    [article](https://www.carizy.com/blog/article/decote-voiture-impacts) ou
+    [celui-ci](https://www.fiches-auto.fr/articles-auto/argent-economie/s-2952-decote-d-une-voiture-variables-et-estimation.php),
+    on peut estimer une valeur moyenne de décote dégressive au fur et à mesure
+    de sa mise en circulation : 
+
+    | Temps écoulé depuis la mise en circulation  | Décote moyenne |
+    |---------------------------------------------|----------------|
+    | 1 an                                        | 20-25%         |
+    | 2 ans                                       | 15%            |
+    | 3 ans                                       | 10-12%         |
+    | 4 ans                                       | 10%            |
+    | 5 ans et plus                               | 5-7%           |
+
+    ### Pistes d'amélioration
+
+    Le taux de décote varie d'un type de motorisation à un autre. Il serait
+    pertinent de prendre en compte ce critère pour affiner le calcul.
+    Cependant, il n'existe pas réellement de sources pour le faire.
+  avec: 
+    durée décote:
+      description: Durée sur laquelle la décote est appliquée.
+      par défaut: voiture . âge
+      unité: an
