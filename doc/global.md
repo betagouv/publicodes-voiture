@@ -1,7 +1,5 @@
 # Document de travail
 
-Emile Rolley | Août 2024
-
 ## Objectif
 
 Ce modèle de calcul a pour but d'être utilisé dans l'application
@@ -12,7 +10,9 @@ leurs usages.
 
 Le but de ce modèle est donc de permettre le calcul d'une estimation de
 l'empreinte carbone d'une voiture (fabrication et usage) ainsi que son coût
-monétaire (achat, entretien, carburant, etc.).
+monétaire (achat, entretien, carburant, etc.) et de permettre de fournir une
+listes des différentes options alternatives au véhicule actuel (voir ce
+[document](/alternatives.md) pour plus d'informations sur les alternatives).
 
 Un client autonome est disponible pour ce modèle :
 [agir-voiture](https://github.com/betagouv/agir-voiture).
@@ -106,42 +106,7 @@ problème de cohérence du calcul et potentiellement des règles de conversions
 compliquant encore une fois le calcul et la compréhension que l'on peut s'en
 faire.
 
-Le choix de la fonction d'amortissement du prix d'achat sur la durée de vie est
-également discutable pour notre modèle.
-
-Afin d'éviter ces limitations il semblerait plus judicieux de réécrire le
-modèle dans une nouvelle version.
-
-### Première version - v1
-
-Pour avoir la main sur la structure et les hypothèses du calcul il parait
-intéressant de repartir _à zéro_ sur l'implémentation. Mais avant cela, il
-préférable de prendre un peu de recul et de réfléchir aux valeurs nécessaires
-au calcul et à la façon de procéder.
-
-Rappelons que le but du modèle étant d'être utilisé dans la plateforme
-[`Agir`](https://agir.beta.gouv.fr) en réutilisant un maximum des données
-collectées et que le modèle `NGC` est déjà utilisé pour le calcul du bilan
-carbone. Il **parait donc raisonnable que de se baser sur la situation de `NGC`
-permettrait la réutilisation de nombreuses information** tout en réduisant les
-étapes de conversion des formats de données (voir la [Méthode d'intégration de
-services
-externes](https://github.com/betagouv/agir-voiture/blob/main/doc/reflexion-integration-service.md)).
-
-Se baser la situation de `NGC` permettrait _a priori_ de pouvoir se concentrer
-dans premier temps uniquement sur la réimplémentation du calcul du coût.
-
----
-
-## Conception de la v1
-
-Essayons de définir les règles pour atteindre l'objectif final : _suggérer une
-meilleure alternative à la voiture actuelle de l'utilisateurice si garder la
-voiture actuelle n'est pas la meilleure option_.
-
-### La _meilleure_ alternative
-
-La meilleure alternative est celle qui minimise la `durée d'amortissement` de
+Le choix de la fonction d'amortissement` de
 l'achat/construction).
 
 La achat/construction de la voiture est amortie lorsque l'`économie réalisée sur
@@ -364,7 +329,23 @@ qui aura la mains sur les données renseignées**.
 
 ### Amortissement de l'empreinte de la construction
 
-TODO
+> Réflexions liées :
+>
+> - https://github.com/incubateur-ademe/nosgestesclimat/issues/816
+> - https://github.com/incubateur-ademe/nosgestesclimat/issues/2127
+
+Actuellement, le calcul de l'empreinte carbone reprenant celui du modèle
+`transport . voiture` de NGC, l'**empreinte de la construction est amortie sur
+la durée de vie totale de la voiture (en km parcourus)** et se [reflète donc
+dans le nombre de km parcourus par
+an](https://nosgestesclimat.fr/documentation/transport/voiture/construction)
+avec un
+[seuil](https://nosgestesclimat.fr/documentation/transport/voiture/construction/seuil-km)
+pour les _petits rouleurs_. Ce qui signifie que **plus de km sont parcourus à
+l'année, plus l'empreinte liée à la construction augmente**.
+
+Cette approche reparti la **responsabilité de l'empreinte de la construction
+entre les différents propriétaires au prorata de leurs utilisation**.
 
 ### Quid des réglementation et interdiction sur des catégories de véhicules ?
 
@@ -380,11 +361,29 @@ TODO
 - [_Analyse de cycle de vie appliquée a un véhicule ou un équipement automobile - Préconisations méthodologiques_ (PFA)](https://pfa-auto.fr/wp-content/uploads/2023/04/DT_Me%CC%81thodologie_2023_V15_FRANCAIS.pdf)
 - [_Véhicules hors d'usage (VHU)_ (ADEME)](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu)
 - [_Compte d’affectation spéciale « Contrôle de la circulation et du stationnement routiers »_, 2022 (Cour des comptes)](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15)
+- [_Vieillissement du parc automobile d’occasion, pourquoi ?_ 2023 (LeBoncoin)](https://leboncoinsolutionspro.fr/actualites/vieillissement-du-parc-automobile-doccasion-pourquoi/)
+- [_Baromètre du financement automobile européen_ 2021 (Eurogroup Consulting)](https://www.eurogroupconsulting.com/wp-content/uploads/2021/11/Eurogroup-Consulting_Barometre-financement-auto-2021.pdf)
+- [_Budget de l'automobiliste en 2019_ (Automobile Club Association)](https://www.automobile-club.org/assets/doc/Budget_de_lAutomobiliste_2020_BD.pdf)
+- [_Note d'analyse - Autopartage_ 2018 (The Shift Project)](https://theshiftproject.org/wp-content/uploads/2017/12/Analyse-Autopartage-V12-1.pdf)
+- [_Enquête Autopartage 2022_ (ADEME)](https://librairie.ademe.fr/mobilite-et-transport/5804-enquete-autopartage-2022.html)
+
+### Sites de références
+
+- [nosgestesclimat.fr](https://nosgestesclimat.fr/)
+- [futur.eco](https://futur.eco/)
+- [Car Labelling](https://carlabelling.ademe.fr/)
+- [mes-aides.francetravail.fr](https://mes-aides.francetravail.fr)
+- [Je roule en électrique](https://www.je-roule-en-electrique.fr/)
 
 ### Modèles existants
 
+- [Je change ma voiture](https://jechangemavoiture.gouv.fr/jcmv/)
 - [calculis.net](https://calculis.net/cout-km)
 - [toutcalculer.com](https://www.toutcalculer.com/automobile/cout-kilometre-moto-voiture.php)
+
+### Comparateurs de prix
+
+- [elite-auto.fr](https://www.elite-auto.fr/recherche?prod_ELITE_OFFERS%5BrefinementList%5D%5Bcategory%5D%5B0%5D=3&prod_ELITE_OFFERS%5BrefinementList%5D%5BtypeForRecherche%5D%5B0%5D=Particulier&prod_ELITE_OFFERS%5BrefinementList%5D%5BsegmentEliteGroup%5D%5B0%5D=citadine&prod_ELITE_OFFERS%5BrefinementList%5D%5BenergieNormalized%5D%5B0%5D=essence)
 
 ---
 

@@ -203,7 +203,7 @@ coûts . voiture . coûts de possession . certificat d'immatriculation amorti:
 
 # TODO: a compléter
 coûts . voiture . coûts de possession . certificat d'immatriculation:
-  titre: Coût  du certificat d'immatriculation (ex-carte grise)
+  titre: Coût du certificat d'immatriculation (ex-carte grise)
   formule:
     variations:
       - si: voiture . motorisation = 'électrique'

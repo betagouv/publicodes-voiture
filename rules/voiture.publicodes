@@ -129,9 +129,9 @@ voiture . thermique . consommation carburant:
   unité: l/100km
   plancher: 1
   description: |
-    Renseignez la consommation moyenne de votre voiture en litre aux 100 km tel
-    que renseigné par le constructeur. Si vous ne la connaissez pas, vous
-    pouvez laisser la valeur par défaut.
+    Renseignez la consommation réelle de votre voiture en litre aux 100 km. Si
+    vous ne la connaissez pas, vous pouvez utiliser la valeur fournie par le
+    constructeur ou laisser la valeur par défaut.
 
 voiture . thermique . consommation estimée:
   titre: Consommation estimée par défaut
@@ -156,9 +156,9 @@ voiture . électrique . consommation électricité:
   unité: kWh/100km
   plancher: 1
   description: |
-    Renseignez la consommation moyenne de votre voiture en kWh par 100 km tel
-    que renseigné par le constructeur. Si vous ne la connaissez pas, vous
-    pouvez laisser la valeur par défaut.
+    Renseignez la consommation réelle de votre voiture en kWh aux 100 km. Si
+    vous ne la connaissez pas, vous pouvez utiliser la valeur fournie par le
+    constructeur ou laisser la valeur par défaut.
 
 voiture . électrique . consommation estimée:
   titre: Consommation estimée par défaut
