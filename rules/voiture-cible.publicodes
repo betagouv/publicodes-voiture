@@ -21,13 +21,14 @@ voiture . cible . achat envisagé:
     alternatives.
 
 voiture . cible . borne de recharge:
-  question: Avez-vous la possibilité d'installer une borne de recharge chez vous ?
+  question: Avez-vous la possibilité de recharger une voiture électrique au quotidien ?
   applicable si: achat envisagé
   par défaut: oui
   description: |
     Répondez "non" uniquement si vous vous êtes déjà renseigné sur la
-    possibilité d'installer une borne de recharge chez vous et que cela
-    est impossible.
+    possibilité de pouvoir recharger une voiture électrique au quotidien.
+    Par exemple, en installant une borne de recharge chez vous ou en utilisant
+    une borne en libre service. 
 
 # TODO: to factorize with voiture . gabarit
 voiture . cible . gabarit:
