@@ -16,15 +16,3 @@
 
 - Pour la location est-ce que l'on souhaite ignorer l'empreinte de la
   construction/coût d'achat ?
-
-### Listes des questions posées dans futureco
-
-Voici la liste des questions posées dans le modèle de Futur.eco qui ne sont pas
-actuellement posées actuellement mais qui pourraient être pertinentes.
-
-> **Note** : le modèle de Futur.eco a été conçu pour calculer le coût d'un
-> trajet en voiture et non le coût d'une voiture à l'année. Par conséquent,
-> certaines questions pourraient être difficile à répondre.
-
-- Quel est la part des trajets effectués en autoroute ? (Nulle (vous évitez
-  toutes les autoroutes payantes) ?)

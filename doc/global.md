@@ -1,7 +1,5 @@
 # Document de travail
 
-Emile Rolley | Août 2024
-
 ## Objectif
 
 Ce modèle de calcul a pour but d'être utilisé dans l'application
@@ -12,7 +10,9 @@ leurs usages.
 
 Le but de ce modèle est donc de permettre le calcul d'une estimation de
 l'empreinte carbone d'une voiture (fabrication et usage) ainsi que son coût
-monétaire (achat, entretien, carburant, etc.).
+monétaire (achat, entretien, carburant, etc.) et de permettre de fournir une
+listes des différentes options alternatives au véhicule actuel (voir ce
+[document](/alternatives.md) pour plus d'informations sur les alternatives).
 
 Un client autonome est disponible pour ce modèle :
 [agir-voiture](https://github.com/betagouv/agir-voiture).
@@ -364,7 +364,25 @@ qui aura la mains sur les données renseignées**.
 
 ### Amortissement de l'empreinte de la construction
 
-TODO
+> Réflexions liées :
+>
+> - https://github.com/incubateur-ademe/nosgestesclimat/issues/816
+> - https://github.com/incubateur-ademe/nosgestesclimat/issues/2127
+
+Actuellement, le calcul de l'empreinte carbone reprenant celui du modèle
+`transport . voiture` de NGC, l'**empreinte de la construction est amortie sur
+la durée de vie en km de la voiture** et se [reflète donc dans le nombre de km
+parcourus par
+an](https://nosgestesclimat.fr/documentation/transport/voiture/construction)
+avec un
+[seuil](https://nosgestesclimat.fr/documentation/transport/voiture/construction/seuil-km)
+pour les _petits rouleurs_. Ce qui signifie que **plus de km sont parcourus à
+l'année, plus l'empreinte de la construction augmente**.
+
+Cela, semble pertinent pour l'achat
+d'une voiture neuve car nous pouvons considérer que l'acheteureuse initiale est
+responsable de l'empreinte de la construction est l'amorti donc sur
+l'intégralité de la durée de vie de la voiture.
 
 ### Quid des réglementation et interdiction sur des catégories de véhicules ?
 
@@ -380,11 +398,16 @@ TODO
 - [_Analyse de cycle de vie appliquée a un véhicule ou un équipement automobile - Préconisations méthodologiques_ (PFA)](https://pfa-auto.fr/wp-content/uploads/2023/04/DT_Me%CC%81thodologie_2023_V15_FRANCAIS.pdf)
 - [_Véhicules hors d'usage (VHU)_ (ADEME)](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu)
 - [_Compte d’affectation spéciale « Contrôle de la circulation et du stationnement routiers »_, 2022 (Cour des comptes)](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15)
+- [_Vieillissement du parc automobile d’occasion, pourquoi ?_ 2023 (LeBoncoin)](https://leboncoinsolutionspro.fr/actualites/vieillissement-du-parc-automobile-doccasion-pourquoi/)
 
 ### Modèles existants
 
 - [calculis.net](https://calculis.net/cout-km)
 - [toutcalculer.com](https://www.toutcalculer.com/automobile/cout-kilometre-moto-voiture.php)
+
+### Comparateurs de prix
+
+- [elite-auto.fr](https://www.elite-auto.fr/recherche?prod_ELITE_OFFERS%5BrefinementList%5D%5Bcategory%5D%5B0%5D=3&prod_ELITE_OFFERS%5BrefinementList%5D%5BtypeForRecherche%5D%5B0%5D=Particulier&prod_ELITE_OFFERS%5BrefinementList%5D%5BsegmentEliteGroup%5D%5B0%5D=citadine&prod_ELITE_OFFERS%5BrefinementList%5D%5BenergieNormalized%5D%5B0%5D=essence)
 
 ---
 
