@@ -2,7 +2,7 @@ name: GitHub release and NPM publishing
 
 on:
   workflow_run:
-    workflows: ["Build rules"]
+    workflows: ["Build and test rules"]
     branches:
       - main
     types:

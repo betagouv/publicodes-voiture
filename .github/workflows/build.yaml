@@ -1,4 +1,4 @@
-name: Build rules
+name: Build and test rules
 
 on:
   push:
@@ -22,3 +22,7 @@ jobs:
       - id: build
         name: Compile the rules
         run: yarn build
+
+      - id: test
+        name: Test the rules
+        run: yarn test

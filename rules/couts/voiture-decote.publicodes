@@ -27,8 +27,16 @@ décote:
         alors: 45%
       - si: durée décote <= 4
         alors: 55%
-      - sinon: 60%
+      - sinon: 60 + (5 * (durée décote - 5))
+  plafond: 80%
+  unité: "%"
   note: |
+    Nous avons choisi un plafond de 80% pour la décote. Cette valeur est
+    arbitraire mais nous considérons que la valeur de revente d'une voiture
+    ne peut pas descendre en dessous de 20% de sa valeur d'achat. Nous
+    n'avons pas trouvé de sources fiables pour justifier ce choix, cela
+    pourrait être un point d'amélioration pour ce modèle.
+
     ### Sources
 
     Selon cet

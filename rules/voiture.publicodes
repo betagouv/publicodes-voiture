@@ -13,14 +13,21 @@ voiture . prix d'achat:
   par défaut:
     variations:
       - si: voiture . occasion
-        #FIXME: décote depend de prix d'achat -> non applicable.
-        alors: prix d'achat . estimé * décote
+        alors: prix d'achat . estimé * (100% - décote)
       - sinon: prix d'achat . estimé
   plancher: 1
   unité: €
   description: |
     Renseignez le montant que vous avez payé pour l'achat de votre voiture
     (hors primes ou aides à l'achat) qu'elle soit neuve ou d'occasion.
+  test:
+    prix d'achat par défaut:
+      contexte: []
+      valeur attendue: 38000 €
+    prix d'achat occasion:
+      contexte: 
+        voiture . occasion: oui
+      valeur attendue: 38000 € * 20%
 
 voiture . occasion:
   titre: Achat d'occasion
