@@ -119,6 +119,48 @@ voiture . prix d'achat . estimé:
     milieu de gamme, haut de gamme). Il faudra là aussi trouver une source
     permettant de préciser le prix d'achat en fonction de ce critère.
 
+    ##### Utilisation des données de Car Labelling
+
+    L'ADEME publie des [données](https://data.ademe.fr/datasets/ademe-car-labelling) (prix d'achat, consommation au 100, etc...) sur un ensemble de véhicules neufs
+    vendus en France. Ces données pourraient être utilisées comme source
+    de confiance pour déterminer le prix d'achat moyen d'une voiture neuve.
+    Cependant, il faudrait trouver un moyen de faire correspondre
+    les type de carrosserie de Car Labelling avec les gabarits de Nos Gestes Climat.
+
+    La solution qui parait la plus pertinent serait de plutôt établir la même
+    correspondance entre les gabarits et le
+    [poids](https://nosgestesclimat.fr/documentation/transport/voiture/bar%C3%A8me-construction/bar%C3%A8me-thermique)
+    des véhicules.
+
+    En utilisant les données de Car Labelling et en ignorant les modèles de la gamme `LUXE`
+    nous obtenons les résultats suivants :
+
+    | Poids (kg) | Motorisation | Prix moyen (€) | Nombre de véhicules |
+    | ---------- | ------------ | -------------- | ------------------- |
+    | < 1250     | thermique    | 24 670         | 452                 |
+    | < 1250     | électrique   | 27 228         | 12                  |
+    | < 1250     | hybride      | 22 101         | 172                 |
+    | 1250-1500  | thermique    | 38 078         | 1021                |
+    | 1250-1500  | électrique   | 35 564         | 18                  |
+    | 1250-1500  | hybride      | 33 268         | 191                 |
+    | 1500-1750  | thermique    | 47 512         | 444                 |
+    | 1500-1750  | électrique   | 40 162         | 56                  |
+    | 1500-1750  | hybride      | 49 298         | 270                 |
+    | 1750-2000  | thermique    | 56 769         | 83                  |
+    | 1750-2000  | électrique   | 51 102         | 8                   |
+    | 1750-2000  | hybride      | 61 374         | 399                 |
+    | > 2000     | thermique    | 53 250         | 67                  |
+    | > 2000     | électrique   | 55 443         | 14                  |
+    | > 2000     | hybride      | 76 385         | 56                  |
+
+    Cependant, il semblerait qu'il n'y ait pas assez de modèles électriques
+    pour obtenir une valeur significative. Nous nous attendons, en effet, à
+    ce que les modèles électriques soient plus chers que les modèles
+    thermiques pour un même gabarit.
+
+    C'est pourquoi nous avons choisi de ne pas utiliser ces données pour
+    l'instant.
+
 voiture . thermique . consommation carburant:
   question: Quelle est sa consommation moyenne ?
   applicable si:

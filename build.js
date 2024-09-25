@@ -25,7 +25,6 @@ const uiDestPath = "publicodes-voiture.ui.json"
 
 const model = getModelFromSource(srcFiles, {
   verbose: true,
-  ignore: ["./rules/futureco-cout-voiture.publicodes"],
 })
 const engine = check(model, "base")
 

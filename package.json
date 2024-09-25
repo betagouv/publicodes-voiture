@@ -32,10 +32,11 @@
     "doc:build": "yarn run build && cd online-doc && yarn run build"
   },
   "devDependencies": {
-    "@publicodes/tools": "^1.2.5"
+    "@publicodes/tools": "^1.2.5",
+    "csv-parser": "^3.0.0",
   },
   "peerDependencies": {
-    "publicodes": "^1.4.0"
+    "publicodes": "^1.5.1"
   },
   "license": "MIT",
   "publishConfig": {

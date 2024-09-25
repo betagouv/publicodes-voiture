@@ -515,7 +515,7 @@ d'entretien.
 
 ---
 
-### 10. Utiliser les voiture en libre-service
+### 10. Utiliser les voiture en autopartage
 
 | Implémentée | Faisabilité |
 | :---------: | :---------- |
@@ -523,9 +523,9 @@ d'entretien.
 
 #### Empreinte carbone 🟡
 
-Pour la voiture en libre-service ce pose la même question que pour la location,
-à savoir : **comment souhaitons-nous répartir l'empreinte de la construction
-?**
+Pour l'utilisation des voitures en autopartage pose la même question que pour
+la location, à savoir : **comment souhaitons-nous répartir l'empreinte de la
+construction ?**
 
 L'inconvénient avec le fait d'utiliser le même amortissement que pour la
 voiture en location est de ne pas mettre en avant la virtuosité de
@@ -585,6 +585,93 @@ affiché et plus encore pour les voitures d'occasion).
 
 A noter que **rentrer dans ce niveau de détail pourrait porter à confusion pour
 les alternatives avec des valeurs estimées moins précises**.
+
+#### Estimations des valeurs moyennes
+
+Utiliser les données [données de Car
+Labelling](https://data.ademe.fr/datasets/ademe-car-labelling) pour calculer
+les valeurs moyennes du prix d'achat et potentiellement de la consommation des
+véhicules en fonction de leur gabarit et de leur motorisation pose problème car
+Car Labelling classe les véhicules en fonction de leur carosserie (berline,
+break, etc...), or les gabarits utilisés dans le modèle de NGC se différencient
+en fonction de leur poids pour le calcul de l'[empreinte de la
+construction](https://nosgestesclimat.fr/documentation/transport/voiture/bar%C3%A8me-construction/bar%C3%A8me-thermique).
+
+Souhaitons-nous faire une correspondance entre les gabarits de NGC et les
+carrosseries de Car Labelling ? Et si oui, souhaitons-nous le faire en fonction
+de la dénomination ou du poids ? Par exemple, le modèle Captur de Renault
+possède une carosserie `TS TERRAINS/CHEMINS` ce qui correspond au gabarit `SUV`
+dans le modèle de NGC. Cependant, ce modèle à un poids de 1,2 tonnes, ce qui
+correspondrait à un gabarit `petite` dans le modèle de NGC.
+
+Pour le calcul de l'empreinte de la construction, le poids est un paramètre
+important. Cependant, pour le prix d'achat, le poids d'un véhicule n'est pas
+forcément un paramètre déterminant. Il **serait donc peut-être plus pertinent de
+faire la correspondance en fonction de la dénomination**. A confirmer en comparant
+les prix d'achat des véhicules en fonction de leur carrosserie ou de leur poids.
+
+##### Estimation du prix d'achat moyen à partir des données de Car Labelling
+
+> Les véhicules de la gamme `LUXE` ont été ignorés pour ne pas trop influencer
+> les moyennes.
+
+**Prix moyen par carosserie**
+
+| Carosserie          | Prix moyen (€) | Nombre de véhicules |
+| ------------------- | -------------- | ------------------- |
+| BERLINE             | 35 047         | 1207                |
+| BREAK               | 43 463         | 175                 |
+| CABRIOLET           | 51 774         | 120                 |
+| COMBISPACE          | 32 821         | 149                 |
+| COUPE               | 58 136         | 139                 |
+| MINIBUS             | 44 994         | 113                 |
+| MINISPACE           | 30 213         | 7                   |
+| MONOSPACE           | 56 386         | 12                  |
+| MONOSPACE COMPACT   | 38 676         | 74                  |
+| TS TERRAINS/CHEMINS | 45 864         | 1267                |
+
+**Prix moyen par poids**
+
+| Poids (kg) | Prix moyen (€) | Nombre de véhicules |
+| ---------- | -------------- | ------------------- |
+| < 1250     | 24 023         | 636                 |
+| 1250-1500  | 37 294         | 1230                |
+| 1500-1750  | 47 604         | 770                 |
+| 1750-2000  | 60 426         | 490                 |
+| > 2000     | 62 930         | 137                 |
+
+**Prix moyen par poids et par motorisation**
+
+| Poids (kg) | Motorisation | Prix moyen (€) | Nombre de véhicules |
+| ---------- | ------------ | -------------- | ------------------- |
+| < 1250     | thermique    | 24 670         | 452                 |
+| < 1250     | électrique   | 27 228         | 12                  |
+| < 1250     | hybride      | 22 101         | 172                 |
+| 1250-1500  | thermique    | 38 078         | 1021                |
+| 1250-1500  | électrique   | 35 564         | 18                  |
+| 1250-1500  | hybride      | 33 268         | 191                 |
+| 1500-1750  | thermique    | 47 512         | 444                 |
+| 1500-1750  | électrique   | 40 162         | 56                  |
+| 1500-1750  | hybride      | 49 298         | 270                 |
+| 1750-2000  | thermique    | 56 769         | 83                  |
+| 1750-2000  | électrique   | 51 102         | 8                   |
+| 1750-2000  | hybride      | 61 374         | 399                 |
+| > 2000     | thermique    | 53 250         | 67                  |
+| > 2000     | électrique   | 55 443         | 14                  |
+| > 2000     | hybride      | 76 385         | 56                  |
+
+Après comparaison, il **semblerait que l'estimation du prix d'achat moyen est
+relativement proportionnelle au poids du véhicule**. Nous utiliserons donc
+cette correspondance pour estimer le prix d'achat moyen des véhicules.
+d'autant plus que la carrosserie `BERLINE` est bien plus représentée que les
+autres, car elle regroupe à la fois des véhicules comme la Renault Zoé la
+Peugeot 508.
+
+A noter, cependant que les véhicules électriques sont peu représentés dans les
+données de Car Labelling et que les prix d'achat moyens ne sont pas forcément
+représentatifs. En effet, nous pourrions nous attendre à un prix moyen d'achat
+plus élevé pour les véhicules électriques et hybrides que pour les véhicules
+thermiques.
 
 ### Sur la différence entre le client autonome et l'intégration dans Agir
 
