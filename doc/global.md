@@ -366,6 +366,7 @@ entre les différents propriétaires au prorata de leurs utilisation**.
 - [_Budget de l'automobiliste en 2019_ (Automobile Club Association)](https://www.automobile-club.org/assets/doc/Budget_de_lAutomobiliste_2020_BD.pdf)
 - [_Note d'analyse - Autopartage_ 2018 (The Shift Project)](https://theshiftproject.org/wp-content/uploads/2017/12/Analyse-Autopartage-V12-1.pdf)
 - [_Enquête Autopartage 2022_ (ADEME)](https://librairie.ademe.fr/mobilite-et-transport/5804-enquete-autopartage-2022.html)
+- [_Le covoiturage en France, ses avantages et la réglementation en vigueur_ (ecologie.gouv.fr)](https://www.ecologie.gouv.fr/politiques-publiques/covoiturage-france-ses-avantages-reglementation-vigueur)
 
 ### Sites de références
 
@@ -374,6 +375,7 @@ entre les différents propriétaires au prorata de leurs utilisation**.
 - [Car Labelling](https://carlabelling.ademe.fr/)
 - [mes-aides.francetravail.fr](https://mes-aides.francetravail.fr)
 - [Je roule en électrique](https://www.je-roule-en-electrique.fr/)
+- [Observatoire.covoiturage.gouv.fr](https://observatoire.covoiturage.gouv.fr)
 
 ### Modèles existants
 

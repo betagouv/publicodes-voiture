@@ -46,6 +46,11 @@ l'amortissement, **cela n'a pas d'impact** car l'empreinte de la construction es
 déjà amortie sur la durée de vie totale de la voiture en km (voir
 [Amortissement de l'empreinte de la
 construction](./global.md#amortissement-de-lempreinte-de-la-construction)).
+Sauf si nous **décidons de considérer que la durée de vie de la voiture est
+rallongée** est donc que l'empreinte de la construction est amortie sur une durée
+plus longue. En effet, il y a un risque d'imcompréhension pour l'utilisateurice
+qui s'iel voit l'empreinte de la construction identique avec le fait de d'acheter
+une nouvelle voiture.
 
 ---
 
@@ -498,9 +503,9 @@ pourraient être estimés de la même manière que pour une voiture.
 
 ### 9. Covoiturage
 
-| Implémentée | Faisabilité |
-| :---------: | :---------- |
-|     Non     | ?           |
+| Implémentée | Faisabilité                                                                      |
+| :---------: | :------------------------------------------------------------------------------- |
+|     Non     | 🟢 une première version divisant les coûts et l'empreinte par 2 est envisageable |
 
 Pour modéliser le covoiturage, il est faut décider si nous souhaitons
 simplement **diviser les coûts et l'empreinte par le nombre de passagers** ou
@@ -509,9 +514,32 @@ considérant que la propriétaire à une plus grande responsabilité dans
 l'empreinte et que les passagères n'ont pas à payer les coûts de possession et
 d'entretien.
 
-#### Empreinte carbone ⚪
+#### Empreinte carbone 🟢
 
-#### Coûts ⚪
+Pour l'empreinte carbone, il faut choisir si nous souhaitons diviser
+l'empreinte totale par le nombre de passagers ou bien seulement l'empreinte de
+l'utilisation ?
+
+Selon l'[observatoire du
+covoiturage](https://observatoire.covoiturage.gouv.fr/observatoire/territoire/),
+il y a 2,17 personnes par véhicules.
+
+#### Coûts 🟢
+
+Pour les coûts, selon
+[ecologie.gouv.fr](https://www.ecologie.gouv.fr/politiques-publiques/covoiturage-france-ses-avantages-reglementation-vigueur)
+le conducteur peut facturer un montant devant se situer entre 20 et 60 centimes
+par km et par passager. Il est donc possible de modéliser un coût moyen en
+fonction du nombre de passagers.
+
+A noter qu'utiliser sa voiture pour du covoiturage allonge la durée
+d'utilisation de la voiture et donc **diminue l'empreinte de la construction
+par km**.
+
+Il faut également prendre en compte le coût de l'assurance de covoiturage.
+
+Possibilité d'avoir plusieurs aides : forfait mobilité durable et prime de 100
+euros.
 
 ---
 
