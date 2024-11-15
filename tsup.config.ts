@@ -5,7 +5,7 @@ export default defineConfig((options) => {
     entry: [
       "./src/index.ts",
       "./publicodes-build/index.js",
-      "./src/data/index.ts",
+      "./src/personas/index.ts",
     ],
     format: ["cjs", "esm"],
     dts: true,

@@ -29,10 +29,10 @@
       "require": "./dist/publicodes-build/index.cjs",
       "import": "./dist/publicodes-build/index.js"
     },
-    "./data": {
-      "types": "./dist/src/data/index.d.ts",
-      "require": "./dist/src/data/index.cjs",
-      "import": "./dist/src/data/index.js"
+    "./personas": {
+      "types": "./dist/src/personas/index.d.ts",
+      "require": "./dist/src/personas/index.cjs",
+      "import": "./dist/src/personas/index.js"
     }
   },
   "files": [
@@ -40,9 +40,9 @@
     "publicodes-build"
   ],
   "scripts": {
-    "generate-alternatives": "node scripts/generate-alternatives.js",
+    "precompile": "node scripts/precompile.js",
     "compile:rules": "publicodes compile src/rules",
-    "compile": "yarn run generate-alternatives && yarn compile:rules && tsup",
+    "compile": "yarn compile:rules && tsup",
     "test": "yarn compile:rules && vitest run",
     "doc": "yarn run build && cd online-doc && yarn run dev",
     "doc:build": "yarn run build && cd online-doc && yarn run build"
@@ -53,7 +53,8 @@
     "terser": "^5.36.0",
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
-    "vitest": "^2.1.1"
+    "vitest": "^2.1.1",
+    "yaml": "^2.6.0"
   },
   "publishConfig": {
     "access": "public"

@@ -32,16 +32,18 @@ export default function generateAlternatives(rules) {
     return []
   })
 
+  const alternatives = {}
+
   for (const motorisation of motorisations) {
-    rules[`empreinte . ${motorisation}`] = {
+    alternatives[`empreinte . ${motorisation}`] = {
       titre: `Ensemble des véhicules ${motorisation}`,
     }
-    rules[`coûts . ${motorisation}`] = {
+    alternatives[`coûts . ${motorisation}`] = {
       titre: `Ensemble des véhicules ${motorisation}`,
     }
     for (const gabarit of gabarits) {
       const gabaritTitle =
-        rules[`voiture . gabarit . ${gabarit}`]?.titre ?? gabarit
+        alternatives[`voiture . gabarit . ${gabarit}`]?.titre ?? gabarit
       const baseContexte = {
         "voiture . gabarit": `'${gabarit}'`,
         "voiture . motorisation": `'${motorisation}'`,
@@ -62,31 +64,33 @@ export default function generateAlternatives(rules) {
       }
 
       if (motorisation === "électrique") {
-        rules[`empreinte . ${motorisation} . ${gabarit}`] = {
+        alternatives[`empreinte . ${motorisation} . ${gabarit}`] = {
           titre: `${gabaritTitle} ${motorisation}`,
           unité: "kgCO2eq/an",
           valeur: "empreinte . voiture",
           contexte: baseContexte,
         }
-        rules[`coûts . ${motorisation} . ${gabarit}`] = {
+        alternatives[`coûts . ${motorisation} . ${gabarit}`] = {
           titre: `${gabaritTitle} ${motorisation}`,
           unité: "€/an",
           valeur: "coûts . voiture",
           contexte: baseContexte,
         }
       } else {
-        rules[`empreinte . ${motorisation} . ${gabarit}`] = {
+        alternatives[`empreinte . ${motorisation} . ${gabarit}`] = {
           titre: `Ensemble des ${gabaritTitle} ${motorisation}`,
         }
-        rules[`coûts . ${motorisation} . ${gabarit}`] = {
+        alternatives[`coûts . ${motorisation} . ${gabarit}`] = {
           titre: `Ensemble des ${gabaritTitle} ${motorisation}`,
         }
         for (const carburant of carburants) {
           const carburantTitle =
-            rules[`voiture . thermique . carburant . ${carburant}`]?.titre ??
-            carburant
+            alternatives[`voiture . thermique . carburant . ${carburant}`]
+              ?.titre ?? carburant
 
-          rules[`empreinte . ${motorisation} . ${gabarit} . ${carburant}`] = {
+          alternatives[
+            `empreinte . ${motorisation} . ${gabarit} . ${carburant}`
+          ] = {
             titre: `${gabaritTitle} ${motorisation} (${carburantTitle})`,
             unité: "kgCO2eq/an",
             valeur: "empreinte . voiture",
@@ -103,25 +107,28 @@ export default function generateAlternatives(rules) {
               },
             },
           }
-          rules[`coûts . ${motorisation} . ${gabarit} . ${carburant}`] = {
-            titre: `${gabaritTitle} ${motorisation} (${carburantTitle})`,
-            unité: "€/an",
-            valeur: "coûts . voiture",
-            contexte: {
-              ...baseContexte,
-              "voiture . thermique . carburant": `'${carburant}'`,
-              "voiture . thermique . consommation carburant": {
-                valeur: "voiture . thermique . consommation estimée",
-                contexte: {
-                  "voiture . gabarit": `'${gabarit}'`,
-                  "voiture . motorisation": `'${motorisation}'`,
-                  "voiture . thermique . carburant": `'${carburant}'`,
+          alternatives[`coûts . ${motorisation} . ${gabarit} . ${carburant}`] =
+            {
+              titre: `${gabaritTitle} ${motorisation} (${carburantTitle})`,
+              unité: "€/an",
+              valeur: "coûts . voiture",
+              contexte: {
+                ...baseContexte,
+                "voiture . thermique . carburant": `'${carburant}'`,
+                "voiture . thermique . consommation carburant": {
+                  valeur: "voiture . thermique . consommation estimée",
+                  contexte: {
+                    "voiture . gabarit": `'${gabarit}'`,
+                    "voiture . motorisation": `'${motorisation}'`,
+                    "voiture . thermique . carburant": `'${carburant}'`,
+                  },
                 },
               },
-            },
-          }
+            }
         }
       }
     }
   }
+
+  return alternatives
 }

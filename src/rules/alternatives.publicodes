@@ -1,0 +1,2054 @@
+# GENERATED FILE - DO NOT EDIT
+
+empreinte . thermique:
+  titre: Ensemble des véhicules thermique
+coûts . thermique:
+  titre: Ensemble des véhicules thermique
+empreinte . thermique . petite:
+  titre: Ensemble des petite thermique
+coûts . thermique . petite:
+  titre: Ensemble des petite thermique
+empreinte . thermique . petite . gazole B7 ou B10:
+  titre: petite thermique (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . thermique . petite . gazole B7 ou B10:
+  titre: petite thermique (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . thermique . petite . essence E5 ou E10:
+  titre: petite thermique (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . thermique . petite . essence E5 ou E10:
+  titre: petite thermique (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . thermique . petite . essence E85:
+  titre: petite thermique (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . thermique . petite . essence E85:
+  titre: petite thermique (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . thermique . petite . GPL:
+  titre: petite thermique (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . thermique . petite . GPL:
+  titre: petite thermique (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . thermique . moyenne:
+  titre: Ensemble des moyenne thermique
+coûts . thermique . moyenne:
+  titre: Ensemble des moyenne thermique
+empreinte . thermique . moyenne . gazole B7 ou B10:
+  titre: moyenne thermique (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . thermique . moyenne . gazole B7 ou B10:
+  titre: moyenne thermique (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . thermique . moyenne . essence E5 ou E10:
+  titre: moyenne thermique (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . thermique . moyenne . essence E5 ou E10:
+  titre: moyenne thermique (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . thermique . moyenne . essence E85:
+  titre: moyenne thermique (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . thermique . moyenne . essence E85:
+  titre: moyenne thermique (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . thermique . moyenne . GPL:
+  titre: moyenne thermique (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . thermique . moyenne . GPL:
+  titre: moyenne thermique (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . thermique . berline:
+  titre: Ensemble des berline thermique
+coûts . thermique . berline:
+  titre: Ensemble des berline thermique
+empreinte . thermique . berline . gazole B7 ou B10:
+  titre: berline thermique (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . thermique . berline . gazole B7 ou B10:
+  titre: berline thermique (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . thermique . berline . essence E5 ou E10:
+  titre: berline thermique (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . thermique . berline . essence E5 ou E10:
+  titre: berline thermique (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . thermique . berline . essence E85:
+  titre: berline thermique (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . thermique . berline . essence E85:
+  titre: berline thermique (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . thermique . berline . GPL:
+  titre: berline thermique (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . thermique . berline . GPL:
+  titre: berline thermique (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . thermique . SUV:
+  titre: Ensemble des SUV thermique
+coûts . thermique . SUV:
+  titre: Ensemble des SUV thermique
+empreinte . thermique . SUV . gazole B7 ou B10:
+  titre: SUV thermique (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . thermique . SUV . gazole B7 ou B10:
+  titre: SUV thermique (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . thermique . SUV . essence E5 ou E10:
+  titre: SUV thermique (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . thermique . SUV . essence E5 ou E10:
+  titre: SUV thermique (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . thermique . SUV . essence E85:
+  titre: SUV thermique (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . thermique . SUV . essence E85:
+  titre: SUV thermique (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . thermique . SUV . GPL:
+  titre: SUV thermique (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . thermique . SUV . GPL:
+  titre: SUV thermique (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . thermique . VUL:
+  titre: Ensemble des VUL thermique
+coûts . thermique . VUL:
+  titre: Ensemble des VUL thermique
+empreinte . thermique . VUL . gazole B7 ou B10:
+  titre: VUL thermique (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . thermique . VUL . gazole B7 ou B10:
+  titre: VUL thermique (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . thermique . VUL . essence E5 ou E10:
+  titre: VUL thermique (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . thermique . VUL . essence E5 ou E10:
+  titre: VUL thermique (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . thermique . VUL . essence E85:
+  titre: VUL thermique (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . thermique . VUL . essence E85:
+  titre: VUL thermique (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . thermique . VUL . GPL:
+  titre: VUL thermique (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . thermique . VUL . GPL:
+  titre: VUL thermique (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'thermique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . électrique:
+  titre: Ensemble des véhicules électrique
+coûts . électrique:
+  titre: Ensemble des véhicules électrique
+empreinte . électrique . petite:
+  titre: petite électrique
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+coûts . électrique . petite:
+  titre: petite électrique
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+empreinte . électrique . moyenne:
+  titre: moyenne électrique
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+coûts . électrique . moyenne:
+  titre: moyenne électrique
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+empreinte . électrique . berline:
+  titre: berline électrique
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+coûts . électrique . berline:
+  titre: berline électrique
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+empreinte . électrique . SUV:
+  titre: SUV électrique
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+coûts . électrique . SUV:
+  titre: SUV électrique
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+empreinte . électrique . VUL:
+  titre: VUL électrique
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+coûts . électrique . VUL:
+  titre: VUL électrique
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'électrique'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'électrique'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+empreinte . hybride:
+  titre: Ensemble des véhicules hybride
+coûts . hybride:
+  titre: Ensemble des véhicules hybride
+empreinte . hybride . petite:
+  titre: Ensemble des petite hybride
+coûts . hybride . petite:
+  titre: Ensemble des petite hybride
+empreinte . hybride . petite . gazole B7 ou B10:
+  titre: petite hybride (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . hybride . petite . gazole B7 ou B10:
+  titre: petite hybride (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . hybride . petite . essence E5 ou E10:
+  titre: petite hybride (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . hybride . petite . essence E5 ou E10:
+  titre: petite hybride (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . hybride . petite . essence E85:
+  titre: petite hybride (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . hybride . petite . essence E85:
+  titre: petite hybride (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . hybride . petite . GPL:
+  titre: petite hybride (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . hybride . petite . GPL:
+  titre: petite hybride (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'petite'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'petite'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . hybride . moyenne:
+  titre: Ensemble des moyenne hybride
+coûts . hybride . moyenne:
+  titre: Ensemble des moyenne hybride
+empreinte . hybride . moyenne . gazole B7 ou B10:
+  titre: moyenne hybride (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . hybride . moyenne . gazole B7 ou B10:
+  titre: moyenne hybride (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . hybride . moyenne . essence E5 ou E10:
+  titre: moyenne hybride (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . hybride . moyenne . essence E5 ou E10:
+  titre: moyenne hybride (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . hybride . moyenne . essence E85:
+  titre: moyenne hybride (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . hybride . moyenne . essence E85:
+  titre: moyenne hybride (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . hybride . moyenne . GPL:
+  titre: moyenne hybride (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . hybride . moyenne . GPL:
+  titre: moyenne hybride (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'moyenne'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'moyenne'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . hybride . berline:
+  titre: Ensemble des berline hybride
+coûts . hybride . berline:
+  titre: Ensemble des berline hybride
+empreinte . hybride . berline . gazole B7 ou B10:
+  titre: berline hybride (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . hybride . berline . gazole B7 ou B10:
+  titre: berline hybride (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . hybride . berline . essence E5 ou E10:
+  titre: berline hybride (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . hybride . berline . essence E5 ou E10:
+  titre: berline hybride (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . hybride . berline . essence E85:
+  titre: berline hybride (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . hybride . berline . essence E85:
+  titre: berline hybride (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . hybride . berline . GPL:
+  titre: berline hybride (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . hybride . berline . GPL:
+  titre: berline hybride (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . hybride . SUV:
+  titre: Ensemble des SUV hybride
+coûts . hybride . SUV:
+  titre: Ensemble des SUV hybride
+empreinte . hybride . SUV . gazole B7 ou B10:
+  titre: SUV hybride (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . hybride . SUV . gazole B7 ou B10:
+  titre: SUV hybride (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . hybride . SUV . essence E5 ou E10:
+  titre: SUV hybride (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . hybride . SUV . essence E5 ou E10:
+  titre: SUV hybride (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . hybride . SUV . essence E85:
+  titre: SUV hybride (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . hybride . SUV . essence E85:
+  titre: SUV hybride (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . hybride . SUV . GPL:
+  titre: SUV hybride (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . hybride . SUV . GPL:
+  titre: SUV hybride (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'SUV'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'SUV'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+empreinte . hybride . VUL:
+  titre: Ensemble des VUL hybride
+coûts . hybride . VUL:
+  titre: Ensemble des VUL hybride
+empreinte . hybride . VUL . gazole B7 ou B10:
+  titre: VUL hybride (gazole B7 ou B10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+coûts . hybride . VUL . gazole B7 ou B10:
+  titre: VUL hybride (gazole B7 ou B10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'gazole B7 ou B10'"
+empreinte . hybride . VUL . essence E5 ou E10:
+  titre: VUL hybride (essence E5 ou E10)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+coûts . hybride . VUL . essence E5 ou E10:
+  titre: VUL hybride (essence E5 ou E10)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+empreinte . hybride . VUL . essence E85:
+  titre: VUL hybride (essence E85)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+coûts . hybride . VUL . essence E85:
+  titre: VUL hybride (essence E85)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'essence E85'"
+empreinte . hybride . VUL . GPL:
+  titre: VUL hybride (GPL)
+  unité: kgCO2eq/an
+  valeur: empreinte . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
+coûts . hybride . VUL . GPL:
+  titre: VUL hybride (GPL)
+  unité: €/an
+  valeur: coûts . voiture
+  contexte:
+    voiture . gabarit: "'VUL'"
+    voiture . motorisation: "'hybride'"
+    voiture . prix d'achat:
+      valeur: voiture . prix d'achat . estimé
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+    voiture . électrique . consommation électricité:
+      valeur: voiture . électrique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+    voiture . thermique . carburant: "'GPL'"
+    voiture . thermique . consommation carburant:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . gabarit: "'VUL'"
+        voiture . motorisation: "'hybride'"
+        voiture . thermique . carburant: "'GPL'"
