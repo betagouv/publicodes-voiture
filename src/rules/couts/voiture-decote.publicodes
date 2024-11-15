@@ -27,7 +27,7 @@ décote:
         alors: 45%
       - si: durée décote <= 4
         alors: 55%
-      - sinon: 60 + (5 * (durée décote - 5))
+      - sinon: 60 + (5 %/an * (durée décote - 5))
   plafond: 80%
   unité: "%"
   note: |
