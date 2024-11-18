@@ -4,4 +4,4 @@
 
 export type { Questions, RuleName, Situation } from "../publicodes-build"
 
-export * from "./SimulateurVoitureEngine"
+export * from "./CarSimulatorEngine"

@@ -53,5 +53,66 @@ describe("CarSimulatorEngine", () => {
         title: "Essence",
       })
     })
+
+    test("returned values should match with the inputs", () => {
+      const engine = globalTestEngine.shallowCopy()
+      const carInfos = engine
+        .setInputs({
+          "voiture . gabarit": "petite",
+          "voiture . motorisation": "hybride",
+          "voiture . thermique . carburant": "essence E85",
+        })
+        .evaluateCar()
+
+      expect(carInfos.cost).toBeGreaterThan(0)
+      expect(carInfos.emissions).toBeGreaterThan(0)
+      expect(carInfos.size).toEqual({
+        nodeValue: "petite",
+        title: "Citadine",
+      })
+      expect(carInfos.motorisation).toEqual({
+        nodeValue: "hybride",
+        title: "Hybride",
+      })
+      expect(carInfos.fuel).toEqual({
+        nodeValue: "essence E85",
+        title: "Essence (E85)",
+      })
+    })
+
+    test("should be cached according to the inputs", async () => {
+      const engine = globalTestEngine.shallowCopy()
+
+      engine.setInputs({ "voiture . gabarit": "petite" })
+      let firstEval = new Date().getTime()
+      engine.evaluateCar()
+      firstEval = new Date().getTime() - firstEval
+
+      let secondEval = new Date().getTime()
+      engine.evaluateCar()
+      secondEval = new Date().getTime() - secondEval
+
+      engine.setInputs({ "voiture . gabarit": "moyenne" })
+      let thirdEval = new Date().getTime()
+      engine.evaluateCar()
+      thirdEval = new Date().getTime() - thirdEval
+
+      // TODO: Do we expect the cache to be done according the situation value
+      // instead of resetting at each new setSitutation call (as it is done
+      // now)?
+      //
+      // engine.setInputs({ "voiture . gabarit": "moyenne" })
+      // let fourthEval = new Date().getTime()
+      // engine.evaluateCar()
+      // fourthEval = new Date().getTime() - fourthEval
+      // expect(fourthEval).toBeCloseTo(0, 0)
+
+      expect(secondEval).toBeLessThan(firstEval)
+      // Should be close to 0 because the cache is used
+      expect(secondEval).toBeCloseTo(0, 0)
+      expect(thirdEval).toBeGreaterThan(secondEval)
+      // Should have the same order of magnitude
+      expect(thirdEval / 10).toBeCloseTo(firstEval / 10, 0)
+    })
   })
 })

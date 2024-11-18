@@ -17,6 +17,11 @@ usage . km annuels:
         alors: km annuels . renseignés
       - sinon: km annuels . calculés
 
+# NOTE: cette question pourrait facilement être oubliée dans la situation et
+# avoir seulement la règle `usage . km annuels . renseignés` de définie ce qui
+# pourrait poser problème car instinctivement si on renseigne `usage . km
+# annuels . renseignés` on s'attend à ce que `usage . km annuels . connus` soit
+# `oui`.
 usage . km annuels . connus:
   question: Connaissez-vous la distance totale que vous parcourez à l'année ?
   par défaut: oui

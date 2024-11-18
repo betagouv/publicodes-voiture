@@ -111,6 +111,10 @@ export class CarSimulatorEngine {
    * Return the cost and emissions of _current_ car model for the given inputs.
    *
    * @returns The current user's car cost and emissions.
+   *
+   * @note This computation is cached according to the inputs.
+   *
+   * TODO: should we implement a cache layer for the wrapped engine?
    */
   public evaluateCar(): CarInfos {
     const emissions = this.evaluateRule("empreinte . voiture")
