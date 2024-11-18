@@ -48,6 +48,7 @@ describe("CarSimulatorEngine", () => {
       expect(
         engine.evaluateRule("voiture . thermique . carburant").isApplicable,
       ).toBeTruthy()
+      expect(engine.evaluateRule("voiture . occasion").isApplicable)
     })
 
     test("should return false for undefined default values", () => {
