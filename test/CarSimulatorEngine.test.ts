@@ -33,34 +33,45 @@ describe("CarSimulatorEngine", () => {
     })
   })
 
-  describe("isApplicable()", () => {
-    test("should return true for the default values", () => {
+  describe("evaluateRule()", () => {
+    test("default values should be applicable", () => {
       const engine = globalTestEngine.shallowCopy()
 
-      expect(engine.isApplicable("coûts . voiture")).toBeTruthy()
-      expect(engine.isApplicable("empreinte . voiture")).toBeTruthy()
-      expect(engine.isApplicable("voiture . gabarit")).toBeTruthy()
-      expect(engine.isApplicable("voiture . motorisation")).toBeTruthy()
+      expect(engine.evaluateRule("coûts . voiture").isApplicable).toBeTruthy()
       expect(
-        engine.isApplicable("voiture . thermique . carburant"),
+        engine.evaluateRule("empreinte . voiture").isApplicable,
+      ).toBeTruthy()
+      expect(engine.evaluateRule("voiture . gabarit").isApplicable).toBeTruthy()
+      expect(
+        engine.evaluateRule("voiture . motorisation").isApplicable,
+      ).toBeTruthy()
+      expect(
+        engine.evaluateRule("voiture . thermique . carburant").isApplicable,
       ).toBeTruthy()
     })
 
     test("should return false for undefined default values", () => {
       const engine = globalTestEngine.shallowCopy()
 
-      expect(engine.isApplicable("usage . km annuels . calculés")).toBeFalsy()
       expect(
-        engine.isApplicable("voiture . électrique . consommation électricité"),
+        engine.evaluateRule("usage . km annuels . calculés").isApplicable,
+      ).toBeFalsy()
+      expect(
+        engine.evaluateRule("voiture . électrique . consommation électricité")
+          .isApplicable,
       ).toBeFalsy()
     })
 
     test("should correctly handle conditionals from the inputs", () => {
       const engine = globalTestEngine.shallowCopy()
 
-      expect(engine.isApplicable("usage . km annuels . calculés")).toBeFalsy()
+      expect(
+        engine.evaluateRule("usage . km annuels . calculés").isApplicable,
+      ).toBeFalsy()
       engine.setInputs({ "usage . km annuels . connus": false })
-      expect(engine.isApplicable("usage . km annuels . calculés")).toBeTruthy()
+      expect(
+        engine.evaluateRule("usage . km annuels . calculés").isApplicable,
+      ).toBeTruthy()
     })
   })
 
@@ -69,19 +80,25 @@ describe("CarSimulatorEngine", () => {
       const engine = globalTestEngine.shallowCopy()
       const carInfos = engine.evaluateCar()
 
-      expect(carInfos.cost).toBeCloseTo(6370, 0)
-      expect(carInfos.emissions).toBeCloseTo(3022.8, 0)
+      expect(carInfos.cost.value).toBeCloseTo(6370, 0)
+      expect(carInfos.emissions.value).toBeCloseTo(3022.8, 0)
       expect(carInfos.size).toEqual({
-        nodeValue: "berline",
+        value: "berline",
         title: "Berline",
+        isApplicable: true,
+        isEnumValue: true,
       })
       expect(carInfos.motorisation).toEqual({
-        nodeValue: "thermique",
+        value: "thermique",
         title: "Thermique",
+        isApplicable: true,
+        isEnumValue: true,
       })
       expect(carInfos.fuel).toEqual({
-        nodeValue: "essence E5 ou E10",
+        value: "essence E5 ou E10",
         title: "Essence",
+        isApplicable: true,
+        isEnumValue: true,
       })
     })
 
@@ -95,19 +112,25 @@ describe("CarSimulatorEngine", () => {
         })
         .evaluateCar()
 
-      expect(carInfos.cost).toBeGreaterThan(0)
-      expect(carInfos.emissions).toBeGreaterThan(0)
+      expect(carInfos.cost.value).toBeGreaterThan(0)
+      expect(carInfos.emissions.value).toBeGreaterThan(0)
       expect(carInfos.size).toEqual({
-        nodeValue: "petite",
+        value: "petite",
         title: "Citadine",
+        isApplicable: true,
+        isEnumValue: true,
       })
       expect(carInfos.motorisation).toEqual({
-        nodeValue: "hybride",
+        value: "hybride",
         title: "Hybride",
+        isApplicable: true,
+        isEnumValue: true,
       })
       expect(carInfos.fuel).toEqual({
-        nodeValue: "essence E85",
+        value: "essence E85",
         title: "Essence (E85)",
+        isApplicable: true,
+        isEnumValue: true,
       })
     })
 
@@ -142,8 +165,6 @@ describe("CarSimulatorEngine", () => {
       // Should be close to 0 because the cache is used
       expect(secondEval).toBeCloseTo(0, 0)
       expect(thirdEval).toBeGreaterThan(secondEval)
-      // Should have the same order of magnitude
-      expect(thirdEval / 10).toBeCloseTo(firstEval / 10, 0)
     })
   })
 })

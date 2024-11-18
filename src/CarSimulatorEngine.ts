@@ -1,9 +1,13 @@
 import Engine, {
-  EvaluatedNode,
   Situation as PublicodesSituation,
   serializeUnit,
 } from "publicodes"
-import rules, { Questions, RuleName, Situation } from "../publicodes-build"
+import rules, {
+  Questions,
+  RuleName,
+  RuleValue,
+  Situation,
+} from "../publicodes-build"
 
 export type CarInfos = {
   /**
@@ -14,32 +18,36 @@ export type CarInfos = {
   title?: string
   // NOTE: should we use the Infos type?
   /** The cost of the car in €/an */
-  cost: number
+  cost: EvaluatedRuleInfos<RuleValue["coûts . voiture"]>
   /** The emissions of the car in kgCO2/an */
-  emissions: number
+  emissions: EvaluatedRuleInfos<RuleValue["empreinte . voiture"]>
   /** The car size (gabarit) */
-  size: ValueInfos<Questions["voiture . gabarit"]>
+  size: EvaluatedRuleInfos<RuleValue["voiture . gabarit"]>
   /** The type of motorisation of the car */
-  motorisation: ValueInfos<Questions["voiture . motorisation"]>
+  motorisation: EvaluatedRuleInfos<RuleValue["voiture . motorisation"]>
   /** The type of fuel of the car */
-  fuel: ValueInfos<Questions["voiture . thermique . carburant"]>
+  fuel: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
 }
 
 /**
  * Full information about an evaluated value.
  */
-export type ValueInfos<T> = {
+export type EvaluatedRuleInfos<T> = {
   /**
-   * The value of the node after evaluation.
+   * The node value after evaluation.
    *
    * Can be a number, a string, a boolean, null (« non applicable ») or
    * undefined (« non défini »).
    */
-  nodeValue: T | null | undefined
+  value: T | null | undefined
   /** The unit of the value */
   unit?: string
   /** The title of the corresponding rule (used for enums) */
   title?: string
+  /** The value is applicable in the current situation */
+  isApplicable?: boolean
+  /** The value is an enum value (i.e. `une possibilité` mechanism) */
+  isEnumValue?: boolean
 }
 
 /**
@@ -119,15 +127,12 @@ export class CarSimulatorEngine {
    * TODO: should we implement a cache layer for the wrapped engine?
    */
   public evaluateCar(): CarInfos {
-    const emissions = this.evaluateRule("empreinte . voiture")
-    const cost = this.evaluateRule("coûts . voiture")
-
     return {
-      cost: cost.nodeValue as number,
-      emissions: emissions.nodeValue as number,
-      size: this.getValueInfos("voiture . gabarit"),
-      motorisation: this.getValueInfos("voiture . motorisation"),
-      fuel: this.getValueInfos("voiture . thermique . carburant"),
+      emissions: this.evaluateRule("empreinte . voiture"),
+      cost: this.evaluateRule("coûts . voiture"),
+      size: this.evaluateRule("voiture . gabarit"),
+      motorisation: this.evaluateRule("voiture . motorisation"),
+      fuel: this.evaluateRule("voiture . thermique . carburant"),
     }
   }
 
@@ -137,13 +142,10 @@ export class CarSimulatorEngine {
    * @param rule The name of the rule to get the value infos.
    * @param isEnum If `true`, the rule is expected to be an enum rule and
    * therefore, the title of the rule will correspond to the enum value.
-   *
-   * NOTE: we probably want to find a way to have T extending RuleName to be
-   * able to use this methode with for any rule.
    */
-  private getValueInfos<T extends keyof Questions>(
+  public evaluateRule<T extends keyof RuleValue>(
     rule: T,
-  ): ValueInfos<Questions[T]> {
+  ): EvaluatedRuleInfos<RuleValue[T]> {
     // NOTE: we are evaluating the rule instead of using the inputs because the
     // inputs might not be set, so we need to evaluate the rule to get the
     // default value.
@@ -151,40 +153,18 @@ export class CarSimulatorEngine {
     // NOTE: may not be very stable, if this method is exposed to the public,
     // we should probably find a better way to determine if the rule is an enum
     // (at the Publicodes level probably).
-    const isEnum = typeof node.nodeValue === "string"
-    const titleRuleName = isEnum
+    const isEnumValue = typeof node.nodeValue === "string"
+    const titleRuleName = isEnumValue
       ? ((rule + " . " + node.nodeValue) as RuleName)
       : rule
 
     return {
-      nodeValue: node.nodeValue as Questions[T],
+      value: node.nodeValue as RuleValue[T],
       unit: serializeUnit(node.unit),
       title: this.engine.getRule(titleRuleName).title,
+      isEnumValue,
+      isApplicable: node.nodeValue !== null,
     }
-  }
-
-  /**
-   * Evaluate a rule and return the evaluated node {@link EvaluatedNode}.
-   *
-   * @param rule The name of the rule to evaluate.
-   * @returns The evaluated node.
-   *
-   * @note The only purpose of this methode is to be able to type check the
-   * input rule name to ensure that it is a valid rule name. However, this
-   * should be refactored in the Publicodes engine at some point.
-   */
-  public evaluateRule(rule: RuleName): EvaluatedNode {
-    return this.engine.evaluate(rule)
-  }
-
-  /**
-   * Check if a rule is applicable for in the current situation.
-   *
-   * @param rule The name of the rule to check if it's applicable.
-   * @returns `true` if the rule is applicable, `false` otherwise.
-   */
-  public isApplicable(rule: RuleName): boolean {
-    return this.engine.evaluate({ "est applicable": rule }).nodeValue === true
   }
 
   /**
