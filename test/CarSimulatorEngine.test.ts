@@ -33,6 +33,37 @@ describe("CarSimulatorEngine", () => {
     })
   })
 
+  describe("isApplicable()", () => {
+    test("should return true for the default values", () => {
+      const engine = globalTestEngine.shallowCopy()
+
+      expect(engine.isApplicable("coûts . voiture")).toBeTruthy()
+      expect(engine.isApplicable("empreinte . voiture")).toBeTruthy()
+      expect(engine.isApplicable("voiture . gabarit")).toBeTruthy()
+      expect(engine.isApplicable("voiture . motorisation")).toBeTruthy()
+      expect(
+        engine.isApplicable("voiture . thermique . carburant"),
+      ).toBeTruthy()
+    })
+
+    test("should return false for undefined default values", () => {
+      const engine = globalTestEngine.shallowCopy()
+
+      expect(engine.isApplicable("usage . km annuels . calculés")).toBeFalsy()
+      expect(
+        engine.isApplicable("voiture . électrique . consommation électricité"),
+      ).toBeFalsy()
+    })
+
+    test("should correctly handle conditionals from the inputs", () => {
+      const engine = globalTestEngine.shallowCopy()
+
+      expect(engine.isApplicable("usage . km annuels . calculés")).toBeFalsy()
+      engine.setInputs({ "usage . km annuels . connus": false })
+      expect(engine.isApplicable("usage . km annuels . calculés")).toBeTruthy()
+    })
+  })
+
   describe("evaluateCar()", () => {
     test("should have default values", () => {
       const engine = globalTestEngine.shallowCopy()

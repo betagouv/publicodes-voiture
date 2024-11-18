@@ -98,6 +98,8 @@ export class CarSimulatorEngine {
    * @note The format of the inputs are in the JS format, not the Publicodes
    * format. For example, boolean values are represented as `true` or `false`
    * instead of `oui` or `non` and the values are not wrapped in single quotes.
+   * If you prefer to have more control over the situation, you can use {@link
+   * setSituation} instead.
    */
   public setInputs(inputs: Questions): this {
     this.inputs = inputs
@@ -176,6 +178,35 @@ export class CarSimulatorEngine {
   }
 
   /**
+   * Check if a rule is applicable for in the current situation.
+   *
+   * @param rule The name of the rule to check if it's applicable.
+   * @returns `true` if the rule is applicable, `false` otherwise.
+   */
+  public isApplicable(rule: RuleName): boolean {
+    return this.engine.evaluate({ "est applicable": rule }).nodeValue === true
+  }
+
+  /**
+   * Set the situation of the engine. This will update the Publicodes situation
+   * with the given situation.
+   *
+   * @param situation The situation to set.
+   * @returns The instance of the engine with the updated situation.
+   *
+   * @note This is a low-level method prefer using {@link setInputs} instead.
+   *
+   * @note This will not update the current inputs of the engine. If you want
+   * to update the inputs as well, you should use {@link setInputs} instead.
+   * It's recommended to not mix the usage of {@link setInputs} and {@link
+   * setSituation} to avoid confusion.
+   */
+  public setSituation(situation: Situation): this {
+    this.engine.setSituation(situation as PublicodesSituation<RuleName>)
+    return this
+  }
+
+  /**
    * Create a shallow copy of the engine with the same rules and inputs. This
    * is useful to compute the aids for multiple situations.
    *
@@ -189,12 +220,15 @@ export class CarSimulatorEngine {
   }
 
   /**
-   * Return a shallow copy of the wrapped Publicodes engine. This is useful to
-   * get the current state of the engine (rules and inputs) without modifying
-   * it.
+   * Return the reference to the wrapped Publicodes engine.
+   *
+   * @param shallowCopy If `true` (default), a shallow copy of the engine will
+   * be returned. Otherwise, the reference to the engine will be returned. This
+   * is useful to get the current state of the engine (rules and inputs)
+   * without modifying it.
    */
-  public getEngine(): Engine<RuleName> {
-    return this.engine.shallowCopy()
+  public getEngine(opts = { shallowCopy: true }): Engine<RuleName> {
+    return opts.shallowCopy ? this.engine.shallowCopy() : this.engine
   }
 }
 
