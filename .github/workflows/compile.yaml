@@ -19,9 +19,9 @@ jobs:
         name: Install dependencies
         run: yarn install --immutable
 
-      - id: build
+      - id: compile
         name: Compile the rules
-        run: yarn build
+        run: yarn compile
 
       - id: test
         name: Test the rules
