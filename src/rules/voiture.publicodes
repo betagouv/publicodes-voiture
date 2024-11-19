@@ -1,5 +1,5 @@
 voiture:
-  titre: Informations sur votre voiture
+  titre: Informations sur la voiture
   description: |
     Par défaut, tous les champs sont pré-remplis avec des valeurs moyennes.
     Ainsi si vous ne savez pas répondre à une question, vous pouvez laisser la

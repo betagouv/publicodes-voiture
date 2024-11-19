@@ -71,7 +71,7 @@ describe("Règles", () => {
 
 function evaluateCostAndEmissions(engine: Engine<RuleName>) {
   return {
-    coûts: engine.evaluate("coûts . voiture").nodeValue as number,
-    empreinte: engine.evaluate("empreinte . voiture").nodeValue as number,
+    coûts: engine.evaluate("coûts").nodeValue as number,
+    empreinte: engine.evaluate("empreinte").nodeValue as number,
   }
 }

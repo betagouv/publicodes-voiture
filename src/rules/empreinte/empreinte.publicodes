@@ -1,7 +1,4 @@
 empreinte:
-  titre: Empreinte carbone
-
-empreinte . voiture:
   titre: Empreinte carbone annuelle de votre voiture
   description: |
     Nous utilisons le modèle de [Nos Gestes Climat](https://nosgestesclimat.fr)

@@ -1,5 +1,5 @@
 import { writeFileSync } from "fs"
-import { join, basename } from "path"
+import { join } from "path"
 import { stringify } from "yaml"
 import { getModelFromSource } from "@publicodes/tools/compilation"
 import Engine from "publicodes"
@@ -41,8 +41,8 @@ console.log(`✅ './src/personas/personas.json' generated`)
 function check(rules, step) {
   try {
     const engine = new Engine(rules, { logger: { warn: () => {} } })
-    engine.evaluate("empreinte . voiture")
-    engine.evaluate("coûts . voiture")
+    engine.evaluate("empreinte")
+    engine.evaluate("coûts")
 
     return engine
   } catch (e) {

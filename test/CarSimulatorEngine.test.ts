@@ -37,10 +37,8 @@ describe("CarSimulatorEngine", () => {
     test("default values should be applicable", () => {
       const engine = globalTestEngine.shallowCopy()
 
-      expect(engine.evaluateRule("coûts . voiture").isApplicable).toBeTruthy()
-      expect(
-        engine.evaluateRule("empreinte . voiture").isApplicable,
-      ).toBeTruthy()
+      expect(engine.evaluateRule("coûts").isApplicable).toBeTruthy()
+      expect(engine.evaluateRule("empreinte").isApplicable).toBeTruthy()
       expect(engine.evaluateRule("voiture . gabarit").isApplicable).toBeTruthy()
       expect(
         engine.evaluateRule("voiture . motorisation").isApplicable,
@@ -166,6 +164,24 @@ describe("CarSimulatorEngine", () => {
       // Should be close to 0 because the cache is used
       expect(secondEval).toBeCloseTo(0, 0)
       expect(thirdEval).toBeGreaterThan(secondEval)
+    })
+  })
+
+  describe("evaluateAlternatives()", () => {
+    test("should return all possible alternatives with default values", () => {
+      const engine = globalTestEngine.shallowCopy()
+      const alternatives = engine.evaluateAlternatives()
+      // TODO: use engine.getOptions
+      const nbMotorisations = 3
+      const nbFuels = 4
+      const nbSizes = 5
+      const nbAlternatives =
+        // Thermique + Hybride
+        (nbMotorisations - 1) * nbFuels * nbSizes +
+        // Electrique
+        nbSizes
+
+      expect(alternatives).toHaveLength(nbAlternatives)
     })
   })
 })

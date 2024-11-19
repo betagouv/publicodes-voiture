@@ -18,9 +18,9 @@ export type CarInfos = {
   title?: string
   // NOTE: should we use the Infos type?
   /** The cost of the car in €/an */
-  cost: EvaluatedRuleInfos<RuleValue["coûts . voiture"]>
+  cost: EvaluatedRuleInfos<RuleValue["coûts"]>
   /** The emissions of the car in kgCO2/an */
-  emissions: EvaluatedRuleInfos<RuleValue["empreinte . voiture"]>
+  emissions: EvaluatedRuleInfos<RuleValue["empreinte"]>
   /** The car size (gabarit) */
   size: EvaluatedRuleInfos<RuleValue["voiture . gabarit"]>
   /** The type of motorisation of the car */
@@ -62,6 +62,17 @@ const engineLogger = {
   warn: () => {},
   error: (message: string) => console.error(message),
 }
+
+const RULE_NAMES = Object.keys(rules) as RuleName[]
+const COST_NAMESPACE: RuleName = "coûts"
+const EMISSIONS_NAMESPACE: RuleName = "empreinte"
+
+console.time("ALTERNATIVES_RULES")
+const ALTERNATIVES_RULES = RULE_NAMES.filter(
+  (rule) =>
+    rule.startsWith(COST_NAMESPACE) || rule.startsWith(EMISSIONS_NAMESPACE),
+).map((rule) => rule.split(" . ").slice(1).join(" . "))
+console.timeEnd("ALTERNATIVES_RULES")
 
 /**
  * A wrapper around the {@link Engine} class to compute the available aids for the
@@ -128,12 +139,28 @@ export class CarSimulatorEngine {
    */
   public evaluateCar(): CarInfos {
     return {
-      emissions: this.evaluateRule("empreinte . voiture"),
-      cost: this.evaluateRule("coûts . voiture"),
+      emissions: this.evaluateRule("empreinte"),
+      cost: this.evaluateRule("coûts"),
       size: this.evaluateRule("voiture . gabarit"),
       motorisation: this.evaluateRule("voiture . motorisation"),
       fuel: this.evaluateRule("voiture . thermique . carburant"),
     }
+  }
+
+  /**
+   * Return all the computed alternatives for the given inputs.
+   *
+   * @returns The alternatives for the given inputs.
+   *
+   * @note This computation is cached according to the inputs.
+   */
+  public evaluateAlternatives(): CarInfos[] {
+    RULE_NAMES.map((rule) => {
+      const splitted = rule.split(" . ")
+      const namespace = splitted[0]
+    })
+
+    return []
   }
 
   /**
