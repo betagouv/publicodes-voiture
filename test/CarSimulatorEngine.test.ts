@@ -170,7 +170,9 @@ describe("CarSimulatorEngine", () => {
   describe("evaluateAlternatives()", () => {
     test("should return all possible alternatives with default values", () => {
       const engine = globalTestEngine.shallowCopy()
+      console.time("evaluateAlternatives")
       const alternatives = engine.evaluateAlternatives()
+      console.timeEnd("evaluateAlternatives")
       // TODO: use engine.getOptions
       const nbMotorisations = 3
       const nbFuels = 4
@@ -182,6 +184,17 @@ describe("CarSimulatorEngine", () => {
         nbSizes
 
       expect(alternatives).toHaveLength(nbAlternatives)
+      alternatives.forEach((alternative) => {
+        expect(alternative.kind).toEqual("car")
+        expect(alternative.cost.value).toBeGreaterThan(0)
+        expect(alternative.emissions.value).toBeGreaterThan(0)
+        expect(alternative.size.value).toEqual("berline")
+        expect(alternative.size.isEnumValue).toBeTruthy()
+        expect(alternative.motorisation.value).toEqual("thermique")
+        expect(alternative.motorisation.isEnumValue).toBeTruthy()
+        expect(alternative.fuel.value).toEqual("essence E5 ou E10")
+        expect(alternative.fuel.isEnumValue).toBeTruthy()
+      })
     })
   })
 })

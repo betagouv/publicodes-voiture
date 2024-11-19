@@ -30,6 +30,17 @@ export type CarInfos = {
 }
 
 /**
+ * Models an alternative to the current car (i.e. defined by the inputs).
+ * This is used to compare the current car with other alternatives.
+ *
+ * @note For now, the only alternative is a car, but in the future, we might
+ * have other alternatives like public transport, bike, etc.
+ */
+export type Alternative = {
+  kind: "car"
+} & CarInfos
+
+/**
  * Full information about an evaluated value.
  */
 export type EvaluatedRuleInfos<T> = {
@@ -63,16 +74,14 @@ const engineLogger = {
   error: (message: string) => console.error(message),
 }
 
-const RULE_NAMES = Object.keys(rules) as RuleName[]
-const COST_NAMESPACE: RuleName = "coûts"
-const EMISSIONS_NAMESPACE: RuleName = "empreinte"
-
-console.time("ALTERNATIVES_RULES")
-const ALTERNATIVES_RULES = RULE_NAMES.filter(
+export const RULE_NAMES = Object.keys(rules) as RuleName[]
+export const ALTERNATIVES_VOITURE_NAMESPACE: RuleName = "alternatives . voiture"
+export const ALTERNATIVES_RULES = RULE_NAMES.filter(
   (rule) =>
-    rule.startsWith(COST_NAMESPACE) || rule.startsWith(EMISSIONS_NAMESPACE),
-).map((rule) => rule.split(" . ").slice(1).join(" . "))
-console.timeEnd("ALTERNATIVES_RULES")
+    rule.startsWith(ALTERNATIVES_VOITURE_NAMESPACE) &&
+    `${rule} . coûts` in rules &&
+    `${rule} . empreinte` in rules,
+)
 
 /**
  * A wrapper around the {@link Engine} class to compute the available aids for the
@@ -154,13 +163,32 @@ export class CarSimulatorEngine {
    *
    * @note This computation is cached according to the inputs.
    */
-  public evaluateAlternatives(): CarInfos[] {
-    RULE_NAMES.map((rule) => {
-      const splitted = rule.split(" . ")
-      const namespace = splitted[0]
+  public evaluateAlternatives(): Alternative[] {
+    const infos = ALTERNATIVES_RULES.map((rule: RuleName) => {
+      const splittedRule = rule.split(" . ").slice(2)
+      const sizeOption = splittedRule[0]
+      const motorisationOption = splittedRule[1]
+      const fuelOption =
+        motorisationOption !== "électrique" ? splittedRule[2] : undefined
+
+      return {
+        kind: "car",
+        title: this.engine.getRule(rule).title,
+        emissions: this.evaluateRule((rule + " . empreinte") as RuleName),
+        cost: this.evaluateRule((rule + " . coûts") as RuleName),
+        size: this.evaluateRule(ruleName("voiture . gabarit", sizeOption)),
+        motorisation: this.evaluateRule(
+          ruleName("voiture . motorisation", motorisationOption),
+        ),
+        fuel: fuelOption
+          ? this.evaluateRule(
+              ruleName("voiture . thermique . carburant", fuelOption),
+            )
+          : undefined,
+      } as Alternative
     })
 
-    return []
+    return infos
   }
 
   /**
@@ -176,10 +204,12 @@ export class CarSimulatorEngine {
     // NOTE: we are evaluating the rule instead of using the inputs because the
     // inputs might not be set, so we need to evaluate the rule to get the
     // default value.
+    console.log("evaluateRule", rule)
     const node = this.engine.evaluate(rule)
     // NOTE: may not be very stable, if this method is exposed to the public,
     // we should probably find a better way to determine if the rule is an enum
     // (at the Publicodes level probably).
+    // FIXME: this doesn't work for enums.
     const isEnumValue = typeof node.nodeValue === "string"
     const titleRuleName = isEnumValue
       ? ((rule + " . " + node.nodeValue) as RuleName)
@@ -254,4 +284,8 @@ function getSituation(inputs: Questions): Situation {
         }
       }),
   )
+}
+
+function ruleName(namespace: RuleName, rule: string): RuleName {
+  return (namespace + " . " + rule) as RuleName
 }
