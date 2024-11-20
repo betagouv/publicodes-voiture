@@ -26,7 +26,7 @@ export type CarInfos = {
   /** The type of motorisation of the car */
   motorisation: EvaluatedRuleInfos<RuleValue["voiture . motorisation"]>
   /** The type of fuel of the car */
-  fuel: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
+  fuel?: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
 }
 
 /**
@@ -147,12 +147,17 @@ export class CarSimulatorEngine {
    * TODO: should we implement a cache layer for the wrapped engine?
    */
   public evaluateCar(): CarInfos {
+    const motorisation = this.evaluateRule("voiture . motorisation")
+
     return {
       emissions: this.evaluateRule("empreinte"),
       cost: this.evaluateRule("coûts"),
       size: this.evaluateRule("voiture . gabarit"),
-      motorisation: this.evaluateRule("voiture . motorisation"),
-      fuel: this.evaluateRule("voiture . thermique . carburant"),
+      motorisation,
+      fuel:
+        motorisation.value !== "électrique"
+          ? this.evaluateRule("voiture . thermique . carburant")
+          : undefined,
     }
   }
 
@@ -161,7 +166,7 @@ export class CarSimulatorEngine {
    *
    * @returns The alternatives for the given inputs.
    *
-   * @note This computation is cached according to the inputs.
+   * @note This method is an expensive operation.
    */
   public evaluateAlternatives(): Alternative[] {
     const infos = ALTERNATIVES_RULES.map((rule: RuleName) => {
@@ -174,16 +179,32 @@ export class CarSimulatorEngine {
       return {
         kind: "car",
         title: this.engine.getRule(rule).title,
-        emissions: this.evaluateRule((rule + " . empreinte") as RuleName),
         cost: this.evaluateRule((rule + " . coûts") as RuleName),
-        size: this.evaluateRule(ruleName("voiture . gabarit", sizeOption)),
-        motorisation: this.evaluateRule(
-          ruleName("voiture . motorisation", motorisationOption),
-        ),
+        emissions: this.evaluateRule((rule + " . empreinte") as RuleName),
+        size: {
+          value: sizeOption,
+          title: this.engine.getRule(ruleName("voiture . gabarit", sizeOption))
+            .title,
+          isEnumValue: true,
+          isApplicable: true,
+        },
+        motorisation: {
+          value: motorisationOption,
+          title: this.engine.getRule(
+            ruleName("voiture . motorisation", motorisationOption),
+          ).title,
+          isEnumValue: true,
+          isApplicable: true,
+        },
         fuel: fuelOption
-          ? this.evaluateRule(
-              ruleName("voiture . thermique . carburant", fuelOption),
-            )
+          ? {
+              value: fuelOption,
+              title: this.engine.getRule(
+                ruleName("voiture . thermique . carburant", fuelOption),
+              ).title,
+              isEnumValue: true,
+              isApplicable: true,
+            }
           : undefined,
       } as Alternative
     })
@@ -197,6 +218,8 @@ export class CarSimulatorEngine {
    * @param rule The name of the rule to get the value infos.
    * @param isEnum If `true`, the rule is expected to be an enum rule and
    * therefore, the title of the rule will correspond to the enum value.
+   *
+   * TODO: add tests
    */
   public evaluateRule<T extends keyof RuleValue>(
     rule: T,
@@ -204,12 +227,10 @@ export class CarSimulatorEngine {
     // NOTE: we are evaluating the rule instead of using the inputs because the
     // inputs might not be set, so we need to evaluate the rule to get the
     // default value.
-    console.log("evaluateRule", rule)
     const node = this.engine.evaluate(rule)
     // NOTE: may not be very stable, if this method is exposed to the public,
     // we should probably find a better way to determine if the rule is an enum
     // (at the Publicodes level probably).
-    // FIXME: this doesn't work for enums.
     const isEnumValue = typeof node.nodeValue === "string"
     const titleRuleName = isEnumValue
       ? ((rule + " . " + node.nodeValue) as RuleName)

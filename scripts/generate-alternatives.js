@@ -81,6 +81,11 @@ export default function generateAlternatives(rules) {
 
       if (motorisation === "électrique") {
         alternatives[
+          `${ALTERNATIVES_VOITURE_NAMESPACE} . ${gabarit} . ${motorisation}`
+        ] = {
+          titre: `${gabaritTitle} ${motorisationTitle}`,
+        }
+        alternatives[
           `${ALTERNATIVES_VOITURE_NAMESPACE} . ${gabarit} . ${motorisation} . empreinte`
         ] = {
           titre: "Empreinte CO2e",
@@ -105,7 +110,7 @@ export default function generateAlternatives(rules) {
           alternatives[
             `${ALTERNATIVES_VOITURE_NAMESPACE} . ${gabarit} . ${motorisation} . ${carburant}`
           ] = {
-            titre: carburantTitle,
+            titre: `${gabaritTitle} ${motorisationTitle} (${carburantTitle})`,
           }
 
           alternatives[

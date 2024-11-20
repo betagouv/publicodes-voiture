@@ -133,6 +133,31 @@ describe("CarSimulatorEngine", () => {
       })
     })
 
+    test("should have empty fuel value for electric cars", () => {
+      const engine = globalTestEngine.shallowCopy()
+      const carInfos = engine
+        .setInputs({
+          "voiture . motorisation": "électrique",
+        })
+        .evaluateCar()
+
+      expect(carInfos.cost.value).toBeGreaterThan(0)
+      expect(carInfos.emissions.value).toBeGreaterThan(0)
+      expect(carInfos.size).toEqual({
+        value: "berline",
+        title: "Berline",
+        isApplicable: true,
+        isEnumValue: true,
+      })
+      expect(carInfos.motorisation).toEqual({
+        value: "électrique",
+        title: "Électrique",
+        isApplicable: true,
+        isEnumValue: true,
+      })
+      expect(carInfos.fuel).toBeUndefined()
+    })
+
     test("should be cached according to the inputs", async () => {
       const engine = globalTestEngine.shallowCopy()
 
@@ -188,12 +213,16 @@ describe("CarSimulatorEngine", () => {
         expect(alternative.kind).toEqual("car")
         expect(alternative.cost.value).toBeGreaterThan(0)
         expect(alternative.emissions.value).toBeGreaterThan(0)
-        expect(alternative.size.value).toEqual("berline")
+        expect(alternative.size.value).toBeDefined()
         expect(alternative.size.isEnumValue).toBeTruthy()
-        expect(alternative.motorisation.value).toEqual("thermique")
+        expect(alternative.motorisation.value).toBeDefined()
         expect(alternative.motorisation.isEnumValue).toBeTruthy()
-        expect(alternative.fuel.value).toEqual("essence E5 ou E10")
-        expect(alternative.fuel.isEnumValue).toBeTruthy()
+        if (alternative.motorisation.value !== "électrique") {
+          expect(alternative.fuel.value).toBeDefined()
+          expect(alternative.fuel.isEnumValue).toBeTruthy()
+        } else {
+          expect(alternative.fuel).toBeUndefined()
+        }
       })
     })
   })
