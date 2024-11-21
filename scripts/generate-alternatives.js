@@ -89,7 +89,7 @@ export default function generateAlternatives(rules) {
           `${ALTERNATIVES_VOITURE_NAMESPACE} . ${gabarit} . ${motorisation} . empreinte`
         ] = {
           titre: "Empreinte CO2e",
-          unité: "kgCO2eq/an",
+          unité: "kgCO2e/an",
           valeur: "empreinte",
           contexte: baseContexte,
         }
@@ -117,7 +117,7 @@ export default function generateAlternatives(rules) {
             `${ALTERNATIVES_VOITURE_NAMESPACE} . ${gabarit} . ${motorisation} . ${carburant} . empreinte`
           ] = {
             titre: "Empreinte CO2e",
-            unité: "kgCO2eq/an",
+            unité: "kgCO2e/an",
             valeur: "empreinte",
             contexte: {
               ...baseContexte,

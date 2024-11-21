@@ -197,10 +197,18 @@ export class CarSimulator {
   public evaluateAlternatives(): Alternative[] {
     const infos = ALTERNATIVES_RULES.map((rule: RuleName) => {
       const splittedRule = rule.split(" . ").slice(2)
-      const sizeOption = splittedRule[0]
-      const motorisationOption = splittedRule[1]
-      const fuelOption =
+      const sizeOption = splittedRule[0] as Questions["voiture . gabarit"]
+      const motorisationOption =
+        splittedRule[1] as Questions["voiture . motorisation"]
+      const fuelOption = (
         motorisationOption !== "électrique" ? splittedRule[2] : undefined
+      ) as Questions["voiture . thermique . carburant"]
+
+      if (!sizeOption || !motorisationOption) {
+        throw new Error(
+          `Invalid alternative rule ${rule}. It should have a size and a motorisation option.`,
+        )
+      }
 
       return {
         kind: "car",
@@ -345,6 +353,17 @@ function getSituation(inputs: Questions): Situation {
       }),
   )
 }
+
+// type ExtractBaseRuleNames<
+//   N extends string,
+//   T extends string,
+// > = T extends `${infer Namespace} . ${infer Rule}`
+//   ? Rule extends `${string} . ${infer Rule2}`
+//     ? ExtractBaseRuleNames<T, Rule2>
+//     : { T: Rule }
+//   : never
+//
+// type BaseRuleNames = ExtractBaseRuleNames<"", RuleName>
 
 function ruleName(namespace: RuleName, rule: string): RuleName {
   return (namespace + " . " + rule) as RuleName
