@@ -65,7 +65,12 @@ describe("CarSimulator", () => {
       engine.setInputs({ "voiture . gabarit": "SUV" })
       expect(engine.getInputs()).toEqual({ "voiture . gabarit": "SUV" })
 
-      engine.setInputs({ "voiture . cible . borne de recharge": false }, true)
+      engine.setInputs(
+        { "voiture . cible . borne de recharge": false },
+        {
+          overwrite: true,
+        },
+      )
       expect(engine.getInputs()).toEqual({
         "voiture . cible . borne de recharge": false,
       })
@@ -264,10 +269,10 @@ describe("CarSimulator", () => {
     })
   })
 
-  describe("getTargetInfos()", () => {
+  describe("evaluateTargetCar()", () => {
     test("should return values corresponding to the defaults ones", () => {
       const engine = globalTestEngine.shallowCopy()
-      const targetInfos = engine.evaluateTargetInfos()
+      const targetInfos = engine.evaluateTargetCar()
       const carInfos = engine.evaluateCar()
 
       expect(targetInfos.size).toEqual(carInfos.size)
@@ -286,7 +291,7 @@ describe("CarSimulator", () => {
           "voiture . cible . gabarit": "SUV",
           "voiture . cible . borne de recharge": false,
         })
-        .evaluateTargetInfos()
+        .evaluateTargetCar()
 
       expect(targetInfos.size).toEqual({
         value: "SUV",

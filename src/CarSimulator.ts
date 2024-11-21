@@ -30,6 +30,16 @@ export type CarInfos = {
 }
 
 /**
+ * Models the car informations wanted by the user.
+ */
+export type TargetInfos = {
+  size: EvaluatedRuleInfos<RuleValue["voiture . cible . gabarit"]>
+  hasChargingStation: EvaluatedRuleInfos<
+    RuleValue["voiture . cible . borne de recharge"]
+  >
+}
+
+/**
  * Models an alternative to the current car (i.e. defined by the inputs).
  * This is used to compare the current car with other alternatives.
  *
@@ -131,8 +141,8 @@ export class CarSimulator {
    * If you prefer to have more control over the situation, you can use {@link
    * setSituation} instead.
    */
-  public setInputs(inputs: Questions, overwrite = false): this {
-    if (overwrite) {
+  public setInputs(inputs: Questions, options = { overwrite: false }): this {
+    if (options.overwrite) {
       this.inputs = inputs
     } else {
       this.inputs = {
@@ -229,7 +239,20 @@ export class CarSimulator {
   }
 
   /**
-   * Return the value infos of a rule.
+   * Return the value of the targeted car (wanted size and possibility to
+   * have a charging station).
+   */
+  public evaluateTargetCar(): TargetInfos {
+    return {
+      size: this.evaluateRule("voiture . cible . gabarit"),
+      hasChargingStation: this.evaluateRule(
+        "voiture . cible . borne de recharge",
+      ),
+    }
+  }
+
+  /**
+   * Return the value of a rule.
    *
    * @param rule The name of the rule to get the value infos.
    * @param isEnum If `true`, the rule is expected to be an enum rule and
