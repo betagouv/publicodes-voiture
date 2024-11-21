@@ -48,7 +48,7 @@
     "doc:build": "yarn run compile && cd online-doc && yarn run build"
   },
   "devDependencies": {
-    "@publicodes/tools": "^1.3.0-1",
+    "@publicodes/tools": "^1.3.0-2",
     "csv-parser": "^3.0.0",
     "terser": "^5.36.0",
     "tsup": "^8.3.5",
