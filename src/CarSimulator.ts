@@ -205,8 +205,8 @@ export class CarSimulator {
       return {
         kind: "car",
         title: this.engine.getRule(rule).title,
-        cost: this.evaluateRule((rule + " . coûts") as RuleName),
-        emissions: this.evaluateRule((rule + " . empreinte") as RuleName),
+        cost: this.evaluateRule(ruleName(rule, "coûts")),
+        emissions: this.evaluateRule(ruleName(rule, "empreinte")),
         size: {
           value: sizeOption,
           title: this.engine.getRule(ruleName("voiture . gabarit", sizeOption))

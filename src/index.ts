@@ -10,3 +10,5 @@ export type {
 } from "../publicodes-build"
 
 export * from "./CarSimulator"
+
+export * from "./personas"
