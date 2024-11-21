@@ -94,7 +94,7 @@ export const ALTERNATIVES_RULES = RULE_NAMES.filter(
  * can use {@link shallowCopy} to create a new instance with the same rules and
  * inputs.
  */
-export class CarSimulatorEngine {
+export class CarSimulator {
   private inputs: Questions = {}
   private engine: Engine<RuleName>
 
@@ -271,7 +271,7 @@ export class CarSimulatorEngine {
    * @returns A new instance of the engine with the same rules and inputs.
    */
   public shallowCopy() {
-    const newEngine = new CarSimulatorEngine(true)
+    const newEngine = new CarSimulator(true)
     newEngine.inputs = { ...this.inputs }
     newEngine.engine = this.engine.shallowCopy()
     return newEngine

@@ -9,4 +9,4 @@ export type {
   RuleValue,
 } from "../publicodes-build"
 
-export * from "./CarSimulatorEngine"
+export * from "./CarSimulator"

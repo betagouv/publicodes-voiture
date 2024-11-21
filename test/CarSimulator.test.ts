@@ -1,11 +1,11 @@
 import { describe, expect, test } from "vitest"
-import { CarSimulatorEngine } from "../src/CarSimulatorEngine"
+import { CarSimulator } from "../src/CarSimulator"
 
-describe("CarSimulatorEngine", () => {
-  describe("new CarSimulatorEngine()", () => {
+describe("CarSimulator", () => {
+  describe("new CarSimulator()", () => {
     test("should return an instance of AidesVeloEngine with corrects rules parsed", () => {
-      const engine = new CarSimulatorEngine()
-      expect(engine).toBeInstanceOf(CarSimulatorEngine)
+      const engine = new CarSimulator()
+      expect(engine).toBeInstanceOf(CarSimulator)
 
       const parsedRules = engine.getEngine().getParsedRules()
       expect(parsedRules["coûts"]).toBeDefined()
@@ -13,7 +13,7 @@ describe("CarSimulatorEngine", () => {
     })
   })
 
-  const globalTestEngine = new CarSimulatorEngine()
+  const globalTestEngine = new CarSimulator()
 
   describe("setInputs()", () => {
     test("should correctly set the engine's situation", () => {
@@ -195,9 +195,7 @@ describe("CarSimulatorEngine", () => {
   describe("evaluateAlternatives()", () => {
     test("should return all possible alternatives with default values", () => {
       const engine = globalTestEngine.shallowCopy()
-      console.time("evaluateAlternatives")
       const alternatives = engine.evaluateAlternatives()
-      console.timeEnd("evaluateAlternatives")
       // TODO: use engine.getOptions
       const nbMotorisations = 3
       const nbFuels = 4
@@ -218,8 +216,8 @@ describe("CarSimulatorEngine", () => {
         expect(alternative.motorisation.value).toBeDefined()
         expect(alternative.motorisation.isEnumValue).toBeTruthy()
         if (alternative.motorisation.value !== "électrique") {
-          expect(alternative.fuel.value).toBeDefined()
-          expect(alternative.fuel.isEnumValue).toBeTruthy()
+          expect(alternative.fuel?.value).toBeDefined()
+          expect(alternative.fuel?.isEnumValue).toBeTruthy()
         } else {
           expect(alternative.fuel).toBeUndefined()
         }
