@@ -31,6 +31,45 @@ describe("CarSimulator", () => {
       const situation = engine.getEngine().getSituation()
       expect(situation["voiture . gabarit"]).toBeUndefined()
     })
+
+    test("shouldn't overwrite by default", () => {
+      const engine = globalTestEngine.shallowCopy()
+
+      expect(engine.getInputs()).toEqual({})
+
+      engine.setInputs({ "voiture . gabarit": "SUV" })
+      expect(engine.getInputs()).toEqual({ "voiture . gabarit": "SUV" })
+
+      engine.setInputs({ "voiture . cible . borne de recharge": false })
+      expect(engine.getInputs()).toEqual({
+        "voiture . gabarit": "SUV",
+        "voiture . cible . borne de recharge": false,
+      })
+
+      engine.setInputs({ "voiture . gabarit": undefined })
+      expect(engine.getInputs()).toEqual({
+        "voiture . cible . borne de recharge": false,
+      })
+
+      engine.setInputs({ "voiture . cible . borne de recharge": true })
+      expect(engine.getInputs()).toEqual({
+        "voiture . cible . borne de recharge": true,
+      })
+    })
+
+    test("should correctly overwrite when requested", () => {
+      const engine = globalTestEngine.shallowCopy()
+
+      expect(engine.getInputs()).toEqual({})
+
+      engine.setInputs({ "voiture . gabarit": "SUV" })
+      expect(engine.getInputs()).toEqual({ "voiture . gabarit": "SUV" })
+
+      engine.setInputs({ "voiture . cible . borne de recharge": false }, true)
+      expect(engine.getInputs()).toEqual({
+        "voiture . cible . borne de recharge": false,
+      })
+    })
   })
 
   describe("evaluateRule()", () => {
@@ -179,7 +218,7 @@ describe("CarSimulator", () => {
       // instead of resetting at each new setSitutation call (as it is done
       // now)?
       //
-      // engine.setInputs({ "voiture . gabarit": "moyenne" })
+      // engine.updateInputs({ "voiture . gabarit": "moyenne" })
       // let fourthEval = new Date().getTime()
       // engine.evaluateCar()
       // fourthEval = new Date().getTime() - fourthEval
@@ -221,6 +260,45 @@ describe("CarSimulator", () => {
         } else {
           expect(alternative.fuel).toBeUndefined()
         }
+      })
+    })
+  })
+
+  describe("getTargetInfos()", () => {
+    test("should return values corresponding to the defaults ones", () => {
+      const engine = globalTestEngine.shallowCopy()
+      const targetInfos = engine.evaluateTargetInfos()
+      const carInfos = engine.evaluateCar()
+
+      expect(targetInfos.size).toEqual(carInfos.size)
+      expect(targetInfos.hasChargingStation).toEqual({
+        value: true,
+        title: "Borne de recharge",
+        isApplicable: true,
+        isEnumValue: false,
+      })
+    })
+
+    test("should return values corresponding to the inputs", () => {
+      const engine = globalTestEngine.shallowCopy()
+      const targetInfos = engine
+        .setInputs({
+          "voiture . cible . gabarit": "SUV",
+          "voiture . cible . borne de recharge": false,
+        })
+        .evaluateTargetInfos()
+
+      expect(targetInfos.size).toEqual({
+        value: "SUV",
+        title: "SUV",
+        isApplicable: true,
+        isEnumValue: true,
+      })
+      expect(targetInfos.hasChargingStation).toEqual({
+        value: false,
+        title: "Borne de recharge",
+        isApplicable: true,
+        isEnumValue: false,
       })
     })
   })

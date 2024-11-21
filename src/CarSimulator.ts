@@ -117,11 +117,13 @@ export class CarSimulator {
   }
 
   /**
-   * Set the inputs of the engine. This will update the Publicodes situation
-   * with the given inputs.
+   * Update the inputs of the engine. This will update the Publicodes
+   * situation with the given inputs.
    *
    * @param inputs The inputs to set (corresponding to the rules that are
    * questions).
+   * @param overwrite To overwrite existing inputs (if `true`) or update
+   * existing inputs with the one (if `false`).
    *
    * @note The format of the inputs are in the JS format, not the Publicodes
    * format. For example, boolean values are represented as `true` or `false`
@@ -129,12 +131,26 @@ export class CarSimulator {
    * If you prefer to have more control over the situation, you can use {@link
    * setSituation} instead.
    */
-  public setInputs(inputs: Questions): this {
-    this.inputs = inputs
+  public setInputs(inputs: Questions, overwrite = false): this {
+    if (overwrite) {
+      this.inputs = inputs
+    } else {
+      this.inputs = {
+        ...this.inputs,
+        ...inputs,
+      }
+    }
     this.engine.setSituation(
-      getSituation(inputs) as PublicodesSituation<RuleName>,
+      getSituation(this.inputs) as PublicodesSituation<RuleName>,
     )
     return this
+  }
+
+  /**
+   * Return a copy of the current inputs.
+   */
+  public getInputs(): Questions {
+    return { ...this.inputs }
   }
 
   /**
