@@ -33,16 +33,7 @@ jobs:
 
   create_github_release:
     runs-on: ubuntu-latest
-    # We create release only if the version in the package.json have been
-    # upgraded and this CI is running against the main branch. We allow
-    # branches with a PR open on main to publish pre-release (x.y.z-rc.u) but
-    # not actual releases.
-    if: |
-      needs.check_if_version_upgraded.outputs.is_upgraded_version == 'true' &&
-      (
-        github.event_name == 'push' ||
-        needs.check_if_version_upgraded.outputs.is_pre_release == 'true'
-      )
+    if: needs.check_if_version_upgraded.outputs.is_upgraded_version == 'true'
     needs:
       - check_if_version_upgraded
     steps:
@@ -75,7 +66,7 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages
-          build_dir: doc/build
+          build_dir: online-doc/dist
           jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -96,7 +87,7 @@ jobs:
           cache: "yarn"
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies and build
-        run: yarn i --frozen-lockfile && yarn run compile
+        run: yarn install --frozen-lockfile && yarn run compile
       - name: Publish to NPM
         run: npm publish
         env:
