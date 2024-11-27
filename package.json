@@ -1,6 +1,6 @@
 {
   "name": "@betagouv/publicodes-voiture",
-  "version": "0.3.0-9",
+  "version": "0.3.0-rc.9",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/betagouv/publicodes-voiture.git"
