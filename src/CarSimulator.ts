@@ -10,13 +10,8 @@ import rules, {
 } from "../publicodes-build"
 
 export type CarInfos = {
-  /**
-   * The title of the rule
-   *
-   * TODO: only used for alternatives, should be two different types?
-   */
+  /** The title of the rule */
   title?: string
-  // NOTE: should we use the Infos type?
   /** The cost of the car in €/an */
   cost: EvaluatedRuleInfos<RuleValue["coûts"]>
   /** The emissions of the car in kgCO2/an */
@@ -265,8 +260,6 @@ export class CarSimulator {
    * @param rule The name of the rule to get the value infos.
    * @param isEnum If `true`, the rule is expected to be an enum rule and
    * therefore, the title of the rule will correspond to the enum value.
-   *
-   * TODO: add tests
    */
   public evaluateRule<T extends keyof RuleValue>(
     rule: T,
@@ -353,17 +346,6 @@ function getSituation(inputs: Questions): Situation {
       }),
   )
 }
-
-// type ExtractBaseRuleNames<
-//   N extends string,
-//   T extends string,
-// > = T extends `${infer Namespace} . ${infer Rule}`
-//   ? Rule extends `${string} . ${infer Rule2}`
-//     ? ExtractBaseRuleNames<T, Rule2>
-//     : { T: Rule }
-//   : never
-//
-// type BaseRuleNames = ExtractBaseRuleNames<"", RuleName>
 
 function ruleName(namespace: RuleName, rule: string): RuleName {
   return (namespace + " . " + rule) as RuleName

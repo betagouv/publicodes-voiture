@@ -116,6 +116,23 @@ describe("CarSimulator", () => {
         engine.evaluateRule("usage . km annuels . calculés").isApplicable,
       ).toBeTruthy()
     })
+
+    test("should correctly handle enum values", () => {
+      const engine = globalTestEngine.shallowCopy()
+
+      expect(engine.evaluateRule("voiture . gabarit").isEnumValue).toBeTruthy()
+      expect(
+        engine.evaluateRule("voiture . motorisation").isEnumValue,
+      ).toBeTruthy()
+      expect(
+        engine.evaluateRule("voiture . thermique . carburant").isEnumValue,
+      ).toBeTruthy()
+      expect(engine.evaluateRule("voiture . occasion").isEnumValue).toBeFalsy()
+      expect(
+        engine.evaluateRule("voiture . prix d'achat").isEnumValue,
+      ).toBeFalsy()
+      expect(engine.evaluateRule("voiture").isEnumValue).toBeFalsy()
+    })
   })
 
   describe("evaluateCar()", () => {
