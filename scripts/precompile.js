@@ -34,7 +34,7 @@ writeFileSync(
   })}`,
 )
 
-const personas = getPersonas(model)
+const personas = getPersonas(resolvedRules)
 writeFileSync(PERSONAS_DEST_PATH, JSON.stringify(personas))
 console.log(`✅ './src/personas/personas.json' generated`)
 

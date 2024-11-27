@@ -3,11 +3,41 @@ import { readFileSync } from "fs"
 
 /**
  * Parses the personas.yaml file
- * TODO: checks that personas definition are valid.
  */
-export default function getPersonas() {
+export default function getPersonas(rules) {
   const personas = parse(readFileSync("personas.yaml", "utf-8"))
   let error = false
+
+  Object.entries(personas).forEach(([personaName, persona]) => {
+    if (!persona.titre) {
+      console.warning(`[getPersonas] '${personaName}' has no title`)
+    }
+    if (!persona.description) {
+      console.warning(`[getPersonas] '${personaName}' has no description`)
+    }
+    if (!persona.situation) {
+      console.warning(`[getPersonas] '${personaName}' has no situation`)
+    } else {
+      Object.entries(persona.situation).forEach(([name, value]) => {
+        if (!(name in rules)) {
+          console.error(
+            `[getPersonas] '${personaName}' has an unknown rule '${name}'`,
+          )
+          error = true
+        } else if (
+          typeof value === "string" &&
+          value !== "oui" &&
+          value !== "non" &&
+          !(`${name} . ${value}` in rules)
+        ) {
+          console.error(
+            `[getPersonas] '${personaName}' has an unknown value '${value}' for rule '${name}'`,
+          )
+          error = true
+        }
+      })
+    }
+  })
 
   if (error) {
     console.log()
