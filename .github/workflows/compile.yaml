@@ -10,6 +10,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -17,12 +18,8 @@ jobs:
 
       - id: install
         name: Install dependencies
-        run: yarn install --immutable
-
-      - id: compile
-        name: Compile the rules
-        run: yarn compile
+        run: yarn install --frozen-lockfile
 
       - id: test
-        name: Test the rules
+        name: Compile and test
         run: yarn test
