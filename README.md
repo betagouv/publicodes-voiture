@@ -18,12 +18,12 @@ client autonome [`agir-voiture`](https://github.com/betagouv/agir-voiture) et
 une intégration est en cours dans l'application
 [J'agis](https://jagis.beta.gouv.fr).
 
+</div>
+
 > [!WARNING]
 > Ce projet est en cours de construction et est susceptible de fortement
 > évoluer. Voir le [document de travail](/specs.md) pour plus d'informations
 > sur le projet.
-
-</div>
 
 ## Usage
 
