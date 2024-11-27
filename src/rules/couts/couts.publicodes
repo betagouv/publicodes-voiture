@@ -1,6 +1,4 @@
 coûts:
-
-coûts . voiture:
   titre: Coûts annuels de votre voiture
   description: |
     Coûts répartis entre les coûts liés à la possession d'une voiture (achat,
@@ -23,7 +21,7 @@ coûts . voiture:
     [futur.eco](https://futur.eco/cout-voiture) et le modèle reste une source
     d'inspiration.
 
-coûts . voiture . coûts de possession:
+coûts . coûts de possession:
   titre: Coûts de possession annuels
   description: |
     Ensemble des coûts liés à la possession d'une voiture et qui peuvent par
@@ -38,7 +36,7 @@ coûts . voiture . coûts de possession:
       - certificat d'immatriculation amorti
   unité: €/an
 
-coûts . voiture . coûts de possession . contrôle technique:
+coûts . coûts de possession . contrôle technique:
   titre: Coût annuel du contrôle technique
   valeur: 85 € / 2 an
   note: |
@@ -53,7 +51,7 @@ coûts . voiture . coûts de possession . contrôle technique:
     [data.economie.gouv.fr/explore/embed/dataset/prix-controle-technique/](https://data.economie.gouv.fr/explore/embed/dataset/prix-controle-technique/analyze/?dataChart=eyJxdWVyaWVzIjpbeyJjb25maWciOnsiZGF0YXNldCI6InByaXgtY29udHJvbGUtdGVjaG5pcXVlIiwib3B0aW9ucyI6e319LCJjaGFydHMiOlt7ImFsaWduTW9udGgiOnRydWUsInR5cGUiOiJiYXIiLCJmdW5jIjoiQVZHIiwieUF4aXMiOiJwcml4X3Zpc2l0ZSIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6IiM0NDcwNDkifV0sInhBeGlzIjoiY2F0X2VuZXJnaWVfaWQiLCJtYXhwb2ludHMiOm51bGwsInRpbWVzY2FsZSI6IiIsInNvcnQiOiIiLCJzZXJpZXNCcmVha2Rvd25UaW1lc2NhbGUiOiIifV0sImRpc3BsYXlMZWdlbmQiOnRydWUsImFsaWduTW9udGgiOnRydWUsInRpbWVzY2FsZSI6IiJ9) :
 
 
-coûts . voiture . coûts de possession . entretien:
+coûts . coûts de possession . entretien:
   question: Combien coûte l'entretien de votre voiture ?
   description: |
     Renseignez le coût annuel moyen de l'entretien de votre voiture hors
@@ -65,7 +63,7 @@ coûts . voiture . coûts de possession . entretien:
   plancher: 0
   unité: €/an
 
-coûts . voiture . coûts de possession . entretien estimé:
+coûts . coûts de possession . entretien estimé:
   titre: Estimation du coût d'entretien moyen
   description: |
     Estimation du coût d'entretien moyen de votre voiture par an en prenant
@@ -109,7 +107,7 @@ coûts . voiture . coûts de possession . entretien estimé:
     des km parcourus et avoir une division plus fine des coûts d'entretien en
     sous-postes.
 
-coûts . voiture . coûts de possession . entretien thermique moyen:
+coûts . coûts de possession . entretien thermique moyen:
   titre: Coût d'entretien moyen d'une voiture thermique
   valeur: 1250 €/an
   note: |
@@ -119,7 +117,7 @@ coûts . voiture . coûts de possession . entretien thermique moyen:
     de France Stratégie (en retranchant le coût du contrôle technique qui est
     comptabilisé à part).
 
-coûts . voiture . coûts de possession . assurance:
+coûts . coûts de possession . assurance:
   question: Quel est le coût de l'assurance de votre voiture ? 
   description: |
     Renseignez le coût annuel de l'assurance de votre voiture. Si vous ne
@@ -128,7 +126,7 @@ coûts . voiture . coûts de possession . assurance:
   plancher: 0
   unité: €/an
 
-coûts . voiture . coûts de possession . assurance estimée:
+coûts . coûts de possession . assurance estimée:
   titre: Coût annuel estimé de l'assurance
   formule:
     variations:
@@ -146,7 +144,7 @@ coûts . voiture . coûts de possession . assurance estimée:
 
     - [LesFurets.com](https://www.lesfurets.com/assurance-auto/types-vehicules/voiture-propre/electrique)
 
-coûts . voiture . coûts de possession . achat amorti:
+coûts . coûts de possession . achat amorti:
   titre: Coût annuel de l'achat de votre voiture
   formule: (voiture . prix d'achat - valeur résiduelle) / voiture . durée de détention totale
   note: |
@@ -197,12 +195,12 @@ coûts . voiture . coûts de possession . achat amorti:
       contexte:
         décote . durée décote: voiture . durée de détention totale
         
-coûts . voiture . coûts de possession . certificat d'immatriculation amorti:
+coûts . coûts de possession . certificat d'immatriculation amorti:
   titre: Coût annuel du certificat d'immatriculation
   formule: certificat d'immatriculation / voiture . durée de détention totale
 
 # TODO: a compléter
-coûts . voiture . coûts de possession . certificat d'immatriculation:
+coûts . coûts de possession . certificat d'immatriculation:
   titre: Coût du certificat d'immatriculation (ex-carte grise)
   formule:
     variations:
@@ -221,7 +219,7 @@ coûts . voiture . coûts de possession . certificat d'immatriculation:
     récupérer et calculer le coût moyen du certificat d'immatriculation en
     fonction du type de véhicule et si il est d'occasion.
 
-coûts . voiture . coûts d'utilisation:
+coûts . coûts d'utilisation:
   titre: Coûts d'utilisation annuels
   description: |
     Ensemble des coûts liés à l'utilisation d'une voiture et qui peuvent par
@@ -236,11 +234,11 @@ coûts . voiture . coûts d'utilisation:
 
   unité: €/an
 
-coûts . voiture . coûts d'utilisation . consommation:
+coûts . coûts d'utilisation . consommation:
   titre: Coût de la consommation annuelle
   valeur: consommation au km * usage . km annuels
 
-coûts . voiture . coûts d'utilisation . consommation . consommation au km:
+coûts . coûts d'utilisation . consommation . consommation au km:
   titre: Coût de la consommation au km
   formule:
     variations:
@@ -277,7 +275,7 @@ coûts . voiture . coûts d'utilisation . consommation . consommation au km:
         ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
         de France Stratégie.
 
-coûts . voiture . coûts d'utilisation . stationnement:
+coûts . coûts d'utilisation . stationnement:
   question: Combien coûte le stationnement de votre voiture ?
   description: |
     Renseignez le coût annuel associé au stationnement de votre voiture
@@ -299,7 +297,7 @@ coûts . voiture . coûts d'utilisation . stationnement:
     voiture électrique souhaitant bénéficier d'une borne de recharge, mais
     nous n'avons pas encore de données pour le confirmer.
 
-coûts . voiture . coûts d'utilisation . péage:
+coûts . coûts d'utilisation . péage:
   titre: Coût annuel lié aux péages
   question: Combien payez-vous en moyenne pour les péages ?
   par défaut: 
@@ -326,7 +324,7 @@ coûts . voiture . coûts d'utilisation . péage:
         Infos](https://www.francetvinfo.fr/economie/automobile/infographies-prix-des-peages-visualisez-l-augmentation-des-tarifs-en-2023-autoroute-par-autoroute_5917970.html)
         comparant l'évolution des tarifs des autoroutes entre 2022 et 2023.
 
-coûts . voiture . coûts d'utilisation . contraventions:
+coûts . coûts d'utilisation . contraventions:
   question: Quel le coût des contraventions que vous payez ?
   description: |
     Il s'agit ici de toutes les contraventions qui surviennent : parking,
@@ -370,7 +368,7 @@ coûts . voiture . coûts d'utilisation . contraventions:
         [SDES](https://www.statistiques.developpement-durable.gouv.fr/387-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2022).
 
 
-coûts . voiture . coûts d'utilisation . permis de conduire:
+coûts . coûts d'utilisation . permis de conduire:
   formule: coût d'obtention / durée d'utilisation
   unité: €/an
   note: |

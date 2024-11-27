@@ -1,27 +1,10 @@
-importer!:
-  depuis:
-    nom: '@incubateur-ademe/nosgestesclimat'
-    url: https://github.com/incubateur-ademe/nosgestesclimat
-  dans: ngc
-  les règles:
-   - transport . voiture
-
-ngc:
-  titre: Nos Gestes Climat
-  description: |
-    Ce modèle utilise une partie des règles de calcul du modèle de [Nos
-    Gestes Climat](https://nosgestesclimat.fr) pour calculer l'empreinte
-    CO2e.
-
 empreinte:
-  titre: Empreinte carbone
-
-empreinte . voiture:
   titre: Empreinte carbone annuelle de votre voiture
   description: |
     Nous utilisons le modèle de [Nos Gestes Climat](https://nosgestesclimat.fr)
     pour calculer l'empreinte carbone de votre voiture.
   valeur: ngc . transport . voiture
+  unité: kgCO2e/an
   contexte:
     ngc . transport . voiture . utilisateur: "'propriétaire'"
     ngc . transport . voiture . gabarit: voiture . gabarit

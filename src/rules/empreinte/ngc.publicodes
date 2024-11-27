@@ -1,0 +1,67 @@
+importer!:
+  depuis:
+    nom: '@incubateur-ademe/nosgestesclimat'
+    url: https://github.com/incubateur-ademe/nosgestesclimat
+  dans: ngc
+  les règles:
+    - transport . voiture
+    # NOTE: écrase l'attribut `question` pour éviter d'exposer les questions des
+    # règles importées du modèle `@incubateur-ademe/nosgestesclimat` car elles sont
+    # définies à partir des questions de ce modèle.
+    - transport . voiture . km:
+        question:
+        unité: km/an
+    - transport . voiture . utilisateur:
+        question:
+    - transport . voiture . voyageurs:
+        question:
+    - transport . voiture . motorisation:
+        question:
+    - transport . voiture . thermique . consommation aux 100:
+        question:
+    - transport . voiture . gabarit:
+        question:
+    - transport . voiture . thermique . carburant:
+        question:
+    - transport . voiture . électrique . consommation aux 100:
+        question:
+    # NOTE: les règles du namespace `logement` sont utilisées pour estimer
+    # l'empreinte de la consommation d'électricité. Actuellement, nous
+    # utilisons les valeurs par défaut de NGC. Cependant, nous pourrions à
+    # terme les exposer afin d'affiner de pouvoir permettre d'affiner le calcul
+    # pour les clients ayant ces informations (par exemple, J'agis).
+    - logement . électricité . photovoltaique . présent:
+        question:
+    - logement . électricité . photovoltaique . production:
+        question:
+    - logement . type:
+        question:
+    - logement . surface:
+        question:
+    - logement . électricité . réseau . consommation:
+        question:
+    - logement . électricité . photovoltaique . part autoconsommation:
+        question:
+    - logement . chauffage . électricité . présent:
+        question:
+    - logement . chauffage . PAC . présent:
+        question:
+    - logement . chauffage . gaz . présent:
+        question:
+    - logement . chauffage . réseau de chaleur . présent:
+        question:
+    - logement . chauffage . bouteille gaz . présent:
+        question:
+    - logement . chauffage . citerne propane . présent:
+        question:
+    - logement . chauffage . fioul . présent:
+        question:
+    - logement . chauffage . bois . présent:
+        question:
+
+ngc:
+  titre: Nos Gestes Climat
+  description: |
+    Ce modèle utilise une partie des règles de calcul du modèle de [Nos
+    Gestes Climat](https://nosgestesclimat.fr) pour calculer l'empreinte
+    CO2e.

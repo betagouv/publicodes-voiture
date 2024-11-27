@@ -1,10 +1,9 @@
 node_modules
 .yarn
-index.d.ts
-index.js
 doc/dist/
-publicodes-voiture.model.json
-publicodes-voiture.personas.json
-publicodes-voiture.ui.json
 test.ts
 scripts/data/quechoisir/*.html
+dist/
+publicodes-build/
+src/rules/alternatives.publicodes
+src/personas/personas.json

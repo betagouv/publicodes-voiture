@@ -6,7 +6,7 @@ import { ComponentProps, useRef } from "react"
 import ReactMardown from "react-markdown"
 
 // Import the model from the compiled model
-import model from "../../index"
+import model from "../../publicodes-build"
 
 // Instantiate the publicodes engine with the model
 const engine = new Engine(model)
