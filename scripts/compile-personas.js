@@ -10,13 +10,13 @@ export default function getPersonas(rules) {
 
   Object.entries(personas).forEach(([personaName, persona]) => {
     if (!persona.titre) {
-      console.warning(`[getPersonas] '${personaName}' has no title`)
+      console.warn(`[getPersonas] '${personaName}' has no title`)
     }
     if (!persona.description) {
-      console.warning(`[getPersonas] '${personaName}' has no description`)
+      console.warn(`[getPersonas] '${personaName}' has no description`)
     }
     if (!persona.situation) {
-      console.warning(`[getPersonas] '${personaName}' has no situation`)
+      console.warn(`[getPersonas] '${personaName}' has no situation`)
     } else {
       Object.entries(persona.situation).forEach(([name, value]) => {
         if (!(name in rules)) {
@@ -27,13 +27,15 @@ export default function getPersonas(rules) {
         } else if (
           typeof value === "string" &&
           value !== "oui" &&
-          value !== "non" &&
-          !(`${name} . ${value}` in rules)
+          value !== "non"
         ) {
-          console.error(
-            `[getPersonas] '${personaName}' has an unknown value '${value}' for rule '${name}'`,
-          )
-          error = true
+          const valueName = value.slice(1, value.length - 1)
+          if (!(`${name} . ${valueName}` in rules)) {
+            console.error(
+              `[getPersonas] '${personaName}' has an unknown value '${valueName}' for rule '${name}'`,
+            )
+            error = true
+          }
         }
       })
     }

@@ -1,13 +1,44 @@
+valeur par défaut:
+  titre: Valeur par défaut
+  situation: {}
+  empreinte: 3022.851504292707
+  coûts: 6370.257297587041
+
 aller-retours travail électrique ville:
   titre: Aller-retours travail en ville (électrique)
   description: |
     Personne qui va travailler avec une petite voiture électrique en ville
   situation:
-    voiture . motorisation: électrique
-    voiture . gabarit: petite
+    voiture . motorisation: "'électrique'"
+    voiture . gabarit: "'petite'"
+    voiture . prix d'achat: 5400
+    voiture . électrique . consommation électricité: 24 # kWh/100km
+    voiture . électrique . prix kWh: 0.17 # €/kWh
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 20
     usage . km annuels . calculés . vacances: 0
+    coûts . coûts de possession . entretien: 700
+    coûts . coûts de possession . assurance: 400
+    coûts . coûts d'utilisation . stationnement: 700
+    coûts . coûts d'utilisation . péage: 0
+    coûts . coûts d'utilisation . contraventions: 10
+  empreinte: 539.1190922108744
+  coûts: 2387.813887814313
+
+aller-retours travail électrique ville occasion:
+  titre: Aller-retours travail en ville (électrique) - Occasion
+  description: |
+    Personne qui va travailler avec une petite voiture électrique en ville
+  situation:
+    voiture . motorisation: "'électrique'"
+    voiture . gabarit: "'petite'"
+    voiture . prix d'achat: 5400
+    voiture . occasion: oui
+    usage . km annuels . connus: non
+    usage . km annuels . calculés . quotidien: 20
+    usage . km annuels . calculés . vacances: 0
+  empreinte: 504.95509221087445
+  coûts: 3059.8004878143133
 
 grandes vacances familiales:
   titre: Grandes vacances familiales (essence)
@@ -15,12 +46,14 @@ grandes vacances familiales:
     Personne qui utilise une voiture essence pour partir en vacances en
     famille.
   situation:
-    voiture . motorisation: thermique
-    voiture . thermique . carburant: essence E5 ou E10
-    voiture . gabarit: berline
+    voiture . motorisation: "'thermique'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . gabarit: "'berline'"
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 5
     usage . km annuels . calculés . vacances: 2000
+  empreinte: 1087.2386496543545
+  coûts: 4687.079592587041
 
 famille usage régulier diesel:
   titre: Usage régulier en famille (diesel)
@@ -31,12 +64,14 @@ famille usage régulier diesel:
     Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
     et aller au travail.
   situation:
-    voiture . motorisation: thermique
-    voiture . thermique . carburant: gazole B7 ou B10
-    voiture . gabarit: berline
+    voiture . motorisation: "'électrique'"
+    voiture . thermique . carburant: "'gazole B7 ou B10'"
+    voiture . gabarit: "'berline'"
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
+  empreinte: 1124.184851307695
+  coûts: 5478.477946905223
 
 famille usage régulier biocarburant:
   titre: Usage régulier en famille (biocarburant)
@@ -47,12 +82,14 @@ famille usage régulier biocarburant:
     Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
     et aller au travail.
   situation:
-    voiture . motorisation: thermique
-    voiture . thermique . carburant: essence E85
-    voiture . gabarit: berline
+    voiture . motorisation: "'thermique'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . gabarit: "'berline'"
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
+  empreinte: 1823.1880810919374
+  coûts: 5745.61951946204
 
 famille usage régulier moyenne biocarburant:
   titre: Usage régulier en famille (moyenne/biocarburant)
@@ -63,9 +100,11 @@ famille usage régulier moyenne biocarburant:
     Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
     et aller au travail.
   situation:
-    voiture . motorisation: thermique
-    voiture . thermique . carburant: essence E85
-    voiture . gabarit: moyenne
+    voiture . motorisation: "'thermique'"
+    voiture . thermique . carburant: "'essence E85'"
+    voiture . gabarit: "'moyenne'"
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
+  empreinte: 1752.9630810919373
+  coûts: 5491.074064916586

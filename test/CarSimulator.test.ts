@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest"
 import { CarSimulator } from "../src/CarSimulator"
+import personas from "../src/personas"
 
 describe("CarSimulator", () => {
   describe("new CarSimulator()", () => {
@@ -136,6 +137,22 @@ describe("CarSimulator", () => {
   })
 
   describe("evaluateCar()", () => {
+    describe("personas", () => {
+      const simulator = new CarSimulator()
+
+      Object.values(personas).forEach((persona) => {
+        test(persona.titre, () => {
+          const evaluatedCar = simulator
+            .shallowCopy()
+            .setSituation(persona.situation)
+            .evaluateCar()
+
+          expect(evaluatedCar.emissions.value).toEqual(persona["empreinte"])
+          expect(evaluatedCar.cost.value).toEqual(persona["coûts"])
+        })
+      })
+    })
+
     test("should have default values", () => {
       const engine = globalTestEngine.shallowCopy()
       const carInfos = engine.evaluateCar()

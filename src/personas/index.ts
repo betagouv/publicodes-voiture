@@ -12,6 +12,8 @@ export type Persona = {
   titre: string
   description?: string
   situation: Situation
+  empreinte: number
+  coûts: number
 }
 
 /**

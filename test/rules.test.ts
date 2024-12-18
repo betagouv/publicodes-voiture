@@ -11,6 +11,21 @@ describe("Règles", () => {
     },
   })
 
+  describe("technique", () => {
+    test("une évaluation doit retourner la même valeur que celle renseignée dans la situation", () => {
+      const actual = engine.shallowCopy().setSituation({
+        "voiture . motorisation": "'électrique'",
+      })
+
+      expect(actual.getSituation()["voiture . motorisation"]).toEqual(
+        "'électrique'",
+      )
+      expect(actual.evaluate("voiture . motorisation").nodeValue).toEqual(
+        "électrique",
+      )
+    })
+  })
+
   describe("voiture . prix d'achat", () => {
     test("prix par défaut", () => {
       const actual = engine.setSituation({}).evaluate("voiture . prix d'achat")
