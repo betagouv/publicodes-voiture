@@ -9,7 +9,10 @@ import rules, {
   Situation,
 } from "../publicodes-build"
 
-export type CarInfos = {
+/**
+ * Evaluated rule values for the car.
+ */
+export type EvaluatedCarInfos = {
   /** The title of the rule */
   title?: string
   /** The cost of the car in €/an */
@@ -43,7 +46,7 @@ export type TargetInfos = {
  */
 export type Alternative = {
   kind: "car"
-} & CarInfos
+} & EvaluatedCarInfos
 
 /**
  * Full information about an evaluated value.
@@ -167,7 +170,7 @@ export class CarSimulator {
    *
    * TODO: should we implement a cache layer for the wrapped engine?
    */
-  public evaluateCar(): CarInfos {
+  public evaluateCar(): EvaluatedCarInfos {
     const motorisation = this.evaluateRule("voiture . motorisation")
 
     return {

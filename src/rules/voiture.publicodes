@@ -336,7 +336,7 @@ voiture . thermique . carburant:
       description: Essence E85
     GPL:
       titre: GPL
-      description: GPL (Gaz de Pétrole Liquéfiés)
+      description: GPL (Gaz de Pétrole Liquéfié)
 
 
 voiture . gabarit:
