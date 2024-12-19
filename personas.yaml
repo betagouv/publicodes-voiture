@@ -64,14 +64,14 @@ famille usage régulier diesel:
     Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
     et aller au travail.
   situation:
-    voiture . motorisation: "'électrique'"
+    voiture . motorisation: "'thermique'"
     voiture . thermique . carburant: "'gazole B7 ou B10'"
     voiture . gabarit: "'berline'"
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
-  empreinte: 1124.184851307695
-  coûts: 5478.477946905223
+  empreinte: 2677.626189841937
+  coûts: 5913.45340708704
 
 famille usage régulier biocarburant:
   titre: Usage régulier en famille (biocarburant)
