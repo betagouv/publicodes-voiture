@@ -27,4 +27,4 @@ jobs:
       - name: Run pkg.pr.new
         run: |
           yarn compile
-          npx pkg-pr-new publish
+          npx pkg-pr-new publish --packageManager=yarn
