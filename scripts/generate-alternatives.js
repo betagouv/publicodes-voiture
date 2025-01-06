@@ -3,7 +3,7 @@
  * motorisations
  */
 
-const ALTERNATIVES_VOITURE_NAMESPACE = "alternatives . voiture"
+const ALTERNATIVES_VOITURE_NAMESPACE = "alternatives . acheter voiture"
 
 export default function generateAlternatives(rules) {
   const carburants = Object.keys(rules).flatMap((key) => {
@@ -35,11 +35,8 @@ export default function generateAlternatives(rules) {
   })
 
   const alternatives = {
-    alternatives: {
-      titre: "Alternatives",
-    },
-    "alternatives . voiture": {
-      titre: "Voiture Individuelle",
+    "alternatives . acheter voiture": {
+      titre: "Acheter une nouvelle voiture",
     },
   }
 

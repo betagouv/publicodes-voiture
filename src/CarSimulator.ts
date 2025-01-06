@@ -38,15 +38,18 @@ export type TargetInfos = {
 }
 
 /**
- * Models an alternative to the current car (i.e. defined by the inputs).
- * This is used to compare the current car with other alternatives.
- *
- * @note For now, the only alternative is a car, but in the future, we might
- * have other alternatives like public transport, bike, etc.
+ * Models an alternative to the current car (i.e. defined by the inputs). This
+ * is used to compare the current car with other alternatives.
  */
-export type Alternative = {
-  kind: "car"
-} & EvaluatedCarInfos
+export type Alternative =
+  | ({ kind: "buy-new-car" } & EvaluatedCarInfos)
+  | ({
+      kind: "keep-current-car"
+      /** The additional period (in years) to keep the current car */
+      additionalPeriod: EvaluatedRuleInfos<
+        RuleValue["alternatives . garder sa voiture . durée supplémentaire"]
+      >
+    } & EvaluatedCarInfos)
 
 /**
  * Full information about an evaluated value.
@@ -83,10 +86,12 @@ const engineLogger = {
 }
 
 export const RULE_NAMES = Object.keys(rules) as RuleName[]
-export const ALTERNATIVES_VOITURE_NAMESPACE: RuleName = "alternatives . voiture"
+export const ALTERNATIVES_NAMESPACE: RuleName = "alternatives"
 export const ALTERNATIVES_RULES = RULE_NAMES.filter(
   (rule) =>
-    rule.startsWith(ALTERNATIVES_VOITURE_NAMESPACE) &&
+    rule.startsWith(ALTERNATIVES_NAMESPACE) &&
+    // NOTE: this is a bit hacking, we should probably add a field in the
+    // publicodes rules to mark the rules that are alternatives.
     `${rule} . coûts` in rules &&
     `${rule} . empreinte` in rules,
 )
@@ -193,55 +198,85 @@ export class CarSimulator {
    * @note This method is an expensive operation.
    */
   public evaluateAlternatives(): Alternative[] {
-    const infos = ALTERNATIVES_RULES.map((rule: RuleName) => {
-      const splittedRule = rule.split(" . ").slice(2)
-      const sizeOption = splittedRule[0] as Questions["voiture . gabarit"]
-      const motorisationOption =
-        splittedRule[1] as Questions["voiture . motorisation"]
-      const fuelOption = (
-        motorisationOption !== "électrique" ? splittedRule[2] : undefined
-      ) as Questions["voiture . thermique . carburant"]
-
-      if (!sizeOption || !motorisationOption) {
-        throw new Error(
-          `Invalid alternative rule ${rule}. It should have a size and a motorisation option.`,
-        )
+    return ALTERNATIVES_RULES.map((rule: RuleName) => {
+      try {
+        if (rule.includes("acheter voiture")) {
+          return this.evaluateBuyNewCarAlternative(rule)
+        } else if (rule.includes("garder sa voiture")) {
+          return this.evaluateKeepCurrentCarAlternative(rule)
+        }
+      } catch (error) {
+        console.error(error)
       }
+    }).filter((alternative) => alternative !== undefined)
+  }
 
-      return {
-        kind: "car",
-        title: this.engine.getRule(rule).title,
-        cost: this.evaluateRule(ruleName(rule, "coûts")),
-        emissions: this.evaluateRule(ruleName(rule, "empreinte")),
-        size: {
-          value: sizeOption,
-          title: this.engine.getRule(ruleName("voiture . gabarit", sizeOption))
-            .title,
-          isEnumValue: true,
-          isApplicable: true,
-        },
-        motorisation: {
-          value: motorisationOption,
-          title: this.engine.getRule(
-            ruleName("voiture . motorisation", motorisationOption),
-          ).title,
-          isEnumValue: true,
-          isApplicable: true,
-        },
-        fuel: fuelOption
-          ? {
-              value: fuelOption,
-              title: this.engine.getRule(
-                ruleName("voiture . thermique . carburant", fuelOption),
-              ).title,
-              isEnumValue: true,
-              isApplicable: true,
-            }
+  private evaluateBuyNewCarAlternative(rule: RuleName): Alternative {
+    const splittedRule = rule.split(" . ").slice(2)
+    const sizeOption = splittedRule[0] as Questions["voiture . gabarit"]
+    const motorisationOption =
+      splittedRule[1] as Questions["voiture . motorisation"]
+    const fuelOption = (
+      motorisationOption !== "électrique" ? splittedRule[2] : undefined
+    ) as Questions["voiture . thermique . carburant"]
+
+    if (!sizeOption || !motorisationOption) {
+      throw new Error(
+        `Invalid alternative rule ${rule}. It should have a size and a motorisation option.`,
+      )
+    }
+
+    return {
+      kind: "buy-new-car",
+      title: this.engine.getRule(rule).title,
+      cost: this.evaluateRule(ruleName(rule, "coûts")),
+      emissions: this.evaluateRule(ruleName(rule, "empreinte")),
+      size: {
+        value: sizeOption,
+        title: this.engine.getRule(ruleName("voiture . gabarit", sizeOption))
+          .title,
+        isEnumValue: true,
+        isApplicable: true,
+      },
+      motorisation: {
+        value: motorisationOption,
+        title: this.engine.getRule(
+          ruleName("voiture . motorisation", motorisationOption),
+        ).title,
+        isEnumValue: true,
+        isApplicable: true,
+      },
+      fuel: fuelOption
+        ? {
+            value: fuelOption,
+            title: this.engine.getRule(
+              ruleName("voiture . thermique . carburant", fuelOption),
+            ).title,
+            isEnumValue: true,
+            isApplicable: true,
+          }
+        : undefined,
+    } as Alternative
+  }
+
+  private evaluateKeepCurrentCarAlternative(rule: RuleName): Alternative {
+    const additionalPeriod = this.evaluateRule(
+      ruleName(rule, "durée supplémentaire"),
+    )
+
+    return {
+      kind: "keep-current-car",
+      title: this.engine.getRule(rule).title,
+      cost: this.evaluateRule(ruleName(rule, "coûts")),
+      emissions: this.evaluateRule(ruleName(rule, "empreinte")),
+      additionalPeriod,
+      size: this.evaluateRule("voiture . gabarit"),
+      motorisation: this.evaluateRule("voiture . motorisation"),
+      fuel:
+        this.evaluateRule("voiture . motorisation").value !== "électrique"
+          ? this.evaluateRule("voiture . thermique . carburant")
           : undefined,
-      } as Alternative
-    })
-
-    return infos
+    } as Alternative
   }
 
   /**

@@ -1,0 +1,60 @@
+alternatives:
+  titre: Alternatives
+
+alternatives . garder sa voiture:
+  titre: Conserver sa voiture actuelle 5 ans de plus
+  description: >
+    Conserver sa voiture actuelle peut permettre de réduire les coûts annuels
+    liés à votre voiture. En effet, il n'y aura pas de coûts supplémentaires
+    liés à l'achat d'une nouvelle voiture et vous étendrez la durée
+    d'amortissement de l'achat de votre voiture actuelle.
+
+    
+    Cependant, il est important de vérifier que votre voiture actuelle respecte
+    les [normes environnementales en
+    vigueur](https://www.ecologie.gouv.fr/politiques-publiques/zones-faibles-emissions-zfe).
+  avec:
+    empreinte:
+      valeur: empreinte
+      note: >
+        La durée de détention de la voiture n'impacte pas l'empreinte carbone.
+        En effet, nous utilisons le modèle de [Nos Gestes
+        Climat](https://nosgestesclimat.fr) qui a fait le choix d'amortir
+        l'empreinte carbone sur la durée de vie du véhicule en km parcourus.
+        Cela signifie que seule la distance parcourue en une année détermine
+        l'empreinte carbone annuelle de la voiture et permet de répartir
+        l'amortissement de l'empreinte de la construction équitablement entre
+        toustes les propriétaires successif:ves.
+
+
+        Voir la documentation sur
+        [l'amortissement](https://nosgestesclimat.fr/documentation/transport/voiture/amortissement)
+        pour plus d'informations.
+
+    coûts:
+      # TODO: prendre en compte l'augmentation des coûts d'entretien de la voiture
+      valeur: coûts
+      contexte:
+        voiture . durée de détention totale: voiture . durée de détention totale + durée supplémentaire
+
+    durée supplémentaire: 
+      titre: Durée de détention supplémentaire
+      question: Combien de temps souhaitez-vous garder votre voiture actuelle ?
+      # TODO: déterminer la valeur à ajouter pour la détention de la voiture
+      par défaut: 5 
+      unité: an
+
+# alternatives . utiliser le vélo:
+#   applicable si:
+#     toutes ces conditions:
+#       - usage . km annuels . calculés
+#       - usage . km annuels . calculés . quotidien <= 15
+#   titre: Utiliser le vélo pour les trajets quotidiens
+#   description: >
+#     Utiliser le vélo est une option qui peut être intéressante si vous avez des
+#     trajets courts à effectuer. Cela vous permet de vous déplacer de manière
+#     écologique et de faire du sport en même temps.
+#
+#   avec:
+#     empreinte:
+#       valeur: empreinte 
