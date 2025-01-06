@@ -23,3 +23,6 @@ jobs:
       - id: test
         name: Compile and test
         run: yarn test
+
+      - name: Run pkg.pr.new
+        run: npx pkg-pr-new publish --compact
