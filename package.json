@@ -3,7 +3,7 @@
   "version": "0.3.2",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/betagouv/publicodes-voiture.git"
+    "url": "github:betagouv/publicodes-voiture"
   },
   "homepage": "https://github.com/betagouv/publicodes-voiture#readme",
   "description": "Modèle de calcul de l'impact environnemental et du coût de la voiture",
