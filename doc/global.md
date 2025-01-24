@@ -106,10 +106,9 @@ problème de cohérence du calcul et potentiellement des règles de conversions
 compliquant encore une fois le calcul et la compréhension que l'on peut s'en
 faire.
 
-Le choix de la fonction d'amortissement` de
-l'achat/construction).
+Le choix de la fonction d'amortissement de l'achat/construction.
 
-La achat/construction de la voiture est amortie lorsque l'`économie réalisée sur
+L'achat/construction de la voiture est amortie lorsque l'`économie réalisée sur
 l'utilisation` est supérieur au coût d'achat/empreinte de la construction :
 
 ```yaml

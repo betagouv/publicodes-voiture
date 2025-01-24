@@ -147,10 +147,11 @@ coûts . coûts de possession . assurance estimée:
 coûts . coûts de possession . achat amorti:
   titre: Coût annuel de l'achat de votre voiture
   formule: (voiture . prix d'achat - valeur résiduelle) / voiture . durée de détention totale
-  note: |
+  note: >
     Le prix d'achat d'une voiture qu'elle soit neuve ou d'occasion représente
     un facteur important du coût total du véhicule. Le choix de la fonction
     d'amortissement est par conséquent crucial pour le calcul du coût annuel.
+
 
     De nombreuses méthodes existe pour définir cette fonction : amortissement
     linéaire sur toute la durée de vie ou sur la durée d'utilisation,
@@ -158,16 +159,20 @@ coûts . coûts de possession . achat amorti:
     le prix de revente. L'amortissement sur la durée de vie peut se faire en
     années ou bien en km parcourus.
 
+
     Nous avons donc du faire un choix et avons décidé de choisir un
     **amortissement linéaire sur la durée de détention**.
 
+
     #### Historique de ce choix
+
 
     La première version du modèle pour le calcul des coûts d'une voiture était
     basée sur le modèle de [futur.eco](https://futur.eco/cout-voiture) qui
     utilise un amortissement linéaire sur la durée de vie en années de la
     voiture, en faisant l'hypothèse qu'en moyenne la voiture est gardée
     jusqu'au bout de sa vie.
+
 
     Si à l'échelle d'une voiture, il est probable qu'elle roule jusqu'à la fin de
     sa vie, (c'est-à-dire qu'elle ne soit plus en état de fonctionner), à l'échelle
@@ -177,6 +182,7 @@ coûts . coûts de possession . achat amorti:
     détention n'est que de 5,5 ans alors que l'âge moyen des voitures hors d'usage (VHU)
     est de 19 ans (voir
     cet [article](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu)).
+
 
     De plus, ce choix d'amortissement peut se justifier dans le contexte du
     calcul du coût d'un trajet arbitraire (comme c'est le cas pour futur.eco).
