@@ -25,4 +25,6 @@ jobs:
         run: yarn test
 
       - name: Run pkg.pr.new
-        run: npx pkg-pr-new publish --compact
+        run: |
+          yarn compile
+          npx pkg-pr-new publish --packageManager=yarn

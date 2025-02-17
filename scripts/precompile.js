@@ -11,7 +11,7 @@ const ROOT_PATH = new URL(".", import.meta.url).pathname
 const SRC_FILES = join(ROOT_PATH, "../src/rules/")
 const ALTERNATIVES_DEST_PATH = join(
   ROOT_PATH,
-  "../src/rules/alternatives.publicodes",
+  "../src/rules/alternatives/achat-voiture.publicodes",
 )
 const PERSONAS_DEST_PATH = join(ROOT_PATH, "../src/personas/personas.json")
 
@@ -26,13 +26,13 @@ const resolvedRules = Object.fromEntries(
 )
 
 const alternatives = generateAlternatives(resolvedRules)
-console.log(`✅ './src/rules/alternatives.publicodes' generated`)
 writeFileSync(
   ALTERNATIVES_DEST_PATH,
   `# GENERATED FILE - DO NOT EDIT\n\n${stringify(alternatives, {
     aliasDuplicateObjects: false,
   })}`,
 )
+console.log(`✅ './src/rules/alternatives/achat-voiture.publicodes' generated`)
 
 const personas = getPersonas(resolvedRules)
 writeFileSync(PERSONAS_DEST_PATH, JSON.stringify(personas))

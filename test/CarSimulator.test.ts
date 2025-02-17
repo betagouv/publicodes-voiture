@@ -284,9 +284,10 @@ describe("CarSimulator", () => {
         // Electrique
         nbSizes
 
-      expect(alternatives).toHaveLength(nbAlternatives)
+      expect(alternatives).toHaveLength(
+        nbAlternatives + 1 /* Garder sa voiture */,
+      )
       alternatives.forEach((alternative) => {
-        expect(alternative.kind).toEqual("car")
         expect(alternative.cost.value).toBeGreaterThan(0)
         expect(alternative.emissions.value).toBeGreaterThan(0)
         expect(alternative.size.value).toBeDefined()
@@ -298,6 +299,16 @@ describe("CarSimulator", () => {
           expect(alternative.fuel?.isEnumValue).toBeTruthy()
         } else {
           expect(alternative.fuel).toBeUndefined()
+        }
+
+        if (alternative.kind === "keep-current-car") {
+          expect(alternative.additionalPeriod).toEqual({
+            isApplicable: true,
+            isEnumValue: false,
+            title: "Durée de détention supplémentaire",
+            value: 5,
+            unit: "an",
+          })
         }
       })
     })
