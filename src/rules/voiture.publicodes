@@ -211,7 +211,10 @@ voiture . électrique . consommation estimée:
 
 voiture . électrique . prix kWh:
   question: Quel est le prix du kWh ?
-  applicable si: motorisation = 'électrique'
+  applicable si: 
+    une de ces conditions:
+      - motorisation = 'électrique'
+      - motorisation = 'hybride'
   par défaut: estimé
   unité: €/kWh
   description: |
@@ -225,7 +228,6 @@ voiture . électrique . prix kWh:
 
 voiture . électrique . prix kWh . estimé:
   titre: Prix du kWh estimé par défaut
-  applicable si: motorisation = 'électrique'
   formule:
     somme:
       - prix électricité . TRV HC * 85%

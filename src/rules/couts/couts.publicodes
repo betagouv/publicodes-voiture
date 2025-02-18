@@ -331,7 +331,7 @@ coûts . coûts d'utilisation . péage:
         comparant l'évolution des tarifs des autoroutes entre 2022 et 2023.
 
 coûts . coûts d'utilisation . contraventions:
-  question: Quel le coût des contraventions que vous payez ?
+  question: Combien payez-vous en moyenne pour les contraventions ?
   description: |
     Il s'agit ici de toutes les contraventions qui surviennent : parking,
     vitesse, ivresse, feu cassé, stop grillé, etc.
