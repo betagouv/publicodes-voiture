@@ -251,13 +251,10 @@ voiture . électrique . prix kWh . estimé:
 voiture . motorisation:
   question: Quel type de voiture possédez-vous ?
   par défaut: "'thermique'"
-  formule:
-    une possibilité:
-      choix obligatoire: oui
-      possibilités:
-        - thermique
-        - hybride
-        - électrique
+  une possibilité:
+    - thermique
+    - hybride
+    - électrique
   avec:
     thermique:
       titre: Thermique
@@ -275,14 +272,11 @@ voiture . thermique . carburant:
     une de ces conditions:
       - motorisation = 'thermique'
       - motorisation = 'hybride'
-  formule:
-    une possibilité:
-      choix obligatoire: oui
-      possibilités:
-        - gazole B7 ou B10
-        - essence E5 ou E10
-        - essence E85
-        - GPL
+  une possibilité:
+    - gazole B7 ou B10
+    - essence E5 ou E10
+    - essence E85
+    - GPL
   par défaut: "'essence E5 ou E10'"
   note: |
     Pour comprendre les différents types de carburants, [cet article
@@ -343,15 +337,12 @@ voiture . thermique . carburant:
 
 voiture . gabarit:
   question: Quel est son gabarit ?
-  formule:
-    une possibilité:
-      choix obligatoire: oui
-      possibilités:
-        - petite
-        - moyenne
-        - berline
-        - SUV
-        - VUL
+  une possibilité:
+    - petite
+    - moyenne
+    - berline
+    - SUV
+    - VUL
   par défaut: "'berline'"
   description: |
     Si vous ne savez pas quel gabarit choisir, vous pouvez penser à la taille
