@@ -9,22 +9,41 @@ importer!:
     # règles importées du modèle `@incubateur-ademe/nosgestesclimat` car elles sont
     # définies à partir des questions de ce modèle.
     - transport . voiture . km:
-        question:
+        formule: usage . km annuels
         unité: km/an
     - transport . voiture . utilisateur:
-        question:
+        question: Quel est l'utilisateur de la voiture ? DEBUG
+        formule: "'propriétaire'"
     - transport . voiture . voyageurs:
         question:
+        formule: 1
     - transport . voiture . motorisation:
         question:
+        formule: voiture . motorisation
     - transport . voiture . thermique . consommation aux 100:
         question:
+        formule:
+        # Permet de forcer l'utilisation de la consommation estimée lors des
+        # recalculs pour les alternatives.
+          variations:
+            - si: voiture . thermique . consommation carburant > 1
+              alors: voiture . thermique . consommation carburant
+            - sinon: voiture . thermique . consommation estimée
     - transport . voiture . gabarit:
         question:
+        formule: voiture . gabarit
     - transport . voiture . thermique . carburant:
         question:
+        formule: voiture . thermique . carburant
     - transport . voiture . électrique . consommation aux 100:
         question:
+        formule:
+          # Permet de forcer l'utilisation de la consommation estimée lors des
+          # recalculs pour les alternatives.
+          variations:
+            - si: voiture . électrique . consommation électricité > 1 
+              alors: voiture . électrique . consommation électricité 
+            - sinon: voiture . électrique . consommation estimée
     # NOTE: les règles du namespace `logement` sont utilisées pour estimer
     # l'empreinte de la consommation d'électricité. Actuellement, nous
     # utilisons les valeurs par défaut de NGC. Cependant, nous pourrions à

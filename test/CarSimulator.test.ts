@@ -5,7 +5,9 @@ import personas from "../src/personas"
 describe("CarSimulator", () => {
   describe("new CarSimulator()", () => {
     test("should return an instance of AidesVeloEngine with corrects rules parsed", () => {
+      console.time("CarSimulator init")
       const engine = new CarSimulator()
+      console.timeEnd("CarSimulator init")
       expect(engine).toBeInstanceOf(CarSimulator)
 
       const parsedRules = engine.getEngine().getParsedRules()
@@ -273,7 +275,9 @@ describe("CarSimulator", () => {
   describe("evaluateAlternatives()", () => {
     test("should return all possible alternatives with default values", () => {
       const engine = globalTestEngine.shallowCopy()
+      console.time("evaluateAlternatives")
       const alternatives = engine.evaluateAlternatives()
+      console.timeEnd("evaluateAlternatives")
       // TODO: use engine.getOptions
       const nbMotorisations = 3
       const nbFuels = 4
