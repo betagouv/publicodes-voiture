@@ -5,7 +5,9 @@ import personas from "../src/personas"
 describe("CarSimulator", () => {
   describe("new CarSimulator()", () => {
     test("should return an instance of AidesVeloEngine with corrects rules parsed", () => {
+      console.time("CarSimulator init")
       const engine = new CarSimulator()
+      console.timeEnd("CarSimulator init")
       expect(engine).toBeInstanceOf(CarSimulator)
 
       const parsedRules = engine.getEngine().getParsedRules()
@@ -144,7 +146,7 @@ describe("CarSimulator", () => {
         test(persona.titre, () => {
           const evaluatedCar = simulator
             .shallowCopy()
-            .setSituation(persona.situation)
+            .setSituation(persona.contexte)
             .evaluateCar()
 
           expect(evaluatedCar.emissions.value).toEqual(persona["empreinte"])
@@ -273,7 +275,11 @@ describe("CarSimulator", () => {
   describe("evaluateAlternatives()", () => {
     test("should return all possible alternatives with default values", () => {
       const engine = globalTestEngine.shallowCopy()
+      engine.setInputs({ "usage . km annuels . renseignés": 1000000 })
+      console.time("evaluateAlternatives")
       const alternatives = engine.evaluateAlternatives()
+      console.timeEnd("evaluateAlternatives")
+
       // TODO: use engine.getOptions
       const nbMotorisations = 3
       const nbFuels = 4
@@ -299,6 +305,96 @@ describe("CarSimulator", () => {
         } else {
           expect(alternative.fuel).toBeUndefined()
         }
+      })
+    })
+
+    test("increasing the annual distance should increase the cost and emissions", () => {
+      const engine = globalTestEngine.shallowCopy()
+      engine.setInputs({ "usage . km annuels . renseignés": 10 })
+      const alternatives = engine.evaluateAlternatives()
+
+      engine.setInputs({ "usage . km annuels . renseignés": 10000 })
+      const newAlternatives = engine.evaluateAlternatives()
+
+      expect(alternatives).toHaveLength(newAlternatives.length)
+      alternatives.forEach((alternative, i) => {
+        expect(alternative.cost.value).toBeLessThan(
+          newAlternatives[i].cost.value!,
+        )
+        expect(alternative.emissions.value).toBeLessThan(
+          newAlternatives[i].emissions.value!,
+        )
+      })
+    })
+
+    test("set km to 0 should return 0 for emissions", () => {
+      const engine = globalTestEngine.shallowCopy()
+      engine.setInputs({
+        "usage . km annuels . renseignés": 0,
+        "usage . km annuels . connus": true,
+      })
+      const alternatives = engine.evaluateAlternatives()
+
+      alternatives.forEach((alternative) => {
+        expect(alternative.emissions.value).toEqual(0)
+      })
+    })
+
+    test("modify the consumption shouldn't modify the cost and emissions", () => {
+      const engine = globalTestEngine.shallowCopy()
+      const alternatives = engine.evaluateAlternatives()
+
+      engine.setInputs({
+        "voiture . électrique . consommation électricité": 4,
+        "voiture . thermique . consommation carburant": 10,
+      })
+      const newAlternatives = engine.evaluateAlternatives()
+
+      expect(alternatives).toHaveLength(newAlternatives.length)
+      alternatives.forEach((alternative, i) => {
+        expect(alternative.cost.value).toEqual(newAlternatives[i].cost.value)
+        expect(alternative.emissions.value).toEqual(
+          newAlternatives[i].emissions.value,
+        )
+      })
+    })
+
+    test("modify the fuel price should modify the cost", () => {
+      const engine = globalTestEngine.shallowCopy()
+      const alternatives = engine.evaluateAlternatives()
+
+      engine.setInputs({
+        "voiture . thermique . prix carburant": 20,
+        "voiture . électrique . prix kWh": 20,
+      })
+      const newAlternatives = engine.evaluateAlternatives()
+
+      expect(alternatives).toHaveLength(newAlternatives.length)
+      alternatives.forEach((alternative, i) => {
+        expect(alternative.cost.value).toBeLessThan(
+          newAlternatives[i].cost.value!,
+        )
+        expect(alternative.emissions.value).toEqual(
+          newAlternatives[i].emissions.value,
+        )
+      })
+    })
+
+    test("modify the car price shouldn't modify the cost", () => {
+      const engine = globalTestEngine.shallowCopy()
+      const alternatives = engine.evaluateAlternatives()
+
+      engine.setInputs({
+        "voiture . prix d'achat": 20000,
+      })
+      const newAlternatives = engine.evaluateAlternatives()
+
+      expect(alternatives).toHaveLength(newAlternatives.length)
+      alternatives.forEach((alternative, i) => {
+        expect(alternative.cost.value).toEqual(newAlternatives[i].cost.value)
+        expect(alternative.emissions.value).toEqual(
+          newAlternatives[i].emissions.value,
+        )
       })
     })
   })

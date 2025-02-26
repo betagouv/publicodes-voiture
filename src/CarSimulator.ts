@@ -1,4 +1,5 @@
 import Engine, {
+  Possibility,
   Situation as PublicodesSituation,
   serializeUnit,
 } from "publicodes"
@@ -82,15 +83,6 @@ const engineLogger = {
   error: (message: string) => console.error(message),
 }
 
-export const RULE_NAMES = Object.keys(rules) as RuleName[]
-export const ALTERNATIVES_VOITURE_NAMESPACE: RuleName = "alternatives . voiture"
-export const ALTERNATIVES_RULES = RULE_NAMES.filter(
-  (rule) =>
-    rule.startsWith(ALTERNATIVES_VOITURE_NAMESPACE) &&
-    `${rule} . coûts` in rules &&
-    `${rule} . empreinte` in rules,
-)
-
 /**
  * A wrapper around the {@link Engine} class to compute the available aids for the
  * given inputs (which are a subset of the Publicodes situation corresponding to
@@ -148,9 +140,7 @@ export class CarSimulator {
         ...inputs,
       }
     }
-    this.engine.setSituation(
-      getSituation(this.inputs) as PublicodesSituation<RuleName>,
-    )
+    this.engine.setSituation(getSituation(this.inputs))
     return this
   }
 
@@ -193,55 +183,49 @@ export class CarSimulator {
    * @note This method is an expensive operation.
    */
   public evaluateAlternatives(): Alternative[] {
-    const infos = ALTERNATIVES_RULES.map((rule: RuleName) => {
-      const splittedRule = rule.split(" . ").slice(2)
-      const sizeOption = splittedRule[0] as Questions["voiture . gabarit"]
-      const motorisationOption =
-        splittedRule[1] as Questions["voiture . motorisation"]
-      const fuelOption = (
-        motorisationOption !== "électrique" ? splittedRule[2] : undefined
-      ) as Questions["voiture . thermique . carburant"]
+    const localEngine = this.getEngine().shallowCopy()
+    const localSituation = localEngine.getSituation()
+    const carSizes = this.getEngine().getPossibilitiesFor("voiture . gabarit")!
+    const carMotorisations = this.getEngine().getPossibilitiesFor(
+      "voiture . motorisation",
+    )!
+    const carFuels = this.getEngine().getPossibilitiesFor(
+      "voiture . thermique . carburant",
+    )!
 
-      if (!sizeOption || !motorisationOption) {
-        throw new Error(
-          `Invalid alternative rule ${rule}. It should have a size and a motorisation option.`,
-        )
+    const res = []
+
+    // NOTE: we want to use default values for the alternatives as they are
+    // specific for each alternative.
+    delete localSituation["voiture . prix d'achat"]
+    delete localSituation["voiture . électrique . consommation électricité"]
+    delete localSituation["voiture . thermique . consommation carburant"]
+    for (const size of carSizes) {
+      localSituation["voiture . gabarit"] =
+        size.publicodesValue as Situation["voiture . gabarit"]
+      for (const motorisation of carMotorisations) {
+        localSituation["voiture . motorisation"] =
+          motorisation.publicodesValue as Situation["voiture . motorisation"]
+        if (motorisation.nodeValue === "électrique") {
+          localEngine.setSituation(
+            localSituation as PublicodesSituation<RuleName>,
+          )
+
+          res.push(getAlternative(localEngine, size, motorisation, undefined))
+        } else {
+          for (const fuel of carFuels) {
+            localSituation["voiture . thermique . carburant"] =
+              fuel.publicodesValue
+
+            localEngine.setSituation(localSituation)
+
+            res.push(getAlternative(localEngine, size, motorisation, fuel))
+          }
+        }
       }
+    }
 
-      return {
-        kind: "car",
-        title: this.engine.getRule(rule).title,
-        cost: this.evaluateRule(ruleName(rule, "coûts")),
-        emissions: this.evaluateRule(ruleName(rule, "empreinte")),
-        size: {
-          value: sizeOption,
-          title: this.engine.getRule(ruleName("voiture . gabarit", sizeOption))
-            .title,
-          isEnumValue: true,
-          isApplicable: true,
-        },
-        motorisation: {
-          value: motorisationOption,
-          title: this.engine.getRule(
-            ruleName("voiture . motorisation", motorisationOption),
-          ).title,
-          isEnumValue: true,
-          isApplicable: true,
-        },
-        fuel: fuelOption
-          ? {
-              value: fuelOption,
-              title: this.engine.getRule(
-                ruleName("voiture . thermique . carburant", fuelOption),
-              ).title,
-              isEnumValue: true,
-              isApplicable: true,
-            }
-          : undefined,
-      } as Alternative
-    })
-
-    return infos
+    return res
   }
 
   /**
@@ -333,7 +317,7 @@ export class CarSimulator {
   }
 }
 
-function getSituation(inputs: Questions): Situation {
+function getSituation(inputs: Questions): PublicodesSituation<RuleName> {
   return Object.fromEntries(
     Object.entries(inputs)
       .filter(([, value]) => value !== undefined)
@@ -350,6 +334,48 @@ function getSituation(inputs: Questions): Situation {
   )
 }
 
-function ruleName(namespace: RuleName, rule: string): RuleName {
-  return (namespace + " . " + rule) as RuleName
+function getAlternative(
+  engine: Engine,
+  size: Possibility,
+  motorisation: Possibility,
+  fuel?: Possibility,
+): Alternative {
+  return {
+    kind: "car",
+    title: `${size.title} ${motorisation.title}${fuel ? ` (${fuel.title})` : ""}`,
+    cost: {
+      title: "Coûts annuels",
+      unit: "€/an",
+      isEnumValue: false,
+      isApplicable: true,
+      value: engine.evaluate("coûts").nodeValue,
+    },
+    emissions: {
+      title: "Empreinte CO2e",
+      unit: "kgCO2e/an",
+      isEnumValue: false,
+      isApplicable: true,
+      value: engine.evaluate("empreinte").nodeValue,
+    },
+    size: {
+      value: size.nodeValue,
+      title: size.title,
+      isEnumValue: true,
+      isApplicable: true,
+    },
+    motorisation: {
+      value: motorisation.nodeValue,
+      title: motorisation.title,
+      isEnumValue: true,
+      isApplicable: true,
+    },
+    fuel: fuel
+      ? {
+          value: fuel.nodeValue,
+          title: fuel.title,
+          isEnumValue: true,
+          isApplicable: true,
+        }
+      : undefined,
+  } as Alternative
 }

@@ -5,7 +5,9 @@ import { readFileSync } from "fs"
  * Parses the personas.yaml file
  */
 export default function getPersonas(rules) {
-  const personas = parse(readFileSync("personas.yaml", "utf-8"))
+  const personas = parse(
+    readFileSync("situations/personas.publicodes", "utf-8"),
+  )
   let error = false
 
   Object.entries(personas).forEach(([personaName, persona]) => {
@@ -15,10 +17,10 @@ export default function getPersonas(rules) {
     if (!persona.description) {
       console.warn(`[getPersonas] '${personaName}' has no description`)
     }
-    if (!persona.situation) {
+    if (!persona.contexte) {
       console.warn(`[getPersonas] '${personaName}' has no situation`)
     } else {
-      Object.entries(persona.situation).forEach(([name, value]) => {
+      Object.entries(persona.contexte).forEach(([name, value]) => {
         if (!(name in rules)) {
           console.error(
             `[getPersonas] '${personaName}' has an unknown rule '${name}'`,

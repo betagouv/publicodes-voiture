@@ -1,14 +1,14 @@
 valeur par défaut:
   titre: Valeur par défaut
-  situation: {}
   empreinte: 3022.851504292707
   coûts: 6370.257297587041
+  contexte: {}
 
 aller-retours travail électrique ville:
   titre: Aller-retours travail en ville (électrique)
   description: |
     Personne qui va travailler avec une petite voiture électrique en ville
-  situation:
+  contexte:
     voiture . motorisation: "'électrique'"
     voiture . gabarit: "'petite'"
     voiture . prix d'achat: 5400
@@ -29,7 +29,7 @@ aller-retours travail électrique ville occasion:
   titre: Aller-retours travail en ville (électrique) - Occasion
   description: |
     Personne qui va travailler avec une petite voiture électrique en ville
-  situation:
+  contexte:
     voiture . motorisation: "'électrique'"
     voiture . gabarit: "'petite'"
     voiture . prix d'achat: 5400
@@ -45,7 +45,7 @@ grandes vacances familiales:
   description: |
     Personne qui utilise une voiture essence pour partir en vacances en
     famille.
-  situation:
+  contexte:
     voiture . motorisation: "'thermique'"
     voiture . thermique . carburant: "'essence E5 ou E10'"
     voiture . gabarit: "'berline'"
@@ -63,7 +63,7 @@ famille usage régulier diesel:
 
     Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
     et aller au travail.
-  situation:
+  contexte:
     voiture . motorisation: "'thermique'"
     voiture . thermique . carburant: "'gazole B7 ou B10'"
     voiture . gabarit: "'berline'"
@@ -81,7 +81,7 @@ famille usage régulier biocarburant:
 
     Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
     et aller au travail.
-  situation:
+  contexte:
     voiture . motorisation: "'thermique'"
     voiture . thermique . carburant: "'essence E85'"
     voiture . gabarit: "'berline'"
@@ -99,7 +99,7 @@ famille usage régulier moyenne biocarburant:
 
     Elle a besoin d'une voiture spacieuse pour transporter ses enfants à l'école
     et aller au travail.
-  situation:
+  contexte:
     voiture . motorisation: "'thermique'"
     voiture . thermique . carburant: "'essence E85'"
     voiture . gabarit: "'moyenne'"

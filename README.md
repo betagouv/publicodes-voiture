@@ -184,6 +184,11 @@ yarn test
 
 #### Lancer la documentation
 
+> [!TIP]
+> Pour facilement parcourir la documentation et tester différentes situations pendant
+> le développement, il est conseillé d'utiliser la commande `yarn dev` à la place.
+> La `online-doc` sera bientôt dépréciée.
+
 > Le code de la documentation est disponible dans le dossier
 > [`online-doc/`](https://github.com/betagouv/publicodes-voiture/tree/main/online-doc).
 
@@ -191,12 +196,18 @@ Pour lancer l'app React en local permettant de parcourir la documentation du
 modèle, il suffit d'exécuter la commande suivante :
 
 ```
+
 yarn install --cwd doc
 
 yarn doc
+
 ```
 
 ## Publier une nouvelle version
 
 Afin de publier une nouvelle version il suffit d'exécuter la commande `yarn
 version`.
+
+```
+
+```

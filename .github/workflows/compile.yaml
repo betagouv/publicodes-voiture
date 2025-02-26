@@ -24,5 +24,9 @@ jobs:
         name: Compile and test
         run: yarn test
 
+      - id: compile
+        name: Compile
+        run: yarn compile
+
       - name: Run pkg.pr.new
         run: npx pkg-pr-new publish

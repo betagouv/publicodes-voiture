@@ -5,27 +5,27 @@ empreinte:
     pour calculer l'empreinte carbone de votre voiture.
   valeur: ngc . transport . voiture
   unité: kgCO2e/an
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: voiture . gabarit
-    ngc . transport . voiture . motorisation: voiture . motorisation
-    ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
-    ngc . transport . voiture . km: usage . km annuels
-    ngc . transport . voiture . thermique . consommation aux 100:
-      valeur:
-        # Permet de forcer l'utilisation de la consommation estimée lors des
-        # recalculs pour les alternatives.
-        variations:
-          - si: voiture . thermique . consommation carburant > 1
-            alors: voiture . thermique . consommation carburant
-          - sinon: voiture . thermique . consommation estimée
-    ngc . transport . voiture . électrique . consommation aux 100:
-      valeur:
-        # Permet de forcer l'utilisation de la consommation estimée lors des
-        # recalculs pour les alternatives.
-        variations:
-          - si: voiture . électrique . consommation électricité > 1 
-            alors: voiture . électrique . consommation électricité 
-          - sinon: voiture . électrique . consommation estimée
+  # contexte:
+    # ngc . transport . voiture . utilisateur: "'propriétaire'"
+    # ngc . transport . voiture . gabarit: voiture . gabarit
+    # ngc . transport . voiture . motorisation: voiture . motorisation
+    # ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+    # ngc . transport . voiture . km: usage . km annuels
+    # ngc . transport . voiture . thermique . consommation aux 100:
+    #   valeur:
+    #     # Permet de forcer l'utilisation de la consommation estimée lors des
+    #     # recalculs pour les alternatives.
+    #     variations:
+    #       - si: voiture . thermique . consommation carburant > 1
+    #         alors: voiture . thermique . consommation carburant
+    #       - sinon: voiture . thermique . consommation estimée
+    # ngc . transport . voiture . électrique . consommation aux 100:
+    #   valeur:
+    #     # Permet de forcer l'utilisation de la consommation estimée lors des
+    #     # recalculs pour les alternatives.
+    #     variations:
+    #       - si: voiture . électrique . consommation électricité > 1 
+    #         alors: voiture . électrique . consommation électricité 
+    #       - sinon: voiture . électrique . consommation estimée
     # On souhaite estimer l'empreinte total de la voiture et non par personne.
-    ngc . transport . voiture . voyageurs: 1
+    # ngc . transport . voiture . voyageurs: 1
