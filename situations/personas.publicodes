@@ -2,6 +2,7 @@ valeur par défaut:
   titre: Valeur par défaut
   empreinte: 3022.851504292707
   coûts: 6370.257297587041
+  contexte: {}
 
 aller-retours travail électrique ville:
   titre: Aller-retours travail en ville (électrique)

@@ -146,7 +146,7 @@ describe("CarSimulator", () => {
         test(persona.titre, () => {
           const evaluatedCar = simulator
             .shallowCopy()
-            .setSituation(persona.situation)
+            .setSituation(persona.contexte)
             .evaluateCar()
 
           expect(evaluatedCar.emissions.value).toEqual(persona["empreinte"])

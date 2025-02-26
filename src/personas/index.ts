@@ -11,7 +11,7 @@ import _rawPersonas from "./personas.json"
 export type Persona = {
   titre: string
   description?: string
-  situation: Situation
+  contexte: Situation
   empreinte: number
   coûts: number
 }

@@ -20,7 +20,7 @@ describe("Personas", () => {
       test(persona.titre, () => {
         const localEngine = engine
           .shallowCopy()
-          .setSituation(persona.situation as Situation<RuleName>, {
+          .setSituation(persona.contexte as Situation<RuleName>, {
             strict: true,
           })
 
