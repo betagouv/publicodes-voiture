@@ -44,6 +44,7 @@
     "compile:rules": "publicodes compile src/rules",
     "compile": "yarn compile:rules && tsup",
     "test": "yarn compile:rules && vitest run",
+    "dev": "publicodes dev",
     "doc": "yarn run compile && cd online-doc && yarn run dev",
     "doc:build": "yarn run compile && cd online-doc && yarn run build"
   },
