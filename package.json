@@ -51,7 +51,7 @@
   "devDependencies": {
     "@incubateur-ademe/nosgestesclimat": "^3.5.4",
     "@incubateur-ademe/publicodes-commun": "^1.1.5",
-    "@publicodes/tools": "https://pkg.pr.new/publicodes/publicodes/@publicodes/tools@1858c5e",
+    "@publicodes/tools": "^1.5.4",
     "csv-parser": "^3.0.0",
     "terser": "^5.36.0",
     "tsup": "^8.3.5",
@@ -63,7 +63,7 @@
     "access": "public"
   },
   "dependencies": {
-    "publicodes": "https://pkg.pr.new/publicodes/publicodes@56e0eea"
+    "publicodes": "^1.8.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
