@@ -200,6 +200,8 @@ export class CarSimulator {
     delete localSituation["voiture . prix d'achat"]
     delete localSituation["voiture . électrique . consommation électricité"]
     delete localSituation["voiture . thermique . consommation carburant"]
+    delete localSituation["voiture . thermique . prix carburant"]
+
     for (const size of carSizes) {
       localSituation["voiture . gabarit"] =
         size.publicodesValue as Situation["voiture . gabarit"]
