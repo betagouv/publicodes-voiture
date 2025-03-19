@@ -359,7 +359,7 @@ describe("CarSimulator", () => {
       })
     })
 
-    test("modify the fuel price should modify the cost", () => {
+    test("modify the fuel price should modify the cost only for electricity", () => {
       const engine = globalTestEngine.shallowCopy()
       const alternatives = engine.evaluateAlternatives()
 
@@ -371,9 +371,13 @@ describe("CarSimulator", () => {
 
       expect(alternatives).toHaveLength(newAlternatives.length)
       alternatives.forEach((alternative, i) => {
-        expect(alternative.cost.value).toBeLessThan(
-          newAlternatives[i].cost.value!,
-        )
+        if (alternative.motorisation.value === "thermique") {
+          expect(alternative.cost.value).toEqual(newAlternatives[i].cost.value!)
+        } else {
+          expect(alternative.cost.value).toBeLessThan(
+            newAlternatives[i].cost.value!,
+          )
+        }
         expect(alternative.emissions.value).toEqual(
           newAlternatives[i].emissions.value,
         )
