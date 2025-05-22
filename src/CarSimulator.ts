@@ -17,9 +17,56 @@ export type EvaluatedCarInfos = {
   /** The title of the rule */
   title?: string
   /** The cost of the car in €/an */
-  cost: EvaluatedRuleInfos<RuleValue["coûts"]>
+  cost: {
+    total: EvaluatedRuleInfos<RuleValue["coûts"]>
+    ownership: EvaluatedRuleInfos<RuleValue["coûts . coûts de possession"]>
+    usage: EvaluatedRuleInfos<RuleValue["coûts . coûts d'utilisation"]>
+
+    // ownership: {
+    //   total: EvaluatedRuleInfos<RuleValue["coûts . coûts de possession"]>
+    // purchase_cost: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . achat amorti"]
+    // >
+    // technical_inspection: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . contrôle technique"]
+    // >
+    // maintenance: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . entretien"]
+    // >
+    // insurance: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . assurance"]
+    // >
+    // registration_certificate: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . certificat d'immatriculation amorti"]
+    // >
+    // }
+    // usage: {
+    //   total: EvaluatedRuleInfos<RuleValue["coûts . coûts d'utilisation"]>
+    //   consumption: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . consommation"]
+    //   >
+    //   parking: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . stationnement"]
+    //   >
+    //   motorway_fee: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . péage"]
+    //   >
+    //   contraventions: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . contraventions"]
+    //   >
+    //   driving_licence: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . permis de conduire"]
+    //   >
+    // }
+  }
   /** The emissions of the car in kgCO2/an */
-  emissions: EvaluatedRuleInfos<RuleValue["empreinte"]>
+  emissions: {
+    total: EvaluatedRuleInfos<RuleValue["empreinte"]>
+    ownership: EvaluatedRuleInfos<
+      RuleValue["ngc . transport . voiture . construction"]
+    >
+    usage: EvaluatedRuleInfos<RuleValue["ngc . transport . voiture . usage"]>
+  }
   /** The car size (gabarit) */
   size: EvaluatedRuleInfos<RuleValue["voiture . gabarit"]>
   /** The type of motorisation of the car */
@@ -164,8 +211,18 @@ export class CarSimulator {
     const motorisation = this.evaluateRule("voiture . motorisation")
 
     return {
-      emissions: this.evaluateRule("empreinte"),
-      cost: this.evaluateRule("coûts"),
+      cost: {
+        total: this.evaluateRule("coûts"),
+        usage: this.evaluateRule("coûts . coûts d'utilisation"),
+        ownership: this.evaluateRule("coûts . coûts de possession"),
+      },
+      emissions: {
+        total: this.evaluateRule("empreinte"),
+        usage: this.evaluateRule("ngc . transport . voiture . usage"),
+        ownership: this.evaluateRule(
+          "ngc . transport . voiture . construction",
+        ),
+      },
       size: this.evaluateRule("voiture . gabarit"),
       motorisation,
       fuel:
@@ -346,18 +403,51 @@ function getAlternative(
     kind: "car",
     title: `${size.title} ${motorisation.title}${fuel ? ` (${fuel.title})` : ""}`,
     cost: {
-      title: "Coûts annuels",
-      unit: "€/an",
-      isEnumValue: false,
-      isApplicable: true,
-      value: engine.evaluate("coûts").nodeValue,
+      total: {
+        title: "Coûts annuels",
+        unit: "€/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts").nodeValue,
+      },
+      ownership: {
+        title: "Coûts de possession",
+        unit: "€/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts . coûts de possession").nodeValue,
+      },
+      usage: {
+        title: "Coûts d'utilisation",
+        unit: "€/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts . coûts d'utilisation").nodeValue,
+      },
     },
     emissions: {
-      title: "Empreinte CO2e",
-      unit: "kgCO2e/an",
-      isEnumValue: false,
-      isApplicable: true,
-      value: engine.evaluate("empreinte").nodeValue,
+      total: {
+        title: "Empreinte CO2e",
+        unit: "kgCO2e/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("empreinte").nodeValue,
+      },
+      ownership: {
+        title: "Empreinte CO2e de construction",
+        unit: "kgCO2e/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("ngc . transport . voiture . construction")
+          .nodeValue,
+      },
+      usage: {
+        title: "Empreinte CO2e d'usage",
+        unit: "kgCO2e/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("ngc . transport . voiture . usage").nodeValue,
+      },
     },
     size: {
       value: size.nodeValue,

@@ -449,17 +449,15 @@ voiture . année de fabrication:
 
 # TODO: ajouter un warning si la durée de détention est supérieure à l'âge de la voiture.
 voiture . durée de détention totale:
-  question: Combien de temps envisagez-vous de garder votre voiture au total ?
-  description: |
+  question: En moyenne, combien de temps gardez-vous vos véhicule ?
+  description: >
     Renseignez la durée totale de détention de votre voiture. Si vous la
     possédez depuis 5 ans et que vous comptez encore la garder 4 ans,
     renseignez 9 ans.
   par défaut: durée de détention moyenne
   plancher: 1
   unité: an
-  note: |
-    La durée de détention défini la durée sur la quelle amortir le prix
-    d'achat.
+  note: La durée de détention défini la durée sur la quelle amortir le prix d'achat.
 
 voiture . durée de détention moyenne:
   description: |
