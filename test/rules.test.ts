@@ -26,6 +26,16 @@ describe("Règles", () => {
     })
   })
 
+  describe("coûts . coûts de possession . achat amorti", () => {
+    test("les divisions par zero ne devrait pas être possible", () => {
+      const actual = engine
+        .setSituation({ "voiture . durée de détention totale": 0 })
+        .evaluate("coûts . coûts de possession . achat amorti")
+
+      expect(actual.nodeValue).toEqual(30400)
+    })
+  })
+
   describe("voiture . prix d'achat", () => {
     test("prix par défaut", () => {
       const actual = engine.setSituation({}).evaluate("voiture . prix d'achat")

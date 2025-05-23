@@ -455,7 +455,7 @@ voiture . durée de détention totale:
     possédez depuis 5 ans et que vous comptez encore la garder 4 ans,
     renseignez 9 ans.
   par défaut: durée de détention moyenne
-  plancher: 0
+  plancher: 1
   unité: an
   note: |
     La durée de détention défini la durée sur la quelle amortir le prix
