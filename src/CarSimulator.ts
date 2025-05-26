@@ -182,10 +182,7 @@ export class CarSimulator {
     if (options.overwrite) {
       this.inputs = inputs
     } else {
-      this.inputs = {
-        ...this.inputs,
-        ...inputs,
-      }
+      this.inputs = Object.assign(this.inputs, inputs)
     }
     this.engine.setSituation(getSituation(this.inputs))
     return this
@@ -195,7 +192,7 @@ export class CarSimulator {
    * Return a copy of the current inputs.
    */
   public getInputs(): Questions {
-    return { ...this.inputs }
+    return Object.assign({}, this.inputs)
   }
 
   /**
@@ -358,7 +355,7 @@ export class CarSimulator {
    */
   public shallowCopy() {
     const newEngine = new CarSimulator(true)
-    newEngine.inputs = { ...this.inputs }
+    newEngine.inputs = Object.assign({}, this.inputs)
     newEngine.engine = this.engine.shallowCopy()
     return newEngine
   }

@@ -1,14 +1,18 @@
 import Engine, { serializeUnit } from "publicodes"
 import rules, { RuleName } from "../publicodes-build"
-import { expect, test, describe } from "vitest"
+import { expect, test, describe, beforeEach } from "vitest"
 
 describe("Règles", () => {
-  const engine = new Engine<RuleName>(rules, {
+  let engine = new Engine<RuleName>(rules, {
     logger: {
       log: () => {},
       warn: () => {},
       error: (message: string) => console.error(message),
     },
+  })
+
+  beforeEach(() => {
+    engine = engine.shallowCopy()
   })
 
   describe("technique", () => {
@@ -91,6 +95,21 @@ describe("Règles", () => {
       expect(petiteConso.coûts).toBeLessThan(grandeConso.coûts)
       expect(petiteConso.empreinte).toBeLessThan(grandeConso.empreinte)
     })
+  })
+
+  describe("rentabilité passage à l'électrique", () => {
+    describe("durée de possession", () => {
+      test("par défaut", () => {
+        const actual = engine
+          .setSituation({})
+          .evaluate("rentabilité passage à l'électrique . durée de possession")
+
+        expect(actual.nodeValue).toBeCloseTo(44.6, 0)
+        expect(serializeUnit(actual.unit)).toEqual("an")
+      })
+    })
+
+    // describe("km annuels", () => {})
   })
 })
 
