@@ -1,0 +1,58 @@
+rentabilité passage à l'électrique:
+  titre: Calcul de la rentabilité du passage à l'électrique
+  description: >
+    Calcul de la rentabilité du passage à l'électrique pour une voiture de
+    même gabarit que la voiture thermique envisagée.
+
+    Par rentable nous entendons : que les gains liés à l'usage dépassent le
+    coût d'achat de la nouvelle voiture.
+  avec: 
+    variables:
+      avec:
+        coûts d'utilisation électrique:
+          formule: coûts . coûts d'utilisation
+          contexte:
+            voiture . motorisation: "'électrique'"
+
+        prix d'achat électrique:
+          titre: Prix d'achat estimé de la voiture électrique 
+          description: >
+            Prix d'achat estimé de la voiture électrique de même gabarit que la
+            voiture thermique envisagée.
+          valeur:
+            variations:
+              - si: voiture . cible . gabarit = 'petite'
+                alors: voiture . prix d'achat . estimé . électrique . petite
+              - si: voiture . cible . gabarit = 'moyenne'
+                alors: voiture . prix d'achat . estimé . électrique . moyenne
+              - si: voiture . cible . gabarit = 'berline'
+                alors: voiture . prix d'achat . estimé . électrique . berline
+              - si: voiture . cible . gabarit = 'SUV'
+                alors: voiture . prix d'achat . estimé . électrique . SUV
+              - si: voiture . cible . gabarit = 'VUL'
+                alors: voiture . prix d'achat . estimé . électrique . VUL
+
+rentabilité passage à l'électrique . durée de possession:
+  titre: Durée de possession minimale pour rentabiliser l'alternative électrique
+  non applicable si: voiture . motorisation = 'électrique'
+  description: >
+    Calcul de durée de possession à partir de laquelle l'alternative
+    électrique de même gabarit devient rentable en parcourant `usage . km
+    annuels`. 
+  formule: variables . prix d'achat électrique / économie annuelle
+  avec:
+    économie annuelle:
+      formule: coûts . coûts d'utilisation - variables . coûts d'utilisation électrique
+
+
+rentabilité passage à l'électrique . km annuels:
+  titre: Kilomètres annuels à parcourir pour rentabiliser l'alternative électrique
+  non applicable si: voiture . motorisation = 'électrique'
+  description: >
+    Calcul de la distance parcourue à l'année à partir de laquelle
+    l'alternative électrique de même gabarit devient rentable au bout de
+    `voiture . durée de détention totale`.
+  formule: variables . prix d'achat électrique / économie au km
+  avec:
+    économie au km:
+      formule: (coûts . coûts d'utilisation - variables . coûts d'utilisation électrique) / usage . km annuels
