@@ -107,6 +107,52 @@ describe("Règles", () => {
         expect(actual.nodeValue).toBeCloseTo(44.6, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
+
+      test("pour des km annuels deux fois moins important que par défaut (7000 km/an)", () => {
+        const actual = engine
+          .setSituation({
+            "usage . km annuels . connus": "oui",
+            "usage . km annuels . renseignés": 7000,
+          })
+          .evaluate("rentabilité passage à l'électrique . durée de possession")
+
+        expect(actual.nodeValue).toBeCloseTo(114, 0)
+        expect(serializeUnit(actual.unit)).toEqual("an")
+      })
+
+      test("pour 50 000 km annuels", () => {
+        const actual = engine
+          .setSituation({
+            "usage . km annuels . connus": "oui",
+            "usage . km annuels . renseignés": 50000,
+          })
+          .evaluate("rentabilité passage à l'électrique . durée de possession")
+
+        expect(actual.nodeValue).toBeCloseTo(16, 0)
+        expect(serializeUnit(actual.unit)).toEqual("an")
+      })
+
+      test("pour des km annuels nuls", () => {
+        const actual = engine
+          .setSituation({
+            "usage . km annuels . connus": "oui",
+            "usage . km annuels . renseignés": 0,
+          })
+          .evaluate("rentabilité passage à l'électrique . durée de possession")
+
+        expect(actual.nodeValue).toBeNull()
+      })
+
+      test("la durée de possession ne devrait pas impacter le calcul", () => {
+        const actual = engine
+          .setSituation({
+            "voiture . durée de détention totale": 100,
+          })
+          .evaluate("rentabilité passage à l'électrique . durée de possession")
+
+        expect(actual.nodeValue).toBeCloseTo(44.6, 0)
+        expect(serializeUnit(actual.unit)).toEqual("an")
+      })
     })
 
     // describe("km annuels", () => {})

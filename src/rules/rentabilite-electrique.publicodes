@@ -31,7 +31,10 @@ rentabilité passage à l'électrique:
                 alors: voiture . prix d'achat . estimé . électrique . SUV
               - si: voiture . cible . gabarit = 'VUL'
                 alors: voiture . prix d'achat . estimé . électrique . VUL
+          contexte:
+            voiture . cible . achat envisagé: oui
 
+# NOTE: comment souhaitons-nous gérer le cas où les économies annuelles sont négatives ?
 rentabilité passage à l'électrique . durée de possession:
   titre: Durée de possession minimale pour rentabiliser l'alternative électrique
   non applicable si: voiture . motorisation = 'électrique'
@@ -39,11 +42,14 @@ rentabilité passage à l'électrique . durée de possession:
     Calcul de durée de possession à partir de laquelle l'alternative
     électrique de même gabarit devient rentable en parcourant `usage . km
     annuels`. 
-  formule: variables . prix d'achat électrique / économie annuelle
+  formule: 
+    variations:
+      - si: économie annuelle > 0
+        alors: variables . prix d'achat électrique / économie annuelle
+  unite: an
   avec:
     économie annuelle:
       formule: coûts . coûts d'utilisation - variables . coûts d'utilisation électrique
-
 
 rentabilité passage à l'électrique . km annuels:
   titre: Kilomètres annuels à parcourir pour rentabiliser l'alternative électrique
@@ -53,6 +59,7 @@ rentabilité passage à l'électrique . km annuels:
     l'alternative électrique de même gabarit devient rentable au bout de
     `voiture . durée de détention totale`.
   formule: variables . prix d'achat électrique / économie au km
+  unite: km/an
   avec:
     économie au km:
       formule: (coûts . coûts d'utilisation - variables . coûts d'utilisation électrique) / usage . km annuels
