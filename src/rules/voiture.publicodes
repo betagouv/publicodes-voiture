@@ -37,47 +37,47 @@ voiture . prix d'achat . estimé:
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 19000
+              alors: thermique . petite
             - si: voiture . motorisation = 'hybride'
-              alors: 22000
+              alors: hybride . petite
             - si: voiture . motorisation = 'électrique'
-              alors: 32000
+              alors: électrique . petite
       - si: voiture . gabarit = 'moyenne'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 31000
+              alors: thermique . moyenne
             - si: voiture . motorisation = 'hybride'
-              alors: 34000
+              alors: hybride . moyenne
             - si: voiture . motorisation = 'électrique'
-              alors: 40000
+              alors: électrique . moyenne
       - si: voiture . gabarit = 'berline'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 38000
+              alors: thermique . berline
             - si: voiture . motorisation = 'hybride'
-              alors: 42000
+              alors: hybride . berline
             - si: voiture . motorisation = 'électrique'
-              alors: 48000
+              alors: électrique . berline
       - si: voiture . gabarit = 'SUV'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 40000
+              alors: thermique . SUV
             - si: voiture . motorisation = 'hybride'
-              alors: 44000
+              alors: hybride . SUV
             - si: voiture . motorisation = 'électrique'
-              alors: 50000
+              alors: électrique . SUV
       - si: voiture . gabarit = 'VUL'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 30000
+              alors: thermique . VUL
             - si: voiture . motorisation = 'hybride'
-              alors: 38000
+              alors: hybride . VUL
             - si: voiture . motorisation = 'électrique'
-              alors: 45000
+              alors: électrique . VUL
   unité: €
   note: |
     La valeur du prix d'achat moyen d'une voiture neuve est importante pour le
@@ -120,19 +120,21 @@ voiture . prix d'achat . estimé:
 
     ##### Utilisation des données de Car Labelling
 
-    L'ADEME publie des [données](https://data.ademe.fr/datasets/ademe-car-labelling) (prix d'achat, consommation au 100, etc...) sur un ensemble de véhicules neufs
-    vendus en France. Ces données pourraient être utilisées comme source
-    de confiance pour déterminer le prix d'achat moyen d'une voiture neuve.
-    Cependant, il faudrait trouver un moyen de faire correspondre
-    les type de carrosserie de Car Labelling avec les gabarits de Nos Gestes Climat.
+    L'ADEME publie des
+    [données](https://data.ademe.fr/datasets/ademe-car-labelling) (prix
+    d'achat, consommation au 100, etc...) sur un ensemble de véhicules neufs
+    vendus en France. Ces données pourraient être utilisées comme source de
+    confiance pour déterminer le prix d'achat moyen d'une voiture neuve.
+    Cependant, il faudrait trouver un moyen de faire correspondre les type de
+    carrosserie de Car Labelling avec les gabarits de Nos Gestes Climat.
 
     La solution qui parait la plus pertinent serait de plutôt établir la même
     correspondance entre les gabarits et le
     [poids](https://nosgestesclimat.fr/documentation/transport/voiture/bar%C3%A8me-construction/bar%C3%A8me-thermique)
     des véhicules.
 
-    En utilisant les données de Car Labelling et en ignorant les modèles de la gamme `LUXE`
-    nous obtenons les résultats suivants :
+    En utilisant les données de Car Labelling et en ignorant les modèles de la
+    gamme `LUXE` nous obtenons les résultats suivants :
 
     | Poids (kg) | Motorisation | Prix moyen (€) | Nombre de véhicules |
     | ---------- | ------------ | -------------- | ------------------- |
@@ -159,6 +161,30 @@ voiture . prix d'achat . estimé:
 
     C'est pourquoi nous avons choisi de ne pas utiliser ces données pour
     l'instant.
+
+voiture . prix d'achat . estimé . thermique:
+  avec:
+    petite: 19000 €
+    moyenne: 31000 €
+    berline: 38000 €
+    SUV: 40000 €
+    VUL: 30000 €
+
+voiture . prix d'achat . estimé . hybride:
+  avec:
+    petite: 22000 €
+    moyenne: 34000 €
+    berline: 42000 €
+    SUV: 44000 €
+    VUL: 38000 €
+
+voiture . prix d'achat . estimé . électrique:
+  avec:
+    petite: 32000 €
+    moyenne: 40000 €
+    berline: 48000 €
+    SUV: 50000 €
+    VUL: 45000 €
 
 voiture . thermique . consommation carburant:
   question: Quelle est sa consommation moyenne ?
