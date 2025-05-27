@@ -146,7 +146,7 @@ coûts . coûts de possession . assurance estimée:
 
 coûts . coûts de possession . achat amorti:
   titre: Coût annuel de l'achat de votre voiture
-  formule: (voiture . prix d'achat - valeur résiduelle) / voiture . durée de détention totale
+  formule: coût d'achat total / voiture . durée de détention totale
   note: >
     Le prix d'achat d'une voiture qu'elle soit neuve ou d'occasion représente
     un facteur important du coût total du véhicule. Le choix de la fonction
@@ -191,6 +191,14 @@ coûts . coûts de possession . achat amorti:
     sur le remplacement d'un véhicule, il est plus probable que la durée de
     détention soit connue.
   avec:
+    coût d'achat total:
+      titre: Coût total lié à l'achat de la voiture
+      description: |
+        Prix d'achat de la voiture moins sa valeur de revente à la fin de son
+        utilisation. Ce prix est utilisé pour calculer le coût annuel de
+        possession de la voiture.
+      valeur: voiture . prix d'achat - valeur résiduelle
+
     valeur résiduelle:
       titre: Valeur résiduelle du véhicule à la revente
       description: |

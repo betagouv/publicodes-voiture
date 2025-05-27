@@ -1,7 +1,7 @@
 valeur par défaut:
   titre: Valeur par défaut
   empreinte: 3022.851504292707
-  coûts: 6370.257297587041
+  coûts: 8242.739438677949
   contexte: {}
 
 aller-retours travail électrique ville:
@@ -23,7 +23,7 @@ aller-retours travail électrique ville:
     coûts . coûts d'utilisation . péage: 0
     coûts . coûts d'utilisation . contraventions: 10
   empreinte: 539.1190922108744
-  coûts: 2387.813887814313
+  coûts: 2653.903455232495
 
 aller-retours travail électrique ville occasion:
   titre: Aller-retours travail en ville (électrique) - Occasion
@@ -38,7 +38,7 @@ aller-retours travail électrique ville occasion:
     usage . km annuels . calculés . quotidien: 20
     usage . km annuels . calculés . vacances: 0
   empreinte: 504.95509221087445
-  coûts: 3059.8004878143133
+  coûts: 3325.8900552324953
 
 grandes vacances familiales:
   titre: Grandes vacances familiales (essence)
@@ -53,7 +53,7 @@ grandes vacances familiales:
     usage . km annuels . calculés . quotidien: 5
     usage . km annuels . calculés . vacances: 2000
   empreinte: 1087.2386496543545
-  coûts: 4687.079592587041
+  coûts: 6559.561733677949
 
 famille usage régulier diesel:
   titre: Usage régulier en famille (diesel)
@@ -71,7 +71,7 @@ famille usage régulier diesel:
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
   empreinte: 2677.626189841937
-  coûts: 5913.45340708704
+  coûts: 7785.935548177949
 
 famille usage régulier biocarburant:
   titre: Usage régulier en famille (biocarburant)
@@ -89,7 +89,7 @@ famille usage régulier biocarburant:
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
   empreinte: 1823.1880810919374
-  coûts: 5745.61951946204
+  coûts: 7618.101660552949
 
 famille usage régulier moyenne biocarburant:
   titre: Usage régulier en famille (moyenne/biocarburant)
@@ -107,4 +107,4 @@ famille usage régulier moyenne biocarburant:
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
   empreinte: 1752.9630810919373
-  coûts: 5491.074064916586
+  coûts: 7018.625285280223
