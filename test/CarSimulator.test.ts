@@ -166,7 +166,7 @@ describe("CarSimulator", () => {
     test("should have default values", () => {
       const carInfos = engine.evaluateCar()
 
-      expect(carInfos.cost.total.value).toBeCloseTo(8243, 0)
+      expect(carInfos.cost.total.value).toBeCloseTo(8165, 0)
       expect(carInfos.emissions.total.value).toBeCloseTo(3022.8, 0)
       expect(carInfos.size).toEqual({
         value: "berline",

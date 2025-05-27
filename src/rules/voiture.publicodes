@@ -422,25 +422,24 @@ voiture . thermique . prix carburant:
   unité: €/l
 
 voiture . thermique . prix carburant moyen:
-  titre: Prix du carburant moyen (août 2024)
+  titre: Prix du carburant moyen (mai 2025)
   unité: €/l
   formule:
     variations:
       - si: carburant = 'gazole B7 ou B10'
-        alors: 1.631
+        alors: 1.530
       - si: carburant = 'essence E5 ou E10'
-        alors: 1.733
+        alors: 1.649
       - si: carburant = 'essence E85'
-        alors: 0.837
+        alors: 0.735
       - si: carburant = 'GPL'
-        alors: 0.959
-  note: |
+        alors: 0.942
+  note: >
     ### Source
 
     Données récupérées sur
-    [prix-carburants-info.fr](https://prix-carburants-info.fr/) le 15 août
-    2024.
-    Le site utilise les données de
+    [prix-carburants-info.fr](https://prix-carburants-info.fr/) le 27 mai
+    2025. Le site utilise les données de
     [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
 
 voiture . âge:
