@@ -2,18 +2,33 @@ import { CarSimulator, Alternative } from "../src/CarSimulator"
 
 const simulator = new CarSimulator()
 
+console.time("alternatives")
+simulator.evaluateAlternatives()
+console.timeEnd("alternatives")
+
 const periods_of_detentions = [3, 5.5, 10]
+const kms = [1000, 7000, 13975, 40000]
 
 for (const period of periods_of_detentions) {
-  simulator.setInputs({
-    "voiture . durée de détention totale": period,
-  })
-  const alternatives = simulator.evaluateAlternatives()
-  showMardownTableSummary(
-    period,
-    simulator.getEngine().evaluate("usage . km annuels").nodeValue as number,
-    alternatives.filter((a) => a.kind === "car"),
-  )
+  for (const km of kms) {
+    simulator.setInputs({
+      "voiture . durée de détention totale": period,
+      "usage . km annuels . connus": true,
+      "usage . km annuels . renseignés": km,
+    })
+    console.time("evaluate alternatives")
+    const alternatives = simulator
+      .evaluateAlternatives()
+      .sort((a, b) => a.title!.localeCompare(b.title!))
+    // .filter((a) => a.size.value === "berline")
+    console.timeEnd("evaluate alternatives")
+    showMardownTableSummary(
+      simulator.getEngine().evaluate("voiture . durée de détention totale")
+        .nodeValue as number,
+      simulator.getEngine().evaluate("usage . km annuels").nodeValue as number,
+      alternatives.filter((a) => a.kind === "car"),
+    )
+  }
 }
 
 /**
@@ -32,16 +47,20 @@ function showMardownTableSummary(
   km: number,
   alternatives: Alternative[],
 ) {
-  console.log(`Entrées utilisées :
-- Durée de détention : ${period} ans
-- Kilométrage annuel : ${km} km
-`)
+  console.log(`| Paramètre | Valeur |`)
+  console.log(`| --------- | ----- |`)
+  console.log(`| Durée de détention (année) | ${period} |`)
+  console.log(`| Kilométrage annuel (km) | ${km} |`)
+  console.log("\n<details>\n")
+  console.log(
+    `<summary>Alternatives (total : ${alternatives.length})</summary>\n`,
+  )
 
   console.log(
-    `\n| Alternative | Coût total (annuel) | Coût d'usage | Coût de possession (annuel) | Émissions totales | Émissions d'usage | Émissions de possession |`,
+    `\n| Alternative | Coût total (annuel) | Coût d'usage | Coût de possession (annuel) | Émissions totales | Émissions d'usage | Émissions de possession | Kilométrage annuel (pour rentabilisé l'élec) | Durée de détention (pour rentabilisé l'élec)|`,
   )
   console.log(
-    `| ----------- | ---------- | ------------ | ------------------ | ----------------- | ----------------- | ----------------------- |`,
+    `| ----------- | ---------- | ------------ | ------------------ | ----------------- | ----------------- | ----------------------- | ------------------ | ----------------- |`,
   )
   for (const alternative of alternatives) {
     const emissions = alternative.emissions.total.value!
@@ -55,18 +74,24 @@ function showMardownTableSummary(
     const costsOwnership = alternative.cost.ownership.value!
     const costsUsagePercent = (costsUsage / costs) * 100 || 0
     const costsOwnershipPercent = (costsOwnership / costs) * 100 || 0
+    const period = alternative.electricSwitch.period.value
+    const km = alternative.electricSwitch.distance.value
+    const pp = (n: number | null | undefined, unit: string) =>
+      n != null ? `${Math.round(n).toLocaleString("fr-FR")} ${unit}` : "N/A"
 
     console.log(
-      `| ${alternative.title!} | ${Math.round(costs)} € | ${Math.round(costsUsage)} € (${costsUsagePercent.toFixed(
+      `| ${alternative.title!} | ${pp(costs, "€")} | ${pp(costsUsage, "€")} (${costsUsagePercent.toFixed(
         0,
-      )} %) | ${Math.round(costsOwnership)} € (${costsOwnershipPercent.toFixed(
+      )} %) | ${pp(costsOwnership, "€")} (${costsOwnershipPercent.toFixed(
         0,
-      )} %) | ${Math.round(emissions)} kgCO2e | ${Math.round(emissionsUsage)} kgCO2e (${emissionsUsagePercent.toFixed(
+      )} %) | ${pp(emissions, "kgCO2e")} | ${pp(emissionsUsage, "kgCO2e")} (${emissionsUsagePercent.toFixed(
         0,
-      )} %) | ${Math.round(emissionsOwnership)} kgCO2e (${emissionsOwnershipPercent.toFixed(
+      )} %) | ${pp(emissionsOwnership, "kgCO2e")} (${emissionsOwnershipPercent.toFixed(
         0,
-      )} %) |`,
+      )} %) | ${pp(km, "km")} | ${pp(period, "an")} |`,
     )
   }
+
+  console.log("\n</details>\n")
   console.log("\n---")
 }

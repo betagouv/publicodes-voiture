@@ -73,6 +73,16 @@ export type EvaluatedCarInfos = {
   motorisation: EvaluatedRuleInfos<RuleValue["voiture . motorisation"]>
   /** The type of fuel of the car */
   fuel?: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
+  electricSwitch: {
+    /** The minimal duration of ownership to make the switch to electric profitable */
+    period: EvaluatedRuleInfos<
+      RuleValue["rentabilité passage à l'électrique . durée de possession"]
+    >
+    /** The minimal distance per year to make the switch to electric profitable */
+    distance: EvaluatedRuleInfos<
+      RuleValue["rentabilité passage à l'électrique . km annuels"]
+    >
+  }
 }
 
 /**
@@ -226,6 +236,14 @@ export class CarSimulator {
         motorisation.value !== "électrique"
           ? this.evaluateRule("voiture . thermique . carburant")
           : undefined,
+      electricSwitch: {
+        period: this.evaluateRule(
+          "rentabilité passage à l'électrique . durée de possession",
+        ),
+        distance: this.evaluateRule(
+          "rentabilité passage à l'électrique . km annuels",
+        ),
+      },
     }
   }
 
@@ -466,5 +484,27 @@ function getAlternative(
           isApplicable: true,
         }
       : undefined,
+    // TODO: should be more clever about this
+    electricSwitch: {
+      period: {
+        title: engine.getRule(
+          "rentabilité passage à l'électrique . durée de possession",
+        ).title,
+        value: engine.evaluate(
+          "rentabilité passage à l'électrique . durée de possession",
+        ).nodeValue,
+        isEnumValue: false,
+        isApplicable: true,
+      },
+      distance: {
+        title: engine.getRule("rentabilité passage à l'électrique . km annuels")
+          .title,
+        value: engine.evaluate(
+          "rentabilité passage à l'électrique . km annuels",
+        ).nodeValue,
+        isEnumValue: false,
+        isApplicable: true,
+      },
+    },
   } as Alternative
 }
