@@ -22,6 +22,7 @@ for (const period of periods_of_detentions) {
       .sort((a, b) => a.title!.localeCompare(b.title!))
     // .filter((a) => a.size.value === "berline")
     console.timeEnd("evaluate alternatives")
+
     showMardownTableSummary(
       simulator.getEngine().evaluate("voiture . durée de détention totale")
         .nodeValue as number,
@@ -57,10 +58,10 @@ function showMardownTableSummary(
   )
 
   console.log(
-    `\n| Alternative | Coût total (annuel) | Coût d'usage | Coût de possession (annuel) | Émissions totales | Émissions d'usage | Émissions de possession | Kilométrage annuel (pour rentabilisé l'élec) | Durée de détention (pour rentabilisé l'élec)|`,
+    `\n| Alternative | Coût total | Coût d'usage | Coût de consommation (% usage) | Coût de possession | Émissions totales | Émissions d'usage | Émissions de possession | Kilométrage annuel (pour rentabilisé l'élec) | Durée de détention (pour rentabilisé l'élec)| Coût d'achat à rentabiliser (élec) |`,
   )
   console.log(
-    `| ----------- | ---------- | ------------ | ------------------ | ----------------- | ----------------- | ----------------------- | ------------------ | ----------------- |`,
+    `| ----------- | ---------- | ------------ | ------------------ | ----------------- | ----------------- | ----------------------- | ------------------ | ----------------- | ----------------- | -------------------------- |`,
   )
   for (const alternative of alternatives) {
     const emissions = alternative.emissions.total.value!
@@ -73,22 +74,25 @@ function showMardownTableSummary(
     const costsUsage = alternative.cost.usage.value!
     const costsOwnership = alternative.cost.ownership.value!
     const costsUsagePercent = (costsUsage / costs) * 100 || 0
+    const costConso = alternative.cost.consomption.value!
+    const costConsoPercent = (costConso / costsUsage) * 100 || 0
     const costsOwnershipPercent = (costsOwnership / costs) * 100 || 0
     const period = alternative.electricSwitch.period.value
     const km = alternative.electricSwitch.distance.value
+    const purchaseCost = alternative.electricSwitch.purchaseCost.value
     const pp = (n: number | null | undefined, unit: string) =>
       n != null ? `${Math.round(n).toLocaleString("fr-FR")} ${unit}` : "N/A"
 
     console.log(
       `| ${alternative.title!} | ${pp(costs, "€")} | ${pp(costsUsage, "€")} (${costsUsagePercent.toFixed(
         0,
-      )} %) | ${pp(costsOwnership, "€")} (${costsOwnershipPercent.toFixed(
+      )} %) | ${pp(costConso, "€")} (${costConsoPercent.toFixed(0)} %) | ${pp(costsOwnership, "€")} (${costsOwnershipPercent.toFixed(
         0,
       )} %) | ${pp(emissions, "kgCO2e")} | ${pp(emissionsUsage, "kgCO2e")} (${emissionsUsagePercent.toFixed(
         0,
       )} %) | ${pp(emissionsOwnership, "kgCO2e")} (${emissionsOwnershipPercent.toFixed(
         0,
-      )} %) | ${pp(km, "km")} | ${pp(period, "an")} |`,
+      )} %) | ${pp(km, "km")} | ${pp(period, "an")} | ${pp(purchaseCost, "€")} |`,
     )
   }
 

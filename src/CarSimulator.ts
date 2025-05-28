@@ -21,6 +21,9 @@ export type EvaluatedCarInfos = {
     total: EvaluatedRuleInfos<RuleValue["coûts"]>
     ownership: EvaluatedRuleInfos<RuleValue["coûts . coûts de possession"]>
     usage: EvaluatedRuleInfos<RuleValue["coûts . coûts d'utilisation"]>
+    consomption: EvaluatedRuleInfos<
+      RuleValue["coûts . coûts d'utilisation . consommation"]
+    >
 
     // ownership: {
     //   total: EvaluatedRuleInfos<RuleValue["coûts . coûts de possession"]>
@@ -74,6 +77,9 @@ export type EvaluatedCarInfos = {
   /** The type of fuel of the car */
   fuel?: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
   electricSwitch: {
+    purchaseCost: EvaluatedRuleInfos<
+      RuleValue["rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser"]
+    >
     /** The minimal duration of ownership to make the switch to electric profitable */
     period: EvaluatedRuleInfos<
       RuleValue["rentabilité passage à l'électrique . durée de possession"]
@@ -222,6 +228,9 @@ export class CarSimulator {
         total: this.evaluateRule("coûts"),
         usage: this.evaluateRule("coûts . coûts d'utilisation"),
         ownership: this.evaluateRule("coûts . coûts de possession"),
+        consomption: this.evaluateRule(
+          "coûts . coûts d'utilisation . consommation",
+        ),
       },
       emissions: {
         total: this.evaluateRule("empreinte"),
@@ -237,6 +246,9 @@ export class CarSimulator {
           ? this.evaluateRule("voiture . thermique . carburant")
           : undefined,
       electricSwitch: {
+        purchaseCost: this.evaluateRule(
+          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+        ),
         period: this.evaluateRule(
           "rentabilité passage à l'électrique . durée de possession",
         ),
@@ -439,6 +451,14 @@ function getAlternative(
         isApplicable: true,
         value: engine.evaluate("coûts . coûts d'utilisation").nodeValue,
       },
+      consomption: {
+        title: "Consommation",
+        unit: "€/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts . coûts d'utilisation . consommation")
+          .nodeValue,
+      },
     },
     emissions: {
       total: {
@@ -486,6 +506,16 @@ function getAlternative(
       : undefined,
     // TODO: should be more clever about this
     electricSwitch: {
+      purchaseCost: {
+        title: engine.getRule(
+          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+        ).title,
+        value: engine.evaluate(
+          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+        ).nodeValue,
+        isEnumValue: false,
+        isApplicable: true,
+      },
       period: {
         title: engine.getRule(
           "rentabilité passage à l'électrique . durée de possession",
