@@ -37,47 +37,47 @@ voiture . prix d'achat . estimé:
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 19000
+              alors: thermique . petite
             - si: voiture . motorisation = 'hybride'
-              alors: 22000
+              alors: hybride . petite
             - si: voiture . motorisation = 'électrique'
-              alors: 32000
+              alors: électrique . petite
       - si: voiture . gabarit = 'moyenne'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 31000
+              alors: thermique . moyenne
             - si: voiture . motorisation = 'hybride'
-              alors: 34000
+              alors: hybride . moyenne
             - si: voiture . motorisation = 'électrique'
-              alors: 40000
+              alors: électrique . moyenne
       - si: voiture . gabarit = 'berline'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 38000
+              alors: thermique . berline
             - si: voiture . motorisation = 'hybride'
-              alors: 42000
+              alors: hybride . berline
             - si: voiture . motorisation = 'électrique'
-              alors: 48000
+              alors: électrique . berline
       - si: voiture . gabarit = 'SUV'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 40000
+              alors: thermique . SUV
             - si: voiture . motorisation = 'hybride'
-              alors: 44000
+              alors: hybride . SUV
             - si: voiture . motorisation = 'électrique'
-              alors: 50000
+              alors: électrique . SUV
       - si: voiture . gabarit = 'VUL'
         alors:
           variations:
             - si: voiture . motorisation = 'thermique'
-              alors: 30000
+              alors: thermique . VUL
             - si: voiture . motorisation = 'hybride'
-              alors: 38000
+              alors: hybride . VUL
             - si: voiture . motorisation = 'électrique'
-              alors: 45000
+              alors: électrique . VUL
   unité: €
   note: |
     La valeur du prix d'achat moyen d'une voiture neuve est importante pour le
@@ -120,19 +120,21 @@ voiture . prix d'achat . estimé:
 
     ##### Utilisation des données de Car Labelling
 
-    L'ADEME publie des [données](https://data.ademe.fr/datasets/ademe-car-labelling) (prix d'achat, consommation au 100, etc...) sur un ensemble de véhicules neufs
-    vendus en France. Ces données pourraient être utilisées comme source
-    de confiance pour déterminer le prix d'achat moyen d'une voiture neuve.
-    Cependant, il faudrait trouver un moyen de faire correspondre
-    les type de carrosserie de Car Labelling avec les gabarits de Nos Gestes Climat.
+    L'ADEME publie des
+    [données](https://data.ademe.fr/datasets/ademe-car-labelling) (prix
+    d'achat, consommation au 100, etc...) sur un ensemble de véhicules neufs
+    vendus en France. Ces données pourraient être utilisées comme source de
+    confiance pour déterminer le prix d'achat moyen d'une voiture neuve.
+    Cependant, il faudrait trouver un moyen de faire correspondre les type de
+    carrosserie de Car Labelling avec les gabarits de Nos Gestes Climat.
 
     La solution qui parait la plus pertinent serait de plutôt établir la même
     correspondance entre les gabarits et le
     [poids](https://nosgestesclimat.fr/documentation/transport/voiture/bar%C3%A8me-construction/bar%C3%A8me-thermique)
     des véhicules.
 
-    En utilisant les données de Car Labelling et en ignorant les modèles de la gamme `LUXE`
-    nous obtenons les résultats suivants :
+    En utilisant les données de Car Labelling et en ignorant les modèles de la
+    gamme `LUXE` nous obtenons les résultats suivants :
 
     | Poids (kg) | Motorisation | Prix moyen (€) | Nombre de véhicules |
     | ---------- | ------------ | -------------- | ------------------- |
@@ -160,6 +162,30 @@ voiture . prix d'achat . estimé:
     C'est pourquoi nous avons choisi de ne pas utiliser ces données pour
     l'instant.
 
+voiture . prix d'achat . estimé . thermique:
+  avec:
+    petite: 19000 €
+    moyenne: 31000 €
+    berline: 38000 €
+    SUV: 40000 €
+    VUL: 30000 €
+
+voiture . prix d'achat . estimé . hybride:
+  avec:
+    petite: 22000 €
+    moyenne: 34000 €
+    berline: 42000 €
+    SUV: 44000 €
+    VUL: 38000 €
+
+voiture . prix d'achat . estimé . électrique:
+  avec:
+    petite: 32000 €
+    moyenne: 40000 €
+    berline: 48000 €
+    SUV: 50000 €
+    VUL: 45000 €
+
 voiture . thermique . consommation carburant:
   question: Quelle est sa consommation moyenne ?
   applicable si:
@@ -178,11 +204,15 @@ voiture . thermique . consommation estimée:
   titre: Consommation estimée par défaut
   valeur: ngc . transport . voiture . thermique . consommation estimée
   unité: l/100km
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: voiture . gabarit
-    ngc . transport . voiture . motorisation: voiture . motorisation
-    ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+  # TODO: pour l'instant, nous simulons ce `contexte` en écrasant à l'import
+  # les paramètres pour éviter d'avoir à utiliser le `contexte` qui est coûteux
+  # en performance. Cependant, avec la nouvelle version de publicodes, il
+  # serait peut-être plus compréhensible de le faire ainsi.
+  # contexte:
+  #   ngc . transport . voiture . utilisateur: "'propriétaire'"
+  #   ngc . transport . voiture . gabarit: voiture . gabarit
+  #   ngc . transport . voiture . motorisation: voiture . motorisation
+  #   ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
 
 voiture . électrique:
   titre: Voiture électrique
@@ -203,11 +233,15 @@ voiture . électrique . consommation électricité:
 
 voiture . électrique . consommation estimée:
   titre: Consommation estimée par défaut
-  valeur: ngc . transport . voiture . électrique . consommation estimée
+  valeur: ngc . transport . voiture . électrique . consommation estimée 
   unité: kWh/100km
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: voiture . gabarit
+  # TODO: pour l'instant, nous simulons ce `contexte` en écrasant à l'import
+  # les paramètres pour éviter d'avoir à utiliser le `contexte` qui est coûteux
+  # en performance. Cependant, avec la nouvelle version de publicodes, il
+  # serait peut-être plus compréhensible de le faire ainsi.
+  # contexte:
+  #   ngc . transport . voiture . utilisateur: "'propriétaire'"
+  #   ngc . transport . voiture . gabarit: voiture . gabarit
 
 voiture . électrique . prix kWh:
   question: Quel est le prix du kWh ?
@@ -396,25 +430,24 @@ voiture . thermique . prix carburant:
   unité: €/l
 
 voiture . thermique . prix carburant moyen:
-  titre: Prix du carburant moyen (août 2024)
+  titre: Prix du carburant moyen (mai 2025)
   unité: €/l
   formule:
     variations:
       - si: carburant = 'gazole B7 ou B10'
-        alors: 1.631
+        alors: 1.530
       - si: carburant = 'essence E5 ou E10'
-        alors: 1.733
+        alors: 1.649
       - si: carburant = 'essence E85'
-        alors: 0.837
+        alors: 0.735
       - si: carburant = 'GPL'
-        alors: 0.959
-  note: |
+        alors: 0.942
+  note: >
     ### Source
 
     Données récupérées sur
-    [prix-carburants-info.fr](https://prix-carburants-info.fr/) le 15 août
-    2024.
-    Le site utilise les données de
+    [prix-carburants-info.fr](https://prix-carburants-info.fr/) le 27 mai
+    2025. Le site utilise les données de
     [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
 
 voiture . âge:
@@ -449,17 +482,15 @@ voiture . année de fabrication:
 
 # TODO: ajouter un warning si la durée de détention est supérieure à l'âge de la voiture.
 voiture . durée de détention totale:
-  question: Combien de temps envisagez-vous de garder votre voiture au total ?
-  description: |
+  question: En moyenne, combien de temps gardez-vous vos véhicule ?
+  description: >
     Renseignez la durée totale de détention de votre voiture. Si vous la
     possédez depuis 5 ans et que vous comptez encore la garder 4 ans,
     renseignez 9 ans.
   par défaut: durée de détention moyenne
   plancher: 1
   unité: an
-  note: |
-    La durée de détention défini la durée sur la quelle amortir le prix
-    d'achat.
+  note: La durée de détention défini la durée sur la quelle amortir le prix d'achat.
 
 voiture . durée de détention moyenne:
   description: |
