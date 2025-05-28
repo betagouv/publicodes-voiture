@@ -30,16 +30,6 @@ describe("Règles", () => {
     })
   })
 
-  describe("coûts . coûts de possession . achat amorti", () => {
-    test("les divisions par zero ne devrait pas être possible", () => {
-      const actual = engine
-        .setSituation({ "voiture . durée de détention totale": 0 })
-        .evaluate("coûts . coûts de possession . achat amorti")
-
-      expect(actual.nodeValue).toEqual(30400)
-    })
-  })
-
   describe("voiture . prix d'achat", () => {
     test("prix par défaut", () => {
       const actual = engine.setSituation({}).evaluate("voiture . prix d'achat")
@@ -58,7 +48,15 @@ describe("Règles", () => {
     })
   })
 
-  describe("coûts . coûts de possession . achat amorti", () => {
+  describe("coûts . achat amorti", () => {
+    test("les divisions par zero ne devrait pas être possible", () => {
+      const actual = engine
+        .setSituation({ "voiture . durée de détention totale": 0 })
+        .evaluate("coûts . achat amorti")
+
+      expect(actual.nodeValue).toEqual(7600)
+    })
+
     test.for([
       [1, 8000],
       [2, 6800],
@@ -74,15 +72,13 @@ describe("Règles", () => {
       [12, 3462],
       [13, 3289],
       [14, 3125],
-    ])("coût d'achat après revente au bout de %i an", ([durée, expected]) => {
+    ])("valeur de revente au bout de %i an", ([durée, expected]) => {
       const actual = engine
         .setSituation({
           "voiture . prix d'achat": 10000,
           "voiture . durée de détention totale": durée,
         })
-        .evaluate(
-          "coûts . coûts de possession . achat amorti . coût d'achat total",
-        )
+        .evaluate("coûts . achat amorti . valeur de revente")
 
       expect(actual.nodeValue).toBeCloseTo(expected, 0)
       expect(serializeUnit(actual.unit)).toEqual("€")
@@ -128,14 +124,30 @@ describe("Règles", () => {
     })
   })
 
-  describe.skip("rentabilité passage à l'électrique", () => {
-    describe("durée de possession", () => {
+  describe("rentabilité passage à l'électrique", () => {
+    test("le coût d'achat à rentabiliser devrait augmenter plus la durée de détention augmente", () => {
+      const low = engine
+        .setSituation({ "voiture . durée de détention totale": 2 })
+        .evaluate(
+          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+        ).nodeValue as number
+
+      const high = engine
+        .setSituation({ "voiture . durée de détention totale": 10 })
+        .evaluate(
+          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+        ).nodeValue as number
+
+      expect(low).toBeLessThan(high)
+    })
+
+    describe.only("durée de possession", () => {
       test("par défaut", () => {
         const actual = engine
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . durée de possession")
 
-        expect(actual.nodeValue).toBeCloseTo(44.6, 0)
+        expect(actual.nodeValue).toBeCloseTo(16.5, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -147,7 +159,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de possession")
 
-        expect(actual.nodeValue).toBeCloseTo(114, 0)
+        expect(actual.nodeValue).toBeCloseTo(29, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -159,7 +171,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de possession")
 
-        expect(actual.nodeValue).toBeCloseTo(16, 0)
+        expect(actual.nodeValue).toBeCloseTo(7, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -171,22 +183,26 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de possession")
 
-        expect(actual.nodeValue).toBeNull()
+        // Même sans rouler, les coûts de possessions sont toujours présents et
+        // moins élevés pour une voiture électrique (assurance moins chère,
+        // moins d'entretien, etc.)
+        expect(actual.nodeValue).toBeCloseTo(60, 0)
       })
 
-      test("la durée de possession ne devrait pas impacter le calcul", () => {
+      // NOTE: pour l'instant, le coût d'achat total dépend de la durée de
+      // possession. A voir si cela pose un réel problème (cf. note de la règle
+      // `rentabilité passage à l'électrique . durée de possession`).
+      test.skip("la durée de possession ne devrait pas impacter le calcul", () => {
         const actual = engine
           .setSituation({
             "voiture . durée de détention totale": 100,
           })
           .evaluate("rentabilité passage à l'électrique . durée de possession")
 
-        expect(actual.nodeValue).toBeCloseTo(44.6, 0)
+        expect(actual.nodeValue).toBeCloseTo(16.5, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
     })
-
-    // describe("km annuels", () => {})
   })
 })
 

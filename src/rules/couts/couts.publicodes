@@ -6,6 +6,7 @@ coûts:
     entretien, etc...).
   formule:
     somme:
+      - achat amorti
       - coûts de possession
       - coûts d'utilisation
   unité: €/an
@@ -21,15 +22,82 @@ coûts:
     [futur.eco](https://futur.eco/cout-voiture) et le modèle reste une source
     d'inspiration.
 
+coûts . achat amorti:
+  titre: Coût annuel de l'achat de votre voiture
+  formule: coût d'achat total / voiture . durée de détention totale
+  note: >
+    Le prix d'achat d'une voiture qu'elle soit neuve ou d'occasion représente
+    un facteur important du coût total du véhicule. Le choix de la fonction
+    d'amortissement est par conséquent crucial pour le calcul du coût annuel.
+
+
+    De nombreuses méthodes existe pour définir cette fonction : amortissement
+    linéaire sur toute la durée de vie ou sur la durée d'utilisation,
+    non-linéaire en _payant_ plus les premières années, amorti en retranchant
+    le prix de revente. L'amortissement sur la durée de vie peut se faire en
+    années ou bien en km parcourus.
+
+
+    Nous avons donc du faire un choix et avons décidé de choisir un
+    **amortissement linéaire sur la durée de détention**.
+
+
+    #### Historique de ce choix
+
+
+    La première version du modèle pour le calcul des coûts d'une voiture était
+    basée sur le modèle de [futur.eco](https://futur.eco/cout-voiture) qui
+    utilise un amortissement linéaire sur la durée de vie en années de la
+    voiture, en faisant l'hypothèse qu'en moyenne la voiture est gardée
+    jusqu'au bout de sa vie.
+
+
+    Si à l'échelle d'une voiture, il est probable qu'elle roule jusqu'à la fin de
+    sa vie, (c'est-à-dire qu'elle ne soit plus en état de fonctionner), à l'échelle
+    d'un.e conducteurice cela semble peu probable. En effet, selon le [bilan de
+    2021 de
+    l'ONSIR](https://www.onisr.securite-routiere.gouv.fr/sites/default/files/2022-09/74-75%20Le%20parc%20automobile%20des%20m%C3%A9nages%20V5.pdf), la durée de
+    détention n'est que de 5,5 ans alors que l'âge moyen des voitures hors d'usage (VHU)
+    est de 19 ans (voir
+    cet [article](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu)).
+
+
+    De plus, ce choix d'amortissement peut se justifier dans le contexte du
+    calcul du coût d'un trajet arbitraire (comme c'est le cas pour futur.eco).
+    Contexte qui ne permet de savoir facilement à ce moment là qu'elle sera la
+    durée de détention du véhicule. Or, dans le contexte d'un questionnement
+    sur le remplacement d'un véhicule, il est plus probable que la durée de
+    détention soit connue.
+  avec:
+    coût d'achat total:
+      titre: Coût total lié à l'achat de la voiture
+      description: >
+        Prix d'achat de la voiture moins sa valeur de revente à la fin de son
+        utilisation. Ce prix est utilisé pour calculer le coût annuel de
+        possession de la voiture.
+      valeur: voiture . prix d'achat - valeur de revente
+
+    valeur de revente: 
+      valeur: voiture . prix d'achat * (100% - décote)
+      contexte:
+        décote . durée décote: voiture . durée de détention totale
+      note: >
+        Par soucis de simplicité, nous avons choisi de calculer la décote non
+        pas en fonction de l'âge de la voiture, mais en fonction de la durée de
+        possession. 
+
+        Cela permet de ne pas avoir à connaître l'âge de la voiture mais rend
+        le calcul du coût d'achat des véhicule d'occasion beaucoup moins
+        précis.
+
 coûts . coûts de possession:
   titre: Coûts de possession annuels
-  description: |
+  description: >
     Ensemble des coûts liés à la possession d'une voiture et qui peuvent par
     conséquent, être négligés dans le calcul des coûts d'une voiture louée par
     exemple.
   formule:
     somme:
-      - achat amorti
       - contrôle technique
       - entretien
       - assurance
@@ -143,71 +211,6 @@ coûts . coûts de possession . assurance estimée:
     ### Sources
 
     - [LesFurets.com](https://www.lesfurets.com/assurance-auto/types-vehicules/voiture-propre/electrique)
-
-coûts . coûts de possession . achat amorti:
-  titre: Coût annuel de l'achat de votre voiture
-  formule: coût d'achat total / voiture . durée de détention totale
-  note: >
-    Le prix d'achat d'une voiture qu'elle soit neuve ou d'occasion représente
-    un facteur important du coût total du véhicule. Le choix de la fonction
-    d'amortissement est par conséquent crucial pour le calcul du coût annuel.
-
-
-    De nombreuses méthodes existe pour définir cette fonction : amortissement
-    linéaire sur toute la durée de vie ou sur la durée d'utilisation,
-    non-linéaire en _payant_ plus les premières années, amorti en retranchant
-    le prix de revente. L'amortissement sur la durée de vie peut se faire en
-    années ou bien en km parcourus.
-
-
-    Nous avons donc du faire un choix et avons décidé de choisir un
-    **amortissement linéaire sur la durée de détention**.
-
-
-    #### Historique de ce choix
-
-
-    La première version du modèle pour le calcul des coûts d'une voiture était
-    basée sur le modèle de [futur.eco](https://futur.eco/cout-voiture) qui
-    utilise un amortissement linéaire sur la durée de vie en années de la
-    voiture, en faisant l'hypothèse qu'en moyenne la voiture est gardée
-    jusqu'au bout de sa vie.
-
-
-    Si à l'échelle d'une voiture, il est probable qu'elle roule jusqu'à la fin de
-    sa vie, (c'est-à-dire qu'elle ne soit plus en état de fonctionner), à l'échelle
-    d'un.e conducteurice cela semble peu probable. En effet, selon le [bilan de
-    2021 de
-    l'ONSIR](https://www.onisr.securite-routiere.gouv.fr/sites/default/files/2022-09/74-75%20Le%20parc%20automobile%20des%20m%C3%A9nages%20V5.pdf), la durée de
-    détention n'est que de 5,5 ans alors que l'âge moyen des voitures hors d'usage (VHU)
-    est de 19 ans (voir
-    cet [article](https://www.ecologie.gouv.fr/politiques-publiques/vehicules-hors-dusage-vhu)).
-
-
-    De plus, ce choix d'amortissement peut se justifier dans le contexte du
-    calcul du coût d'un trajet arbitraire (comme c'est le cas pour futur.eco).
-    Contexte qui ne permet de savoir facilement à ce moment là qu'elle sera la
-    durée de détention du véhicule. Or, dans le contexte d'un questionnement
-    sur le remplacement d'un véhicule, il est plus probable que la durée de
-    détention soit connue.
-  avec:
-    coût d'achat total:
-      titre: Coût total lié à l'achat de la voiture
-      description: |
-        Prix d'achat de la voiture moins sa valeur de revente à la fin de son
-        utilisation. Ce prix est utilisé pour calculer le coût annuel de
-        possession de la voiture.
-      valeur: voiture . prix d'achat - valeur résiduelle
-
-    valeur résiduelle:
-      titre: Valeur résiduelle du véhicule à la revente
-      description: |
-        Prix estimé de revente de votre voiture à la fin de son utilisation,
-        permettant ainsi d'amortir uniquement la différence entre le prix
-        d'achat et la valeur résiduelle.
-      valeur: voiture . prix d'achat * décote
-      contexte:
-        décote . durée décote: voiture . durée de détention totale
         
 coûts . coûts de possession . certificat d'immatriculation amorti:
   titre: Coût annuel du certificat d'immatriculation

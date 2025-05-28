@@ -204,11 +204,15 @@ voiture . thermique . consommation estimée:
   titre: Consommation estimée par défaut
   valeur: ngc . transport . voiture . thermique . consommation estimée
   unité: l/100km
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: voiture . gabarit
-    ngc . transport . voiture . motorisation: voiture . motorisation
-    ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+  # TODO: pour l'instant, nous simulons ce `contexte` en écrasant à l'import
+  # les paramètres pour éviter d'avoir à utiliser le `contexte` qui est coûteux
+  # en performance. Cependant, avec la nouvelle version de publicodes, il
+  # serait peut-être plus compréhensible de le faire ainsi.
+  # contexte:
+  #   ngc . transport . voiture . utilisateur: "'propriétaire'"
+  #   ngc . transport . voiture . gabarit: voiture . gabarit
+  #   ngc . transport . voiture . motorisation: voiture . motorisation
+  #   ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
 
 voiture . électrique:
   titre: Voiture électrique
@@ -229,11 +233,15 @@ voiture . électrique . consommation électricité:
 
 voiture . électrique . consommation estimée:
   titre: Consommation estimée par défaut
-  valeur: ngc . transport . voiture . électrique . consommation estimée
+  valeur: ngc . transport . voiture . électrique . consommation estimée 
   unité: kWh/100km
-  contexte:
-    ngc . transport . voiture . utilisateur: "'propriétaire'"
-    ngc . transport . voiture . gabarit: voiture . gabarit
+  # TODO: pour l'instant, nous simulons ce `contexte` en écrasant à l'import
+  # les paramètres pour éviter d'avoir à utiliser le `contexte` qui est coûteux
+  # en performance. Cependant, avec la nouvelle version de publicodes, il
+  # serait peut-être plus compréhensible de le faire ainsi.
+  # contexte:
+  #   ngc . transport . voiture . utilisateur: "'propriétaire'"
+  #   ngc . transport . voiture . gabarit: voiture . gabarit
 
 voiture . électrique . prix kWh:
   question: Quel est le prix du kWh ?
