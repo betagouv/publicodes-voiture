@@ -22,6 +22,18 @@ coûts:
     [futur.eco](https://futur.eco/cout-voiture) et le modèle reste une source
     d'inspiration.
 
+coûts . sur la durée de détention:
+  titre: Coûts sur la durée de détention
+  description: >
+    Coûts liés à la possession d'une voiture répartis sur la durée de
+    détention du véhicule.
+  formule:
+    somme:
+      - achat amorti . coût d'achat total 
+      - coûts de possession . sur la durée de détention
+      - coûts d'utilisation . sur la durée de détention
+  unité: €
+
 coûts . achat amorti:
   titre: Coût annuel de l'achat de votre voiture
   formule: coût d'achat total / voiture . durée de détention totale
@@ -103,6 +115,20 @@ coûts . coûts de possession:
       - assurance
       - certificat d'immatriculation amorti
   unité: €/an
+
+coûts . coûts de possession . sur la durée de détention:
+  titre: Coûts de possession annuels
+  description: >
+    Ensemble des coûts liés à la possession d'une voiture et qui peuvent par
+    conséquent, être négligés dans le calcul des coûts d'une voiture louée par
+    exemple.
+  formule:
+    somme:
+      - contrôle technique * voiture . durée de détention totale
+      - entretien * voiture . durée de détention totale
+      - assurance * voiture . durée de détention totale
+      - certificat d'immatriculation
+  unité: €
 
 coûts . coûts de possession . contrôle technique:
   titre: Coût annuel du contrôle technique
@@ -249,6 +275,20 @@ coûts . coûts d'utilisation:
     - contraventions
     - permis de conduire
   unité: €/an
+
+coûts . coûts d'utilisation . sur la durée de détention:
+  titre: Coûts d'utilisation sur la durée de détention
+  description: |
+    Ensemble des coûts liés à l'utilisation d'une voiture et qui peuvent par
+    conséquent, être pris en compte dans le calcul des coûts d'une voiture
+    louée ou partagée.
+  somme:
+    - consommation * voiture . durée de détention totale 
+    - stationnement * voiture . durée de détention totale
+    - péage * voiture . durée de détention totale
+    - contraventions * voiture . durée de détention totale
+    - permis de conduire . coût d'obtention
+  unité: €
 
 coûts . coûts d'utilisation . consommation:
   titre: Coût de la consommation annuelle

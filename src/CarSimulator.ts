@@ -78,7 +78,7 @@ export type EvaluatedCarInfos = {
   fuel?: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
   electricSwitch: {
     purchaseCost: EvaluatedRuleInfos<
-      RuleValue["rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser"]
+      RuleValue["rentabilité passage à l'électrique . variables . coût d'achat électrique"]
     >
     /** The minimal duration of ownership to make the switch to electric profitable */
     period: EvaluatedRuleInfos<
@@ -247,7 +247,7 @@ export class CarSimulator {
           : undefined,
       electricSwitch: {
         purchaseCost: this.evaluateRule(
-          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+          "rentabilité passage à l'électrique . variables . coût d'achat électrique",
         ),
         period: this.evaluateRule(
           "rentabilité passage à l'électrique . durée de possession",
@@ -508,10 +508,10 @@ function getAlternative(
     electricSwitch: {
       purchaseCost: {
         title: engine.getRule(
-          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+          "rentabilité passage à l'électrique . variables . coût d'achat électrique",
         ).title,
         value: engine.evaluate(
-          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+          "rentabilité passage à l'électrique . variables . coût d'achat électrique",
         ).nodeValue,
         isEnumValue: false,
         isApplicable: true,
