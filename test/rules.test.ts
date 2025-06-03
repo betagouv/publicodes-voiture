@@ -129,23 +129,23 @@ describe("Règles", () => {
       const low = engine
         .setSituation({ "voiture . durée de détention totale": 2 })
         .evaluate(
-          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+          "rentabilité passage à l'électrique . variables . coût d'achat électrique",
         ).nodeValue as number
 
       const high = engine
         .setSituation({ "voiture . durée de détention totale": 10 })
         .evaluate(
-          "rentabilité passage à l'électrique . variables . coût d'achat à rentabiliser",
+          "rentabilité passage à l'électrique . variables . coût d'achat électrique",
         ).nodeValue as number
 
       expect(low).toBeLessThan(high)
     })
 
-    describe.only("durée de possession", () => {
+    describe("durée de détention", () => {
       test("par défaut", () => {
         const actual = engine
           .setSituation({})
-          .evaluate("rentabilité passage à l'électrique . durée de possession")
+          .evaluate("rentabilité passage à l'électrique . durée de détention")
 
         expect(actual.nodeValue).toBeCloseTo(16.5, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
@@ -157,7 +157,7 @@ describe("Règles", () => {
             "usage . km annuels . connus": "oui",
             "usage . km annuels . renseignés": 7000,
           })
-          .evaluate("rentabilité passage à l'électrique . durée de possession")
+          .evaluate("rentabilité passage à l'électrique . durée de détention")
 
         expect(actual.nodeValue).toBeCloseTo(29, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
@@ -169,7 +169,7 @@ describe("Règles", () => {
             "usage . km annuels . connus": "oui",
             "usage . km annuels . renseignés": 50000,
           })
-          .evaluate("rentabilité passage à l'électrique . durée de possession")
+          .evaluate("rentabilité passage à l'électrique . durée de détention")
 
         expect(actual.nodeValue).toBeCloseTo(7, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
@@ -181,7 +181,7 @@ describe("Règles", () => {
             "usage . km annuels . connus": "oui",
             "usage . km annuels . renseignés": 0,
           })
-          .evaluate("rentabilité passage à l'électrique . durée de possession")
+          .evaluate("rentabilité passage à l'électrique . durée de détention")
 
         // Même sans rouler, les coûts de possessions sont toujours présents et
         // moins élevés pour une voiture électrique (assurance moins chère,
@@ -191,16 +191,72 @@ describe("Règles", () => {
 
       // NOTE: pour l'instant, le coût d'achat total dépend de la durée de
       // possession. A voir si cela pose un réel problème (cf. note de la règle
-      // `rentabilité passage à l'électrique . durée de possession`).
-      test.skip("la durée de possession ne devrait pas impacter le calcul", () => {
-        const actual = engine
+      // `rentabilité passage à l'électrique . durée de détention`).
+      test("augmenter la durée de détention ne devrait pas impacter le calcul", () => {
+        const low = engine
+          .shallowCopy()
           .setSituation({
-            "voiture . durée de détention totale": 100,
+            "voiture . durée de détention totale": 2,
           })
-          .evaluate("rentabilité passage à l'électrique . durée de possession")
+          .evaluate("rentabilité passage à l'électrique . durée de détention")
+          .nodeValue as number
 
-        expect(actual.nodeValue).toBeCloseTo(16.5, 0)
-        expect(serializeUnit(actual.unit)).toEqual("an")
+        const high = engine
+          .shallowCopy()
+          .setSituation({
+            "voiture . durée de détention totale": 8,
+          })
+          .evaluate("rentabilité passage à l'électrique . durée de détention")
+          .nodeValue as number
+
+        expect(low).toBeCloseTo(high, 0)
+      })
+    })
+
+    describe("km annuels", () => {
+      test("par défaut", () => {
+        const actual = engine
+          .setSituation({})
+          .evaluate("rentabilité passage à l'électrique . km annuels")
+
+        expect(actual.nodeValue).toBeCloseTo(41969.6, 0)
+        expect(serializeUnit(actual.unit)).toEqual("km/an")
+      })
+
+      test("augmenter la durée de détention doit diminuer les km annuels", () => {
+        const low = engine
+          .setSituation({ "voiture . durée de détention totale": 2 })
+          .evaluate("rentabilité passage à l'électrique . km annuels")
+          .nodeValue as number
+
+        const high = engine
+          .setSituation({ "voiture . durée de détention totale": 10 })
+          .evaluate("rentabilité passage à l'électrique . km annuels")
+          .nodeValue as number
+
+        expect(low).toBeGreaterThan(high)
+      })
+
+      test("augmenter les kilomètres annuels ne devrait pas impacter la rentabilité", () => {
+        const low = engine
+          .shallowCopy()
+          .setSituation({
+            "usage . km annuels . connus": "oui",
+            "usage . km annuels . renseignés": 5000,
+          })
+          .evaluate("rentabilité passage à l'électrique . km annuels")
+          .nodeValue as number
+
+        const high = engine
+          .shallowCopy()
+          .setSituation({
+            "usage . km annuels . connus": "oui",
+            "usage . km annuels . renseignés": 50000,
+          })
+          .evaluate("rentabilité passage à l'électrique . km annuels")
+          .nodeValue as number
+
+        expect(low).toBeCloseTo(high, 0)
       })
     })
   })

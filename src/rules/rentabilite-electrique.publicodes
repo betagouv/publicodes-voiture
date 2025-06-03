@@ -8,18 +8,18 @@ rentabilité passage à l'électrique:
     coût d'achat de la nouvelle voiture.
 
 # NOTE: comment souhaitons-nous gérer le cas où les économies annuelles sont négatives ?
-rentabilité passage à l'électrique . durée de possession:
-  titre: Durée de possession minimale pour rentabiliser l'alternative électrique
+rentabilité passage à l'électrique . durée de détention:
+  titre: Durée minimale pour rentabiliser l'alternative électrique
   description: >
-    Calcul de durée de possession à partir de laquelle l'alternative
+    Calcul de durée de la durée de détention à partir de laquelle l'alternative
     électrique de même gabarit devient rentable en parcourant `usage . km
     annuels`. 
-  non applicable si: 
+  applicable si: 
     une de ces conditions:
-      - voiture . motorisation = 'électrique'
-      - variables . coût d'achat à rentabiliser <= 0
-      - variables . économie annuelle <= 0
-  valeur: variables . coût d'achat à rentabiliser / variables . économie annuelle
+      - voiture . motorisation != 'électrique'
+      - variables . coût d'achat électrique > 0
+      - variables . économie annuelle > 0
+  valeur: variables . coût d'achat électrique / variables . économie annuelle
   unité: an
   note: >
     Nous avons choisi de prendre le coût d'achat total (c'est-à-dire la
@@ -30,7 +30,7 @@ rentabilité passage à l'électrique . durée de possession:
     nécessaire pour rentabiliser l'achat d'une voiture électrique.
 
     Une solution serait de fixer la durée de détention à une valeur par défaut
-    pour le calcul du coût d'achat à rentabiliser. Pour l'instant, nous avons
+    pour le calcul du coût d'achat électrique. Pour l'instant, nous avons
     choisi de ne pas le faire, pour éviter de devoir utiliser un `contexte`
     supplémentaire qui est couteux en termes de performance et cela permet
     également de pouvoir faire varier cette valeur par défaut via les
@@ -38,44 +38,23 @@ rentabilité passage à l'électrique . durée de possession:
 
 rentabilité passage à l'électrique . km annuels:
   titre: Kilomètres annuels à parcourir pour rentabiliser l'alternative électrique
-  non applicable si: 
+  applicable si: 
     une de ces conditions:
-      - voiture . motorisation = 'électrique'
-      - variables . coût d'achat à rentabiliser <= 0
-      - variables . économie par km <= 0
+      - voiture . motorisation != 'électrique'
+      - variables . coûts à rentabiliser en roulant > 0
+      - variables . économie consommation par km > 0
   description: >
     Calcul de la distance parcourue à l'année à partir de laquelle
     l'alternative électrique de même gabarit devient rentable au bout de
     `voiture . durée de détention totale`.
-  valeur: variables . coût d'achat à rentabiliser / variables . économie par km / voiture . durée de détention totale
+  valeur: variables . coûts à rentabiliser en roulant / variables . économie consommation par km
   unité: km/an
-  avec:
  
 rentabilité passage à l'électrique . variables:
+  description: >
+    Variables utilisées pour le calcul de la rentabilité du passage à
+    l'électrique.
   avec:
-    économie par km:
-      formule: 
-        variations:
-          - si: usage . km annuels > 0
-            alors: variables . économie annuelle / usage . km annuels
-          - sinon: 0
-
-    économie annuelle:
-      formule: |
-        (coûts . coûts d'utilisation + coûts . coûts de possession) - coûts électrique sans prix d'achat
-
-    coût d'achat à rentabiliser:
-      description: >
-        Coût à rentabiliser pour le passage à l'électrique, soit la
-        différence entre le coût d'achat de la voiture électrique
-        équivalente et de la voiture thermique initiale.
-      valeur: coût d'achat électrique # - coûts . coûts de possession . achat amorti . coût d'achat total 
-
-    coûts électrique sans prix d'achat:
-      valeur: coûts - coûts . achat amorti
-      contexte:
-        voiture . motorisation: "'électrique'"
-    
     coût d'achat électrique:
       titre: Coût total lié à l'achat de la voiture électrique
       description: >
@@ -84,4 +63,90 @@ rentabilité passage à l'électrique . variables:
       valeur: coûts . achat amorti . coût d'achat total
       contexte:
         voiture . gabarit: voiture . cible . gabarit
+        voiture . motorisation: "'électrique'"
+
+    économie annuelle:
+      formule: coûts voiture actuelle sans prix d'achat - coûts électrique sans prix d'achat
+      unité: €/an
+
+    coûts électrique sans prix d'achat:
+      valeur: coûts voiture actuelle sans prix d'achat
+      contexte:
+        voiture . motorisation: "'électrique'"
+    
+    coûts voiture actuelle sans prix d'achat:
+      valeur: coûts - coûts . achat amorti
+
+    économie par km:
+      formule: 
+        variations:
+          - si: usage . km annuels > 0
+            alors: économie annuelle / usage . km annuels
+          - sinon: 0
+
+    économies totales:
+      formule: |
+        (coûts . coûts d'utilisation + coûts . coûts de possession)
+        - coûts électrique sans prix d'achat
+    
+    coûts à rentabiliser:
+      titre: Coûts à rentabiliser en roulant par année
+      description: >
+        Coûts liés à l'achat de la voiture électrique par année que l'on
+        cherche à rentabiliser en roulant avec la voiture électrique.
+      valeur: (coût d'achat électrique) - économie fixes sans prix d'achat
+      unité: €/an
+      note: >
+        Il est nécessaire de calculer séparément les économies fixes de celles
+        qui sont liées au kilométrage parcouru. En effet, posséder une voiture
+        électrique permet en général d'économiser sur les coûts de
+        stationnement, d'entretien et d'assurance, indépendamment du nombre de
+        kilomètres parcourus.
+
+    coûts à rentabiliser en roulant:
+      titre: Coûts à rentabiliser en roulant par année
+      description: >
+        Coûts liés à l'achat de la voiture électrique par année que l'on
+        cherche à rentabiliser en roulant avec la voiture électrique.
+      valeur: (coût d'achat électrique / voiture . durée de détention totale) - économie fixes sans prix d'achat
+      unité: €/an
+      note: >
+        Il est nécessaire de calculer séparément les économies fixes de celles
+        qui sont liées au kilométrage parcouru. En effet, posséder une voiture
+        électrique permet en général d'économiser sur les coûts de
+        stationnement, d'entretien et d'assurance, indépendamment du nombre de
+        kilomètres parcourus.
+    
+    économie fixes sans prix d'achat:
+      valeur: coûts actuelle fixes sans prix d'achat - coûts actuelle fixes sans prix d'achat électrique
+      unité: €/an
+
+    coûts actuelle fixes sans prix d'achat électrique:
+      valeur: coûts actuelle fixes sans prix d'achat
+      contexte:
+        voiture . motorisation: "'électrique'"
+
+    coûts actuelle fixes sans prix d'achat:
+      description: >
+        Les coûts fixes sont les coûts qui ne varient pas en fonction du
+        kilométrage parcouru. 
+
+
+        Nous soustrayons le coût d'achat amorti pour car c'est le coût que l'on
+        cherche à rentabiliser ici.
+      valeur: coûts - coûts . coûts d'utilisation . consommation - coûts . achat amorti
+
+    économie consommation par km:
+      valeur: coûts . coûts d'utilisation . consommation . consommation au km - coûts de consommation électrique au km
+
+    coûts de consommation électrique au km:
+      valeur: coûts . coûts d'utilisation . consommation . consommation au km . électrique
+      unité: €/km
+      # TODO: refacto le code pour ne pas avoir à utiliser un contexte ici
+      contexte:
+        voiture . motorisation: "'électrique'"
+      
+    coûts totaux électrique sans prix d'achat:
+      valeur: coûts . sur la durée de détention - coûts . achat amorti . coût d'achat total
+      contexte:
         voiture . motorisation: "'électrique'"
