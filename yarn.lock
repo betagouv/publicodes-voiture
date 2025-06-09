@@ -1705,10 +1705,15 @@ process@^0.11.1:
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==
 
-publicodes@^1.8.2, publicodes@^1.8.5:
+publicodes@^1.8.2:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.8.5.tgz#654bb97bea3aed86ad7249b575d16ac948faf6ea"
   integrity sha512-z+3/NSfOfW2GGp//ulnZBj/KHWylZGuwjKOc7vAVDvmnbdeAWSG1+Dn7JffSZ85+Qs2XK/pWEOrdtFMrPvSWYQ==
+
+publicodes@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.9.0.tgz#e74914edd46820ee5a81144192bb68a7e1a15fed"
+  integrity sha512-0E2vsKAZTq3jNm+sWYDDZfHjePPaPkBIn8cMLS7qtMxC8HRyPQMEFkqowibycLwY+C/hrG0OJJt6+estMiXxYA==
 
 punycode@^2.1.0:
   version "2.3.1"
