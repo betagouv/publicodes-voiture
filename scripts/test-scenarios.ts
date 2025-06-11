@@ -2,12 +2,14 @@ import { CarSimulator, Alternative } from "../src/CarSimulator"
 
 const simulator = new CarSimulator()
 
-console.time("alternatives")
-simulator.evaluateAlternatives()
-console.timeEnd("alternatives")
+// console.time("alternatives")
+// simulator.evaluateAlternatives()
+// console.timeEnd("alternatives")
 
 const periods_of_detentions = [3, 5.5, 10]
+// const periods_of_detentions = [5.5]
 const kms = [1000, 7000, 13975, 40000]
+// const kms = [13975]
 
 for (const period of periods_of_detentions) {
   for (const km of kms) {
@@ -16,6 +18,15 @@ for (const period of periods_of_detentions) {
       "usage . km annuels . connus": true,
       "usage . km annuels . renseignés": km,
     })
+
+    // console.log(`\nEntrées: ${period} ans de détention, ${km} km annuels`)
+    // console.log(
+    //   `- \`durée de détention\` = ${simulator.evaluateRule("rentabilité passage à l'électrique . durée de détention").value} an`,
+    // )
+    // console.log(
+    //   `- \`km annuels\` = ${simulator.evaluateRule("rentabilité passage à l'électrique . km annuels").value} an`,
+    // )
+
     console.time("evaluate alternatives")
     const alternatives = simulator
       .evaluateAlternatives()

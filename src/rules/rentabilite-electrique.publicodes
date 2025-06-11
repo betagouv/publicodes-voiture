@@ -64,7 +64,7 @@ rentabilité passage à l'électrique . variables:
       description: >
         Prix d'achat estimé de la voiture électrique de même gabarit que la
         voiture thermique envisagée moins la décote estimée.
-      valeur: coûts . achat amorti . coût d'achat total
+      valeur: coûts . achat amorti . coût d'achat total - 4000
       contexte:
         voiture . gabarit: voiture . cible . gabarit
         voiture . motorisation: "'électrique'"
