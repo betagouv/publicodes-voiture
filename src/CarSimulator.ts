@@ -17,15 +17,78 @@ export type EvaluatedCarInfos = {
   /** The title of the rule */
   title?: string
   /** The cost of the car in €/an */
-  cost: EvaluatedRuleInfos<RuleValue["coûts"]>
+  cost: {
+    total: EvaluatedRuleInfos<RuleValue["coûts"]>
+    ownership: EvaluatedRuleInfos<RuleValue["coûts . coûts de possession"]>
+    usage: EvaluatedRuleInfos<RuleValue["coûts . coûts d'utilisation"]>
+    consomption: EvaluatedRuleInfos<
+      RuleValue["coûts . coûts d'utilisation . consommation"]
+    >
+
+    // ownership: {
+    //   total: EvaluatedRuleInfos<RuleValue["coûts . coûts de possession"]>
+    // purchase_cost: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . achat amorti"]
+    // >
+    // technical_inspection: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . contrôle technique"]
+    // >
+    // maintenance: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . entretien"]
+    // >
+    // insurance: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . assurance"]
+    // >
+    // registration_certificate: EvaluatedRuleInfos<
+    //   RuleValue["coûts . coûts de possession . certificat d'immatriculation amorti"]
+    // >
+    // }
+    // usage: {
+    //   total: EvaluatedRuleInfos<RuleValue["coûts . coûts d'utilisation"]>
+    //   consumption: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . consommation"]
+    //   >
+    //   parking: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . stationnement"]
+    //   >
+    //   motorway_fee: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . péage"]
+    //   >
+    //   contraventions: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . contraventions"]
+    //   >
+    //   driving_licence: EvaluatedRuleInfos<
+    //     RuleValue["coûts . coûts d'utilisation . permis de conduire"]
+    //   >
+    // }
+  }
   /** The emissions of the car in kgCO2/an */
-  emissions: EvaluatedRuleInfos<RuleValue["empreinte"]>
+  emissions: {
+    total: EvaluatedRuleInfos<RuleValue["empreinte"]>
+    ownership: EvaluatedRuleInfos<
+      RuleValue["ngc . transport . voiture . construction"]
+    >
+    usage: EvaluatedRuleInfos<RuleValue["ngc . transport . voiture . usage"]>
+  }
   /** The car size (gabarit) */
   size: EvaluatedRuleInfos<RuleValue["voiture . gabarit"]>
   /** The type of motorisation of the car */
   motorisation: EvaluatedRuleInfos<RuleValue["voiture . motorisation"]>
   /** The type of fuel of the car */
   fuel?: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
+  electricSwitch: {
+    purchaseCost: EvaluatedRuleInfos<
+      RuleValue["rentabilité passage à l'électrique . variables . coût d'achat électrique"]
+    >
+    /** The minimal duration of ownership to make the switch to electric profitable */
+    period: EvaluatedRuleInfos<
+      RuleValue["rentabilité passage à l'électrique . durée de détention"]
+    >
+    /** The minimal distance per year to make the switch to electric profitable */
+    distance: EvaluatedRuleInfos<
+      RuleValue["rentabilité passage à l'électrique . km annuels"]
+    >
+  }
 }
 
 /**
@@ -135,10 +198,7 @@ export class CarSimulator {
     if (options.overwrite) {
       this.inputs = inputs
     } else {
-      this.inputs = {
-        ...this.inputs,
-        ...inputs,
-      }
+      this.inputs = Object.assign(this.inputs, inputs)
     }
     this.engine.setSituation(getSituation(this.inputs))
     return this
@@ -148,7 +208,7 @@ export class CarSimulator {
    * Return a copy of the current inputs.
    */
   public getInputs(): Questions {
-    return { ...this.inputs }
+    return Object.assign({}, this.inputs)
   }
 
   /**
@@ -164,14 +224,38 @@ export class CarSimulator {
     const motorisation = this.evaluateRule("voiture . motorisation")
 
     return {
-      emissions: this.evaluateRule("empreinte"),
-      cost: this.evaluateRule("coûts"),
+      cost: {
+        total: this.evaluateRule("coûts"),
+        usage: this.evaluateRule("coûts . coûts d'utilisation"),
+        ownership: this.evaluateRule("coûts . coûts de possession"),
+        consomption: this.evaluateRule(
+          "coûts . coûts d'utilisation . consommation",
+        ),
+      },
+      emissions: {
+        total: this.evaluateRule("empreinte"),
+        usage: this.evaluateRule("ngc . transport . voiture . usage"),
+        ownership: this.evaluateRule(
+          "ngc . transport . voiture . construction",
+        ),
+      },
       size: this.evaluateRule("voiture . gabarit"),
       motorisation,
       fuel:
         motorisation.value !== "électrique"
           ? this.evaluateRule("voiture . thermique . carburant")
           : undefined,
+      electricSwitch: {
+        purchaseCost: this.evaluateRule(
+          "rentabilité passage à l'électrique . variables . coût d'achat électrique",
+        ),
+        period: this.evaluateRule(
+          "rentabilité passage à l'électrique . durée de détention",
+        ),
+        distance: this.evaluateRule(
+          "rentabilité passage à l'électrique . km annuels",
+        ),
+      },
     }
   }
 
@@ -301,7 +385,7 @@ export class CarSimulator {
    */
   public shallowCopy() {
     const newEngine = new CarSimulator(true)
-    newEngine.inputs = { ...this.inputs }
+    newEngine.inputs = Object.assign({}, this.inputs)
     newEngine.engine = this.engine.shallowCopy()
     return newEngine
   }
@@ -346,18 +430,59 @@ function getAlternative(
     kind: "car",
     title: `${size.title} ${motorisation.title}${fuel ? ` (${fuel.title})` : ""}`,
     cost: {
-      title: "Coûts annuels",
-      unit: "€/an",
-      isEnumValue: false,
-      isApplicable: true,
-      value: engine.evaluate("coûts").nodeValue,
+      total: {
+        title: "Coûts annuels",
+        unit: "€/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts").nodeValue,
+      },
+      ownership: {
+        title: "Coûts de possession",
+        unit: "€/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts . coûts de possession").nodeValue,
+      },
+      usage: {
+        title: "Coûts d'utilisation",
+        unit: "€/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts . coûts d'utilisation").nodeValue,
+      },
+      consomption: {
+        title: "Consommation",
+        unit: "€/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts . coûts d'utilisation . consommation")
+          .nodeValue,
+      },
     },
     emissions: {
-      title: "Empreinte CO2e",
-      unit: "kgCO2e/an",
-      isEnumValue: false,
-      isApplicable: true,
-      value: engine.evaluate("empreinte").nodeValue,
+      total: {
+        title: "Empreinte CO2e",
+        unit: "kgCO2e/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("empreinte").nodeValue,
+      },
+      ownership: {
+        title: "Empreinte CO2e de construction",
+        unit: "kgCO2e/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("ngc . transport . voiture . construction")
+          .nodeValue,
+      },
+      usage: {
+        title: "Empreinte CO2e d'usage",
+        unit: "kgCO2e/an",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("ngc . transport . voiture . usage").nodeValue,
+      },
     },
     size: {
       value: size.nodeValue,
@@ -379,5 +504,37 @@ function getAlternative(
           isApplicable: true,
         }
       : undefined,
+    // TODO: should be more clever about this
+    electricSwitch: {
+      purchaseCost: {
+        title: engine.getRule(
+          "rentabilité passage à l'électrique . variables . coût d'achat électrique",
+        ).title,
+        value: engine.evaluate(
+          "rentabilité passage à l'électrique . variables . coût d'achat électrique",
+        ).nodeValue,
+        isEnumValue: false,
+        isApplicable: true,
+      },
+      period: {
+        title: engine.getRule(
+          "rentabilité passage à l'électrique . durée de détention",
+        ).title,
+        value: engine.evaluate(
+          "rentabilité passage à l'électrique . durée de détention",
+        ).nodeValue,
+        isEnumValue: false,
+        isApplicable: true,
+      },
+      distance: {
+        title: engine.getRule("rentabilité passage à l'électrique . km annuels")
+          .title,
+        value: engine.evaluate(
+          "rentabilité passage à l'électrique . km annuels",
+        ).nodeValue,
+        isEnumValue: false,
+        isApplicable: true,
+      },
+    },
   } as Alternative
 }

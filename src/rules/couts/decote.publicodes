@@ -22,14 +22,30 @@ décote:
       - si: durée décote <= 1
         alors: 20%
       - si: durée décote <= 2
-        alors: 35%
+        alors: 32%
       - si: durée décote <= 3
-        alors: 45%
+        alors: 40.16%
       - si: durée décote <= 4
-        alors: 55%
-      - sinon: 60 + (5 %/an * (durée décote - 5))
-  plafond: 80%
-  unité: "%"
+        alors: 46.144%
+      - si: durée décote <= 5
+        alors: 49.89392%
+      - si: durée décote <= 6
+        alors: 52.8982848%
+      - si: durée décote <= 7
+        alors: 55.25337056%
+      - si: durée décote <= 8
+        alors: 57.490702032%
+      - si: durée décote <= 9
+        alors: 59.616166930%
+      - si: durée décote <= 10
+        alors: 61.635358583%
+      - si: durée décote <= 11
+        alors: 63.553590654%
+      - si: durée décote <= 12
+        alors: 65.375911121%
+      - si: durée décote <= 13
+        alors: 67.107115565%
+      - sinon: 68.751759787%
   note: |
     Nous avons choisi un plafond de 80% pour la décote. Cette valeur est
     arbitraire mais nous considérons que la valeur de revente d'une voiture
@@ -52,6 +68,18 @@ décote:
     | 3 ans                                       | 10-12%         |
     | 4 ans                                       | 10%            |
     | 5 ans et plus                               | 5-7%           |
+
+    Le calcul du pourcentage utilisé pour une durée de `n` années est le
+    suivant :
+
+        décote = 100 - (produit des (1 - d_i) pour i de 1 à n) * 100
+
+    où `d_i` est le pourcentage de décote pour l'année `i`. Par exemple, pour
+    une durée de 3 ans, on applique les décotes suivantes :
+
+        décote = 100 - (1 - 0.20) * (1 - 0.15) * (1 - 0.12) * 100
+               = 100 - 0.80 * 0.85 * 0.88 * 100
+               = 40.16
 
     ### Pistes d'amélioration
 

@@ -32,7 +32,8 @@ voiture . cible . borne de recharge:
 
 # TODO: to factorize with voiture . gabarit
 voiture . cible . gabarit:
-  applicable si: achat envisagé
+  # TODO: a définir si on souhaite garder cette condition
+  # applicable si: achat envisagé
   question: Quel gabarit de voiture envisagez-vous ?
   description: |
     Renseignez le gabarit de voiture que vous envisagez d'acheter afin de vous
