@@ -4,10 +4,10 @@
     "": {
       "name": "app",
       "dependencies": {
+        "@betagouv/publicodes-voiture": "https://pkg.pr.new/betagouv/publicodes-voiture/@betagouv/publicodes-voiture@18",
         "@humanspeak/svelte-markdown": "^0.8.7",
         "@publicodes/react-ui": "^1.7.1",
         "carbon-components-svelte": "^0.89.4",
-        "@betagouv/publicodes-voiture": "https://pkg.pr.new/betagouv/publicodes-voiture/@betagouv/publicodes-voiture@18",
         "publicodes": "^1.9.0",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
@@ -15,6 +15,7 @@
       },
       "devDependencies": {
         "@sveltejs/adapter-auto": "^6.0.0",
+        "@sveltejs/adapter-netlify": "^5.0.2",
         "@sveltejs/kit": "^2.16.0",
         "@sveltejs/vite-plugin-svelte": "^5.0.0",
         "@tailwindcss/forms": "^0.5.9",
@@ -95,6 +96,8 @@
 
     "@humanspeak/svelte-markdown": ["@humanspeak/svelte-markdown@0.8.7", "", { "dependencies": { "github-slugger": "^2.0.0", "htmlparser2": "^10.0.0", "marked": "^15.0.12" }, "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-s/NakVfPV6fy4HNcUX3xsLWSsCxAiCVSnFkLnmBYpZOivB8owcATWHaAbgG1K4tlVEPidvDNPCcrxFXEiD2x3Q=="],
 
+    "@iarna/toml": ["@iarna/toml@2.2.5", "", {}, "sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg=="],
+
     "@ibm/telemetry-js": ["@ibm/telemetry-js@1.9.1", "", { "bin": { "ibmtelemetry": "dist/collect.js" } }, "sha512-qq8RPafUJHUQieXVCte1kbJEx6JctWzbA/YkXzopbfzIDRT2+hbR9QmgH+KH7bDDNRcDbdHWvHfwJKzThlMtPg=="],
 
     "@isaacs/fs-minipass": ["@isaacs/fs-minipass@4.0.1", "", { "dependencies": { "minipass": "^7.0.4" } }, "sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w=="],
@@ -156,6 +159,8 @@
     "@sveltejs/acorn-typescript": ["@sveltejs/acorn-typescript@1.0.5", "", { "peerDependencies": { "acorn": "^8.9.0" } }, "sha512-IwQk4yfwLdibDlrXVE04jTZYlLnwsTT2PIOQQGNLWfjavGifnk1JD1LcZjZaBTRcxZu2FfPfNLOE04DSu9lqtQ=="],
 
     "@sveltejs/adapter-auto": ["@sveltejs/adapter-auto@6.0.1", "", { "peerDependencies": { "@sveltejs/kit": "^2.0.0" } }, "sha512-mcWud3pYGPWM2Pphdj8G9Qiq24nZ8L4LB7coCUckUEy5Y7wOWGJ/enaZ4AtJTcSm5dNK1rIkBRoqt+ae4zlxcQ=="],
+
+    "@sveltejs/adapter-netlify": ["@sveltejs/adapter-netlify@5.0.2", "", { "dependencies": { "@iarna/toml": "^2.2.5", "esbuild": "^0.25.4", "set-cookie-parser": "^2.6.0" }, "peerDependencies": { "@sveltejs/kit": "^2.4.0" } }, "sha512-iW1mZog3WopP0oBvl155qML8/+K8ejgVFj9ZVIdaP02pGDHAvYXbAUrLvAZTdzRnXYb/VYvQsQp2v9UJuEk3cA=="],
 
     "@sveltejs/kit": ["@sveltejs/kit@2.21.4", "", { "dependencies": { "@sveltejs/acorn-typescript": "^1.0.5", "@types/cookie": "^0.6.0", "acorn": "^8.14.1", "cookie": "^0.6.0", "devalue": "^5.1.0", "esm-env": "^1.2.2", "kleur": "^4.1.5", "magic-string": "^0.30.5", "mrmime": "^2.0.0", "sade": "^1.8.1", "set-cookie-parser": "^2.6.0", "sirv": "^3.0.0", "vitefu": "^1.0.6" }, "peerDependencies": { "@sveltejs/vite-plugin-svelte": "^3.0.0 || ^4.0.0-next.1 || ^5.0.0", "svelte": "^4.0.0 || ^5.0.0-next.0", "vite": "^5.0.3 || ^6.0.0" }, "bin": { "svelte-kit": "svelte-kit.js" } }, "sha512-683kl4BBnORaYn3vktH01HAHYep8FaiRA21LVY7d6uAX+1D/1gK4WYHRJq90vA01Cz/k6rU3n6vpf4fAn9ipkA=="],
 
