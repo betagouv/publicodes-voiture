@@ -4,6 +4,7 @@ import { RulePage } from "@publicodes/react-ui";
 import { createElement } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { onMount } from "svelte";
 
 import { goto } from "$app/navigation";
@@ -37,7 +38,7 @@ const documentationProps = $derived({
   renderers: {
     Link,
     Text: ({ children }: { children: any }) => (
-      createElement(Markdown, { children })
+      createElement(Markdown, { children, remarkPlugins: [remarkGfm] })
     ),
   },
   // other props left as an exercice to the reader
@@ -72,14 +73,18 @@ try {
 <style>
 :global(h1, h2, h3, h4, h5, h6) {
   text-align: left !important;
-  padding-top: 3rem;
-  padding-bottom: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
 }
 
 :global(button) {
   text-decoration: underline;
   padding: 0.5rem 0rem;
   text-align: left !important;
+}
+
+:global(p) {
+  margin-bottom: 0.5rem;
 }
 
 :global(button:hover) {
