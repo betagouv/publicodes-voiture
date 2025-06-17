@@ -4,7 +4,7 @@
 # l'instant, par soucis de performance, nous privilégions cette solution pour
 # éviter les les recaculs inutiles.
 décote:
-  titre: Calcul de la décote d'une voiture
+  titre: Calcul du pourcentage de décote d'une voiture
   description: |
     Ce modèle permet de calculer la décote moyenne d'une voiture en fonction de
     son âge.
@@ -19,34 +19,25 @@ décote:
     Par conséquent, **la décote calculée ici est une estimation moyenne**.
   formule:
     variations:
-      - si: durée décote <= 1
-        alors: 20%
-      - si: durée décote <= 2
-        alors: 32%
-      - si: durée décote <= 3
-        alors: 40.16%
-      - si: durée décote <= 4
-        alors: 46.144%
-      - si: durée décote <= 5
-        alors: 49.89392%
-      - si: durée décote <= 6
-        alors: 52.8982848%
-      - si: durée décote <= 7
-        alors: 55.25337056%
-      - si: durée décote <= 8
-        alors: 57.490702032%
-      - si: durée décote <= 9
-        alors: 59.616166930%
-      - si: durée décote <= 10
-        alors: 61.635358583%
-      - si: durée décote <= 11
-        alors: 63.553590654%
-      - si: durée décote <= 12
-        alors: 65.375911121%
-      - si: durée décote <= 13
-        alors: 67.107115565%
-      - sinon: 68.751759787%
+      - si: voiture . motorisation = 'thermique'
+        alors: 
+          variations:
+            - si: voiture . thermique . carburant = 'essence gazole B7 ou B10'
+              alors: pourcentage diesel
+            - sinon: pourcentage essence
+      - si: voiture . motorisation = 'hybride'
+        alors: pourcentage hybride
+      - si: voiture . motorisation = 'électrique'
+        alors: pourcentage électrique
   note: |
+    Nous utilisons pour les sources, des données du SGPE (Secretariat Général
+    pour la Planification Écologique) à date de 2025.
+
+    > Avant cela, nous utilisions un pourcentage de décote fixe pour tous les
+    > types de motorisation. Expliqué dans l'historique ci-dessous.
+
+    ### Historique 
+
     Nous avons choisi un plafond de 80% pour la décote. Cette valeur est
     arbitraire mais nous considérons que la valeur de revente d'une voiture
     ne peut pas descendre en dessous de 20% de sa valeur d'achat. Nous
@@ -61,6 +52,7 @@ décote:
     on peut estimer une valeur moyenne de décote dégressive au fur et à mesure
     de sa mise en circulation : 
 
+
     | Temps écoulé depuis la mise en circulation  | Décote moyenne |
     |---------------------------------------------|----------------|
     | 1 an                                        | 20-25%         |
@@ -68,6 +60,7 @@ décote:
     | 3 ans                                       | 10-12%         |
     | 4 ans                                       | 10%            |
     | 5 ans et plus                               | 5-7%           |
+
 
     Le calcul du pourcentage utilisé pour une durée de `n` années est le
     suivant :
@@ -91,3 +84,151 @@ décote:
       description: Durée sur laquelle la décote est appliquée.
       par défaut: voiture . âge
       unité: an
+
+    pourcentage essence:
+      titre: Pourcentage de décote pour une voiture essence
+      note: Selon le SGPE, à date de 2025.
+      valeur:
+        variations:
+          - si: durée décote >= 15
+            alors: 87%
+          - si: durée décote >= 14
+            alors: 83%
+          - si: durée décote >= 13
+            alors: 80%
+          - si: durée décote >= 12
+            alors: 76%
+          - si: durée décote >= 11
+            alors: 73%
+          - si: durée décote >= 10
+            alors: 69%
+          - si: durée décote >= 9
+            alors: 65%
+          - si: durée décote >= 8
+            alors: 61%
+          - si: durée décote >= 7
+            alors: 57%
+          - si: durée décote >= 6
+            alors: 53%
+          - si: durée décote >= 5
+            alors: 48%
+          - si: durée décote >= 4
+            alors: 43%
+          - si: durée décote >= 3
+            alors: 36%
+          - si: durée décote >= 2
+            alors: 29%
+          - si: durée décote >= 1
+            alors: 20%
+          - sinon: 0%
+
+    pourcentage diesel:
+      titre: Pourcentage de décote pour une voiture diesel
+      note: Selon le SGPE, à date de 2025.
+      valeur:
+        variations:
+          - si: durée décote >= 15
+            alors: 88%
+          - si: durée décote >= 14
+            alors: 84%
+          - si: durée décote >= 13
+            alors: 80%
+          - si: durée décote >= 12
+            alors: 76%
+          - si: durée décote >= 11
+            alors: 72%
+          - si: durée décote >= 10
+            alors: 68%
+          - si: durée décote >= 9
+            alors: 64%
+          - si: durée décote >= 8
+            alors: 59%
+          - si: durée décote >= 7
+            alors: 55%
+          - si: durée décote >= 6
+            alors: 50%
+          - si: durée décote >= 5
+            alors: 46%
+          - si: durée décote >= 4
+            alors: 40%
+          - si: durée décote >= 3
+            alors: 34%
+          - si: durée décote >= 2
+            alors: 27%
+          - si: durée décote >= 1
+            alors: 18%
+          - sinon: 0%
+    
+    pourcentage hybride:
+      titre: Pourcentage de décote pour une voiture hybride (HEV)
+      note: Selon le SGPE, à date de 2025.
+      valeur:
+        variations:
+          - si: durée décote >= 15
+            alors: 87%
+          - si: durée décote >= 14
+            alors: 84%
+          - si: durée décote >= 13
+            alors: 80%
+          - si: durée décote >= 12
+            alors: 77%
+          - si: durée décote >= 11
+            alors: 73%
+          - si: durée décote >= 10
+            alors: 70%
+          - si: durée décote >= 9
+            alors: 66%
+          - si: durée décote >= 8
+            alors: 62%
+          - si: durée décote >= 7
+            alors: 58%
+          - si: durée décote >= 6
+            alors: 53%
+          - si: durée décote >= 5
+            alors: 47%
+          - si: durée décote >= 4
+            alors: 42%
+          - si: durée décote >= 3
+            alors: 35%
+          - si: durée décote >= 2
+            alors: 28%
+          - si: durée décote >= 1
+            alors: 19%
+          - sinon: 0%
+    
+    pourcentage électrique:
+      titre: Pourcentage de décote pour une voiture électrique
+      note: Selon le SGPE, à date de 2025.
+      valeur:
+        variations:
+          - si: durée décote >= 15
+            alors: 89%
+          - si: durée décote >= 14
+            alors: 88%
+          - si: durée décote >= 13
+            alors: 86.5%
+          - si: durée décote >= 12
+            alors: 85%
+          - si: durée décote >= 11
+            alors: 83%
+          - si: durée décote >= 10
+            alors: 81%
+          - si: durée décote >= 9
+            alors: 78%
+          - si: durée décote >= 8
+            alors: 74%
+          - si: durée décote >= 7
+            alors: 70%
+          - si: durée décote >= 6
+            alors: 65%
+          - si: durée décote >= 5
+            alors: 59%
+          - si: durée décote >= 4
+            alors: 53%
+          - si: durée décote >= 3
+            alors: 44%
+          - si: durée décote >= 2
+            alors: 35%
+          - si: durée décote >= 1
+            alors: 23%
+          - sinon: 0%
