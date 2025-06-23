@@ -1,0 +1,6 @@
+aides:
+aides . bonus écologique:
+  applicable si: voiture . occasion
+  question: Quel est le montant du bonus écologique ?
+  par défaut: 4000 
+  unité: €

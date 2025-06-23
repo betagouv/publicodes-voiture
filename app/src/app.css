@@ -1,2 +1,6 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
+/* @plugin "@tailwindcss/typography"; */
+
+.documentation-rule-explanation {
+  background-color: red;
+}

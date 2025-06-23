@@ -4,7 +4,7 @@
 # l'instant, par soucis de performance, nous privilégions cette solution pour
 # éviter les les recaculs inutiles.
 décote:
-  titre: Calcul du pourcentage de décote d'une voiture
+  titre: Pourcentage de décote d'une voiture
   description: |
     Ce modèle permet de calculer la décote moyenne d'une voiture en fonction de
     son âge.

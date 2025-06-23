@@ -27,7 +27,6 @@ const Link = ({ to, children }: {
 
 const documentationProps = $derived({
   engine: simulator.getEngine(),
-  searchBar: false,
   class: "prose",
   documentationPath: "/documentation",
   showDevSection: false,
@@ -90,5 +89,9 @@ try {
 :global(button:hover) {
   background-color: "#0f62fe";
   cursor: pointer;
+}
+
+:global(div.operation) {
+  align-items: center;
 }
 </style>

@@ -43,12 +43,12 @@ describe("Règles", () => {
         .setSituation({ "voiture . occasion": "oui" })
         .evaluate("voiture . prix d'achat")
 
-      expect(actual.nodeValue).toEqual(14578.563738460001)
+      expect(actual.nodeValue).toEqual(11780)
       expect(serializeUnit(actual.unit)).toEqual("€")
     })
   })
 
-  describe("coûts . achat amorti", () => {
+  describe.only("coûts . achat amorti", () => {
     test("les divisions par zero ne devrait pas être possible", () => {
       const actual = engine
         .setSituation({ "voiture . durée de détention totale": 0 })
@@ -58,31 +58,168 @@ describe("Règles", () => {
     })
 
     test.for([
-      [1, 8000],
-      [2, 6800],
-      [3, 5984],
-      [4, 5386],
-      [5, 5011],
-      [6, 4710],
-      [7, 4475],
-      [8, 4251],
-      [9, 4038],
-      [10, 3836],
-      [11, 3645],
-      [12, 3462],
-      [13, 3289],
-      [14, 3125],
-    ])("valeur de revente au bout de %i an", ([durée, expected]) => {
+      [1, 17600],
+      [2, 15620],
+      [3, 14080],
+      [4, 12540],
+      [5, 11440],
+      [6, 10340],
+      [7, 9460],
+      [8, 8580],
+      [9, 7700],
+      [10, 6820],
+      [11, 5940],
+      [12, 5280],
+      [13, 4400],
+      [14, 3740],
+      [15, 2860],
+    ])(
+      "prix d'achat neuf pour une voiture d'occasion de %i an",
+      ([age, prixAchat]) => {
+        const actual = engine
+          .setSituation({
+            "voiture . prix d'achat": prixAchat,
+            "voiture . âge": age,
+            "voiture . occasion": "oui",
+          })
+          .evaluate("coûts . achat amorti . prix d'achat neuf")
+
+        expect(actual.nodeValue).toBeCloseTo(22000)
+      },
+    )
+
+    test.for([
+      [1, 17600],
+      [2, 15620],
+      [3, 14080],
+      [4, 12540],
+      [5, 11440],
+      [6, 10340],
+      [7, 9460],
+      [8, 8580],
+      [9, 7700],
+      [10, 6820],
+      [11, 5940],
+      [12, 5280],
+      [13, 4400],
+      [14, 3740],
+      [15, 2860],
+    ])("valeur de revente au bout de %i an (neuf)", ([durée, expected]) => {
       const actual = engine
         .setSituation({
-          "voiture . prix d'achat": 10000,
+          "voiture . prix d'achat": 22000,
           "voiture . durée de détention totale": durée,
+          "voiture . motorisation": "'thermique'",
+          "voiture . thermique . carburant": "'essence E5 ou E10'",
         })
         .evaluate("coûts . achat amorti . valeur de revente")
 
       expect(actual.nodeValue).toBeCloseTo(expected, 0)
       expect(serializeUnit(actual.unit)).toEqual("€")
     })
+
+    test.for([
+      [1, 5940],
+      [2, 5280],
+      [3, 4400],
+      [4, 3740],
+      [5, 2860],
+    ])("valeur de revente au bout de %i an (occasion)", ([durée, expected]) => {
+      const actual = engine
+        .setSituation({
+          "voiture . prix d'achat": 6820, // prix d'achat d'une voiture d'occasion de 10 ans
+          "voiture . âge": 10,
+          "voiture . occasion": "oui",
+          "voiture . durée de détention totale": durée,
+          "voiture . motorisation": "'thermique'",
+          "voiture . thermique . carburant": "'essence E5 ou E10'",
+        })
+        .evaluate("coûts . achat amorti . valeur de revente")
+
+      expect(actual.nodeValue).toBeCloseTo(expected, 0)
+      expect(serializeUnit(actual.unit)).toEqual("€")
+    })
+
+    test.for([
+      [1, 17600],
+      [2, 15620],
+      [3, 14080],
+      [4, 12540],
+      [5, 11440],
+      [6, 10340],
+      [7, 9460],
+      [8, 8580],
+      [9, 7700],
+      [10, 6820],
+      [11, 5940],
+      [12, 5280],
+      [13, 4400],
+      [14, 3740],
+      [15, 2860],
+    ])("coût d'achat total au bout de %i an (neuf)", ([durée, expected]) => {
+      const actual = engine
+        .setSituation({
+          "voiture . prix d'achat": 22000,
+          "voiture . durée de détention totale": durée,
+          "voiture . motorisation": "'thermique'",
+          "voiture . thermique . carburant": "'essence E5 ou E10'",
+        })
+        .evaluate("coûts . achat amorti . coût d'achat total")
+
+      expect(actual.nodeValue).toBeCloseTo(22000 - expected, 0)
+      expect(serializeUnit(actual.unit)).toEqual("€")
+    })
+
+    test.for([
+      [1, 5940],
+      [2, 5280],
+      [3, 4400],
+      [4, 3740],
+      [5, 2860],
+    ])(
+      "coût d'achat total au bout de %i an (occasion)",
+      ([durée, expected]) => {
+        const actual = engine
+          .setSituation({
+            "voiture . prix d'achat . estimé": 22000,
+            "voiture . occasion": "oui",
+            "voiture . durée de détention totale": durée,
+            "voiture . motorisation": "'thermique'",
+            "voiture . thermique . carburant": "'essence E5 ou E10'",
+          })
+          .evaluate("coûts . achat amorti . coût d'achat total")
+        console.log(
+          "prix d'achat",
+          engine
+            .setSituation({
+              "voiture . prix d'achat . estimé": 22000,
+              "voiture . occasion": "oui",
+              "voiture . durée de détention totale": durée,
+              "voiture . motorisation": "'thermique'",
+              "voiture . thermique . carburant": "'essence E5 ou E10'",
+            })
+            .evaluate("voiture . prix d'achat").nodeValue,
+        )
+
+        console.log("coût d'achat total", actual.nodeValue)
+
+        console.log(
+          "valeur de revente",
+          engine
+            .setSituation({
+              "voiture . prix d'achat . estimé": 22000,
+              "voiture . occasion": "oui",
+              "voiture . durée de détention totale": durée,
+              "voiture . motorisation": "'thermique'",
+              "voiture . thermique . carburant": "'essence E5 ou E10'",
+            })
+            .evaluate("coûts . achat amorti . valeur de revente").nodeValue,
+        )
+
+        expect(actual.nodeValue).toBeCloseTo(6820 - expected, 0)
+        expect(serializeUnit(actual.unit)).toEqual("€")
+      },
+    )
   })
 
   // NOTE: we should probably use property-based testing here to have a better
@@ -147,7 +284,7 @@ describe("Règles", () => {
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(19.5, 0)
+        expect(actual.nodeValue).toBeCloseTo(23, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 

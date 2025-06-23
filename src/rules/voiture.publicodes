@@ -11,7 +11,7 @@ voiture:
 voiture . occasion:
   titre: Achat d'occasion
   question: Est-ce une voiture d'occasion ?
-  par défaut: oui
+  par défaut: non
 
 voiture . prix d'achat:
   question: Quel est le prix d'achat de votre voiture ?
@@ -452,28 +452,18 @@ voiture . thermique . prix carburant moyen:
 
 voiture . âge:
   titre: Âge de la voiture
-  question: Quel est l'âge de votre voiture ?
+  question: Quel était l'âge de votre voiture au moment de l'achat ?
   description: |
     Âge de la voiture depuis sa première mise en circulation.
 
     Cette valeur permet de calculer la décote de la voiture qui a un impact
     important sur le prix d'achat.
   # valeur: commun . année courante - année de fabrication
-  par défaut: 5  # commun . année courante - année de fabrication
-
-voiture . année de fabrication:
-  titre: Année de fabrication de la voiture
-  question: Quelle est son année de fabrication ?
-  description: |
-    Renseignez l'année de fabrication de votre voiture. 
   par défaut: 
     variations:
-      - si: occasion
-        alors: commun . année courante - âge moyen d'une voiture d'occasion
-      - sinon: commun . année courante - durée de détention moyenne
-  plafond: commun . année courante
-  plancher: 1900
-  arrondi: oui
+      - si: voiture . occasion = oui
+        alors: âge moyen d'une voiture d'occasion
+      - sinon: 0
   avec:
     âge moyen d'une voiture d'occasion:
       description: |
@@ -481,6 +471,21 @@ voiture . année de fabrication:
         estimé à 10,5 ans selon [cette publication du
         SDES](https://www.statistiques.developpement-durable.gouv.fr/immatriculations-des-voitures-particulieres-en-2023-rebond-dans-le-neuf-mais-un-marche-de-loccasion).
       valeur: 10.5 an
+
+# voiture . année de fabrication:
+#   titre: Année de fabrication de la voiture
+#   question: Quelle est son année de fabrication ?
+#   description: |
+#     Renseignez l'année de fabrication de votre voiture. 
+#   par défaut: 
+#     variations:
+#       - si: occasion
+#         alors: commun . année courante - âge moyen d'une voiture d'occasion
+#       - sinon: commun . année courante - durée de détention moyenne
+#   plafond: commun . année courante
+#   plancher: 1900
+#   arrondi: oui
+#   avec:
 
 # TODO: ajouter un warning si la durée de détention est supérieure à l'âge de la voiture.
 voiture . durée de détention totale:

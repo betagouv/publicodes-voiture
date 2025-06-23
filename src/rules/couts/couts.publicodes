@@ -90,22 +90,30 @@ coûts . achat amorti:
       valeur: voiture . prix d'achat - valeur de revente
 
     valeur de revente: 
-      valeur: voiture . prix d'achat . estimé * (100% - décote)
+      valeur: prix d'achat neuf * (100% - décote)
       contexte:
-        décote . durée décote: 
+        décote . durée décote:
           variations:
-            - si: voiture . occasion
+            - si: voiture . occasion 
               alors: voiture . âge + voiture . durée de détention totale
             - sinon: voiture . durée de détention totale
       note: >
-        Par soucis de simplicité, nous avons choisi de calculer la décote non
-        pas en fonction de l'âge de la voiture, mais en fonction de la durée de
-        possession. 
+        Dans le cas d'une voiture d'occasion il est nécessaire d'utiliser le
+        prix d'achat neuf pour lui appliquer la décote correspondante car ce
+        serait incorrect de lui appliquer une décote corresondante à la durée
+        de détention sur un prix d'achat d'occasion.
 
-        Cela permet de ne pas avoir à connaître l'âge de la voiture mais rend
-        le calcul du coût d'achat des véhicule d'occasion beaucoup moins
-        précis.
-
+    prix d'achat neuf:
+      valeur: 
+        variations:
+          - si: voiture . occasion
+            alors: 
+              valeur: voiture . prix d'achat / (100% - décote)
+              contexte:
+                décote . durée décote: voiture . âge
+          - sinon: voiture . prix d'achat
+      unité: €
+        
 coûts . coûts de possession:
   titre: Coûts de possession annuels
   description: >

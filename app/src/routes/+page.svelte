@@ -39,17 +39,16 @@ const pp = (n: number | null | undefined, unit: string, round = true) =>
 
 const engine = simulator.getEngine();
 
-const situationDefaut: Situation = {
+let occasion = $state(true);
+let alternatives: Data[] = $state([]);
+let situation: Situation = $derived({
   // "voiture . prix d'achat . estimé": 30000,
   "voiture . durée de détention totale": 5.5,
   "usage . km annuels . connus": "oui",
   "usage . km annuels . renseignés": 12000,
+  "aides . bonus écologique": occasion ? 0 : 4000,
   "voiture . âge": 5,
-};
-
-let occasion = $state(true);
-let alternatives: Data[] = $state([]);
-let situation: Situation = $state(situationDefaut);
+});
 let submitted = $state(true);
 let pageSize = $state(15);
 let page = $state(1);
@@ -144,34 +143,33 @@ let filteredRowIds = $derived(
 );
 </script>
 
-<div class="flex flex-col gap-8">
+<div class="flex flex-col gap-16">
   <h1>Calculateur de rentabilité pour le passage à l'électrique</h1>
 
   <Form
-    class="flex flex-col"
+    class="flex flex-col max-w-3xl"
     on:submit={(e: Event) => {
       e.preventDefault();
       submitted = true;
       loading = true;
     }}
   >
-    <div class="inline-flex gap-8 items-center">
+    <div class="gap-8 items-end grid grid-cols-2">
       <Checkbox
         id="occasion"
-        labelText="Voiture d'occasion"
+        labelText="La voiture est d'occasion"
         bind:checked={occasion}
       />
 
-      {#if occasion}
-        <NumberInput
-          id="âge"
-          label="Âge de la voiture (années)"
-          min={0}
-          max={100}
-          required={false}
-          bind:value={situation["voiture . âge"]}
-        />
-      {/if}
+      <NumberInput
+        id="âge"
+        label="Âge de la voiture (années)"
+        min={0}
+        max={100}
+        required={false}
+        bind:value={situation["voiture . âge"]}
+        disabled={!occasion}
+      />
 
       <NumberInput
         id="durée-détention"
@@ -192,12 +190,21 @@ let filteredRowIds = $derived(
       />
 
       <NumberInput
+        id="bonus-ecologique"
+        label="Aides (bonus écologique) (€)"
+        min={0}
+        max={4000}
+        required={false}
+        bind:value={situation["aides . bonus écologique"]}
+      />
+
+      <NumberInput
         id="prix-achat"
         label="Prix d'achat estimé (€)"
         min={1}
         max={100000}
         required={false}
-        bind:value={situation["voiture . prix d'achat . estimé"]}
+        bind:value={situation["voiture . prix d'achat"]}
       />
     </div>
 
