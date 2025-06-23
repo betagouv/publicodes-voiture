@@ -1,13 +1,15 @@
-importer!:
-  depuis:
-    nom: '@incubateur-ademe/publicodes-commun'
-    url: https://github.com/incubateur-ademe/publicodes-commun
-  dans: commun
-  les règles:
-    - jours par an
+# importer!:
+#   depuis:
+#     nom: '@incubateur-ademe/publicodes-commun'
+#     url: https://github.com/incubateur-ademe/publicodes-commun
+#   dans: commun
+#   les règles:
+#     - jours par an
 
-
+commun:
 commun . voiture:
+
+commun . jours par an: 365 jour
 
 commun . voiture . parc français 2022:
   titre: Nombre de voiture en circulation en France au 1er janvier 2022

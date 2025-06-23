@@ -1,86 +1,1003 @@
-importer!:
-  depuis:
-    nom: '@incubateur-ademe/nosgestesclimat'
-    url: https://github.com/incubateur-ademe/nosgestesclimat
-  dans: ngc
-  les règles:
-    - transport . voiture
-    # NOTE: écrase l'attribut `question` pour éviter d'exposer les questions des
-    # règles importées du modèle `@incubateur-ademe/nosgestesclimat` car elles sont
-    # définies à partir des questions de ce modèle.
-    - transport . voiture . km:
-        formule: usage . km annuels
-        unité: km/an
-    - transport . voiture . utilisateur:
-        question: Quel est l'utilisateur de la voiture ? DEBUG
-        formule: "'propriétaire'"
-    - transport . voiture . voyageurs:
-        question:
-        formule: 1
-    - transport . voiture . motorisation:
-        question:
-        formule: voiture . motorisation
-    - transport . voiture . thermique . consommation aux 100:
-        question:
-        formule:
-        # Permet de forcer l'utilisation de la consommation estimée lors des
-        # recalculs pour les alternatives.
-          variations:
-            - si: voiture . thermique . consommation carburant > 1
-              alors: voiture . thermique . consommation carburant
-            - sinon: voiture . thermique . consommation estimée
-    - transport . voiture . gabarit:
-        question:
-        formule: voiture . gabarit
-    - transport . voiture . thermique . carburant:
-        question:
-        formule: voiture . thermique . carburant
-    - transport . voiture . électrique . consommation aux 100:
-        question:
-        formule:
-          # Permet de forcer l'utilisation de la consommation estimée lors des
-          # recalculs pour les alternatives.
-          variations:
-            - si: voiture . électrique . consommation électricité > 1 
-              alors: voiture . électrique . consommation électricité 
-            - sinon: voiture . électrique . consommation estimée
-    # NOTE: les règles du namespace `logement` sont utilisées pour estimer
-    # l'empreinte de la consommation d'électricité. Actuellement, nous
-    # utilisons les valeurs par défaut de NGC. Cependant, nous pourrions à
-    # terme les exposer afin d'affiner de pouvoir permettre d'affiner le calcul
-    # pour les clients ayant ces informations (par exemple, J'agis).
-    - logement . électricité . photovoltaique . présent:
-        question:
-    - logement . électricité . photovoltaique . production:
-        question:
-    - logement . type:
-        question:
-    - logement . surface:
-        question:
-    - logement . électricité . réseau . consommation:
-        question:
-    - logement . électricité . photovoltaique . part autoconsommation:
-        question:
-    - logement . chauffage . électricité . présent:
-        question:
-    - logement . chauffage . PAC . présent:
-        question:
-    - logement . chauffage . gaz . présent:
-        question:
-    - logement . chauffage . réseau de chaleur . présent:
-        question:
-    - logement . chauffage . bouteille gaz . présent:
-        question:
-    - logement . chauffage . citerne propane . présent:
-        question:
-    - logement . chauffage . fioul . présent:
-        question:
-    - logement . chauffage . bois . présent:
-        question:
+# importer!:
+#   depuis:
+#     nom: '@incubateur-ademe/nosgestesclimat'
+#     url: https://github.com/incubateur-ademe/nosgestesclimat
+#   dans: ngc
+#   les règles:
+#     - transport . voiture
+#     # NOTE: écrase l'attribut `question` pour éviter d'exposer les questions des
+#     # règles importées du modèle `@incubateur-ademe/nosgestesclimat` car elles sont
+#     # définies à partir des questions de ce modèle.
+#     - transport . voiture . km:
+#         formule: usage . km annuels
+#         unité: km/an
+#     - transport . voiture . utilisateur:
+#         question: Quel est l'utilisateur de la voiture ? DEBUG
+#         formule: "'propriétaire'"
+#     - transport . voiture . voyageurs:
+#         question:
+#         formule: 1
+#     - transport . voiture . motorisation:
+#         question:
+#         formule: voiture . motorisation
+#     - transport . voiture . thermique . consommation aux 100:
+#         question:
+#         formule:
+#         # Permet de forcer l'utilisation de la consommation estimée lors des
+#         # recalculs pour les alternatives.
+#           variations:
+#             - si: voiture . thermique . consommation carburant > 1
+#               alors: voiture . thermique . consommation carburant
+#             - sinon: voiture . thermique . consommation estimée
+#     - transport . voiture . gabarit:
+#         question:
+#         formule: voiture . gabarit
+#     - transport . voiture . thermique . carburant:
+#         question:
+#         formule: voiture . thermique . carburant
+#     - transport . voiture . électrique . consommation aux 100:
+#         question:
+#         formule:
+#           # Permet de forcer l'utilisation de la consommation estimée lors des
+#           # recalculs pour les alternatives.
+#           variations:
+#             - si: voiture . électrique . consommation électricité > 1 
+#               alors: voiture . électrique . consommation électricité 
+#             - sinon: voiture . électrique . consommation estimée
+#     # NOTE: les règles du namespace `logement` sont utilisées pour estimer
+#     # l'empreinte de la consommation d'électricité. Actuellement, nous
+#     # utilisons les valeurs par défaut de NGC. Cependant, nous pourrions à
+#     # terme les exposer afin d'affiner de pouvoir permettre d'affiner le calcul
+#     # pour les clients ayant ces informations (par exemple, J'agis).
+#     - logement . électricité . photovoltaique . présent:
+#         question:
+#     - logement . électricité . photovoltaique . production:
+#         question:
+#     - logement . type:
+#         question:
+#     - logement . surface:
+#         question:
+#     - logement . électricité . réseau . consommation:
+#         question:
+#     - logement . électricité . photovoltaique . part autoconsommation:
+#         question:
+#     - logement . chauffage . électricité . présent:
+#         question:
+#     - logement . chauffage . PAC . présent:
+#         question:
+#     - logement . chauffage . gaz . présent:
+#         question:
+#     - logement . chauffage . réseau de chaleur . présent:
+#         question:
+#     - logement . chauffage . bouteille gaz . présent:
+#         question:
+#     - logement . chauffage . citerne propane . présent:
+#         question:
+#     - logement . chauffage . fioul . présent:
+#         question:
+#     - logement . chauffage . bois . présent:
+#         question:
 
-ngc:
-  titre: Nos Gestes Climat
+transport:
+transport . voiture:
+  titre: voiture
+  icônes: 🚘
+  formule:
+    variations:
+      - si: km = 0
+        alors: 0
+      - sinon:
+          variations:
+            - si:
+                est défini: utilisateur
+              alors:
+                variations:
+                  - si:
+                      une de ces conditions:
+                        - utilisateur = 'propriétaire'
+                        - utilisateur = 'régulier non propriétaire'
+                    alors: empreinte calculée
+                  - si: utilisateur = 'non régulier'
+                    alors: empreinte moyenne non régulier
+            - sinon: empreinte moyenne
+  unité: kgCO2e
   description: |
-    Ce modèle utilise une partie des règles de calcul du modèle de [Nos
-    Gestes Climat](https://nosgestesclimat.fr) pour calculer l'empreinte
-    CO2e.
+    ![](https://upload.wikimedia.org/wikipedia/commons/9/9a/Congestion_caused_by_a_road_accident%2C_Algarve%2C_Portugal.jpg)
+
+    La voiture est aujourd'hui en France essentiellement thermique (essence, diesel), bien que l'électrique progresse lentement.
+
+    Pourtant, électrique ou thermique, elle reste un moyen de déplacement très peu efficient :
+    **il s'agit en moyenne de déplacer un humain de 80kg dans une boîte en métal de 1200kg**.
+
+    Un peu comme si chaque midi, nous faisions à manger pour 10 avant de jeter 90% de la nourriture, ou que nous décidions de chauffer tout le pâté de maisons plutôt que l'intérieur de chacune des 10 maisons.
+
+    Notons finalement qu'il est important de prendre en compte à la fois l'usage (les km parcourus) et la construction de ce véhicule de plus d'une tonne de matériaux divers.
+
+transport . voiture . km: usage . km annuels
+  # titre: Km en voiture
+  # question: Quelle distance parcourez-vous à l'année en voiture ?
+  # description: |
+  #   Ne comptez que les kilomètres de déplacement personnel (courses, loisirs, famille, etc.) et de déplacement domicile-travail.
+  #
+  #   Si une mission professionnelle vous amène à vous déplacer plus loin que votre lieu de travail habituel, ne comptez pas ici les km concernés.
+  # # It seems that there is a [publicodes bug](https://github.com/publicodes/publicodes/issues/517). For now, we can't use `km annuels moyen réel` directly here, until the problem is fixed.
+  # valeur: usage . km annuels
+  # unité: km
+  # plancher: 0
+  # plafond: 99999
+  # suggestions:
+  #   zéro: 0
+  #   vacances: 2000
+  #   10km / jour: 3600
+  #   1000km / mois: 12000
+  #   20 000km / an: 20000
+
+transport . voiture . km annuels moyen réel:
+  #8210
+  formule: km annuels moyen * nombre véhicules circulation / population
+
+transport . voiture . km annuels moyen:
+  #12216
+  formule:
+    somme:
+      - km annuels moyen . véhicules légers * nombre véhicules circulation . véhicules légers / nombre véhicules circulation
+      - km annuels moyen . VUL * nombre véhicules circulation . VUL / nombre véhicules circulation
+  unité: km
+  note: |
+    Ce chiffre concerne les véhicules en circulation (voitures et VUL).
+    Il est issu des [Données sur le parc automobile français au 1er janvier 2023](https://www.statistiques.developpement-durable.gouv.fr/donnees-sur-le-parc-automobile-francais-au-1er-janvier-2023?rubrique=&dossier=1348).
+
+    Nous considérons néanmoins les données pour l'année 2022 car la distance moyenne parcourue par véhicule n'est dispo que pour 2022.
+
+    Nous avons choisi de ne pas prendre en compte la catégorisation pro/perso dans de nombreux véhicules professionels sont utilisés également pour les trajets perso et domicile travail (que nous prenons en compte dans le calculateur).
+
+transport . voiture . km annuels moyen . véhicules légers:
+  formule: 11957
+  unité: km
+  note: |
+    Ce chiffre concerne les véhicules en circulation (voitures et VUL).
+    Il est issu des [Données sur le parc automobile français au 1er janvier 2023](https://www.statistiques.developpement-durable.gouv.fr/donnees-sur-le-parc-automobile-francais-au-1er-janvier-2023?rubrique=&dossier=1348).
+
+    Nous considérons néanmoins les données pour l'année 2022 car la distance moyenne parcourue par véhicule n'est dispo que pour 2022.
+
+transport . voiture . km annuels moyen . VUL:
+  formule: 13793
+  unité: km
+  note: |
+    Ce chiffre concerne les véhicules en circulation (voitures et VUL).
+    Il est issu des [Données sur le parc automobile français au 1er janvier 2023](https://www.statistiques.developpement-durable.gouv.fr/donnees-sur-le-parc-automobile-francais-au-1er-janvier-2023?rubrique=&dossier=1348).
+
+    Nous considérons néanmoins les données pour l'année 2022 car la distance moyenne parcourue par véhicule n'est dispo que pour 2022.
+
+transport . voiture . nombre véhicules circulation:
+  formule: véhicules légers + VUL
+  note: |
+    Ce chiffre concerne les véhicules en circulation (voitures et VUL).
+    Il est issu des [Données sur le parc automobile français au 1er janvier 2023](https://www.statistiques.developpement-durable.gouv.fr/donnees-sur-le-parc-automobile-francais-au-1er-janvier-2023?rubrique=&dossier=1348).
+
+    Nous considérons néanmoins les données pour l'année 2022 car la distance moyenne parcourue par véhicule n'est dispo que pour 2022.
+
+    Nous avons choisi de ne pas prendre en compte la catégorisation pro/perso dans de nombreux véhicules professionels sont utilisés également pour les trajets perso et domicile travail (que nous prenons en compte dans le calculateur).
+
+transport . voiture . nombre véhicules circulation . véhicules légers:
+  formule: 38814659
+  note: |
+    Ce chiffre est issu des [Données sur le parc automobile français au 1er janvier 2023](https://www.statistiques.developpement-durable.gouv.fr/donnees-sur-le-parc-automobile-francais-au-1er-janvier-2023?rubrique=&dossier=1348).
+
+    Nous considérons néanmoins les données pour l'année 2022 car la distance moyenne parcourue par véhicule n'est dispo que pour 2022.
+
+transport . voiture . nombre véhicules circulation . VUL:
+  formule: 6384963
+  note: |
+    Ce chiffre est issu des [Données sur le parc automobile français au 1er janvier 2023](https://www.statistiques.developpement-durable.gouv.fr/donnees-sur-le-parc-automobile-francais-au-1er-janvier-2023?rubrique=&dossier=1348).
+
+    Nous considérons néanmoins les données pour l'année 2022 car la distance moyenne parcourue par véhicule n'est dispo que pour 2022.
+
+transport . voiture . utilisateur:
+  question: Utilisez-vous majoritairement la même voiture pour vous déplacer ?
+  applicable si: km > 0
+  valeur: "'propriétaire'"
+  une possibilité:
+    - propriétaire
+    - régulier non propriétaire
+    - non régulier
+  note: |
+    Deux données sont importantes dans le cadre du calcul de l'empreinte liée à la construction :
+
+    - L'usage ou non d'un même véhicule pour tous les kilomètres parcourus (si non : on vous attribue un véhicule "moyen")
+    - La propriété ou non dudit véhicule s'il s'agit toujours du même
+
+    Nous avons fait le choix d'attribuer l'empreinte de construction au pro-rata des kilomètres parcourus. Mais cette approche avait deux défauts :
+
+    - Elle était extrêmement avantageuse pour les petits rouleurs, alors que leur véhicule qui roule moins peut s'user plus vite (un moteur a besoin de tourner régulièrement) et donc avoir une durée de vie inférieure.
+    - Elle ne permettait pas de valoriser l'engagement de ne pas disposer de son propre véhicule, et de pratiquer à la place l'autopartage, ou la location ponctuelle (car l'empreinte de construction était la même, que l'on soit propriétaire ou non).
+
+    > Pour pallier ces deux problèmes, et mieux représenter qu'un véhicule possédé mais sous-utilisé s'use plus vite et mérite une empreinte de construction plus importante, **nous appliquons un seuil pour la partie construction de l'empreinte, pour les propriétaires**.
+
+transport . voiture . utilisateur . propriétaire:
+  titre: Oui et j'en suis propriétaire
+transport . voiture . utilisateur . régulier non propriétaire:
+  titre: Oui mais c'est celle d'un proche
+transport . voiture . utilisateur . non régulier:
+  titre: Non, je change souvent (autopartage, proches, taxi...)
+
+
+transport . voiture . empreinte moyenne:
+  valeur: voiture . empreinte calculée
+  contexte:
+    voiture . utilisateur: "'propriétaire'"
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation aux 100:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . utilisateur: "'propriétaire'"
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+
+transport . voiture . empreinte moyenne non régulier:
+  valeur: voiture . empreinte calculée
+  contexte:
+    voiture . utilisateur: "'régulier non propriétaire'"
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation aux 100:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . utilisateur: "'régulier non propriétaire'"
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+
+transport . voiture . empreinte calculée:
+  formule: (usage + construction) / voyageurs
+  unité: kgCO2e
+
+transport . voiture . voyageurs: 1
+  # titre: Nombre de voyageurs
+  # question: Quel est le nombre moyen de voyageurs dans la voiture ?
+  # valeur: 1
+  # description: |
+  #   🤔 Il est fort probable que vos trajets ne se ressemblent pas, et que vous rouliez parfois seul, parfois à plusieurs.
+  #
+  #   Sachez qu'en moyenne en France, le taux de remplissage d'une voiture est de 1,4 personnes sur des trajets courts, et 2,25 personnes sur des trajets longs. Ce taux augmente légèrement pour les familles, particulièrement les foyers monoparentaux.
+  # plancher: 1
+  # plafond: 9
+  # avertissement: |
+  #   Le nombre de voyageurs est compris entre 1 (vous) et 9 (8 passagers au plus).
+  # note: |
+  #   On considère que le nombre maximal de voyageurs est de 9 (limite du permis B).
+  #
+  #   Néanmoins, cette question est souvent mal répondue car les utilisateurs.rices ne considèrent pas le nombre de voyageurs moyen : ils répondront 3 s'ils emmènent leurs enfants à l'école sans prendre en compte qu'ils sont seuls dans leur voiture la majorité du temps.
+  # suggestions:
+  #   je suis seul: 1
+  #   deux: 2
+  #   cinq: 5
+
+
+transport . voiture . usage:
+  titre: Usage de la voiture
+  formule: usage au kilomètre * km
+  unité: kgCO2e
+
+transport . voiture . usage au kilomètre:
+  formule: empreinte au kilomètre + base au kilomètre
+  unité: kgCO2e/km
+
+transport . voiture . empreinte au kilomètre:
+  formule:
+    variations:
+      - si:
+          est défini: utilisateur
+        alors:
+          variations:
+            - si:
+                une de ces conditions:
+                  - utilisateur = 'propriétaire'
+                  - utilisateur = 'régulier non propriétaire'
+              alors: empreinte au kilomètre calculée
+            - si: utilisateur = 'non régulier'
+              alors: empreinte au kilomètre non régulier
+      - sinon: empreinte au kilomètre moyenne
+
+transport . voiture . empreinte au kilomètre moyenne:
+  valeur: voiture . empreinte au kilomètre calculée
+  contexte:
+    voiture . utilisateur: "'propriétaire'"
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation aux 100:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . utilisateur: "'propriétaire'"
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+
+transport . voiture . empreinte au kilomètre non régulier:
+  valeur: voiture . empreinte au kilomètre calculée
+  contexte:
+    voiture . utilisateur: "'régulier non propriétaire'"
+    voiture . gabarit: "'berline'"
+    voiture . motorisation: "'thermique'"
+    voiture . thermique . carburant: "'essence E5 ou E10'"
+    voiture . thermique . consommation aux 100:
+      valeur: voiture . thermique . consommation estimée
+      contexte:
+        voiture . utilisateur: "'régulier non propriétaire'"
+        voiture . gabarit: "'berline'"
+        voiture . motorisation: "'thermique'"
+        voiture . thermique . carburant: "'essence E5 ou E10'"
+
+transport . voiture . empreinte au kilomètre calculée:
+  formule:
+    variations:
+      - si: motorisation = 'thermique'
+        alors: thermique . empreinte au kilomètre
+      - si: motorisation = 'hybride'
+        alors: thermique . empreinte au kilomètre * 0.85
+      - si: motorisation = 'électrique'
+        alors: électrique . empreinte au kilomètre
+  unité: kgCO2e/km
+  note: |
+    Pour la voiture hybride, nous n'avons pour l'instant pas utilisé les valeurs de la base bilan-GES, car elles sont compliquées à interpréter :
+      - la catégorie "hybride rechargeable" a une empreinte étonnamment faible (du niveau de l'électrique), mais surtout 0 émission à la combustion. Ce serait donc un véhicule essence qui n'utilise pas d'essence à l'usage ? [Un sujet récent] sur le forum de bilan-GES n'explique pas l'incohérence.
+      - la différence entre Hybride full Prius et Hybride full P2 n'est pas expliquée
+      - dans ces 2 catégories, il n'y a pas l'entrée de gamme.
+
+    L'étude FNH-Carbone4 pourrait être utilisée pour l'empreinte au km des véhicules hybrides rechargeables. Voici l'hypothèse structurante retenue :
+
+    > Répartition des modes de roulage (thermique / électrique) pour les hybrides : 50% / 50% en 2016
+
+    Mais on notera la controverse récente sur l'empreinte des véhicules hybrides rechargeable suite à [une étude](https://www.transportenvironment.org/press/les-hybrides-rechargeables-au-cœur-d’un-nouveau-scandale-d’émissions-des-tests-révèlent-des) de Transport & Environnement faisant état d'une empreinte réelle incomparable à l'empreinte annoncée par les constructeurs.
+
+    Nous avons donc pour l'instant retenu le calcul du calculateur MicMac qui est la base de Nos Gestes Climat, dont la source est malheureusement inaccessible :
+
+    > Hybride : enlever 15% aux consommations ci-dessus (source ADEME: http://www2.ademe.fr/servlet/KBaseShow?catid=13655)
+
+transport . voiture . motorisation:
+  question: Quel type de voiture utilisez-vous ?
+  applicable si:
+    toutes ces conditions:
+      - est défini: utilisateur
+      - une de ces conditions:
+          - utilisateur = 'propriétaire'
+          - utilisateur = 'régulier non propriétaire'
+      - km > 0
+  description: 💡 **Si vous utilisez plusieurs voitures (par exemple dans le cas où vous n'en possédez pas une), choisissez la réponse la plus représentative de votre usage.**
+  par défaut: "'thermique'"
+  une possibilité:
+    - thermique
+    - hybride
+    - électrique
+transport . voiture . motorisation . thermique:
+  titre: Thermique (diesel/essence/GPL)
+transport . voiture . motorisation . électrique:
+  titre: Électrique
+transport . voiture . motorisation . hybride:
+  titre: Hybride
+
+transport . voiture . thermique:
+  titre: Voiture thermique
+
+transport . voiture . thermique . empreinte au kilomètre:
+  titre: empreinte au km thermique
+  formule: consommation au kilomètre * empreinte au litre
+  note: Cette méthode de calcul, plutôt qu'un barème gabarit -> empreinte au km, permet à l'utilisateur qui connait la consommation moyenne réelle de sa voiture de la saisir pour plus de précision.
+  unité: kgCO2e/km
+
+transport . voiture . thermique . consommation au kilomètre:
+  formule: consommation aux 100 / 100 km/centkm
+  unité: l/km
+
+transport . voiture . thermique . consommation aux 100:
+  question: Connaissez-vous la consommation moyenne de la voiture ?
+  applicable si:
+    toutes ces conditions:
+      - est défini: utilisateur
+      - une de ces conditions:
+          - utilisateur = 'propriétaire'
+          - utilisateur = 'régulier non propriétaire'
+      - une de ces conditions:
+          - motorisation = 'thermique'
+          - motorisation = 'hybride'
+      - km > 0
+  description: |
+    **💡 Si vous utilisez plusieurs voitures (par exemple dans le cas où vous n'en possédez pas une), choisissez la réponse la plus représentative de votre usage.**
+  suggestions:
+    5 l/100km: 5
+    7 l/100km: 7
+    9 l/100km: 9
+  formule:
+  # Permet de forcer l'utilisation de la consommation estimée lors des
+  # recalculs pour les alternatives.
+    variations:
+      - si: voiture . thermique . consommation carburant > 1
+        alors: voiture . thermique . consommation carburant
+      - sinon: voiture . thermique . consommation estimée
+  unité: l/centkm
+  note: Les suggestions de réponse sont à la louche, à préciser et sourcer.
+
+transport . voiture . thermique . consommation estimée:
+  titre: Consommation estimée voiture
+  note: |
+    > Si nous avons travaillé les propositions de consommation moyenne, l'idéal au vu de l'impact de cette donnée est bien que l'utilisateur ou l'utilisatrice saisisse sa propre consommation réelle, moyennée sur son usage.
+
+    Pour obtenir nos propositions pour les voitures individuelles, nous avons croisé deux sources de données :
+
+    - Les données moyennes de consommation des véhicules essence et diesel, [fournies par l'ADEME](https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne)
+    - Les données des "meilleures consommations" par gabarit et par carburant, fournies par [cet article de CAROOM](https://www.caroom.fr/guide/voiture-neuve/comment-choisir/carburant/faible-consommation):
+
+    Nous n'avons pas trouvé d'autre source pour obtenir la consommation moyenne par type de véhicule. Dans l'article de CAROOM, sont donnés les chiffres des meilleures performances par véhicule:
+
+      |                  | E5 ou E10 | Diesel | % circulation |
+      |------------------|-----------|--------|---------------|
+      | Petite           | 5,07      | 3,65   | 25,29%        |
+      | Moyenne          | 4,70      | 3,75   | 10,30%        |
+      | Berline          | 4,70      | 3,75   | 49,81%        |
+      | SUV              | 5,08      | 4,14   | 14,60%        |
+      | Moyenne pondérée | 4,85      | 3,78   |               |
+
+    D'un autre côté, nous avons les données fournies par l'ADEME qui donnent des consommations moyennes de 6,8 L/100km pour une essence, 5 L/100km pour un diesel.
+    On remarque bien que les consommations moyennes calculées via les données de CAROOM (4,85 L/100km et 3,78 L/100km) sont bien plus basses que celles
+    de l'ADEME, ce sont les voitures les plus performantes.
+
+    Nous avons donc retravaillé les chiffres via un ratio (conso moyenne / conso moyenne performante) pour mettre à jour les consommations moyennes par véhicules :
+    A titre d'exemple, pour une citadine essence, on obtient le chiffre de 7,11 L/100km via la formule suivante : 5,07 / 4,85 * 6,8.
+
+    - Moyennes corrigées (et utilisées dans NGC):
+
+      |                  | E5 ou E10 | Diesel | % circulation |
+      |------------------|-----------|--------|---------------|
+      | Petite           | 7,11      | 4,83   | 25,29%        |
+      | Moyenne          | 6,59      | 4,96   | 10,30%        |
+      | Berline          | 6,59      | 4,96   | 49,81%        |
+      | SUV              | 7,13      | 5,48   | 14,60%        |
+      | Moyenne pondérée | 6,80      | 5,00   |               |
+
+    Pour les véhicules utilitaires légers, nous avons utilisé cette source :
+    - [Consommation des véhicules utilitaires légers](https://www.webfleet.com/fr_fr/webfleet/blog/consommation-utilitaire/)
+
+    > Nous avons bien noté que la consomation d'une citadine essence est plus élevée que celle d'une berline, ce qui semble contre-intuitif mais nous n'avons pas d'autres sources pour l'instant.
+
+    Enfin, pour obtenir les consommations des véhicules roulant à l'essence E85, nous avons appliqué une **surconsommation de 25%** par rapport aux véhicules essence, chiffre qui semble faire consensus.
+
+    De même, pour obtenir les consommations des véhicules roulant au GPL, nous avons appliqué une **surconsommation de 15%** par rapport aux véhicules essence, sauf pour le GPL, véhicule pour lequel nous avons déjà la données.
+  unité: l/centkm
+  formule:
+    variations:
+      - si: gabarit = 'petite'
+        alors:
+          variations:
+            - si: thermique . carburant = 'gazole B7 ou B10'
+              alors: petite diesel
+            - si: thermique . carburant = 'essence E5 ou E10'
+              alors: petite essence
+            - si: thermique . carburant = 'essence E85'
+              alors: petite essence * 1.25
+            - si: thermique . carburant = 'GPL'
+              alors: petite essence * 1.15
+      - si: gabarit = 'moyenne'
+        alors:
+          variations:
+            - si: thermique . carburant = 'gazole B7 ou B10'
+              alors: moyenne diesel
+            - si: thermique . carburant = 'essence E5 ou E10'
+              alors: moyenne essence
+            - si: thermique . carburant = 'essence E85'
+              alors: moyenne essence * 1.25
+            - si: thermique . carburant = 'GPL'
+              alors: moyenne essence * 1.15
+      - si: gabarit = 'VUL'
+        alors:
+          variations:
+            - si: thermique . carburant = 'gazole B7 ou B10'
+              alors: VUL diesel
+            - si: thermique . carburant = 'essence E5 ou E10'
+              alors: VUL essence
+            - si: thermique . carburant = 'essence E85'
+              alors: VUL essence * 1.25
+            - si: thermique . carburant = 'GPL'
+              alors: 13
+      - si: gabarit = 'berline'
+        alors:
+          variations:
+            - si: thermique . carburant = 'gazole B7 ou B10'
+              alors: moyenne diesel
+            - si: thermique . carburant = 'essence E5 ou E10'
+              alors: moyenne essence
+            - si: thermique . carburant = 'essence E85'
+              alors: moyenne essence * 1.25
+            - si: thermique . carburant = 'GPL'
+              alors: moyenne essence * 1.15
+      - si: gabarit = 'SUV'
+        alors:
+          variations:
+            - si: thermique . carburant = 'gazole B7 ou B10'
+              alors: SUV diesel
+            - si: thermique . carburant = 'essence E5 ou E10'
+              alors: SUV essence
+            - si: thermique . carburant = 'essence E85'
+              alors: SUV essence * 1.25
+            - si: thermique . carburant = 'GPL'
+              alors: SUV essence * 1.15
+
+transport . voiture . thermique . consommation estimée . petite diesel:
+  titre: Consommation moyenne petite voiture diesel
+  formule: 4.83
+  unité: l/centkm
+
+transport . voiture . thermique . consommation estimée . petite essence:
+  titre: Consommation moyenne petite voiture essence
+  formule: 7.11
+  unité: l/centkm
+
+transport . voiture . thermique . consommation estimée . moyenne diesel:
+  titre: Consommation moyenne voiture "moyenne" diesel
+  formule: 4.96
+  unité: l/centkm
+
+transport . voiture . thermique . consommation estimée . moyenne essence:
+  titre: Consommation moyenne voiture "moyenne" essence
+  formule: 6.59
+  unité: l/centkm
+
+transport . voiture . thermique . consommation estimée . VUL diesel:
+  titre: Consommation moyenne VUL diesel
+  formule: 7.7
+  unité: l/centkm
+
+transport . voiture . thermique . consommation estimée . VUL essence:
+  titre: Consommation moyenne VUL essence
+  formule: 9
+  unité: l/centkm
+
+transport . voiture . thermique . consommation estimée . SUV diesel:
+  titre: Consommation moyenne SUV diesel
+  formule: 5.48
+  unité: l/centkm
+
+transport . voiture . thermique . consommation estimée . SUV essence:
+  titre: Consommation moyenne SUV essence
+  formule: 7.13
+  unité: l/centkm
+
+transport . voiture . thermique . empreinte au litre:
+  description: |
+    Les empreintes sont disponibles de façon assez détaillée sur [la base carbone](https://bilans-ges.ademe.fr/fr/basecarbone/donnees-consulter/liste-element?recherche=diesel), ici par exemple pour le "diesel". Idem pour "essence".
+    Pour les retrouver facilement, filtrez par unité "kgCO2e/litre" et par géographie "France continentale".
+
+    À noter que pour le gazole, le FE choisi est la moyenne entre le gazole B7 et le gazole B10.
+  formule:
+    variations:
+      - si: carburant = 'gazole B7 ou B10'
+        alors:
+          moyenne:
+            - 3.1 kgCO2e/l
+            - 3.04 kgCO2e/l
+      - si: carburant = 'essence E5 ou E10'
+        alors: 2.7
+      - si: carburant = 'essence E85'
+        alors: 1.11
+      - si: carburant = 'GPL'
+        alors: 1.86
+  unité: kgCO2e/l
+
+transport . voiture . thermique . carburant:
+  question: Quel type de carburant votre voiture consomme-t-elle ?
+  applicable si:
+    toutes ces conditions:
+      - est défini: utilisateur
+      - une de ces conditions:
+          - utilisateur = 'propriétaire'
+          - utilisateur = 'régulier non propriétaire'
+      - une de ces conditions:
+          - motorisation = 'thermique'
+          - motorisation = 'hybride'
+      - km > 0
+  description: |
+    > Attention, si le type de carburant fait varier de façon significative l'empreinte climat au litre, la consommation en litre par 100km elle aussi varie. Veillez à saisir une consommation au litre basée sur votre moyenne réelle.
+
+  par défaut: "'essence E5 ou E10'"
+  une possibilité:
+    - gazole B7 ou B10
+    - essence E5 ou E10
+    - essence E85
+    - GPL
+  note: |
+    La domination du couple gazole-essence est écrasante [source](https://www.leprogres.fr/magazine-automobile/2021/03/27/quels-sont-les-carburants-les-plus-utilises-dans-votre-commune).
+
+    Par contre, parmi les véhicules neufs, l'essence domine aujourd'hui.
+
+    Le facteur d'émission associé au biocarburant E85 n'est pas représentatif des conséquences environnementales liées à l'utilisation des biocarburants.
+    En effet, au vu des problématiques liées au changement d'affectation des sols et autres impacts environnementaux liés à la culture du maïs par exemple, les **biocarburants** ne sont pas pris en compte
+    (le facteur d'émission de la base carbone étant particulièrement incertain). Voir nos discussions [ici](https://github.com/incubateur-ademe/nosgestesclimat/pull/1324).
+
+    Le GPL (Gaz de Pétrole Liquéfiés) est un [résidu de l'extraction du pétrole qui était autrefois brûlé](https://fr.wikipedia.org/wiki/Gaz_de_p%C3%A9trole_liqu%C3%A9fi%C3%A9).
+    Il a une empreinte carbone par litre moins importante que les véhicules essence ou diesel, par contre sa consommation est légèrement supérieure, ce qui compense légèrement le gain.
+    Mais si les rejets de CO2e sont au final presque équivalents entre le GPL et les autres carburants, c'est [du côté de l'émission de particules nocives](https://agirpourlatransition.ademe.fr/particuliers/conso/conso-responsable/comment-choisir-voiture-deux-roues-moins-polluant) que le GPL est un bien meilleur élève que les autres carburants thermiques.
+
+    Pour comprendre les différents types de carburants, [cet article pédagogique](https://www.francetvinfo.fr/economie/automobile/essence/les-carburants-changent-de-nom-a-la-pompe-voici-comment-vous-y-retrouver_2967013.html) est très utile.
+
+    [Cet article](https://www.ecologie.gouv.fr/carburants-et-combustibles-autorises-en-france) du ministère de l'Écologie explique plus en détail les carburants légaux en France.
+
+transport . voiture . thermique . carburant . gazole B7 ou B10:
+  titre: Gazole (B7 ou B10)
+transport . voiture . thermique . carburant . essence E5 ou E10:
+  titre: Essence (E5 ou E10)
+transport . voiture . thermique . carburant . essence E85:
+  titre: Essence E85 (biocarburants)
+transport . voiture . thermique . carburant . GPL:
+  titre: GPL (Gaz de Pétrole Liquéfiés)
+
+transport . voiture . électrique:
+  titre: Voiture électrique
+
+transport . voiture . électrique . empreinte au kilomètre:
+  titre: empreinte au km électrique
+  unité: kgCO2e/km
+  formule: consommation au kilomètre * logement . électricité . empreinte au kWh
+  note: |
+    Nous considérons ici le mix électrique moyen français. La majorité des possesseurs de voitures électriques rechargent leur véhicule chez eux avec une tarification heure creuses, qui est plus avantageuse financièrement et correspond d'ailleurs aux moments où la demande en électricité est moins forte et le mix électrique moins carboné (les centrales gaz ne sont pas sollicitées).
+
+transport . voiture . électrique . consommation au kilomètre:
+  formule: consommation aux 100 / 100 km/centkm
+  unité: kWh/km
+
+transport . voiture . électrique . consommation aux 100:
+  titre: Consommation électrique au km
+  question: Connaissez-vous la consommation moyenne de la voiture ?
+  applicable si:
+    toutes ces conditions:
+      - est défini: utilisateur
+      - une de ces conditions:
+          - utilisateur = 'propriétaire'
+          - utilisateur = 'régulier non propriétaire'
+      - motorisation = 'électrique'
+      - km > 0
+  suggestions:
+    15 kWh/100km: 15
+    20 kWh/100km: 20
+    25 kWh/100km: 25
+  formule:
+  # Permet de forcer l'utilisation de la consommation estimée lors des
+  # recalculs pour les alternatives.
+    variations:
+      - si: voiture . électrique . consommation électricité > 1 
+        alors: voiture . électrique . consommation électricité 
+      - sinon: voiture . électrique . consommation estimée
+  unité: kWh/centkm
+
+transport . voiture . électrique . consommation estimée:
+  variations:
+    - si: voiture . gabarit = 'petite'
+      alors: 15
+    - si: voiture . gabarit = 'moyenne'
+      alors: 17
+    - si: voiture . gabarit = 'berline'
+      alors: 25
+    - si: voiture . gabarit = 'SUV'
+      alors: 25
+    - si: voiture . gabarit = 'VUL'
+      alors: 25
+  unité: kWh/centkm
+  note: Données moyennes fournies par le service Transport et Mobilité de l'ADEME.
+
+# transport . voiture . gabarit:
+#   question: Quel est le gabarit de la voiture ?
+#   applicable si:
+#     toutes ces conditions:
+#       - est défini: utilisateur
+#       - une de ces conditions:
+#           - utilisateur = 'propriétaire'
+#           - utilisateur = 'régulier non propriétaire'
+#       - km > 0
+#   description: |
+#     **💡 Si vous utilisez plusieurs voitures (par exemple dans le cas où vous n'en possédez pas une), choisissez la réponse la plus représentative de votre usage.**
+#   valeur: voiture . gabarit
+#   note: |
+#     Nous considérons que la voiture par défaut est une "Berline", en témoigne [une étude menée par AAA Data](https://www.alphabet.com/fr-fr/parc-automobile-roulant-les-donnees-cles)
+#     qui indique que "Si les SUV ont représenté 38 % des ventes de véhicules en 2019, ils ne représentent que 16 % de la totalité des véhicules en circulation, loin derrière les berlines qui comptent pour 58 %, soit 23 millions de véhicules."
+#   une possibilité:
+#     - petite
+#     - moyenne
+#     - VUL
+#     - berline
+#     - SUV
+transport . voiture . gabarit:
+transport . voiture . gabarit . petite:
+  titre: Petite
+  description: Citadine type Zoé, Fiat 500
+transport . voiture . gabarit . moyenne:
+  titre: Moyenne
+  description: Modèle au dessus de la petite citadine, type Mégane, Golf
+transport . voiture . gabarit . VUL:
+  titre: Véhicule utilitaire
+  description: Camionette de type Kangoo ou Partner jusqu'au Trafic et Vito
+transport . voiture . gabarit . berline:
+  titre: Berline
+  description: Une voiture longue, type 308, Tesla Model 3, Audi A3
+transport . voiture . gabarit . SUV:
+  titre: SUV
+  description: |
+    "Sport utility vehicle", type 4x4 urbain
+
+transport . voiture . gabarit . petite . poids:
+  formule: 1000
+  unité: kg
+  note: Les valeurs de poids sont tirées du simulateur [carculator](https://carculator.readthedocs.io/en/latest/modeling.html#size-classes) qui utilise le papier [Cost and well-to-wheel implications of the vehicle fleet CO2 emission regulation in the European Union, Christian and others, 2014](https://www.sciencedirect.com/science/article/abs/pii/S0965856414000494?via%3Dihub)
+
+transport . voiture . gabarit . moyenne . poids:
+  formule: 1500
+  unité: kg
+  note: Les valeurs de poids sont tirées du simulateur [carculator](https://carculator.readthedocs.io/en/latest/modeling.html#size-classes) qui utilise le papier [Cost and well-to-wheel implications of the vehicle fleet CO2 emission regulation in the European Union, Christian and others, 2014](https://www.sciencedirect.com/science/article/abs/pii/S0965856414000494?via%3Dihub)
+
+transport . voiture . gabarit . VUL . poids:
+  formule: 1750
+  unité: kg
+  note: Les valeurs de poids sont tirées du simulateur [carculator](https://carculator.readthedocs.io/en/latest/modeling.html#size-classes) qui utilise le papier [Cost and well-to-wheel implications of the vehicle fleet CO2 emission regulation in the European Union, Christian and others, 2014](https://www.sciencedirect.com/science/article/abs/pii/S0965856414000494?via%3Dihub)
+
+transport . voiture . gabarit . berline . poids:
+  formule: 1750
+  unité: kg
+  note: Les valeurs de poids sont tirées du simulateur [carculator](https://carculator.readthedocs.io/en/latest/modeling.html#size-classes) qui utilise le papier [Cost and well-to-wheel implications of the vehicle fleet CO2 emission regulation in the European Union, Christian and others, 2014](https://www.sciencedirect.com/science/article/abs/pii/S0965856414000494?via%3Dihub)
+
+transport . voiture . gabarit . SUV . poids:
+  formule: 2000
+  unité: kg
+  note: Les valeurs de poids sont tirées du simulateur [carculator](https://carculator.readthedocs.io/en/latest/modeling.html#size-classes) qui utilise le papier [Cost and well-to-wheel implications of the vehicle fleet CO2 emission regulation in the European Union, Christian and others, 2014](https://www.sciencedirect.com/science/article/abs/pii/S0965856414000494?via%3Dihub)
+
+transport . voiture . base au kilomètre:
+  applicable si:
+    toutes ces conditions:
+      - est défini: utilisateur
+      - une de ces conditions:
+          - utilisateur = 'propriétaire'
+          - utilisateur = 'régulier non propriétaire'
+  titre: Entretien et climatisation au kilomètre
+  formule: entretien pondéré + climatisation
+  unité: kgCO2e/km
+
+transport . voiture . entretien pondéré:
+  formule:
+    variations:
+      - si: motorisation = 'thermique'
+        alors: entretien
+      - si: motorisation = 'hybride'
+        alors: entretien * 0.90
+      - si: motorisation = 'électrique'
+        alors: entretien * 0.75
+  unité: kgCO2e/km
+  note: |
+    Plusieurs sources s'accordent pour dire que l'entretien d'un véhicule électrique est inférieur à celui d'un véhicule thermique de 25%. Comme [celle-ci](https://izi-by-edf.fr/blog/voiture-hybride-entretien/).
+
+    Pour ce qui est d'un véhicule hybride, son entretien se situe entre celui d'un véhicule électrique et celui d'un véhicule thermique. Cela dépend de l'utilisation du moteur électrique ou thermique.
+    Nous choisissons de partir sur une hypothèse conservatrice de -10% de coût d'entretien par rapport aux véhicules thermiques.
+
+transport . voiture . entretien:
+  formule: ((empreinte branche . G45 * 1000000 kgCO2e/ktCO2e * 0.07) / nombre véhicules circulation) / transport . voiture . km annuels moyen
+  unité: kgCO2e/km
+  note: |
+    Dans le poste G45, nous prenons la part Entretien et réparation de véhicules automobiles (7%).
+    Nous le divisons par le nombre de véhicules en circulation, puis par 12200 km (la moyenne de km effectués par véhicule) pour obtenir une empreinte en kgCO2e / km.
+
+transport . voiture . climatisation:
+  formule: (émissions gaz fluorés transport / nombre véhicules circulation) / transport . voiture . km annuels moyen
+  unité: kgCO2e/km
+  note: |
+    L'idée ici est de prendre en compte une part des émissions liées aux gaz fluorés issus des climatisations des véhicules
+    en France via le total des émissions dues à ces gaz sur le secteur du transport (voitures et VUL diesel, essence, GNV, GPL, électrique).
+
+transport . voiture . climatisation . émissions gaz fluorés transport:
+  titre: Emissions nationales dûes aux climatisations des voitures et VUL
+  formule: 1374000000
+  unité: kgCO2e
+  note: |
+    Ce chiffre provient de l'étude [SECTEN](https://www.citepa.org/fr/secten/) (le rapport de référence sur les émissions de gaz à effet de serre et de polluants atmosphériques en France).
+
+    D'après l'excel [Données par substance de gaz à effet de serre (GES) édition 2023, onglet "GF-UE_total"](https://www.citepa.org/wp-content/uploads/publications/secten/2023/Citepa_gaz_a_effet_de_serre_v2.zip),
+    les émissions de gaz fluorés pour le secteur du transport (provenant des équipements de réfrigération et d'air conditionné, utilisant des halocarbures ou du SF6), sont de 1374 ktCO₂e.
+
+transport . voiture . construction:
+  titre: Construction de la voiture
+  formule:
+    variations:
+      - si:
+          toutes ces conditions:
+            - voiture . utilisateur = 'propriétaire'
+            - km < seuil km
+        alors: construction au kilomètre * seuil km
+      - sinon: construction au kilomètre * km
+  unité: kgCO2e
+  note: |
+    Pour le moment, nous ne considérons pas l'amortissement complet d'une voiture (c'est-à-dire que nous n'avons pas l'info de l'âge ou le kilométrage complet de la voiture donc sa contruction ne sera jamais nulle).
+  # Nous pourrions utiliser ici le mécanisme `plancher` avec pour valeur "construction au kilomètre * seuil km"
+  # mais il est plus simple ici de comprendre la méhotodo avec `variations`.
+
+transport . voiture . construction . seuil km:
+  formule: voiture . durée de vie en km / durée de vie moyenne
+  plafond: voiture . km annuels moyen
+  unité: km
+
+transport . voiture . durée de vie moyenne:
+  formule: 20
+  note: |
+    On considère que l'âge moyen d'une voiture qui part à la casse est de 20 ans. Néanmoins, c'est une hypothèse forte car on peut légitimement penser qu'une voiture électrique possède une durée de vie plus longue qu'une voiture thermique. Il faudrait cependant considérer une valeur plus importante également pour la durée de vie en km.
+
+transport . voiture . construction au kilomètre:
+  formule: barème construction * amortissement
+  unité: kgCO2e/km
+
+transport . voiture . barème construction:
+  formule:
+    variations:
+      - si: motorisation = 'thermique'
+        alors: barème thermique
+      - si: motorisation = 'électrique'
+        alors: barème électrique
+      - si: motorisation = 'hybride'
+        alors: barème hybride
+  unité: kgCO2e
+  description: |
+    ![](https://i.imgur.com/uIlZcEjl.jpg)
+
+    Une voiture est un gros, très gros objet, qui pèse souvent plus d'une tonne et demie. En conséquence, sa construction a une empreinte importante.
+
+    En particulier, la construction d'une voiture électrique de gamme équivalente à une thermique émet plus de gaz à effet de serre. C'est notamment dû à la batterie et son poids important.
+
+    Malgré cela, en France, sur la durée de vie de la voiture et donc les km parcourus, le choix de la voiture électrique est nettement mieux pour le climat.
+
+    Mieux, mais loin d'être faible ! Aujourd'hui, il ne s'agit plus seulement de comparer des solutions techniques entre elles, il s'agit d'évaluer ses achats par rapport aux objectifs climat.
+
+  note: |
+    Les données autour des émissions liées à la fabrication de véhicules sont nombreuses et variées. La première approche utilisait l'étude [FNH-Carbone4](https://github.com/betagouv/ecolab-data/files/5945898/vehicule_electrique_rapport.pdf) qui propose des facteurs d'émissions pour la construction pour 2 gabarits, en distinguant les véhicules thermiques, électriques et hybrides. Certaines données pour le véhicules paraissaient incohérentes, et nous avions besoin, d'un point de vue méthodologique, de plus de finesse dans le calcul de l'empreinte des véhicules électriques.
+
+    C'est pouquoi, désormais, nous adoptons l'approche suivante:
+
+    - Pour les véhicules thermiques, nous utilisons les données de la Base Empreinte de l'ADEME donnant une valeur de 4,5 kgCO2e/kg pour la construction d'une voiture. Nous appliquons ce facteur à la masse de la voiture pour obtenir l'empreinte de la construction, masse étant déterminée par le gabarit du véhicule.
+    - Pour les véhicules électriques, nous calculons l'empreinte de la batterie en fonction de sa capacité, puis nous ajoutons l'empreinte de la construction d'une voiture thermique de gamme équivalente.
+    - Pour les véhicules hybrides, nous utilisons les mêmes données que pour les véhicules électriques (hypothèse forte, voir note sur le barème hybride).
+
+transport . voiture . barème construction . barème thermique:
+  formule:
+    variations:
+      - si: gabarit = 'petite'
+        alors: empreinte par kg * gabarit . petite . poids
+      - si: gabarit = 'moyenne'
+        alors: empreinte par kg * gabarit . moyenne . poids
+      - si: gabarit = 'VUL'
+        alors: empreinte par kg * gabarit . VUL . poids
+      - si: gabarit = 'berline'
+        alors: empreinte par kg * gabarit . berline . poids
+      - si: gabarit = 'SUV'
+        alors: empreinte par kg * gabarit . SUV . poids
+  unité: kgCO2e
+
+transport . voiture . barème construction . barème thermique . empreinte par kg:
+  formule: 4.5
+  unité: kgCO2e/kg
+  note: Facteur d'émission issu de la Base Empreinte.
+
+transport . voiture . barème construction . barème électrique:
+  formule: barème thermique + batterie
+  unité: kgCO2e
+  note: |
+    La construction d'une voiture électrique émet plus de gaz à effet de serre qu'une voiture thermique de gamme équivalente.
+    Cela est dû à la production de la batterie, qui est très énergivore et à une empreinte carbone importante.
+
+    > Ce surplus d'émissions est d'environ +50% (mais varie d'environ +20% à plus d'une multiplication par 2 selon les études).
+    https://bonpote.com/la-voiture-electrique-solution-ideale-pour-le-climat/
+
+transport . voiture . barème construction . barème électrique . batterie:
+  formule: capacité * barème construction . batterie . empreinte par kWh
+  unité: kgCO2e
+  note: |
+    L'empreinte carbone d'une batterie augmente avec sa capacité, car une capacité plus élevée nécessite l'utilisation d'un plus grand nombre de cellules lithium-ion.
+
+    La capacité de la batterie est exprimée en kWh, elle peut varier considérablement selon les modèles de voitures électriques.
+    Pour réduire l'impact de la voiture électrique il faut privilégier les modèles avec une batterie de petite capacité.
+
+transport . voiture . barème construction . barème électrique . batterie . capacité:
+  applicable si:
+    toutes ces conditions:
+      - est défini: utilisateur
+      - une de ces conditions:
+          - utilisateur = 'propriétaire'
+          - utilisateur = 'régulier non propriétaire'
+      - motorisation = 'électrique'
+  question: Quelle est la capacité de la batterie de votre voiture électrique ?
+  description: |
+    La capacité de la batterie est exprimée en kWh, elle varie considérablement selon les modèles de véhicules.
+
+    Les constructeurs distinguent parfois une capacité brute et une capacité nette, réellement disponible. Si vous avez les deux valeurs, choisissez la capacité brute.
+  unité: kWh
+  par défaut:
+    variations:
+      - si:
+          une de ces conditions:
+            - voiture . gabarit = 'petite'
+            - voiture . gabarit = 'moyenne'
+        alors: 40
+      - si:
+          une de ces conditions:
+            - voiture . gabarit = 'berline'
+            - voiture . gabarit = 'SUV'
+            - voiture . gabarit = 'VUL'
+        alors: 65
+  suggestions:
+    petite autonomie: 40
+    autonomie moyenne: 65
+    grande autonomie: 100
+
+transport . voiture . barème construction . barème hybride:
+  formule: barème thermique + batterie
+  unité: kgCO2e
+  note: |
+    On fait l'hypothèse forte que la construction d'un véhicule hybride correspond à l'empreinte d'un véhicule électrique équipé d'une petite batterie. Néanmoins, le calcul est plus complexe, notamment car le type de véhicule hybride (rechargeable ou non) sur la composition de la voiture. On a également 2 moteurs...
+
+transport . voiture . barème construction . barème hybride . batterie:
+  formule: capacité * barème construction . batterie . empreinte par kWh
+  unité: kgCO2e
+
+transport . voiture . barème construction . barème hybride . capacité:
+  valeur: 40
+  unité: kWh
+
+transport . voiture . barème construction . batterie:
+transport . voiture . barème construction . batterie . empreinte par kWh:
+  formule: 100
+  unité: kgCO2e/kWh
+  note: |
+    Les études académiques sur l'empreinte carbone des batteries des véhicules électriques sont nombreuses, mais leurs résultats sont très variables.
+
+    Les valeurs varient de 60 kgCO2e/kWh à 150 kgCO2e/kWh. Une [méta-étude de l'IFPEN](https://www.sciencedirect.com/science/article/abs/pii/S0959652622006291)
+    (Institut Français du Pétrole et des Énergies Nouvelles) calcule une valeur médiane de 83 kgCO2e/kWh, en précisant que les résultats différent selons les chimies de batteries,
+    les pays de productions, le pays des auteurs de l'étude, et que même ces facteurs intégrés il reste une grande variabilité des résultats.
+
+    Compte tenu de l'incertitude et des variations observées dans les études, nous adoptons une valeur prudente de 100 kgCO2e/kWh pour l'empreinte carbone des batteries.
+
+    [Étude Carbone 4 sur l'empreinte des batteries (en)](https://www.carbone4.com/publication-liion-battery-carbon-footprint)
+
+transport . voiture . amortissement:
+  description: |
+    Les discussions ont été animées sur l'amortissement de la voiture. Précédemment, dans le but de décourager l'achat neuf, un amortissement non linéaire avait été imaginé, fortement dégressif dans le temps, sur 10 ans.
+    Cet amortissement non linéaire avait le mérite de décourager l'achat, et de bien faire comprendre à l'utilisateur qu'une grande partie de l'empreinte du véhicule est liée à sa production, donc à l'achat neuf.
+
+    Mais cet amortissement non linéaire n'était pas évident à comprendre pour les utilisateurs, et manquait son objectif pédagogique.
+    Par ailleurs, il occasionnait un double-discours dans Nos Gestes Climat, car dans les actions proposées aux propriétaires de voitures, nous proposons l'achat d'un véhicule électrique, or celui-ci est fortement pénalisant s'il est acheté neuf dans l'empreinte carbone individuelle.
+
+    Enfin, il était, dans le simulateur Nos Gestes Climat, une exception : tous les autres biens amortis le sont de manière linéaire (l'empreinte de construction est divisée par la durée de vie du bien).
+
+    Nous avions donc fait le choix de revenir pour la voiture à un amortissement linéaire sur la durée de vie de la voiture, une durée de vie en années.
+
+    Mais ce fonctionnement ne nous convenait toujours pas : en effet, elle pénalisait beaucoup les petits rouleurs, et ne paraissait pas très juste par rapport à la réalité d'un véhicule, dont la durée de vie s'exprime plutôt en km.
+
+    C'est donc, finalement, ce choix-là que nous avons fait : l'amortissement du véhicule est fonction du nombre de km parcourus, au regard du nombre de km maximal correspondant au gabarit du véhicule.
+  formule: 1 / durée de vie en km
+
+transport . voiture . durée de vie en km:
+  formule:
+    variations:
+      - si: voiture . gabarit = 'petite'
+        alors: 150000
+      - si:
+          une de ces conditions:
+            - voiture . gabarit = 'moyenne'
+            - voiture . gabarit = 'berline'
+        alors: 225000
+      - sinon: 270000
+  unité: km
+  note: |
+    Nous nous appuyons sur le référentiel (durée de vie, kilométrage) que reprend la [plateforme automobile de préconisations européennes](https://pfa-auto.fr/wp-content/uploads/2023/04/DT_Me%CC%81thodologie_2023_V15_FRANCAIS.pdf), avec les segments suivants :
+
+    - Gabarit "petit" : correspondant au segment A, soit 150000 km
+    - Gabarit "moyen" : correspondant au segment B ou C, soit 225000 km
+    - Gabarit "VUL" : correspondant au segment CDV (Car-Derived Vehicle), soit 270000 km
+    - Gabarit "berline" : correspondant au segment B ou C, soit 225000 km
+    - Gabarit "SUV" : correspondant au segment E ou F, soit 270000 km
+
+    Pour le moment, nous ne faisons pas la différence entre thermique et électrique. C'est une hypothèse très forte.

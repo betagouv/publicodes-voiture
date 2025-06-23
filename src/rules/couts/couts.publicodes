@@ -336,8 +336,10 @@ coûts . coûts d'utilisation . stationnement:
   description: |
     Renseignez le coût annuel associé au stationnement de votre voiture
     (parking, garage, place payante, etc...).
-  par défaut: 50 €/mois
+  par défaut: 50 * 12 
   plancher: 0
+  # par défaut: 50 €/mois
+  # plancher: 0
   unité: €/an
   note: |
     Valeur par défaut basée sur le [baromètre de

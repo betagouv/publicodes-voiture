@@ -1,3 +1,3 @@
-import { CarSimulator } from "@betagouv/publicodes-voiture"
+import { CarSimulator } from "../../../src/CarSimulator"
 
 export const simulator = new CarSimulator()

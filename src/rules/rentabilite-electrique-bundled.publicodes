@@ -9,7 +9,6 @@ rentabilité passage à l'électrique:
 
 # NOTE: comment souhaitons-nous gérer le cas où les économies annuelles sont négatives ?
 rentabilité passage à l'électrique . durée de détention:
-  public: oui
   titre: Durée minimale pour rentabiliser l'alternative électrique
   description: >
     Calcul de durée de la durée de détention à partir de laquelle l'alternative
@@ -42,7 +41,6 @@ rentabilité passage à l'électrique . durée de détention:
     paramètres du calcul.
 
 rentabilité passage à l'électrique . km annuels:
-  public: oui
   titre: Kilomètres annuels à parcourir pour rentabiliser l'alternative électrique
   non applicable si: 
     une de ces conditions:

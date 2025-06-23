@@ -67,8 +67,8 @@ usage . km annuels . calculés:
 
 usage . km annuels . calculés . quotidien:
   question: Kilomètres parcourus en moyenne par jours
-  par défaut: 33
-  unité: km/jour
+  par défaut: 33 * commun . jours par an
+  # unité: km/jour
   plancher: 0
   suggestions:
     jamais: 0 km/jour

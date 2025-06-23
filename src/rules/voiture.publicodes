@@ -193,7 +193,7 @@ voiture . thermique . consommation carburant:
       - motorisation = 'thermique'
       - motorisation = 'hybride'
   par défaut: consommation estimée
-  unité: l/100km
+  unité: l/centkm
   plancher: 1
   description: |
     Renseignez la consommation réelle de votre voiture en litre aux 100 km. Si
@@ -202,17 +202,17 @@ voiture . thermique . consommation carburant:
 
 voiture . thermique . consommation estimée:
   titre: Consommation estimée par défaut
-  valeur: ngc . transport . voiture . thermique . consommation estimée
-  unité: l/100km
+  valeur: transport . voiture . thermique . consommation estimée
+  unité: l/centkm
   # TODO: pour l'instant, nous simulons ce `contexte` en écrasant à l'import
   # les paramètres pour éviter d'avoir à utiliser le `contexte` qui est coûteux
   # en performance. Cependant, avec la nouvelle version de publicodes, il
   # serait peut-être plus compréhensible de le faire ainsi.
   # contexte:
-  #   ngc . transport . voiture . utilisateur: "'propriétaire'"
-  #   ngc . transport . voiture . gabarit: voiture . gabarit
-  #   ngc . transport . voiture . motorisation: voiture . motorisation
-  #   ngc . transport . voiture . thermique . carburant: voiture . thermique . carburant
+  #  transport . voiture . utilisateur: "'propriétaire'"
+  #  transport . voiture . gabarit: voiture . gabarit
+  #  transport . voiture . motorisation: voiture . motorisation
+  #  transport . voiture . thermique . carburant: voiture . thermique . carburant
 
 voiture . électrique:
   titre: Voiture électrique
@@ -224,7 +224,7 @@ voiture . électrique . consommation électricité:
       - motorisation = 'électrique'
       - motorisation = 'hybride'
   par défaut: consommation estimée
-  unité: kWh/100km
+  unité: kWh/centkm
   plancher: 1
   description: |
     Renseignez la consommation réelle de votre voiture en kWh aux 100 km. Si
@@ -233,15 +233,15 @@ voiture . électrique . consommation électricité:
 
 voiture . électrique . consommation estimée:
   titre: Consommation estimée par défaut
-  valeur: ngc . transport . voiture . électrique . consommation estimée 
-  unité: kWh/100km
+  valeur: transport . voiture . électrique . consommation estimée 
+  unité: kWh/centkm
   # TODO: pour l'instant, nous simulons ce `contexte` en écrasant à l'import
   # les paramètres pour éviter d'avoir à utiliser le `contexte` qui est coûteux
   # en performance. Cependant, avec la nouvelle version de publicodes, il
   # serait peut-être plus compréhensible de le faire ainsi.
   # contexte:
-  #   ngc . transport . voiture . utilisateur: "'propriétaire'"
-  #   ngc . transport . voiture . gabarit: voiture . gabarit
+  #  transport . voiture . utilisateur: "'propriétaire'"
+  #  transport . voiture . gabarit: voiture . gabarit
 
 voiture . électrique . prix kWh:
   question: Quel est le prix du kWh ?
