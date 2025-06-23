@@ -19,6 +19,9 @@ export type EvaluatedCarInfos = {
   /** The cost of the car in €/an */
   cost: {
     total: EvaluatedRuleInfos<RuleValue["coûts"]>
+    totalPurchaseCost: EvaluatedRuleInfos<
+      RuleValue["coûts . achat amorti . coût d'achat total"]
+    >
     ownership: EvaluatedRuleInfos<RuleValue["coûts . coûts de possession"]>
     usage: EvaluatedRuleInfos<RuleValue["coûts . coûts d'utilisation"]>
     consomption: EvaluatedRuleInfos<
@@ -228,6 +231,9 @@ export class CarSimulator {
         total: this.evaluateRule("coûts"),
         usage: this.evaluateRule("coûts . coûts d'utilisation"),
         ownership: this.evaluateRule("coûts . coûts de possession"),
+        totalPurchaseCost: this.evaluateRule(
+          "coûts . achat amorti . coût d'achat total",
+        ),
         consomption: this.evaluateRule(
           "coûts . coûts d'utilisation . consommation",
         ),
@@ -457,6 +463,14 @@ function getAlternative(
         isEnumValue: false,
         isApplicable: true,
         value: engine.evaluate("coûts . coûts d'utilisation . consommation")
+          .nodeValue,
+      },
+      totalPurchaseCost: {
+        title: "Coût d'achat total",
+        unit: "€",
+        isEnumValue: false,
+        isApplicable: true,
+        value: engine.evaluate("coûts . achat amorti . coût d'achat total")
           .nodeValue,
       },
     },

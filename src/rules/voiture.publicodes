@@ -8,6 +8,11 @@ voiture:
 
     Cependant, plus vous renseignerez de champs, plus l'estimation sera précise.
 
+voiture . occasion:
+  titre: Achat d'occasion
+  question: Est-ce une voiture d'occasion ?
+  par défaut: oui
+
 voiture . prix d'achat:
   question: Quel est le prix d'achat de votre voiture ?
   par défaut:
@@ -20,11 +25,6 @@ voiture . prix d'achat:
   description: |
     Renseignez le montant que vous avez payé pour l'achat de votre voiture
     (hors primes ou aides à l'achat) qu'elle soit neuve ou d'occasion.
-
-voiture . occasion:
-  titre: Achat d'occasion
-  question: Est-ce une voiture d'occasion ?
-  par défaut: non
 
 voiture . prix d'achat . estimé:
   titre: Prix d'achat estimé par défaut
@@ -452,12 +452,14 @@ voiture . thermique . prix carburant moyen:
 
 voiture . âge:
   titre: Âge de la voiture
+  question: Quel est l'âge de votre voiture ?
   description: |
     Âge de la voiture depuis sa première mise en circulation.
 
     Cette valeur permet de calculer la décote de la voiture qui a un impact
     important sur le prix d'achat.
-  valeur: commun . année courante - année de fabrication
+  # valeur: commun . année courante - année de fabrication
+  par défaut: 5  # commun . année courante - année de fabrication
 
 voiture . année de fabrication:
   titre: Année de fabrication de la voiture

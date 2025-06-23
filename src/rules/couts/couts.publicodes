@@ -90,9 +90,13 @@ coûts . achat amorti:
       valeur: voiture . prix d'achat - valeur de revente
 
     valeur de revente: 
-      valeur: voiture . prix d'achat * (100% - décote)
+      valeur: voiture . prix d'achat . estimé * (100% - décote)
       contexte:
-        décote . durée décote: voiture . durée de détention totale
+        décote . durée décote: 
+          variations:
+            - si: voiture . occasion
+              alors: voiture . âge + voiture . durée de détention totale
+            - sinon: voiture . durée de détention totale
       note: >
         Par soucis de simplicité, nous avons choisi de calculer la décote non
         pas en fonction de l'âge de la voiture, mais en fonction de la durée de

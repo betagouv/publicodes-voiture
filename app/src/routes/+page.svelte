@@ -3,6 +3,7 @@ import { goto } from "$app/navigation";
 import { simulator } from "$lib/simulator";
 import {
   Button,
+  Checkbox,
   DataTable,
   DataTableSkeleton,
   Form,
@@ -24,6 +25,7 @@ type Data = {
     consommation: string;
     "prix carburant": string;
     "prix kWh": string;
+    "prix de revente"?: string;
   };
 };
 
@@ -37,13 +39,15 @@ const pp = (n: number | null | undefined, unit: string, round = true) =>
 
 const engine = simulator.getEngine();
 
-const situationDefaut = {
+const situationDefaut: Situation = {
   // "voiture . prix d'achat . estimé": 30000,
   "voiture . durée de détention totale": 5.5,
   "usage . km annuels . connus": "oui",
   "usage . km annuels . renseignés": 12000,
+  "voiture . âge": 5,
 };
 
+let occasion = $state(true);
 let alternatives: Data[] = $state([]);
 let situation: Situation = $state(situationDefaut);
 let submitted = $state(true);
@@ -56,11 +60,14 @@ let rows = 40;
 $effect(() => {
   if (submitted) {
     loading = true;
+    console.log("Calculating alternatives with situation:", situation);
+    situation["voiture . occasion"] = occasion ? "oui" : "non";
     alternatives = simulator.setSituation(situation)
       .evaluateAlternatives().filter((alternative) =>
         alternative.motorisation.value !== "électrique"
       )
       .map((alternative, id) => {
+        console.log("Alternative:", alternative);
         engine.setSituation(
           {
             ...situation as any,
@@ -91,6 +98,10 @@ $effect(() => {
             "€/an",
           ),
           "hypotheses": {
+            "prix de revente": pp(
+              alternative.cost.totalPurchaseCost.value,
+              "€",
+            ),
             "coût d'achat": pp(
               engine.evaluate("voiture . prix d'achat").nodeValue as number,
               "€",
@@ -144,15 +155,23 @@ let filteredRowIds = $derived(
       loading = true;
     }}
   >
-    <div class="inline-flex gap-8">
-      <NumberInput
-        id="prix-achat"
-        label="Prix d'achat estimé (€)"
-        min={1}
-        max={100000}
-        required={false}
-        bind:value={situation["voiture . prix d'achat . estimé"]}
+    <div class="inline-flex gap-8 items-center">
+      <Checkbox
+        id="occasion"
+        labelText="Voiture d'occasion"
+        bind:checked={occasion}
       />
+
+      {#if occasion}
+        <NumberInput
+          id="âge"
+          label="Âge de la voiture (années)"
+          min={0}
+          max={100}
+          required={false}
+          bind:value={situation["voiture . âge"]}
+        />
+      {/if}
 
       <NumberInput
         id="durée-détention"
@@ -170,6 +189,15 @@ let filteredRowIds = $derived(
         min={0}
         required={false}
         bind:value={situation["usage . km annuels . renseignés"]}
+      />
+
+      <NumberInput
+        id="prix-achat"
+        label="Prix d'achat estimé (€)"
+        min={1}
+        max={100000}
+        required={false}
+        bind:value={situation["voiture . prix d'achat . estimé"]}
       />
     </div>
 
@@ -233,6 +261,11 @@ let filteredRowIds = $derived(
       <svelte:fragment slot="expanded-row" let:row>
         <ul class="py-8">
           <li>Coût d'achat : {row.hypotheses["coût d'achat"]}</li>
+          <li>
+            Coût d'achat réel (moins la décote) : {
+              row.hypotheses["prix de revente"]
+            }
+          </li>
           <li>Consommation : {row.hypotheses.consommation}</li>
           <li>Prix carburant : {row.hypotheses["prix carburant"]}</li>
           <li>Prix kWh : {row.hypotheses["prix kWh"]}</li>
