@@ -44,15 +44,18 @@
     "compile:rules": "publicodes compile src/rules",
     "compile": "yarn compile:rules && tsup",
     "test": "yarn compile:rules && vitest run",
+    "benchmark": "yarn compile:rules && node test/CarSimulator.benchmark.js",
     "dev": "publicodes dev",
     "doc": "yarn run compile && cd online-doc && yarn run dev",
     "doc:build": "yarn run compile && cd online-doc && yarn run build"
   },
   "devDependencies": {
+    "@betagouv/publicodes-voiture": "^0.3.8",
     "@incubateur-ademe/nosgestesclimat": "^3.8.0",
     "@incubateur-ademe/publicodes-commun": "^1.1.5",
     "@publicodes/tools": "^1.7.2",
     "csv-parser": "^3.2.0",
+    "mitata": "^1.0.34",
     "terser": "^5.39.2",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",

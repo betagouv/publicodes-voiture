@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@betagouv/publicodes-voiture@^0.3.8":
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/@betagouv/publicodes-voiture/-/publicodes-voiture-0.3.8.tgz#8da67294f24de19d5434194dcfd8562f6aa786aa"
+  integrity sha512-SiM+bw1Eon7vXZb3j6OnW65mSVfGSg0DdMTySMq9EZ7aYFOxm+HlYGwzV964XFRtU+aAhzh9dfsJHShrbXjtgQ==
+  dependencies:
+    publicodes "^1.8.0"
+
 "@clack/core@^0.3.3":
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/@clack/core/-/core-0.3.5.tgz#3e1454c83a329353cc3a6ff8491e4284d49565bb"
@@ -1549,6 +1556,11 @@ minimatch@^9.0.4, minimatch@^9.0.5:
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-7.1.2.tgz#93a9626ce5e5e66bd4db86849e7515e92340a707"
   integrity sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==
 
+mitata@^1.0.34:
+  version "1.0.34"
+  resolved "https://registry.yarnpkg.com/mitata/-/mitata-1.0.34.tgz#131f500d58c0bdc958095ab64f637d6fe1cf101a"
+  integrity sha512-Mc3zrtNBKIMeHSCQ0XqRLo1vbdIx1wvFV9c8NJAiyho6AjNfMY8bVhbS12bwciUdd1t4rj8099CH3N3NFahaUA==
+
 mlly@^1.7.4:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/mlly/-/mlly-1.7.4.tgz#3d7295ea2358ec7a271eaa5d000a0f84febe100f"
@@ -1705,15 +1717,15 @@ process@^0.11.1:
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==
 
+publicodes@^1.8.0, publicodes@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.9.0.tgz#e74914edd46820ee5a81144192bb68a7e1a15fed"
+  integrity sha512-0E2vsKAZTq3jNm+sWYDDZfHjePPaPkBIn8cMLS7qtMxC8HRyPQMEFkqowibycLwY+C/hrG0OJJt6+estMiXxYA==
+
 publicodes@^1.8.2:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.8.5.tgz#654bb97bea3aed86ad7249b575d16ac948faf6ea"
   integrity sha512-z+3/NSfOfW2GGp//ulnZBj/KHWylZGuwjKOc7vAVDvmnbdeAWSG1+Dn7JffSZ85+Qs2XK/pWEOrdtFMrPvSWYQ==
-
-publicodes@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.9.0.tgz#e74914edd46820ee5a81144192bb68a7e1a15fed"
-  integrity sha512-0E2vsKAZTq3jNm+sWYDDZfHjePPaPkBIn8cMLS7qtMxC8HRyPQMEFkqowibycLwY+C/hrG0OJJt6+estMiXxYA==
 
 punycode@^2.1.0:
   version "2.3.1"
