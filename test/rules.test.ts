@@ -30,6 +30,24 @@ describe("Règles", () => {
     })
   })
 
+  describe("aides", () => {
+    test("bonus écologique", () => {
+      let actual = engine.setSituation({}).evaluate("aides . bonus écologique")
+
+      expect(actual.nodeValue).toBeNull()
+
+      actual = engine
+        .setSituation({
+          "voiture . motorisation": "'électrique'",
+          "voiture . prix d'achat": 40000,
+        })
+        .evaluate("aides . bonus écologique")
+
+      expect(actual.nodeValue).toEqual(4000)
+      expect(serializeUnit(actual.unit)).toEqual("€")
+    })
+  })
+
   describe("voiture . prix d'achat", () => {
     test("prix par défaut", () => {
       const actual = engine.setSituation({}).evaluate("voiture . prix d'achat")
@@ -253,7 +271,7 @@ describe("Règles", () => {
     test("le prix d'achat devrait influencer la rentabilité", () => {
       const low = engine
         .setSituation({
-          "voiture . prix d'achat": 2000,
+          "voiture . prix d'achat": 20000,
         })
         .evaluate("rentabilité passage à l'électrique . durée de détention")
 
@@ -272,7 +290,7 @@ describe("Règles", () => {
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(26, 0)
+        expect(actual.nodeValue).toBeCloseTo(23, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -284,7 +302,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(46, 0)
+        expect(actual.nodeValue).toBeCloseTo(41, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -296,7 +314,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(11, 0)
+        expect(actual.nodeValue).toBeCloseTo(10, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -311,7 +329,7 @@ describe("Règles", () => {
         // Même sans rouler, les coûts de possessions sont toujours présents et
         // moins élevés pour une voiture électrique (assurance moins chère,
         // moins d'entretien, etc.)
-        expect(actual.nodeValue).toBeCloseTo(97.56, 0)
+        expect(actual.nodeValue).toBeCloseTo(88, 0)
       })
 
       // NOTE: pour l'instant, le coût d'achat total dépend de la durée de
@@ -344,7 +362,7 @@ describe("Règles", () => {
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . km annuels")
 
-        expect(actual.nodeValue).toBeCloseTo(71418, 0)
+        expect(actual.nodeValue).toBeCloseTo(60156, 0)
         expect(serializeUnit(actual.unit)).toEqual("km/an")
       })
 
