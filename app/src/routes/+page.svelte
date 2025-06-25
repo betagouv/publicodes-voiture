@@ -42,8 +42,6 @@ const engine = simulator.getEngine();
 let occasion = $state(true);
 let alternatives: Data[] = $state([]);
 let situation: Situation = $derived({
-  // "voiture . prix d'achat . estimé": 30000,
-  "voiture . prix d'achat": 11440,
   "voiture . durée de détention totale": 5,
   "usage . km annuels . connus": "oui",
   "usage . km annuels . renseignés": 12000,
@@ -60,12 +58,16 @@ let rows = 40;
 $effect(() => {
   if (submitted) {
     loading = true;
-    console.log("Calculating alternatives with situation:", situation);
     situation["voiture . occasion"] = occasion ? "oui" : "non";
-    situation["voiture . prix d'achat . estimé d'occasion"] =
-      situation["voiture . prix d'achat"];
-    situation["voiture . prix d'achat . estimé neuf"] =
-      situation["voiture . prix d'achat"];
+    if (situation["voiture . prix d'achat"]) {
+      situation["voiture . prix d'achat . estimé d'occasion"] =
+        situation["voiture . prix d'achat"];
+      situation["voiture . prix d'achat . estimé neuf"] =
+        situation["voiture . prix d'achat"];
+    } else {
+      delete situation["voiture . prix d'achat . estimé d'occasion"];
+      delete situation["voiture . prix d'achat . estimé neuf"];
+    }
     alternatives = simulator.setSituation(situation)
       .evaluateAlternatives().filter((alternative) =>
         alternative.motorisation.value !== "électrique"

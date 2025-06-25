@@ -10,9 +10,9 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@betagouv/publicodes-voiture@https://pkg.pr.new/betagouv/publicodes-voiture/@betagouv/publicodes-voiture@18":
+"@betagouv/publicodes-voiture@https://pkg.pr.new/betagouv/publicodes-voiture/@betagouv/publicodes-voiture@dcd800f":
   version "0.3.8"
-  resolved "https://pkg.pr.new/betagouv/publicodes-voiture/@betagouv/publicodes-voiture@18#7bb9311b9d5cc733a79ea7d790a6106fba54b9f6"
+  resolved "https://pkg.pr.new/betagouv/publicodes-voiture/@betagouv/publicodes-voiture@dcd800f#4da75efb799ca60a4fe45f02bd3aabd23ef88dbe"
   dependencies:
     publicodes "^1.9.0"
 
