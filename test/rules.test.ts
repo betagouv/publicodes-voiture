@@ -48,7 +48,7 @@ describe("Règles", () => {
     })
   })
 
-  describe.only("coûts . achat amorti", () => {
+  describe("coûts . achat amorti", () => {
     test("les divisions par zero ne devrait pas être possible", () => {
       const actual = engine
         .setSituation({ "voiture . durée de détention totale": 0 })
@@ -188,34 +188,6 @@ describe("Règles", () => {
             "voiture . thermique . carburant": "'essence E5 ou E10'",
           })
           .evaluate("coûts . achat amorti . coût d'achat total")
-        console.log(
-          "prix d'achat",
-          engine
-            .setSituation({
-              "voiture . prix d'achat . estimé": 22000,
-              "voiture . occasion": "oui",
-              "voiture . durée de détention totale": durée,
-              "voiture . motorisation": "'thermique'",
-              "voiture . thermique . carburant": "'essence E5 ou E10'",
-            })
-            .evaluate("voiture . prix d'achat").nodeValue,
-        )
-
-        console.log("coût d'achat total", actual.nodeValue)
-
-        console.log(
-          "valeur de revente",
-          engine
-            .setSituation({
-              "voiture . prix d'achat . estimé": 22000,
-              "voiture . occasion": "oui",
-              "voiture . durée de détention totale": durée,
-              "voiture . motorisation": "'thermique'",
-              "voiture . thermique . carburant": "'essence E5 ou E10'",
-            })
-            .evaluate("coûts . achat amorti . valeur de revente").nodeValue,
-        )
-
         expect(actual.nodeValue).toBeCloseTo(6820 - expected, 0)
         expect(serializeUnit(actual.unit)).toEqual("€")
       },
@@ -278,13 +250,29 @@ describe("Règles", () => {
       expect(low).toBeLessThan(high)
     })
 
+    test("le prix d'achat devrait influencer la rentabilité", () => {
+      const low = engine
+        .setSituation({
+          "voiture . prix d'achat": 2000,
+        })
+        .evaluate("rentabilité passage à l'électrique . durée de détention")
+
+      const high = engine
+        .setSituation({
+          "voiture . prix d'achat": 40000,
+        })
+        .evaluate("rentabilité passage à l'électrique . durée de détention")
+
+      expect(low.nodeValue).toBeLessThan(high.nodeValue as number)
+    })
+
     describe("durée de détention", () => {
       test("par défaut", () => {
         const actual = engine
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(23, 0)
+        expect(actual.nodeValue).toBeCloseTo(26, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -296,7 +284,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(35, 0)
+        expect(actual.nodeValue).toBeCloseTo(46, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -308,7 +296,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(8, 0)
+        expect(actual.nodeValue).toBeCloseTo(11, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -323,7 +311,7 @@ describe("Règles", () => {
         // Même sans rouler, les coûts de possessions sont toujours présents et
         // moins élevés pour une voiture électrique (assurance moins chère,
         // moins d'entretien, etc.)
-        expect(actual.nodeValue).toBeCloseTo(74.2, 0)
+        expect(actual.nodeValue).toBeCloseTo(97.56, 0)
       })
 
       // NOTE: pour l'instant, le coût d'achat total dépend de la durée de
@@ -356,7 +344,7 @@ describe("Règles", () => {
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . km annuels")
 
-        expect(actual.nodeValue).toBeCloseTo(63172.2, 0)
+        expect(actual.nodeValue).toBeCloseTo(71418, 0)
         expect(serializeUnit(actual.unit)).toEqual("km/an")
       })
 

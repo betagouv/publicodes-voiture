@@ -43,7 +43,8 @@ let occasion = $state(true);
 let alternatives: Data[] = $state([]);
 let situation: Situation = $derived({
   // "voiture . prix d'achat . estimé": 30000,
-  "voiture . durée de détention totale": 5.5,
+  "voiture . prix d'achat": 11440,
+  "voiture . durée de détention totale": 5,
   "usage . km annuels . connus": "oui",
   "usage . km annuels . renseignés": 12000,
   "aides . bonus écologique": occasion ? 0 : 4000,
@@ -61,6 +62,10 @@ $effect(() => {
     loading = true;
     console.log("Calculating alternatives with situation:", situation);
     situation["voiture . occasion"] = occasion ? "oui" : "non";
+    situation["voiture . prix d'achat . estimé d'occasion"] =
+      situation["voiture . prix d'achat"];
+    situation["voiture . prix d'achat . estimé neuf"] =
+      situation["voiture . prix d'achat"];
     alternatives = simulator.setSituation(situation)
       .evaluateAlternatives().filter((alternative) =>
         alternative.motorisation.value !== "électrique"
@@ -200,7 +205,7 @@ let filteredRowIds = $derived(
 
       <NumberInput
         id="prix-achat"
-        label="Prix d'achat estimé (€)"
+        label="Prix d'achat (€)"
         min={1}
         max={100000}
         required={false}

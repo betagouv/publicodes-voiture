@@ -32,13 +32,14 @@ aller-retours travail électrique ville occasion:
   contexte:
     voiture . motorisation: "'électrique'"
     voiture . gabarit: "'petite'"
-    voiture . prix d'achat: 5400
+    voiture . prix d'achat: 11440
+    voiture . âge: 5
     voiture . occasion: oui
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 20
     usage . km annuels . calculés . vacances: 0
   empreinte: 504.84559221087443
-  coûts: 3693.5316832688586
+  coûts: 3935.8110624262863
 
 grandes vacances familiales:
   titre: Grandes vacances familiales (essence)
