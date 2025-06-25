@@ -1,6 +1,7 @@
 <script lang="ts">
 import { goto } from "$app/navigation";
 import { simulator } from "$lib/simulator";
+import type { Situation } from "$lib/simulator";
 import {
   Button,
   Checkbox,
@@ -13,7 +14,6 @@ import {
   ToolbarContent,
   ToolbarSearch,
 } from "carbon-components-svelte";
-import { type Situation } from "../../../src";
 
 type Data = {
   id: number;
@@ -71,7 +71,6 @@ $effect(() => {
         alternative.motorisation.value !== "électrique"
       )
       .map((alternative, id) => {
-        console.log("Alternative:", alternative);
         engine.setSituation(
           {
             ...situation as any,
