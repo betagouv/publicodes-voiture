@@ -41,51 +41,60 @@ voiture . prix d'achat . estimé:
     motorisation.
   formule:
     variations:
-      - si: voiture . gabarit = 'petite'
+      - si: voiture . motorisation = 'électrique'
         alors:
           variations:
-            - si: voiture . motorisation = 'thermique'
-              alors: thermique . petite
-            - si: voiture . motorisation = 'hybride'
-              alors: hybride . petite
-            - si: voiture . motorisation = 'électrique'
-              alors: électrique . petite
-      - si: voiture . gabarit = 'moyenne'
+            - si: voiture . gabarit = 'petite'
+              alors: car labbeling . petite . électrique
+            - si: voiture . gabarit = 'moyenne'
+              alors: car labbeling . moyenne . électrique
+            - si: voiture . gabarit = 'berline'
+              alors: car labbeling . berline . électrique
+            - si: voiture . gabarit = 'SUV'
+              alors: car labbeling . SUV . électrique
+            - si: voiture . gabarit = 'VUL'
+              alors: car labbeling . VUL . électrique
+      - si: voiture . motorisation = 'thermique'
         alors:
           variations:
-            - si: voiture . motorisation = 'thermique'
-              alors: thermique . moyenne
-            - si: voiture . motorisation = 'hybride'
-              alors: hybride . moyenne
-            - si: voiture . motorisation = 'électrique'
-              alors: électrique . moyenne
-      - si: voiture . gabarit = 'berline'
+            - si: voiture . thermique . carburant = 'gazole B7 ou B10'
+              alors:
+                variations:
+                  - si: voiture . gabarit = 'petite'
+                    alors: car labbeling . petite . diesel
+                  - si: voiture . gabarit = 'moyenne'
+                    alors: car labbeling . moyenne . diesel
+                  - si: voiture . gabarit = 'berline'
+                    alors: car labbeling . berline . diesel
+                  - si: voiture . gabarit = 'SUV'
+                    alors: car labbeling . SUV . diesel
+                  - si: voiture . gabarit = 'VUL'
+                    alors: car labbeling . VUL . diesel
+            - sinon:
+                variations:
+                  - si: voiture . gabarit = 'petite'
+                    alors: car labbeling . petite . essence
+                  - si: voiture . gabarit = 'moyenne'
+                    alors: car labbeling . moyenne . essence
+                  - si: voiture . gabarit = 'berline'
+                    alors: car labbeling . berline . essence
+                  - si: voiture . gabarit = 'SUV'
+                    alors: car labbeling . SUV . essence
+                  - si: voiture . gabarit = 'VUL'
+                    alors: car labbeling . VUL . essence
+      - si: voiture . motorisation = 'hybride'
         alors:
           variations:
-            - si: voiture . motorisation = 'thermique'
-              alors: thermique . berline
-            - si: voiture . motorisation = 'hybride'
-              alors: hybride . berline
-            - si: voiture . motorisation = 'électrique'
-              alors: électrique . berline
-      - si: voiture . gabarit = 'SUV'
-        alors:
-          variations:
-            - si: voiture . motorisation = 'thermique'
-              alors: thermique . SUV
-            - si: voiture . motorisation = 'hybride'
-              alors: hybride . SUV
-            - si: voiture . motorisation = 'électrique'
-              alors: électrique . SUV
-      - si: voiture . gabarit = 'VUL'
-        alors:
-          variations:
-            - si: voiture . motorisation = 'thermique'
-              alors: thermique . VUL
-            - si: voiture . motorisation = 'hybride'
-              alors: hybride . VUL
-            - si: voiture . motorisation = 'électrique'
-              alors: électrique . VUL
+            - si: voiture . gabarit = 'petite'
+              alors: car labbeling . petite . hybride
+            - si: voiture . gabarit = 'moyenne'
+              alors: car labbeling . moyenne . hybride
+            - si: voiture . gabarit = 'berline'
+              alors: car labbeling . berline . hybride
+            - si: voiture . gabarit = 'SUV'
+              alors: car labbeling . SUV . hybride
+            - si: voiture . gabarit = 'VUL'
+              alors: car labbeling . VUL . hybride
   unité: €
   note: |
     La valeur du prix d'achat moyen d'une voiture neuve est importante pour le
@@ -170,29 +179,69 @@ voiture . prix d'achat . estimé:
     C'est pourquoi nous avons choisi de ne pas utiliser ces données pour
     l'instant.
 
-voiture . prix d'achat . estimé . thermique:
-  avec:
-    petite: 19000 €
-    moyenne: 31000 €
-    berline: 38000 €
-    SUV: 40000 €
-    VUL: 30000 €
+voiture . prix d'achat . estimé . car labbeling:
+  titre: Prix d'achat estimé par défaut (Car Labelling)
+  description: |
+    Prix d'achat moyen d'une voiture neuve en fonction du gabarit et de sa motorisation, basé sur les données de [Car Labelling](https://www.data.gouv.fr/datasets/ademe-car-labelling/).
 
-voiture . prix d'achat . estimé . hybride:
-  avec:
-    petite: 22000 €
-    moyenne: 34000 €
-    berline: 42000 €
-    SUV: 44000 €
-    VUL: 38000 €
+    L'équivalence entre les gabarits de Nos Gestes Climat et ceux de Car Labelling est faite de la façon suivante.
 
-voiture . prix d'achat . estimé . électrique:
+    **Voiture électrique** :
+    - petite : < 1700 kg
+    - moyenne : 1700-2000 kg
+    - berline : >= 2000 kg
+    - SUV : >= 2000 kg et gamme 'LUXE'/'SUPERIEUR' et prix <= 100 000 euros
+    - VUL : carrosserie 'COMPISPACE'
+
+    **Voiture thermique** :
+    - petite : < 1400 kg
+    - moyenne : 1400-1600 kg
+    - berline : >= 1600 kg
+    - SUV : >= 1600 kg et gamme 'LUXE'/'SUPERIEUR' et prix <= 100 000 euros
+    - VUL : carrosserie 'COMPISPACE'
+
+    **voiture hybride** :
+    - petite : < 1550 kg
+    - moyenne : 1550-1750 kg
+    - berline : >= 1750 kg
+    - SUV : >= 1750 kg, gamme 'LUXE'/'SUPERIEUR' et prix <= 100 000 euros
+    - VUL : carrosserie 'COMPISPACE'
+
+    Sont exclues les voitures avec un prix d'achat supérieur à 100 000 euros, et nous faisons l'hypothèse que le prix d'achat réel est 10% inférieur au prix catalogue (selon le [SGPE](https://www.planification-ecologique.gouv.fr/)).
+
+    Le script utilisé pour calculer les valeurs est disponible [ici](https://github.com/betagouv/publicodes-voiture/blob/main/scripts/carlabelling-compute.ts).
+  
   avec:
-    petite: 32000 €
-    moyenne: 40000 €
-    berline: 48000 €
-    SUV: 50000 €
-    VUL: 45000 €
+    petite: 
+      avec:
+        essence: 28120 €
+        diesel: 27686 €
+        électrique: 33284 €
+        hybride: 35753 €
+    moyenne: 
+      avec:
+        essence: 38870 €
+        diesel: 37342 €
+        électrique: 45132 €
+        hybride: 41670 €
+    berline: 
+      avec:
+        essence: 50713 €
+        diesel: 41401 €
+        électrique: 49899 €
+        hybride: 49545 €
+    SUV: 
+      avec:
+        essence: 65377 €
+        diesel: 48336 €
+        électrique: 73701 €
+        hybride: 59871 €
+    VUL: 
+      avec:
+        essence: 28457 €
+        diesel: 29949 €
+        électrique: 35805 €
+        hybride: 35805 €
 
 voiture . thermique . consommation carburant:
   question: Quelle est sa consommation moyenne ?

@@ -75,7 +75,7 @@ describe("Règles", () => {
     test("prix par défaut", () => {
       const actual = engine.setSituation({}).evaluate("voiture . prix d'achat")
 
-      expect(actual.nodeValue).toEqual(38000)
+      expect(actual.nodeValue).toEqual(50713)
       expect(serializeUnit(actual.unit)).toEqual("€")
     })
 
@@ -84,7 +84,7 @@ describe("Règles", () => {
         .setSituation({ "voiture . occasion": "oui" })
         .evaluate("voiture . prix d'achat")
 
-      expect(actual.nodeValue).toEqual(11780)
+      expect(actual.nodeValue).toBeCloseTo(15721, 0)
       expect(serializeUnit(actual.unit)).toEqual("€")
     })
   })
@@ -95,7 +95,7 @@ describe("Règles", () => {
         .setSituation({ "voiture . durée de détention totale": 0 })
         .evaluate("coûts . achat amorti")
 
-      expect(actual.nodeValue).toEqual(7600)
+      expect(actual.nodeValue).toBeCloseTo(10143, 0)
     })
 
     test.for([
@@ -313,7 +313,7 @@ describe("Règles", () => {
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(18, 0)
+        expect(actual.nodeValue).toBeCloseTo(19, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -325,7 +325,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(34, 0)
+        expect(actual.nodeValue).toBeCloseTo(35, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -352,7 +352,7 @@ describe("Règles", () => {
         // Même sans rouler, les coûts de possessions sont toujours présents et
         // moins élevés pour une voiture électrique (assurance moins chère,
         // moins d'entretien, etc.)
-        expect(actual.nodeValue).toBeCloseTo(88, 0)
+        expect(actual.nodeValue).toBeCloseTo(91, 0)
       })
 
       // NOTE: pour l'instant, le coût d'achat total dépend de la durée de
@@ -385,7 +385,7 @@ describe("Règles", () => {
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . km annuels")
 
-        expect(actual.nodeValue).toBeCloseTo(43028, 0)
+        expect(actual.nodeValue).toBeCloseTo(45284, 0)
         expect(serializeUnit(actual.unit)).toEqual("km/an")
       })
 

@@ -1,7 +1,7 @@
 valeur par défaut:
   titre: Valeur par défaut
   empreinte: 4232.090025601444
-  coûts: 8677.415018782494
+  coûts: 9786.913200600677
   contexte: {}
 
 aller-retours travail électrique ville:
@@ -54,7 +54,7 @@ grandes vacances familiales:
     usage . km annuels . calculés . quotidien: 5
     usage . km annuels . calculés . vacances: 2000
   empreinte: 1675.63899023877
-  coûts: 6723.610157682495
+  coûts: 7833.108339500677
 
 famille usage régulier diesel:
   titre: Usage régulier en famille (diesel)
@@ -72,7 +72,7 @@ famille usage régulier diesel:
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
   empreinte: 4121.41757764417
-  coûts: 8260.536466832495
+  coûts: 8557.35101228704
 
 famille usage régulier biocarburant:
   titre: Usage régulier en famille (biocarburant)
@@ -90,7 +90,7 @@ famille usage régulier biocarburant:
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
   empreinte: 2678.54010671917
-  coûts: 7814.115825819994
+  coûts: 8923.614007638176
 
 famille usage régulier moyenne biocarburant:
   titre: Usage régulier en famille (moyenne/biocarburant)
@@ -108,4 +108,4 @@ famille usage régulier moyenne biocarburant:
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
   empreinte: 2366.069076368627
-  coûts: 7114.208924567154
+  coûts: 7801.045288203517
