@@ -12,14 +12,18 @@ importer!:
         formule: usage . km annuels
         unité: km/an
     - transport . voiture . utilisateur:
-        question: Quel est l'utilisateur de la voiture ? DEBUG
+        question: Quel est l'utilisateur de la voiture ?
         formule: "'propriétaire'"
     - transport . voiture . voyageurs:
         question:
         formule: 1
     - transport . voiture . motorisation:
         question:
-        formule: voiture . motorisation
+        formule: 
+          variations:
+            - si: voiture . motorisation = 'hybride'
+              alors: "'hybride non rechargeable'"
+            - sinon: voiture . motorisation
     - transport . voiture . thermique . consommation aux 100:
         question:
         formule:

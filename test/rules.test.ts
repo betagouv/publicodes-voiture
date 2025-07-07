@@ -48,6 +48,29 @@ describe("Règles", () => {
     })
   })
 
+  describe("mapping", () => {
+    test("la motorisation 'hybride' devrait être mappée vers 'hybride non rechargeable'", () => {
+      engine.setSituation({
+        "voiture . motorisation": "'hybride'",
+      })
+      const hybridEmissions = engine.evaluate("empreinte")
+
+      engine.setSituation({
+        "ngc . transport . voiture . motorisation":
+          "'hybride non rechargeable'",
+      })
+      const hnrEmissions = engine.evaluate("empreinte")
+
+      engine.setSituation({
+        "ngc . transport . voiture . motorisation": "'hybride rechargeable'",
+      })
+      const hrEmissions = engine.evaluate("empreinte")
+
+      expect(hybridEmissions.nodeValue).toEqual(hnrEmissions.nodeValue)
+      expect(hybridEmissions.nodeValue).not.toEqual(hrEmissions.nodeValue)
+    })
+  })
+
   describe("voiture . prix d'achat", () => {
     test("prix par défaut", () => {
       const actual = engine.setSituation({}).evaluate("voiture . prix d'achat")
@@ -290,7 +313,7 @@ describe("Règles", () => {
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(23, 0)
+        expect(actual.nodeValue).toBeCloseTo(18, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -302,7 +325,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(41, 0)
+        expect(actual.nodeValue).toBeCloseTo(34, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -314,7 +337,7 @@ describe("Règles", () => {
           })
           .evaluate("rentabilité passage à l'électrique . durée de détention")
 
-        expect(actual.nodeValue).toBeCloseTo(10, 0)
+        expect(actual.nodeValue).toBeCloseTo(7, 0)
         expect(serializeUnit(actual.unit)).toEqual("an")
       })
 
@@ -362,7 +385,7 @@ describe("Règles", () => {
           .setSituation({})
           .evaluate("rentabilité passage à l'électrique . km annuels")
 
-        expect(actual.nodeValue).toBeCloseTo(60156, 0)
+        expect(actual.nodeValue).toBeCloseTo(43028, 0)
         expect(serializeUnit(actual.unit)).toEqual("km/an")
       })
 

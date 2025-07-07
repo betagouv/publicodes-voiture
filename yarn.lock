@@ -293,10 +293,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.4.tgz#0b17ec8a70b2385827d52314c1253160a0b9bacc"
   integrity sha512-nOT2vZNw6hJ+z43oP1SPea/G/6AbN6X+bGNhNuq8NtRHy4wsMhw765IKLNmnjek7GvjWBYQ8Q5VBoYTFg9y1UQ==
 
-"@incubateur-ademe/nosgestesclimat@^3.8.0":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@incubateur-ademe/nosgestesclimat/-/nosgestesclimat-3.8.0.tgz#f65fc1b488923b2688fd606fc0dab92d8536132b"
-  integrity sha512-Q0W+6OUmJZQTozFOxXVgMM+WI8y+ccXMxf5/RlpL7q72C4Dok2D3AHBUQFkxRvbrwXaTW2GWFM112XSBHVmreA==
+"@incubateur-ademe/nosgestesclimat@3.8.3":
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/@incubateur-ademe/nosgestesclimat/-/nosgestesclimat-3.8.3.tgz#72529aee94cd7fa8a0309a518ddf4c9a6fd74113"
+  integrity sha512-6SI6+8y5XLFvzJ/PfXNKW4TLAQDi3BmtlauUdyUwLXwycvcypcUMGqb6eaqmKnYLvFBmyKL9Ohz/ZVY0noIlwQ==
 
 "@incubateur-ademe/publicodes-commun@^1.1.5":
   version "1.1.5"
