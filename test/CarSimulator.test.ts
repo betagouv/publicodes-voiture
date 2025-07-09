@@ -166,7 +166,7 @@ describe("CarSimulator", () => {
     test("should have default values", () => {
       const carInfos = engine.evaluateCar()
 
-      expect(carInfos.cost.total.value).toBeCloseTo(9787, 0)
+      expect(carInfos.cost.total.value).toBeCloseTo(5361, 0)
       expect(carInfos.emissions.total.value).toBeCloseTo(4232, 0)
       expect(carInfos.size).toEqual({
         value: "berline",
@@ -277,26 +277,28 @@ describe("CarSimulator", () => {
 
   describe("evaluateAlternatives()", () => {
     test("should return all possible alternatives with default values", () => {
-      engine.setInputs({ "usage . km annuels . renseignés": 1000000 })
       console.time("evaluateAlternatives")
       const alternatives = engine.evaluateAlternatives()
       console.timeEnd("evaluateAlternatives")
 
-      // TODO: use engine.getOptions
+      const nbEtats = 2
       const nbMotorisations = 3
       const nbFuels = 4
       const nbSizes = 5
       const nbAlternatives =
+        // Neuf + Occasion
+        nbEtats *
         // Thermique + Hybride
-        (nbMotorisations - 1) * nbFuels * nbSizes +
-        // Electrique
-        nbSizes
+        ((nbMotorisations - 1) * nbFuels * nbSizes +
+          // Electrique
+          nbSizes)
 
       expect(alternatives).toHaveLength(nbAlternatives)
       alternatives.forEach((alternative) => {
         expect(alternative.kind).toEqual("car")
         expect(alternative.cost.total.value).toBeGreaterThan(0)
         expect(alternative.emissions.total.value).toBeGreaterThan(0)
+        expect(alternative.occasion).toBeDefined()
         expect(alternative.size.value).toBeDefined()
         expect(alternative.size.isEnumValue).toBeTruthy()
         expect(alternative.motorisation.value).toBeDefined()
@@ -307,6 +309,8 @@ describe("CarSimulator", () => {
         } else {
           expect(alternative.fuel).toBeUndefined()
         }
+        // TODO: need to test the profitability calculation
+        // expect(alternative.profitability).toBeDefined()
       })
     })
 

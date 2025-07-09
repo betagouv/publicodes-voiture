@@ -1,12 +1,12 @@
 coûts:
   titre: Coûts annuels de votre voiture
   description: |
-    Coûts répartis entre les coûts liés à la possession d'une voiture (achat,
+    Coûts répartis entre les coûts liés à la possession d'une voiture (
     assurance, etc...) et les coûts liés à son utilisation (carburant,
     entretien, etc...).
   formule:
     somme:
-      - achat amorti
+      # - achat amorti
       - coûts de possession
       - coûts d'utilisation
   unité: €/an

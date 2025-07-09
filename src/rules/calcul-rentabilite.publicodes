@@ -1,0 +1,116 @@
+# calcul de rentabilité:
+#   titre: Calcul de la rentabilité du passage à l'alternative
+#   description: >
+#     Calcul de la rentabilité du passage à l'alternative par rapport à la
+#     voiture actuelle.
+#
+# # NOTE: comment souhaitons-nous gérer le cas où les économies annuelles sont négatives ?
+# calcul de rentabilité . durée de détention:
+#   titre: Durée minimale pour rentabiliser l'alternative
+#   description: >
+#     Calcul de durée de la durée de détention à partir de laquelle l'alternative
+#     devient rentable en parcourant `usage . km annuels`.
+#   applicable si: variables . économie annuelle > 0
+#   valeur: variables . coût d'achat à rentabiliser / variables . économie annuelle
+#   unité: an
+#
+# calcul de rentabilité . économie annuelle:
+#   titre: Économie annuelle
+#   description: >
+#     Calcul de l'économie annuelle réalisée en passant à l'alternative
+#     envisagée.
+#   valeur: variables . économie annuelle
+#   unité: €/an
+#
+# calcul de rentabilité . économie totale:
+#   titre: Économie totale
+#   description: >
+#     Calcul de l'économie totale réalisée en passant à l'alternative
+#     envisagée.
+#   valeur: variables . économie annuelle * alternative . durée de détention
+#   unité: €
+#
+# calcul de rentabilité . alternative:
+#   titre: Alternative envisagée
+#   description: >
+#     Défini les paramètres de l'alternative envisagée pour le calcul de la
+#     rentabilité.
+#   avec:
+#     bonus écologique:
+#       non applicable si: 
+#         une de ces conditions:
+#           - alternative . occasion
+#           - alternative . motorisation = 'thermique'
+#       question: Quel est le montant du bonus écologique ?
+#       par défaut: 4000 
+#       unité: €
+#     
+#     durée de détention:
+#       question: Durée de détention de l'alternative
+#       par défaut: 10 an
+#
+#     occasion:
+#       question: L'alternative est-elle d'occasion ?
+#       par défaut: non
+#
+#     motorisation:
+#       question: Motorisation de l'alternative
+#       une possibilité:
+#         - thermique:
+#         - hybride:
+#         - électrique:
+#       par défaut: "'électrique'"
+#
+#     gabarit:
+#       question: Gabarit de l'alternative
+#       une possibilité:
+#         - petite:
+#         - moyenne:
+#         - berline:
+#         - SUV:
+#         - VUL:
+#       par défaut: voiture . gabarit
+#
+#     carburant:
+#       question: Carburant de l'alternative
+#       non applicable si: motorisation = 'électrique'
+#       une possibilité:
+#         - essence E5 ou E10:
+#         - gazole B7 ou B10:
+#         - essence E85:
+#         - GPL:
+#       par défaut: voiture . thermique . carburant
+#
+# calcul de rentabilité . variables:
+#   description: >
+#     Variables utilisées pour le calcul de la rentabilité du passage à
+#     l'électrique.
+#   avec:
+#     économie annuelle:
+#       formule: coûts - coûts alternative
+#       unité: €/an
+#     
+#     coûts alternative:
+#       titre: Coûts de l'alternative
+#       description: >
+#         Coûts liés à l'usage de la voiture électrique de même gabarit que la
+#         voiture thermique envisagée.
+#       valeur: coûts
+#       contexte:
+#         voiture . gabarit: alternative . gabarit
+#         voiture . motorisation: alternative . motorisation 
+#         voiture . thermique . carburant: alternative . carburant
+#         voiture . durée de détention totale: alternative . durée de détention
+#
+#     coût d'achat à rentabiliser:
+#       titre: Coût d'achat à rentabiliser
+#       description: >
+#         Coût d'achat de l'alternative moins le prix de revente estimé.
+#       valeur: prix d'achat alternative - alternative . bonus écologique - coûts . achat amorti . valeur de revente
+#
+#     prix d'achat alternative:
+#       valeur: voiture . prix d'achat
+#       contexte:
+#         voiture . gabarit: alternative . gabarit
+#         voiture . motorisation: alternative . motorisation 
+#         voiture . thermique . carburant: alternative . carburant

@@ -425,7 +425,6 @@ voiture . thermique . carburant:
       titre: GPL
       description: GPL (Gaz de Pétrole Liquéfié)
 
-
 voiture . gabarit:
   question: Quel est son gabarit ?
   une possibilité:
