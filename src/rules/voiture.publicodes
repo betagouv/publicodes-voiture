@@ -545,21 +545,6 @@ voiture . âge:
         SDES](https://www.statistiques.developpement-durable.gouv.fr/immatriculations-des-voitures-particulieres-en-2023-rebond-dans-le-neuf-mais-un-marche-de-loccasion).
       valeur: 10.5 an
 
-# voiture . année de fabrication:
-#   titre: Année de fabrication de la voiture
-#   question: Quelle est son année de fabrication ?
-#   description: |
-#     Renseignez l'année de fabrication de votre voiture. 
-#   par défaut: 
-#     variations:
-#       - si: occasion
-#         alors: commun . année courante - âge moyen d'une voiture d'occasion
-#       - sinon: commun . année courante - durée de détention moyenne
-#   plafond: commun . année courante
-#   plancher: 1900
-#   arrondi: oui
-#   avec:
-
 # TODO: ajouter un warning si la durée de détention est supérieure à l'âge de la voiture.
 voiture . durée de détention totale:
   question: En moyenne, combien de temps gardez-vous vos véhicule ?

@@ -308,6 +308,7 @@ describe("CarSimulator", () => {
       expect(alternatives).toHaveLength(nbAlternatives)
       alternatives.forEach((alternative) => {
         expect(alternative.kind).toEqual("car")
+        expect(alternative.cost.purchase).toBeDefined()
         expect(alternative.cost.total.value).toBeGreaterThan(0)
         expect(alternative.emissions.total.value).toBeGreaterThan(0)
         expect(alternative.occasion).toBeDefined()

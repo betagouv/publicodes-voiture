@@ -399,6 +399,11 @@ export class CarSimulator {
           alternativeEngine.evaluate("coûts").nodeValue,
           "€/an",
         ),
+        purchase: numberValue(
+          "Prix d'achat",
+          alternativeEngine.evaluate("voiture . prix d'achat").nodeValue,
+          "€",
+        ),
       },
       emissions: {
         total: numberValue("Empreinte CO2e", emissions, "kgCO2e/an"),
