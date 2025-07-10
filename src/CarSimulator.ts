@@ -39,14 +39,7 @@ export type EvaluatedCarInfos = {
   parameters: EvaluatedRuleInfos<RuleValueParams>[]
   /** The cost of the car in €/an */
   cost: {
-    /** The total cost of the car in €/an */
     total: EvaluatedRuleInfos<RuleValue["coûts"]>
-    /** Total cost of car purchase, corresponding to purchase price minus resale value in € */
-    totalPurchaseCost: EvaluatedRuleInfos<
-      RuleValue["coûts . achat amorti . coût d'achat total"]
-    >
-    /** The cost of car purchase in € */
-    purchaseCost: EvaluatedRuleInfos<RuleValue["voiture . prix d'achat"]>
   }
   /** The emissions of the car in kgCO2/an */
   emissions: {
@@ -73,6 +66,10 @@ export type TargetInfos = {
  */
 export type Alternative = {
   kind: "car"
+  /** The cost difference between the alternative and the current car */
+  diff_costs: number
+  /** The emissions difference between the alternative and the current car */
+  diff_emissions: number
   /** Information about the profitability of the alternative over the current car */
   profitability: {
     /** The cost of purchase of the alternative car minus the resale value of the current car and the ecological bonus */
@@ -204,10 +201,6 @@ export class CarSimulator {
     return {
       cost: {
         total: this.evaluateRule("coûts"),
-        totalPurchaseCost: this.evaluateRule(
-          "coûts . achat amorti . coût d'achat total",
-        ),
-        purchaseCost: this.evaluateRule("voiture . prix d'achat"),
       },
       emissions: {
         total: this.evaluateRule("empreinte"),
@@ -383,6 +376,9 @@ export class CarSimulator {
     fuel?: Possibility,
   ): Alternative {
     const { profitability } = this.computeProfitability(alternativeEngine) ?? {}
+    const current_emissions = this.evaluateRule("empreinte").value!
+    const emissions = alternativeEngine.evaluate("empreinte")
+      .nodeValue as number
 
     return {
       kind: "car",
@@ -391,31 +387,17 @@ export class CarSimulator {
       motorisation: enumValue(motorisation),
       fuel: enumValue(fuel),
       occasion: booleanValue("Occasion", occasion),
+      diff_costs: profitability?.savingsByYear.value!,
+      diff_emissions: current_emissions - emissions,
       cost: {
         total: numberValue(
           "Coûts annuels",
           alternativeEngine.evaluate("coûts").nodeValue,
           "€/an",
         ),
-        totalPurchaseCost: numberValue(
-          "Coût d'achat total",
-          alternativeEngine.evaluate(
-            "coûts . achat amorti . coût d'achat total",
-          ).nodeValue,
-          "€",
-        ),
-        purchaseCost: numberValue(
-          "Prix d'achat",
-          alternativeEngine.evaluate("voiture . prix d'achat").nodeValue,
-          "€",
-        ),
       },
       emissions: {
-        total: numberValue(
-          "Empreinte CO2e",
-          alternativeEngine.evaluate("empreinte").nodeValue,
-          "kgCO2e/an",
-        ),
+        total: numberValue("Empreinte CO2e", emissions, "kgCO2e/an"),
       },
       profitability,
     } as Alternative
@@ -435,12 +417,6 @@ export class CarSimulator {
     const couts_actuels = this.evaluateRule("coûts").value!
     const couts_alternative = typedEvaluate(alternativeEngine, "coûts").value!
     const economie_annuelle = couts_actuels - couts_alternative
-    if (economie_annuelle <= 0) {
-      // If the alternative is not profitable, we don't return any profitability
-      // information.
-      return undefined
-    }
-
     const prix_achat_alternative = typedEvaluate(
       alternativeEngine,
       "voiture . prix d'achat",
@@ -455,6 +431,11 @@ export class CarSimulator {
     const cout_achat_a_rentabiliser =
       prix_achat_alternative - valeur_revente_actuelle - bonus_ecologique
 
+    const duree_seuil_rentabilite =
+      economie_annuelle > 0
+        ? Math.max(0, cout_achat_a_rentabiliser / economie_annuelle)
+        : null
+
     return {
       profitability: {
         costOfPurchase: numberValue(
@@ -465,7 +446,7 @@ export class CarSimulator {
         aids: numberValue("Aides (bonus écologique)", bonus_ecologique, "€"),
         duration: numberValue(
           "Durée pour atteindre le seuil de rentabilité",
-          Math.max(0, cout_achat_a_rentabiliser / economie_annuelle),
+          duree_seuil_rentabilite,
           "an",
         ),
         savingsByYear: numberValue(

@@ -285,6 +285,7 @@ describe("CarSimulator", () => {
 
   describe("evaluateAlternatives()", () => {
     test("should return all possible alternatives with default values", () => {
+      const currentCar = engine.evaluateCar()
       console.time("evaluateAlternatives")
       const alternatives = engine.evaluateAlternatives()
       console.timeEnd("evaluateAlternatives")
@@ -317,8 +318,19 @@ describe("CarSimulator", () => {
         } else {
           expect(alternative.fuel).toBeUndefined()
         }
-        // TODO: need to test the profitability calculation
-        // expect(alternative.profitability).toBeDefined()
+        expect(alternative.diff_costs).toEqual(
+          currentCar.cost.total.value! - alternative.cost.total.value!,
+        )
+        expect(alternative.diff_costs).toEqual(
+          alternative.profitability.savingsByYear.value!,
+        )
+        expect(alternative.profitability.totalSavings.value).toEqual(
+          alternative.diff_costs * 10,
+        )
+        expect(alternative.diff_emissions).toEqual(
+          currentCar.emissions.total.value! -
+            alternative.emissions.total.value!,
+        )
       })
     })
 
