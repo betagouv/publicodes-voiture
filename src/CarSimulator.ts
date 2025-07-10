@@ -40,6 +40,7 @@ export type EvaluatedCarInfos = {
   /** The cost of the car in €/an */
   cost: {
     total: EvaluatedRuleInfos<RuleValue["coûts"]>
+    purchase: EvaluatedRuleInfos<RuleValue["voiture . prix d'achat"]>
   }
   /** The emissions of the car in kgCO2/an */
   emissions: {
@@ -203,6 +204,7 @@ export class CarSimulator {
     return {
       cost: {
         total: this.evaluateRule("coûts"),
+        purchase: this.evaluateRule("voiture . prix d'achat"),
       },
       emissions: {
         total: this.evaluateRule("empreinte"),
