@@ -30,6 +30,7 @@ usage . km annuels . connus:
     les vacances.
 
 usage . km annuels . renseignés:
+  titre: Kilomètres parcourus à l'année
   applicable si: km annuels . connus
   question: Kilomètres parcourus à l'année
   par défaut: estimés

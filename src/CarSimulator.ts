@@ -14,6 +14,13 @@ import rules, {
 const DUREE_DETENTION_ALTERNATIVE = 10 // an
 const AGE_ALTERNATIVE_OCCASION = 5 // an
 
+const PARAMETERS: (keyof Questions)[] = Object.entries(rules)
+  .filter(([, rule]) => typeof rule === "object" && rule && rule.question)
+  .map(([key]) => key as keyof Questions)
+
+export type RuleValueParams<K extends keyof Questions = keyof Questions> =
+  RuleValue[K]
+
 /**
  * Evaluated rule values for the car.
  */
@@ -28,6 +35,8 @@ export type EvaluatedCarInfos = {
   motorisation: EvaluatedRuleInfos<RuleValue["voiture . motorisation"]>
   /** The type of fuel of the car */
   fuel?: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
+  /** The inputs used to evaluate the car */
+  parameters: EvaluatedRuleInfos<RuleValueParams>[]
   /** The cost of the car in €/an */
   cost: {
     /** The total cost of the car in €/an */
@@ -98,6 +107,8 @@ export type EvaluatedRuleInfos<T> = {
   isApplicable?: boolean
   /** The value is an enum value (i.e. `une possibilité` mechanism) */
   isEnumValue?: boolean
+  /** The name of the rule, used to identify the rule in the Publicodes engine */
+  ruleName?: RuleName
 }
 
 /**
@@ -201,6 +212,9 @@ export class CarSimulator {
       emissions: {
         total: this.evaluateRule("empreinte"),
       },
+      parameters: PARAMETERS.map((key) => this.evaluateRule(key)).filter(
+        (rule) => rule.isApplicable,
+      ),
       size: this.evaluateRule("voiture . gabarit"),
       occasion: this.evaluateRule("voiture . occasion"),
       motorisation,
@@ -491,6 +505,7 @@ function typedEvaluate<T extends keyof RuleValue>(
     title: engine.getRule(titleRuleName).title,
     isEnumValue,
     isApplicable: node.nodeValue !== null,
+    ruleName: rule,
   }
 }
 

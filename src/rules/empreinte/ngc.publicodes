@@ -9,10 +9,11 @@ importer!:
     # règles importées du modèle `@incubateur-ademe/nosgestesclimat` car elles sont
     # définies à partir des questions de ce modèle.
     - transport . voiture . km:
+        question:
         formule: usage . km annuels
         unité: km/an
     - transport . voiture . utilisateur:
-        question: Quel est l'utilisateur de la voiture ?
+        question:
         formule: "'propriétaire'"
     - transport . voiture . voyageurs:
         question:

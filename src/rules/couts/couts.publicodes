@@ -366,7 +366,7 @@ coûts . coûts d'utilisation . stationnement:
     nous n'avons pas encore de données pour le confirmer.
 
 coûts . coûts d'utilisation . péage:
-  titre: Coût annuel lié aux péages
+  titre: Péages
   question: Combien payez-vous en moyenne pour les péages ?
   par défaut: 
     valeur: estimé

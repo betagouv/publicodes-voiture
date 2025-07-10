@@ -173,18 +173,21 @@ describe("CarSimulator", () => {
         title: "Berline",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . gabarit",
       })
       expect(carInfos.motorisation).toEqual({
         value: "thermique",
         title: "Thermique",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . motorisation",
       })
       expect(carInfos.fuel).toEqual({
         value: "essence E5 ou E10",
         title: "Essence",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . thermique . carburant",
       })
     })
 
@@ -204,18 +207,21 @@ describe("CarSimulator", () => {
         title: "Citadine",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . gabarit",
       })
       expect(carInfos.motorisation).toEqual({
         value: "hybride",
         title: "Hybride",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . motorisation",
       })
       expect(carInfos.fuel).toEqual({
         value: "essence E85",
         title: "Essence (E85)",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . thermique . carburant",
       })
     })
 
@@ -233,12 +239,14 @@ describe("CarSimulator", () => {
         title: "Berline",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . gabarit",
       })
       expect(carInfos.motorisation).toEqual({
         value: "électrique",
         title: "Électrique",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . motorisation",
       })
       expect(carInfos.fuel).toBeUndefined()
     })
@@ -415,12 +423,13 @@ describe("CarSimulator", () => {
       const targetInfos = engine.evaluateTargetCar()
       const carInfos = engine.evaluateCar()
 
-      expect(targetInfos.size).toEqual(carInfos.size)
+      expect(targetInfos.size.value).toEqual(carInfos.size.value)
       expect(targetInfos.hasChargingStation).toEqual({
         value: true,
         title: "Borne de recharge",
         isApplicable: true,
         isEnumValue: false,
+        ruleName: "voiture . cible . borne de recharge",
       })
     })
 
@@ -437,12 +446,14 @@ describe("CarSimulator", () => {
         title: "SUV",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . cible . gabarit",
       })
       expect(targetInfos.hasChargingStation).toEqual({
         value: false,
         title: "Borne de recharge",
         isApplicable: true,
         isEnumValue: false,
+        ruleName: "voiture . cible . borne de recharge",
       })
     })
   })
