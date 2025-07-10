@@ -82,6 +82,8 @@ export type Alternative = {
     savingsByYear: EvaluatedRuleInfos<number | undefined>
     /** The amount of aids (ecological bonus) for the alternative car */
     aids: EvaluatedRuleInfos<number | undefined>
+    /** The resale value of the current car */
+    currentCarResaleValue: EvaluatedRuleInfos<number | undefined>
   }
 } & EvaluatedCarInfos
 
@@ -457,6 +459,11 @@ export class CarSimulator {
         totalSavings: numberValue(
           "Économies totales",
           economie_annuelle * DUREE_DETENTION_ALTERNATIVE,
+          "€",
+        ),
+        currentCarResaleValue: numberValue(
+          "Valeur de revente de la voiture actuelle",
+          valeur_revente_actuelle,
           "€",
         ),
       },

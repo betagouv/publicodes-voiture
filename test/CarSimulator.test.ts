@@ -286,6 +286,9 @@ describe("CarSimulator", () => {
   describe("evaluateAlternatives()", () => {
     test("should return all possible alternatives with default values", () => {
       const currentCar = engine.evaluateCar()
+      const currentCarResaleValue = engine.evaluateRule(
+        "coûts . achat amorti . valeur de revente",
+      ).value
       console.time("evaluateAlternatives")
       const alternatives = engine.evaluateAlternatives()
       console.timeEnd("evaluateAlternatives")
@@ -330,6 +333,13 @@ describe("CarSimulator", () => {
         expect(alternative.diff_emissions).toEqual(
           currentCar.emissions.total.value! -
             alternative.emissions.total.value!,
+        )
+        expect(alternative.profitability.aids.isApplicable).toEqual(
+          alternative.occasion.value === false &&
+            alternative.motorisation.value !== "thermique",
+        )
+        expect(alternative.profitability.currentCarResaleValue.value).toEqual(
+          currentCarResaleValue,
         )
       })
     })
