@@ -293,6 +293,22 @@ describe("Règles", () => {
       expect(coutsNeuf).toEqual(coutsNeufJeune)
       expect(prixAchatAmortiNeuf).toEqual(prixAchatAmortiNeufJeune)
     })
+
+    test("l'année de fabrication devrait modifier l'âge uniquement si l'âge n'est pas précisé", () => {
+      engine.setSituation({
+        "voiture . année de fabrication": 2010,
+      })
+      const age = engine.evaluate("voiture . âge").nodeValue as number
+
+      expect(age).toEqual(new Date().getFullYear() - 2010)
+
+      engine.setSituation({
+        "voiture . année de fabrication": 2010,
+        "voiture . âge": 5,
+      })
+      const ageAvecAge = engine.evaluate("voiture . âge").nodeValue as number
+      expect(ageAvecAge).toEqual(5)
+    })
   })
 
   // describe("calcul de rentabilité", () => {})
