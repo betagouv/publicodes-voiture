@@ -29,3 +29,24 @@ prix électricité . TRV HP:
     renseignée sur [hello
     watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite)
     au 1er mai 2025.
+
+prix électricité . recharge rapide exceptionnelle:
+  description: |
+    Le prix moyen d'une recharge rapide  pour des usages exceptionnels (2 à 3
+    fois dans l'année pour un faible rouleur).
+  valeur: 0.60 €/kWh
+  note: Source [SGPE]().
+
+prix électricité . recharge rapide avec abonnement:
+  description: |
+    Le prix moyen d'une recharge rapide avec formules d'abonnement permettant
+    de diminuer le prix unitaire de ses recharges rapides.
+  valeur: 0.40 €/kWh
+  note: |
+    Source [SGPE]().
+
+
+    Il pourrait être pertinent dans une future version de prendre en compte le
+    prix de l'abonnement.
+  
+

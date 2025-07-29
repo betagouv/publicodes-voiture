@@ -39,7 +39,7 @@ aller-retours travail électrique ville occasion:
     usage . km annuels . calculés . quotidien: 20
     usage . km annuels . calculés . vacances: 0
   empreinte: 1018.2118881330775
-  coûts: 2867.6031074506773
+  coûts: 2889.899900410677
 
 grandes vacances familiales:
   titre: Grandes vacances familiales (essence)
@@ -110,16 +110,12 @@ famille usage régulier moyenne biocarburant:
   empreinte: 2366.069076368627
   coûts: 4408.754379112608
 
-# alternative citadine diesel:
-#   titre: Alternative citadine diesl
-#   contexte:
-#     calcul de rentabilité . alternative . gabarit: "'petite'"
-#     calcul de rentabilité . alternative . motorisation: "'thermique'"
-#     calcul de rentabilité . alternative . carburant: "'gazole B7 ou B10'"
-#
-# alternative SUV essence:
-#   titre: Alternative SUV essence
-#   contexte:
-#     calcul de rentabilité . alternative . gabarit: "'SUV'"
-#     calcul de rentabilité . alternative . motorisation: "'thermique'"
-#     calcul de rentabilité . alternative . carburant: "'essence E5 ou E10'"
+gros rouleur thermique:
+  titre: Berline électrique (35 000 km/an)
+  contexte:
+    voiture . motorisation: "'électrique'"
+    voiture . gabarit: "'berline'"
+    usage . km annuels . connus: oui
+    usage . km annuels . renseignés: 35000
+  empreinte: 5079.999930058837
+  coûts: 6126.5538314506775

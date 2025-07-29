@@ -320,17 +320,26 @@ voiture . électrique . prix kWh:
 voiture . électrique . prix kWh . estimé:
   titre: Prix du kWh estimé par défaut
   formule:
-    somme:
-      - prix électricité . TRV HC * 85%
-      - prix électricité . TRV HP * 15%
+    variations:
+      - si: usage . km annuels >= 30000 km/an
+        alors:
+          somme:
+            - prix électricité . TRV HC * 80%
+            - prix électricité . TRV HP * 5%
+            - prix électricité . recharge rapide avec abonnement * 15%
+      - sinon:
+          somme:
+            - prix électricité . TRV HC * 83%
+            - prix électricité . TRV HP * 13%
+            - prix électricité . recharge rapide exceptionnelle * 4%
   unité: €/kWh
   note: |
     On fait ici la même hypothèse que celle faite dans la note d'analyse
     [_Voiture électrique : à quel coût
     ?_](https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2022-na-115-voiture_electrique-annexe_methodo-novembre.pdf)
     de France Stratégie : l'essentiel des recharges à domicile est effectuée la
-    nuit.
-
+    nuit. En affinant avec la prise en compte des recharges effectuées à
+    l'extérieur qui sont plus occasionnelles mais plus coûteuses.
 
 # NOTE:
 # Les questions suivantes sont des quasi copiées-collées de celles présentes
