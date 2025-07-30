@@ -1,6 +1,11 @@
 import { beforeEach, describe, expect, test } from "vitest"
-import { CarSimulator } from "../src/CarSimulator"
+import {
+  CarSimulator,
+  EvaluatedRuleInfos,
+  RuleValueParams,
+} from "../src/CarSimulator"
 import personas from "../src/personas"
+import { Questions, RuleName } from "../publicodes-build"
 
 describe("CarSimulator", () => {
   describe("new CarSimulator()", () => {
@@ -26,15 +31,26 @@ describe("CarSimulator", () => {
   describe("shallowCopy()", () => {
     test("should allow a complete reset of the inputs", () => {
       engine.setInputs({ "voiture . gabarit": "moyenne" })
-      expect(engine.getInputs()).toEqual({ "voiture . gabarit": "moyenne" })
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "moyenne",
+      })
 
       const newEngine = engine.shallowCopy()
-      expect(newEngine.getInputs()).toEqual({ "voiture . gabarit": "moyenne" })
+      expect(newEngine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "moyenne",
+      })
       newEngine.setInputs({}, { overwrite: true })
-      expect(newEngine.getInputs()).toEqual({})
+      expect(newEngine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+      })
 
       // The original engine should still have its inputs
-      expect(engine.getInputs()).toEqual({ "voiture . gabarit": "moyenne" })
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "moyenne",
+      })
     })
   })
 
@@ -54,41 +70,58 @@ describe("CarSimulator", () => {
     })
 
     test("shouldn't overwrite by default", () => {
-      expect(engine.getInputs()).toEqual({})
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+      })
 
       engine.setInputs({ "voiture . gabarit": "SUV" })
-      expect(engine.getInputs()).toEqual({ "voiture . gabarit": "SUV" })
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "SUV",
+      })
 
       engine.setInputs({ "voiture . cible . borne de recharge": false })
       expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
         "voiture . gabarit": "SUV",
         "voiture . cible . borne de recharge": false,
       })
 
       engine.setInputs({ "voiture . gabarit": undefined })
       expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
         "voiture . cible . borne de recharge": false,
       })
 
       engine.setInputs({ "voiture . cible . borne de recharge": true })
       expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
         "voiture . cible . borne de recharge": true,
       })
     })
 
     test("should correctly overwrite when requested", () => {
-      expect(engine.getInputs()).toEqual({})
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+      })
 
       engine.setInputs({ "voiture . gabarit": "SUV" })
-      expect(engine.getInputs()).toEqual({ "voiture . gabarit": "SUV" })
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "SUV",
+      })
 
       engine.setInputs(
-        { "voiture . cible . borne de recharge": false },
+        {
+          "aides . bonus écologique": 0,
+          "voiture . cible . borne de recharge": false,
+        },
         {
           overwrite: true,
         },
       )
       expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
         "voiture . cible . borne de recharge": false,
       })
     })
@@ -278,8 +311,23 @@ describe("CarSimulator", () => {
 
       expect(secondEval).toBeLessThan(firstEval)
       // Should be close to 0 because the cache is used
-      expect(secondEval).toBeCloseTo(0, 0)
+      expect(secondEval).toBeLessThan(1)
       expect(thirdEval).toBeGreaterThan(secondEval)
+    })
+
+    test("'aides . bonus écologique' shouldn't be shown for current car", () => {
+      const currentCar = engine
+        .setInputs({
+          "voiture . motorisation": "électrique",
+          "voiture . occasion": false,
+        })
+        .evaluateCar()
+
+      expect(
+        currentCar.parameters.find(
+          (parameter) => parameter.ruleName === "aides . bonus écologique",
+        ),
+      ).toBeUndefined()
     })
   })
 

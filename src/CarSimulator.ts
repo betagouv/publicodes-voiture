@@ -171,6 +171,10 @@ export class CarSimulator {
    * instead of `oui` or `non` and the values are not wrapped in single quotes.
    * If you prefer to have more control over the situation, you can use {@link
    * setSituation} instead.
+   *
+   * @note By default, we set the rule `aides . bonus écologique` to `0` in
+   * order to avoid substracting it two times from the car price. If you want
+   * to overwrite this, yan can use {@link setSituation} instead.
    */
   public setInputs(inputs: Questions, options = { overwrite: false }): this {
     if (options.overwrite) {
@@ -178,6 +182,7 @@ export class CarSimulator {
     } else {
       this.inputs = Object.assign(this.inputs, inputs)
     }
+    this.inputs["aides . bonus écologique"] = 0
     this.engine.setSituation(getSituation(this.inputs))
     return this
   }
@@ -210,7 +215,10 @@ export class CarSimulator {
         total: this.evaluateRule("empreinte"),
       },
       parameters: PARAMETERS.map((key) => this.evaluateRule(key)).filter(
-        (rule) => rule.isApplicable,
+        (rule) =>
+          rule.isApplicable &&
+          // NOTE: we may want to have a cleaner way to handle this
+          rule.ruleName !== "aides . bonus écologique",
       ),
       size: this.evaluateRule("voiture . gabarit"),
       occasion: this.evaluateRule("voiture . occasion"),
@@ -342,8 +350,17 @@ export class CarSimulator {
    * It's recommended to not mix the usage of {@link setInputs} and {@link
    * setSituation} to avoid confusion.
    */
-  public setSituation(situation: Situation): this {
-    this.engine.setSituation(situation as PublicodesSituation<RuleName>)
+  public setSituation(
+    situation: Situation,
+    options: {
+      keepPreviousSituation?: boolean
+      strict?: boolean
+    } = {},
+  ): this {
+    this.engine.setSituation(
+      situation as PublicodesSituation<RuleName>,
+      options,
+    )
     return this
   }
 
