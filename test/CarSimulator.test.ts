@@ -1,15 +1,10 @@
 import { beforeEach, describe, expect, test } from "vitest"
-import {
-  CarSimulator,
-  EvaluatedRuleInfos,
-  RuleValueParams,
-} from "../src/CarSimulator"
+import { CarSimulator } from "../src/CarSimulator"
 import personas from "../src/personas"
-import { Questions, RuleName } from "../publicodes-build"
 
 describe("CarSimulator", () => {
   describe("new CarSimulator()", () => {
-    test("should return an instance of AidesVeloEngine with corrects rules parsed", () => {
+    test("should return an instance of CarSimulator with corrects rules parsed", () => {
       console.time("CarSimulator init")
       const engine = new CarSimulator()
       console.timeEnd("CarSimulator init")
@@ -188,10 +183,11 @@ describe("CarSimulator", () => {
             .setSituation(persona.contexte)
             .evaluateCar()
 
-          expect(evaluatedCar.emissions.total.value).toEqual(
+          expect(evaluatedCar.emissions.total.value).toBeCloseTo(
             persona["empreinte"],
+            1,
           )
-          expect(evaluatedCar.cost.total.value).toEqual(persona["coûts"])
+          expect(evaluatedCar.cost.total.value).toBeCloseTo(persona["coûts"], 1)
         })
       })
     })

@@ -51,22 +51,22 @@
   },
   "devDependencies": {
     "@betagouv/publicodes-voiture": "^0.3.8",
-    "@incubateur-ademe/nosgestesclimat": "3.8.3",
-    "@incubateur-ademe/publicodes-commun": "^1.1.5",
-    "@publicodes/tools": "^1.7.2",
+    "@incubateur-ademe/nosgestesclimat": "3.10.0",
+    "@incubateur-ademe/publicodes-commun": "^2.0.1",
+    "@publicodes/tools": "https://pkg.pr.new/publicodes/publicodes/@publicodes/tools@7fdd69c",
     "csv-parser": "^3.2.0",
     "mitata": "^1.0.34",
-    "terser": "^5.39.2",
+    "terser": "^5.44.0",
     "tsup": "^8.5.0",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.4",
-    "yaml": "^2.8.0"
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "yaml": "^2.8.1"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "publicodes": "^1.9.0"
+    "publicodes": "^1.9.1"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

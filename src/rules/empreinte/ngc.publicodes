@@ -14,7 +14,11 @@ importer!:
         unité: km/an
     - transport . voiture . utilisateur:
         question:
-        formule: "'propriétaire'"
+        formule: 
+          variations:
+            - si: usage . km annuels = 0
+              alors: "'jamais'"
+            - sinon: "'propriétaire'"
     - transport . voiture . voyageurs:
         question:
         formule: 1
