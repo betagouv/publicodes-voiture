@@ -1,0 +1,10 @@
+aides:
+
+aides . bonus écologique:
+  non applicable si: 
+    une de ces conditions:
+      - voiture . occasion
+      - voiture . motorisation = 'thermique'
+  question: Quel est le montant du bonus écologique ?
+  par défaut: 4000 
+  unité: €

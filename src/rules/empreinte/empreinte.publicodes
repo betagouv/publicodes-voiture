@@ -3,7 +3,7 @@ empreinte:
   description: |
     Nous utilisons le modèle de [Nos Gestes Climat](https://nosgestesclimat.fr)
     pour calculer l'empreinte carbone de votre voiture.
-  valeur: ngc . transport . voiture
+  valeur: ngc . transport . voiture / 1 an
   unité: kgCO2e/an
   # contexte:
     # ngc . transport . voiture . utilisateur: "'propriétaire'"

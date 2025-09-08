@@ -1,7 +1,7 @@
 valeur par défaut:
   titre: Valeur par défaut
-  empreinte: 3022.851504292707
-  coûts: 6370.257297587041
+  empreinte: 4232.090025601444
+  coûts: 5361.051382418858
   contexte: {}
 
 aller-retours travail électrique ville:
@@ -11,7 +11,7 @@ aller-retours travail électrique ville:
   contexte:
     voiture . motorisation: "'électrique'"
     voiture . gabarit: "'petite'"
-    voiture . prix d'achat: 5400
+    # voiture . prix d'achat: 5400
     voiture . électrique . consommation électricité: 24 # kWh/100km
     voiture . électrique . prix kWh: 0.17 # €/kWh
     usage . km annuels . connus: non
@@ -22,8 +22,8 @@ aller-retours travail électrique ville:
     coûts . coûts d'utilisation . stationnement: 700
     coûts . coûts d'utilisation . péage: 0
     coûts . coûts d'utilisation . contraventions: 10
-  empreinte: 539.1190922108744
-  coûts: 2387.813887814313
+  empreinte: 1038.2162241330775
+  coûts: 2191.4502514506767
 
 aller-retours travail électrique ville occasion:
   titre: Aller-retours travail en ville (électrique) - Occasion
@@ -32,13 +32,14 @@ aller-retours travail électrique ville occasion:
   contexte:
     voiture . motorisation: "'électrique'"
     voiture . gabarit: "'petite'"
-    voiture . prix d'achat: 5400
+    voiture . prix d'achat: 11440
+    voiture . âge: 5
     voiture . occasion: oui
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 20
     usage . km annuels . calculés . vacances: 0
-  empreinte: 504.95509221087445
-  coûts: 3059.8004878143133
+  empreinte: 1018.2118881330775
+  coûts: 2889.899900410677
 
 grandes vacances familiales:
   titre: Grandes vacances familiales (essence)
@@ -52,8 +53,8 @@ grandes vacances familiales:
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 5
     usage . km annuels . calculés . vacances: 2000
-  empreinte: 1087.2386496543545
-  coûts: 4687.079592587041
+  empreinte: 1675.63899023877
+  coûts: 3407.246521318859
 
 famille usage régulier diesel:
   titre: Usage régulier en famille (diesel)
@@ -70,8 +71,8 @@ famille usage régulier diesel:
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
-  empreinte: 2677.626189841937
-  coûts: 5913.45340708704
+  empreinte: 4121.41757764417
+  coûts: 4944.172830468859
 
 famille usage régulier biocarburant:
   titre: Usage régulier en famille (biocarburant)
@@ -88,8 +89,8 @@ famille usage régulier biocarburant:
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
-  empreinte: 1823.1880810919374
-  coûts: 5745.61951946204
+  empreinte: 2678.54010671917
+  coûts: 4497.752189456358
 
 famille usage régulier moyenne biocarburant:
   titre: Usage régulier en famille (moyenne/biocarburant)
@@ -106,5 +107,15 @@ famille usage régulier moyenne biocarburant:
     usage . km annuels . connus: non
     usage . km annuels . calculés . quotidien: 33
     usage . km annuels . calculés . vacances: 2000
-  empreinte: 1752.9630810919373
-  coûts: 5491.074064916586
+  empreinte: 2366.069076368627
+  coûts: 4408.754379112608
+
+gros rouleur thermique:
+  titre: Berline électrique (35 000 km/an)
+  contexte:
+    voiture . motorisation: "'électrique'"
+    voiture . gabarit: "'berline'"
+    usage . km annuels . connus: oui
+    usage . km annuels . renseignés: 35000
+  empreinte: 5079.999930058837
+  coûts: 6126.5538314506775

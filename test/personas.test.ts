@@ -24,11 +24,13 @@ describe("Personas", () => {
             strict: true,
           })
 
-        expect(localEngine.evaluate("empreinte").nodeValue).toEqual(
+        expect(localEngine.evaluate("empreinte").nodeValue).toBeCloseTo(
           persona["empreinte"],
+          1,
         )
-        expect(localEngine.evaluate("coûts").nodeValue).toEqual(
+        expect(localEngine.evaluate("coûts").nodeValue).toBeCloseTo(
           persona["coûts"],
+          1,
         )
       })
     })

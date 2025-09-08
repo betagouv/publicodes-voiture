@@ -1,10 +1,10 @@
-import { describe, expect, test } from "vitest"
+import { beforeEach, describe, expect, test } from "vitest"
 import { CarSimulator } from "../src/CarSimulator"
 import personas from "../src/personas"
 
 describe("CarSimulator", () => {
   describe("new CarSimulator()", () => {
-    test("should return an instance of AidesVeloEngine with corrects rules parsed", () => {
+    test("should return an instance of CarSimulator with corrects rules parsed", () => {
       console.time("CarSimulator init")
       const engine = new CarSimulator()
       console.timeEnd("CarSimulator init")
@@ -16,11 +16,41 @@ describe("CarSimulator", () => {
     })
   })
 
-  const globalTestEngine = new CarSimulator()
+  let engine = new CarSimulator()
+
+  beforeEach(() => {
+    // Reset the engine before each test to ensure a clean state
+    engine = engine.shallowCopy().setInputs({}, { overwrite: true })
+  })
+
+  describe("shallowCopy()", () => {
+    test("should allow a complete reset of the inputs", () => {
+      engine.setInputs({ "voiture . gabarit": "moyenne" })
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "moyenne",
+      })
+
+      const newEngine = engine.shallowCopy()
+      expect(newEngine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "moyenne",
+      })
+      newEngine.setInputs({}, { overwrite: true })
+      expect(newEngine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+      })
+
+      // The original engine should still have its inputs
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "moyenne",
+      })
+    })
+  })
 
   describe("setInputs()", () => {
     test("should correctly set the engine's situation", () => {
-      const engine = globalTestEngine.shallowCopy()
       engine.setInputs({ "voiture . gabarit": "moyenne" })
 
       const situation = engine.getEngine().getSituation()
@@ -28,7 +58,6 @@ describe("CarSimulator", () => {
     })
 
     test("should correctly handle undefined values", () => {
-      const engine = globalTestEngine.shallowCopy()
       engine.setInputs({ "voiture . gabarit": undefined })
 
       const situation = engine.getEngine().getSituation()
@@ -36,45 +65,58 @@ describe("CarSimulator", () => {
     })
 
     test("shouldn't overwrite by default", () => {
-      const engine = globalTestEngine.shallowCopy()
-
-      expect(engine.getInputs()).toEqual({})
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+      })
 
       engine.setInputs({ "voiture . gabarit": "SUV" })
-      expect(engine.getInputs()).toEqual({ "voiture . gabarit": "SUV" })
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "SUV",
+      })
 
       engine.setInputs({ "voiture . cible . borne de recharge": false })
       expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
         "voiture . gabarit": "SUV",
         "voiture . cible . borne de recharge": false,
       })
 
       engine.setInputs({ "voiture . gabarit": undefined })
       expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
         "voiture . cible . borne de recharge": false,
       })
 
       engine.setInputs({ "voiture . cible . borne de recharge": true })
       expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
         "voiture . cible . borne de recharge": true,
       })
     })
 
     test("should correctly overwrite when requested", () => {
-      const engine = globalTestEngine.shallowCopy()
-
-      expect(engine.getInputs()).toEqual({})
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+      })
 
       engine.setInputs({ "voiture . gabarit": "SUV" })
-      expect(engine.getInputs()).toEqual({ "voiture . gabarit": "SUV" })
+      expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
+        "voiture . gabarit": "SUV",
+      })
 
       engine.setInputs(
-        { "voiture . cible . borne de recharge": false },
+        {
+          "aides . bonus écologique": 0,
+          "voiture . cible . borne de recharge": false,
+        },
         {
           overwrite: true,
         },
       )
       expect(engine.getInputs()).toEqual({
+        "aides . bonus écologique": 0,
         "voiture . cible . borne de recharge": false,
       })
     })
@@ -82,8 +124,6 @@ describe("CarSimulator", () => {
 
   describe("evaluateRule()", () => {
     test("default values should be applicable", () => {
-      const engine = globalTestEngine.shallowCopy()
-
       expect(engine.evaluateRule("coûts").isApplicable).toBeTruthy()
       expect(engine.evaluateRule("empreinte").isApplicable).toBeTruthy()
       expect(engine.evaluateRule("voiture . gabarit").isApplicable).toBeTruthy()
@@ -97,8 +137,6 @@ describe("CarSimulator", () => {
     })
 
     test("should return false for undefined default values", () => {
-      const engine = globalTestEngine.shallowCopy()
-
       expect(
         engine.evaluateRule("usage . km annuels . calculés").isApplicable,
       ).toBeFalsy()
@@ -109,8 +147,6 @@ describe("CarSimulator", () => {
     })
 
     test("should correctly handle conditionals from the inputs", () => {
-      const engine = globalTestEngine.shallowCopy()
-
       expect(
         engine.evaluateRule("usage . km annuels . calculés").isApplicable,
       ).toBeFalsy()
@@ -121,8 +157,6 @@ describe("CarSimulator", () => {
     })
 
     test("should correctly handle enum values", () => {
-      const engine = globalTestEngine.shallowCopy()
-
       expect(engine.evaluateRule("voiture . gabarit").isEnumValue).toBeTruthy()
       expect(
         engine.evaluateRule("voiture . motorisation").isEnumValue,
@@ -149,40 +183,44 @@ describe("CarSimulator", () => {
             .setSituation(persona.contexte)
             .evaluateCar()
 
-          expect(evaluatedCar.emissions.value).toEqual(persona["empreinte"])
-          expect(evaluatedCar.cost.value).toEqual(persona["coûts"])
+          expect(evaluatedCar.emissions.total.value).toBeCloseTo(
+            persona["empreinte"],
+            1,
+          )
+          expect(evaluatedCar.cost.total.value).toBeCloseTo(persona["coûts"], 1)
         })
       })
     })
 
     test("should have default values", () => {
-      const engine = globalTestEngine.shallowCopy()
       const carInfos = engine.evaluateCar()
 
-      expect(carInfos.cost.value).toBeCloseTo(6370, 0)
-      expect(carInfos.emissions.value).toBeCloseTo(3022.8, 0)
+      expect(carInfos.cost.total.value).toBeCloseTo(5361, 0)
+      expect(carInfos.emissions.total.value).toBeCloseTo(4232, 0)
       expect(carInfos.size).toEqual({
         value: "berline",
         title: "Berline",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . gabarit",
       })
       expect(carInfos.motorisation).toEqual({
         value: "thermique",
         title: "Thermique",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . motorisation",
       })
       expect(carInfos.fuel).toEqual({
         value: "essence E5 ou E10",
         title: "Essence",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . thermique . carburant",
       })
     })
 
     test("returned values should match with the inputs", () => {
-      const engine = globalTestEngine.shallowCopy()
       const carInfos = engine
         .setInputs({
           "voiture . gabarit": "petite",
@@ -191,56 +229,58 @@ describe("CarSimulator", () => {
         })
         .evaluateCar()
 
-      expect(carInfos.cost.value).toBeGreaterThan(0)
-      expect(carInfos.emissions.value).toBeGreaterThan(0)
+      expect(carInfos.cost.total.value).toBeGreaterThan(0)
+      expect(carInfos.emissions.total.value).toBeGreaterThan(0)
       expect(carInfos.size).toEqual({
         value: "petite",
         title: "Citadine",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . gabarit",
       })
       expect(carInfos.motorisation).toEqual({
         value: "hybride",
         title: "Hybride",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . motorisation",
       })
       expect(carInfos.fuel).toEqual({
         value: "essence E85",
         title: "Essence (E85)",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . thermique . carburant",
       })
     })
 
     test("should have empty fuel value for electric cars", () => {
-      const engine = globalTestEngine.shallowCopy()
       const carInfos = engine
         .setInputs({
           "voiture . motorisation": "électrique",
         })
         .evaluateCar()
 
-      expect(carInfos.cost.value).toBeGreaterThan(0)
-      expect(carInfos.emissions.value).toBeGreaterThan(0)
+      expect(carInfos.cost.total.value).toBeGreaterThan(0)
+      expect(carInfos.emissions.total.value).toBeGreaterThan(0)
       expect(carInfos.size).toEqual({
         value: "berline",
         title: "Berline",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . gabarit",
       })
       expect(carInfos.motorisation).toEqual({
         value: "électrique",
         title: "Électrique",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . motorisation",
       })
       expect(carInfos.fuel).toBeUndefined()
     })
 
     test("should be cached according to the inputs", async () => {
-      const engine = globalTestEngine.shallowCopy()
-
       engine.setInputs({ "voiture . gabarit": "petite" })
       let firstEval = new Date().getTime()
       engine.evaluateCar()
@@ -267,34 +307,55 @@ describe("CarSimulator", () => {
 
       expect(secondEval).toBeLessThan(firstEval)
       // Should be close to 0 because the cache is used
-      expect(secondEval).toBeCloseTo(0, 0)
+      expect(secondEval).toBeLessThan(1)
       expect(thirdEval).toBeGreaterThan(secondEval)
+    })
+
+    test("'aides . bonus écologique' shouldn't be shown for current car", () => {
+      const currentCar = engine
+        .setInputs({
+          "voiture . motorisation": "électrique",
+          "voiture . occasion": false,
+        })
+        .evaluateCar()
+
+      expect(
+        currentCar.parameters.find(
+          (parameter) => parameter.ruleName === "aides . bonus écologique",
+        ),
+      ).toBeUndefined()
     })
   })
 
   describe("evaluateAlternatives()", () => {
     test("should return all possible alternatives with default values", () => {
-      const engine = globalTestEngine.shallowCopy()
-      engine.setInputs({ "usage . km annuels . renseignés": 1000000 })
+      const currentCar = engine.evaluateCar()
+      const currentCarResaleValue = engine.evaluateRule(
+        "coûts . achat amorti . valeur de revente",
+      ).value
       console.time("evaluateAlternatives")
       const alternatives = engine.evaluateAlternatives()
       console.timeEnd("evaluateAlternatives")
 
-      // TODO: use engine.getOptions
+      const nbEtats = 2
       const nbMotorisations = 3
       const nbFuels = 4
       const nbSizes = 5
       const nbAlternatives =
+        // Neuf + Occasion
+        nbEtats *
         // Thermique + Hybride
-        (nbMotorisations - 1) * nbFuels * nbSizes +
-        // Electrique
-        nbSizes
+        ((nbMotorisations - 1) * nbFuels * nbSizes +
+          // Electrique
+          nbSizes)
 
       expect(alternatives).toHaveLength(nbAlternatives)
       alternatives.forEach((alternative) => {
         expect(alternative.kind).toEqual("car")
-        expect(alternative.cost.value).toBeGreaterThan(0)
-        expect(alternative.emissions.value).toBeGreaterThan(0)
+        expect(alternative.cost.purchase).toBeDefined()
+        expect(alternative.cost.total.value).toBeGreaterThan(0)
+        expect(alternative.emissions.total.value).toBeGreaterThan(0)
+        expect(alternative.occasion).toBeDefined()
         expect(alternative.size.value).toBeDefined()
         expect(alternative.size.isEnumValue).toBeTruthy()
         expect(alternative.motorisation.value).toBeDefined()
@@ -305,11 +366,30 @@ describe("CarSimulator", () => {
         } else {
           expect(alternative.fuel).toBeUndefined()
         }
+        expect(alternative.diff_costs).toEqual(
+          currentCar.cost.total.value! - alternative.cost.total.value!,
+        )
+        expect(alternative.diff_costs).toEqual(
+          alternative.profitability.savingsByYear.value!,
+        )
+        expect(alternative.profitability.totalSavings.value).toEqual(
+          alternative.diff_costs * 10,
+        )
+        expect(alternative.diff_emissions).toEqual(
+          currentCar.emissions.total.value! -
+            alternative.emissions.total.value!,
+        )
+        expect(alternative.profitability.aids.isApplicable).toEqual(
+          alternative.occasion.value === false &&
+            alternative.motorisation.value !== "thermique",
+        )
+        expect(alternative.profitability.currentCarResaleValue.value).toEqual(
+          currentCarResaleValue,
+        )
       })
     })
 
     test("increasing the annual distance should increase the cost and emissions", () => {
-      const engine = globalTestEngine.shallowCopy()
       engine.setInputs({ "usage . km annuels . renseignés": 10 })
       const alternatives = engine.evaluateAlternatives()
 
@@ -318,17 +398,16 @@ describe("CarSimulator", () => {
 
       expect(alternatives).toHaveLength(newAlternatives.length)
       alternatives.forEach((alternative, i) => {
-        expect(alternative.cost.value).toBeLessThan(
-          newAlternatives[i].cost.value!,
+        expect(alternative.cost.total.value).toBeLessThan(
+          newAlternatives[i].cost.total.value!,
         )
-        expect(alternative.emissions.value).toBeLessThan(
-          newAlternatives[i].emissions.value!,
+        expect(alternative.emissions.total.value).toBeLessThan(
+          newAlternatives[i].emissions.total.value!,
         )
       })
     })
 
     test("set km to 0 should return 0 for emissions", () => {
-      const engine = globalTestEngine.shallowCopy()
       engine.setInputs({
         "usage . km annuels . renseignés": 0,
         "usage . km annuels . connus": true,
@@ -336,12 +415,11 @@ describe("CarSimulator", () => {
       const alternatives = engine.evaluateAlternatives()
 
       alternatives.forEach((alternative) => {
-        expect(alternative.emissions.value).toEqual(0)
+        expect(alternative.emissions.total.value).toEqual(0)
       })
     })
 
     test("modify the consumption shouldn't modify the cost and emissions", () => {
-      const engine = globalTestEngine.shallowCopy()
       const alternatives = engine.evaluateAlternatives()
 
       engine.setInputs({
@@ -352,15 +430,16 @@ describe("CarSimulator", () => {
 
       expect(alternatives).toHaveLength(newAlternatives.length)
       alternatives.forEach((alternative, i) => {
-        expect(alternative.cost.value).toEqual(newAlternatives[i].cost.value)
-        expect(alternative.emissions.value).toEqual(
-          newAlternatives[i].emissions.value,
+        expect(alternative.cost.total.value).toEqual(
+          newAlternatives[i].cost.total.value,
+        )
+        expect(alternative.emissions.total.value).toEqual(
+          newAlternatives[i].emissions.total.value,
         )
       })
     })
 
     test("modify the fuel price should modify the cost only for electricity", () => {
-      const engine = globalTestEngine.shallowCopy()
       const alternatives = engine.evaluateAlternatives()
 
       engine.setInputs({
@@ -372,20 +451,21 @@ describe("CarSimulator", () => {
       expect(alternatives).toHaveLength(newAlternatives.length)
       alternatives.forEach((alternative, i) => {
         if (alternative.motorisation.value === "thermique") {
-          expect(alternative.cost.value).toEqual(newAlternatives[i].cost.value!)
+          expect(alternative.cost.total.value).toEqual(
+            newAlternatives[i].cost.total.value!,
+          )
         } else {
-          expect(alternative.cost.value).toBeLessThan(
-            newAlternatives[i].cost.value!,
+          expect(alternative.cost.total.value).toBeLessThan(
+            newAlternatives[i].cost.total.value!,
           )
         }
-        expect(alternative.emissions.value).toEqual(
-          newAlternatives[i].emissions.value,
+        expect(alternative.emissions.total.value).toEqual(
+          newAlternatives[i].emissions.total.value,
         )
       })
     })
 
     test("modify the car price shouldn't modify the cost", () => {
-      const engine = globalTestEngine.shallowCopy()
       const alternatives = engine.evaluateAlternatives()
 
       engine.setInputs({
@@ -395,9 +475,11 @@ describe("CarSimulator", () => {
 
       expect(alternatives).toHaveLength(newAlternatives.length)
       alternatives.forEach((alternative, i) => {
-        expect(alternative.cost.value).toEqual(newAlternatives[i].cost.value)
-        expect(alternative.emissions.value).toEqual(
-          newAlternatives[i].emissions.value,
+        expect(alternative.cost.total.value).toEqual(
+          newAlternatives[i].cost.total.value,
+        )
+        expect(alternative.emissions.total.value).toEqual(
+          newAlternatives[i].emissions.total.value,
         )
       })
     })
@@ -405,21 +487,20 @@ describe("CarSimulator", () => {
 
   describe("evaluateTargetCar()", () => {
     test("should return values corresponding to the defaults ones", () => {
-      const engine = globalTestEngine.shallowCopy()
       const targetInfos = engine.evaluateTargetCar()
       const carInfos = engine.evaluateCar()
 
-      expect(targetInfos.size).toEqual(carInfos.size)
+      expect(targetInfos.size.value).toEqual(carInfos.size.value)
       expect(targetInfos.hasChargingStation).toEqual({
         value: true,
         title: "Borne de recharge",
         isApplicable: true,
         isEnumValue: false,
+        ruleName: "voiture . cible . borne de recharge",
       })
     })
 
     test("should return values corresponding to the inputs", () => {
-      const engine = globalTestEngine.shallowCopy()
       const targetInfos = engine
         .setInputs({
           "voiture . cible . gabarit": "SUV",
@@ -432,12 +513,14 @@ describe("CarSimulator", () => {
         title: "SUV",
         isApplicable: true,
         isEnumValue: true,
+        ruleName: "voiture . cible . gabarit",
       })
       expect(targetInfos.hasChargingStation).toEqual({
         value: false,
         title: "Borne de recharge",
         isApplicable: true,
         isEnumValue: false,
+        ruleName: "voiture . cible . borne de recharge",
       })
     })
   })

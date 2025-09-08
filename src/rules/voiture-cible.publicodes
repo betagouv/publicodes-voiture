@@ -1,3 +1,5 @@
+# TODO: to remove, is no longer used
+
 voiture . cible:
   titre: Voiture envisagée
   description: |
@@ -20,6 +22,27 @@ voiture . cible . achat envisagé:
     l'instant), il est plus intéressant de recourir à des solutions de mobilité
     alternatives.
 
+voiture . cible . occasion:
+  question: Envisagez-vous d'acheter une voiture d'occasion ?
+  applicable si: achat envisagé
+  par défaut: oui
+
+voiture . cible . âge:
+  question: Quel est l'âge de la voiture que vous comptez acheter ?
+  applicable si: occasion
+  par défaut: voiture . âge
+  note: >
+    Nous utilisons ce paramètre car c'est le plus simple actuellement pour calculer
+    la décôte de la voiture nécessaire pour déterminer le prix d'achat des alternatives
+    d'occasions.
+
+
+    Cependant, nous pourrions envisagez différentes approches pour collecter
+    cette informations, comme par exemple : utiliser le nombre de kilomètres
+    parcourus au compteurs, calculer la différence entre l'année courante et la
+    date de fabrication de la voiture comme c'est le cas pour le calcul de
+    l'âge de la voiture actuelle.
+
 voiture . cible . borne de recharge:
   question: Avez-vous la possibilité de recharger une voiture électrique au quotidien ?
   applicable si: achat envisagé
@@ -32,7 +55,8 @@ voiture . cible . borne de recharge:
 
 # TODO: to factorize with voiture . gabarit
 voiture . cible . gabarit:
-  applicable si: achat envisagé
+  # TODO: a définir si on souhaite garder cette condition
+  # applicable si: achat envisagé
   question: Quel gabarit de voiture envisagez-vous ?
   description: |
     Renseignez le gabarit de voiture que vous envisagez d'acheter afin de vous

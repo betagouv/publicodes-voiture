@@ -11,7 +11,7 @@ usage:
 
 usage . km annuels:
   titre: Distance totale parcourue à l'année
-  valeur:
+  valeur: 
     variations:
       - si: km annuels . connus
         alors: km annuels . renseignés
@@ -30,6 +30,7 @@ usage . km annuels . connus:
     les vacances.
 
 usage . km annuels . renseignés:
+  titre: Kilomètres parcourus à l'année
   applicable si: km annuels . connus
   question: Kilomètres parcourus à l'année
   par défaut: estimés

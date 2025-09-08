@@ -1,4 +1,5 @@
 import Engine, {
+  Evaluation,
   Possibility,
   Situation as PublicodesSituation,
   serializeUnit,
@@ -10,22 +11,41 @@ import rules, {
   Situation,
 } from "../publicodes-build"
 
+const DUREE_DETENTION_ALTERNATIVE = 10 // an
+const AGE_ALTERNATIVE_OCCASION = 5 // an
+
+const PARAMETERS: (keyof Questions)[] = Object.entries(rules)
+  .filter(([, rule]) => typeof rule === "object" && rule && rule.question)
+  .map(([key]) => key as keyof Questions)
+
+export type RuleValueParams<K extends keyof Questions = keyof Questions> =
+  RuleValue[K]
+
 /**
  * Evaluated rule values for the car.
  */
 export type EvaluatedCarInfos = {
   /** The title of the rule */
   title?: string
-  /** The cost of the car in €/an */
-  cost: EvaluatedRuleInfos<RuleValue["coûts"]>
-  /** The emissions of the car in kgCO2/an */
-  emissions: EvaluatedRuleInfos<RuleValue["empreinte"]>
+  /** If the car is second-hand */
+  occasion: EvaluatedRuleInfos<RuleValue["voiture . occasion"]>
   /** The car size (gabarit) */
   size: EvaluatedRuleInfos<RuleValue["voiture . gabarit"]>
   /** The type of motorisation of the car */
   motorisation: EvaluatedRuleInfos<RuleValue["voiture . motorisation"]>
   /** The type of fuel of the car */
   fuel?: EvaluatedRuleInfos<RuleValue["voiture . thermique . carburant"]>
+  /** The inputs used to evaluate the car */
+  parameters: EvaluatedRuleInfos<RuleValueParams>[]
+  /** The cost of the car in €/an */
+  cost: {
+    total: EvaluatedRuleInfos<RuleValue["coûts"]>
+    purchase: EvaluatedRuleInfos<RuleValue["voiture . prix d'achat"]>
+  }
+  /** The emissions of the car in kgCO2/an */
+  emissions: {
+    total: EvaluatedRuleInfos<RuleValue["empreinte"]>
+  }
 }
 
 /**
@@ -47,6 +67,25 @@ export type TargetInfos = {
  */
 export type Alternative = {
   kind: "car"
+  /** The cost difference between the alternative and the current car */
+  diff_costs: number
+  /** The emissions difference between the alternative and the current car */
+  diff_emissions: number
+  /** Information about the profitability of the alternative over the current car */
+  profitability: {
+    /** The cost of purchase of the alternative car minus the resale value of the current car and the ecological bonus */
+    costOfPurchase: EvaluatedRuleInfos<number | undefined>
+    /** The number of years to reach the break-even point */
+    duration: EvaluatedRuleInfos<number | undefined>
+    /** Savings in € when switching to the alternative during the whole ownership period */
+    totalSavings: EvaluatedRuleInfos<number | undefined>
+    /** Savings in €/an when switching to the alternative */
+    savingsByYear: EvaluatedRuleInfos<number | undefined>
+    /** The amount of aids (ecological bonus) for the alternative car */
+    aids: EvaluatedRuleInfos<number | undefined>
+    /** The resale value of the current car */
+    currentCarResaleValue: EvaluatedRuleInfos<number | undefined>
+  }
 } & EvaluatedCarInfos
 
 /**
@@ -68,6 +107,8 @@ export type EvaluatedRuleInfos<T> = {
   isApplicable?: boolean
   /** The value is an enum value (i.e. `une possibilité` mechanism) */
   isEnumValue?: boolean
+  /** The name of the rule, used to identify the rule in the Publicodes engine */
+  ruleName?: RuleName
 }
 
 /**
@@ -130,16 +171,18 @@ export class CarSimulator {
    * instead of `oui` or `non` and the values are not wrapped in single quotes.
    * If you prefer to have more control over the situation, you can use {@link
    * setSituation} instead.
+   *
+   * @note By default, we set the rule `aides . bonus écologique` to `0` in
+   * order to avoid substracting it two times from the car price. If you want
+   * to overwrite this, yan can use {@link setSituation} instead.
    */
   public setInputs(inputs: Questions, options = { overwrite: false }): this {
     if (options.overwrite) {
       this.inputs = inputs
     } else {
-      this.inputs = {
-        ...this.inputs,
-        ...inputs,
-      }
+      this.inputs = Object.assign(this.inputs, inputs)
     }
+    this.inputs["aides . bonus écologique"] = 0
     this.engine.setSituation(getSituation(this.inputs))
     return this
   }
@@ -148,7 +191,7 @@ export class CarSimulator {
    * Return a copy of the current inputs.
    */
   public getInputs(): Questions {
-    return { ...this.inputs }
+    return Object.assign({}, this.inputs)
   }
 
   /**
@@ -164,9 +207,21 @@ export class CarSimulator {
     const motorisation = this.evaluateRule("voiture . motorisation")
 
     return {
-      emissions: this.evaluateRule("empreinte"),
-      cost: this.evaluateRule("coûts"),
+      cost: {
+        total: this.evaluateRule("coûts"),
+        purchase: this.evaluateRule("voiture . prix d'achat"),
+      },
+      emissions: {
+        total: this.evaluateRule("empreinte"),
+      },
+      parameters: PARAMETERS.map((key) => this.evaluateRule(key)).filter(
+        (rule) =>
+          rule.isApplicable &&
+          // NOTE: we may want to have a cleaner way to handle this
+          rule.ruleName !== "aides . bonus écologique",
+      ),
       size: this.evaluateRule("voiture . gabarit"),
+      occasion: this.evaluateRule("voiture . occasion"),
       motorisation,
       fuel:
         motorisation.value !== "électrique"
@@ -198,30 +253,55 @@ export class CarSimulator {
     // NOTE: we want to use default values for the alternatives as they are
     // specific for each alternative.
     delete localSituation["voiture . prix d'achat"]
+    delete localSituation["voiture . durée de détention totale"]
     delete localSituation["voiture . électrique . consommation électricité"]
     delete localSituation["voiture . thermique . consommation carburant"]
     delete localSituation["voiture . thermique . prix carburant"]
 
-    for (const size of carSizes) {
-      localSituation["voiture . gabarit"] =
-        size.publicodesValue as Situation["voiture . gabarit"]
-      for (const motorisation of carMotorisations) {
-        localSituation["voiture . motorisation"] =
-          motorisation.publicodesValue as Situation["voiture . motorisation"]
-        if (motorisation.nodeValue === "électrique") {
-          localEngine.setSituation(
-            localSituation as PublicodesSituation<RuleName>,
-          )
+    localSituation["voiture . âge"] = AGE_ALTERNATIVE_OCCASION
+    localSituation["voiture . durée de détention totale"] =
+      DUREE_DETENTION_ALTERNATIVE
 
-          res.push(getAlternative(localEngine, size, motorisation, undefined))
-        } else {
-          for (const fuel of carFuels) {
-            localSituation["voiture . thermique . carburant"] =
-              fuel.publicodesValue
+    for (const occasion of ["oui", "non"]) {
+      localSituation["voiture . occasion"] =
+        occasion as Situation["voiture . occasion"]
+      for (const size of carSizes) {
+        localSituation["voiture . gabarit"] =
+          size.publicodesValue as Situation["voiture . gabarit"]
+        for (const motorisation of carMotorisations) {
+          localSituation["voiture . motorisation"] =
+            motorisation.publicodesValue as Situation["voiture . motorisation"]
+          if (motorisation.nodeValue === "électrique") {
+            localEngine.setSituation(
+              localSituation as PublicodesSituation<RuleName>,
+            )
 
-            localEngine.setSituation(localSituation)
+            res.push(
+              this.getAlternative(
+                localEngine,
+                occasion === "oui",
+                size,
+                motorisation,
+                undefined,
+              ),
+            )
+          } else {
+            for (const fuel of carFuels) {
+              localSituation["voiture . thermique . carburant"] =
+                fuel.publicodesValue
 
-            res.push(getAlternative(localEngine, size, motorisation, fuel))
+              localEngine.setSituation(localSituation)
+
+              res.push(
+                this.getAlternative(
+                  localEngine,
+                  occasion === "oui",
+                  size,
+                  motorisation,
+                  fuel,
+                ),
+              )
+            }
           }
         }
       }
@@ -253,25 +333,7 @@ export class CarSimulator {
   public evaluateRule<T extends keyof RuleValue>(
     rule: T,
   ): EvaluatedRuleInfos<RuleValue[T]> {
-    // NOTE: we are evaluating the rule instead of using the inputs because the
-    // inputs might not be set, so we need to evaluate the rule to get the
-    // default value.
-    const node = this.engine.evaluate(rule)
-    // NOTE: may not be very stable, if this method is exposed to the public,
-    // we should probably find a better way to determine if the rule is an enum
-    // (at the Publicodes level probably).
-    const isEnumValue = typeof node.nodeValue === "string"
-    const titleRuleName = isEnumValue
-      ? ((rule + " . " + node.nodeValue) as RuleName)
-      : rule
-
-    return {
-      value: node.nodeValue as RuleValue[T],
-      unit: serializeUnit(node.unit),
-      title: this.engine.getRule(titleRuleName).title,
-      isEnumValue,
-      isApplicable: node.nodeValue !== null,
-    }
+    return typedEvaluate<T>(this.engine, rule)
   }
 
   /**
@@ -288,8 +350,17 @@ export class CarSimulator {
    * It's recommended to not mix the usage of {@link setInputs} and {@link
    * setSituation} to avoid confusion.
    */
-  public setSituation(situation: Situation): this {
-    this.engine.setSituation(situation as PublicodesSituation<RuleName>)
+  public setSituation(
+    situation: Situation,
+    options: {
+      keepPreviousSituation?: boolean
+      strict?: boolean
+    } = {},
+  ): this {
+    this.engine.setSituation(
+      situation as PublicodesSituation<RuleName>,
+      options,
+    )
     return this
   }
 
@@ -301,7 +372,7 @@ export class CarSimulator {
    */
   public shallowCopy() {
     const newEngine = new CarSimulator(true)
-    newEngine.inputs = { ...this.inputs }
+    newEngine.inputs = Object.assign({}, this.inputs)
     newEngine.engine = this.engine.shallowCopy()
     return newEngine
   }
@@ -316,6 +387,137 @@ export class CarSimulator {
    */
   public getEngine(opts = { shallowCopy: true }): Engine<RuleName> {
     return opts.shallowCopy ? this.engine.shallowCopy() : this.engine
+  }
+
+  private getAlternative(
+    alternativeEngine: Engine,
+    occasion: boolean,
+    size: Possibility,
+    motorisation: Possibility,
+    fuel?: Possibility,
+  ): Alternative {
+    const { profitability } = this.computeProfitability(alternativeEngine) ?? {}
+    const current_emissions = this.evaluateRule("empreinte").value!
+    const emissions = alternativeEngine.evaluate("empreinte")
+      .nodeValue as number
+
+    return {
+      kind: "car",
+      title: `${size.title} ${motorisation.title}${fuel ? ` (${fuel.title})` : ""}`,
+      size: enumValue(size),
+      motorisation: enumValue(motorisation),
+      fuel: enumValue(fuel),
+      occasion: booleanValue("Occasion", occasion),
+      diff_costs: profitability?.savingsByYear.value!,
+      diff_emissions: current_emissions - emissions,
+      cost: {
+        total: numberValue(
+          "Coûts annuels",
+          alternativeEngine.evaluate("coûts").nodeValue,
+          "€/an",
+        ),
+        purchase: numberValue(
+          "Prix d'achat",
+          alternativeEngine.evaluate("voiture . prix d'achat").nodeValue,
+          "€",
+        ),
+      },
+      emissions: {
+        total: numberValue("Empreinte CO2e", emissions, "kgCO2e/an"),
+      },
+      profitability,
+    } as Alternative
+  }
+
+  /**
+   * Compute the profitability of the alternative car compared to the current
+   * car.
+   *
+   * NOTE: This should be done directly in the Publicodes rules, but we need to
+   * wait for the Publicodes V2 to be able to do that without having severe
+   * performance issues.
+   */
+  private computeProfitability(
+    alternativeEngine: Engine,
+  ): Pick<Alternative, "profitability"> | undefined {
+    const couts_actuels = this.evaluateRule("coûts").value!
+    const couts_alternative = typedEvaluate(alternativeEngine, "coûts").value!
+    const economie_annuelle = couts_actuels - couts_alternative
+    const prix_achat_alternative = typedEvaluate(
+      alternativeEngine,
+      "voiture . prix d'achat",
+    ).value!
+    const valeur_revente_actuelle = this.evaluateRule(
+      "coûts . achat amorti . valeur de revente",
+    ).value!
+    const bonus_ecologique = typedEvaluate(
+      alternativeEngine,
+      "aides . bonus écologique",
+    ).value!
+    const cout_achat_a_rentabiliser =
+      prix_achat_alternative - valeur_revente_actuelle - bonus_ecologique
+
+    const duree_seuil_rentabilite =
+      economie_annuelle > 0
+        ? Math.max(0, cout_achat_a_rentabiliser / economie_annuelle)
+        : null
+
+    return {
+      profitability: {
+        costOfPurchase: numberValue(
+          "Coût d'achat net (après bonus écologique et valeur de revente de la voiture actuelle)",
+          cout_achat_a_rentabiliser,
+          "€",
+        ),
+        aids: numberValue("Aides (bonus écologique)", bonus_ecologique, "€"),
+        duration: numberValue(
+          "Durée pour atteindre le seuil de rentabilité",
+          duree_seuil_rentabilite,
+          "an",
+        ),
+        savingsByYear: numberValue(
+          "Économies annuelles",
+          economie_annuelle,
+          "€/an",
+        ),
+        totalSavings: numberValue(
+          "Économies totales",
+          economie_annuelle * DUREE_DETENTION_ALTERNATIVE,
+          "€",
+        ),
+        currentCarResaleValue: numberValue(
+          "Valeur de revente de la voiture actuelle",
+          valeur_revente_actuelle,
+          "€",
+        ),
+      },
+    }
+  }
+}
+
+function typedEvaluate<T extends keyof RuleValue>(
+  engine: Engine,
+  rule: T,
+): EvaluatedRuleInfos<RuleValue[T]> {
+  // NOTE: we are evaluating the rule instead of using the inputs because the
+  // inputs might not be set, so we need to evaluate the rule to get the
+  // default value.
+  const node = engine.evaluate(rule)
+  // NOTE: may not be very stable, if this method is exposed to the public,
+  // we should probably find a better way to determine if the rule is an enum
+  // (at the Publicodes level probably).
+  const isEnumValue = typeof node.nodeValue === "string"
+  const titleRuleName = isEnumValue
+    ? ((rule + " . " + node.nodeValue) as RuleName)
+    : rule
+
+  return {
+    value: node.nodeValue as RuleValue[T],
+    unit: serializeUnit(node.unit),
+    title: engine.getRule(titleRuleName).title,
+    isEnumValue,
+    isApplicable: node.nodeValue !== null,
+    ruleName: rule,
   }
 }
 
@@ -336,48 +538,49 @@ function getSituation(inputs: Questions): PublicodesSituation<RuleName> {
   )
 }
 
-function getAlternative(
-  engine: Engine,
-  size: Possibility,
-  motorisation: Possibility,
-  fuel?: Possibility,
-): Alternative {
+function numberValue(
+  title: string,
+  value: Evaluation,
+  unit: string,
+): EvaluatedRuleInfos<number | undefined> {
+  if (value !== undefined && value !== null && typeof value !== "number") {
+    // NOTE: should not happen
+    throw new Error("Expected a number, but got: " + value)
+  }
+
   return {
-    kind: "car",
-    title: `${size.title} ${motorisation.title}${fuel ? ` (${fuel.title})` : ""}`,
-    cost: {
-      title: "Coûts annuels",
-      unit: "€/an",
-      isEnumValue: false,
-      isApplicable: true,
-      value: engine.evaluate("coûts").nodeValue,
-    },
-    emissions: {
-      title: "Empreinte CO2e",
-      unit: "kgCO2e/an",
-      isEnumValue: false,
-      isApplicable: true,
-      value: engine.evaluate("empreinte").nodeValue,
-    },
-    size: {
-      value: size.nodeValue,
-      title: size.title,
-      isEnumValue: true,
-      isApplicable: true,
-    },
-    motorisation: {
-      value: motorisation.nodeValue,
-      title: motorisation.title,
-      isEnumValue: true,
-      isApplicable: true,
-    },
-    fuel: fuel
-      ? {
-          value: fuel.nodeValue,
-          title: fuel.title,
-          isEnumValue: true,
-          isApplicable: true,
-        }
-      : undefined,
-  } as Alternative
+    title,
+    unit,
+    isEnumValue: false,
+    isApplicable: value !== null,
+    value,
+  }
 }
+
+function booleanValue(
+  title: string,
+  value: Evaluation,
+): EvaluatedRuleInfos<boolean | undefined> {
+  if (value !== undefined && value !== null && typeof value !== "boolean") {
+    // NOTE: should not happen
+    throw new Error("Expected a boolean, but got: " + value)
+  }
+
+  return {
+    title,
+    unit: undefined,
+    isEnumValue: false,
+    isApplicable: value !== null,
+    value,
+  }
+}
+
+const enumValue = (value: Possibility | undefined) =>
+  value === undefined
+    ? undefined
+    : {
+        title: value.title,
+        value: value.nodeValue,
+        isEnumValue: true,
+        isApplicable: true,
+      }

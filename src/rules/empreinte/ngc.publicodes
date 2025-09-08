@@ -9,17 +9,26 @@ importer!:
     # règles importées du modèle `@incubateur-ademe/nosgestesclimat` car elles sont
     # définies à partir des questions de ce modèle.
     - transport . voiture . km:
+        question:
         formule: usage . km annuels
         unité: km/an
     - transport . voiture . utilisateur:
-        question: Quel est l'utilisateur de la voiture ? DEBUG
-        formule: "'propriétaire'"
+        question:
+        formule: 
+          variations:
+            - si: usage . km annuels = 0
+              alors: "'jamais'"
+            - sinon: "'propriétaire'"
     - transport . voiture . voyageurs:
         question:
         formule: 1
     - transport . voiture . motorisation:
         question:
-        formule: voiture . motorisation
+        formule: 
+          variations:
+            - si: voiture . motorisation = 'hybride'
+              alors: "'hybride non rechargeable'"
+            - sinon: voiture . motorisation
     - transport . voiture . thermique . consommation aux 100:
         question:
         formule:

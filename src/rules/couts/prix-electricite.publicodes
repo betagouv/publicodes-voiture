@@ -1,28 +1,52 @@
 prix électricité:
   description: |
-    Prix de l'électricité en France en août 2024 selon le tarif réglementé de
+    Prix de l'électricité en France en mai 2025 selon le tarif réglementé de
     vente (TRV) d'EDF.
 
 prix électricité . TRV base:
   titre: Tarif réglementé de vente (TRV) (Tarif Bleu d'EDF - Base)
-  valeur: 0.2516 €/kWh
+  valeur: 0.2016 €/kWh
   note : |
-    Tarif réglementé de vente (TRV) de l'électricité au 14 août 2024 selon la
-    grille tarifaire renseignée sur [hello
-    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite).
+    Tarif réglementé de vente (TRV) de l'électricité selon la grille tarifaire
+    renseignée sur [hello
+    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite)
+    au 1er mai 2025.
 
 prix électricité . TRV HC:
   titre: Tarif réglementé de vente (TRV) (Tarif Bleu d'EDF - Heures Creuses)
-  valeur: 0.2068 €/kWh
+  valeur: 0.1696 €/kWh
   note: |
-    Tarif réglementé de vente (TRV) de l'électricité au 14 août 2024 selon la
-    grille tarifaire renseignée sur [hello
-    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite).
+    Tarif réglementé de vente (TRV) de l'électricité selon la grille tarifaire
+    renseignée sur [hello
+    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite)
+    au 1er mai 2025.
 
 prix électricité . TRV HP:
   titre: Tarif réglementé de vente (TRV) (Tarif Bleu d'EDF - Heures Pleines)
-  valeur: 0.27 €/kWh
+  valeur: 0.2146 €/kWh
   note: |
-    Tarif réglementé de vente (TRV) de l'électricité au 14 août 2024 selon la
-    grille tarifaire renseignée sur [hello
-    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite).
+    Tarif réglementé de vente (TRV) de l'électricité selon la grille tarifaire
+    renseignée sur [hello
+    watt](https://www.hellowatt.fr/contrat-electricit%C3%A9/prix-trv-electricite)
+    au 1er mai 2025.
+
+prix électricité . recharge rapide exceptionnelle:
+  description: |
+    Le prix moyen d'une recharge rapide  pour des usages exceptionnels (2 à 3
+    fois dans l'année pour un faible rouleur).
+  valeur: 0.60 €/kWh
+  note: Source [SGPE]().
+
+prix électricité . recharge rapide avec abonnement:
+  description: |
+    Le prix moyen d'une recharge rapide avec formules d'abonnement permettant
+    de diminuer le prix unitaire de ses recharges rapides.
+  valeur: 0.40 €/kWh
+  note: |
+    Source [SGPE]().
+
+
+    Il pourrait être pertinent dans une future version de prendre en compte le
+    prix de l'abonnement.
+  
+

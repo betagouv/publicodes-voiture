@@ -2,13 +2,20 @@ import csv from "csv-parser"
 import fs from "fs"
 
 // TODO: automatically generate this type from the compilation of the Publicodes model
-type PublicodesMotorisation = "thermique" | "électrique" | "hybride"
+type PublicodesMotorisation =
+  | "thermique (essence)"
+  | "thermique (diesel)"
+  | "électrique"
+  | "hybride (HR)"
+  | "hybride (HNR)"
+
+type PublicodesSizes = "petite" | "moyenne" | "SUV" | "berline" | "VUL"
 
 type Energie =
   | "ESSENCE"
   | "GAZOLE"
   | "ELECTRIC"
-  | "ELEC+ESSENCE HR"
+  | "ELEC+ESSENC HR"
   | "ELEC+GAZOLE HR"
   | "ESS+ELEC HNR"
   | "ESS+G.P.L."
@@ -46,13 +53,66 @@ type Car = {
   "Prix véhicule": number
 }
 
-const getMotorisation = (energie: Energie): PublicodesMotorisation => {
+const getMotorisation = (energie: Energie): PublicodesMotorisation | null => {
   if (energie === "ELECTRIC") {
     return "électrique"
-  } else if (energie.includes("HR") || energie.includes("HNR")) {
-    return "hybride"
+  } else if (energie === "ELEC+ESSENC HR") {
+    return "hybride (HR)"
+  } else if (energie?.includes("HNR")) {
+    return "hybride (HNR)"
+  } else if (energie === "GAZOLE") {
+    return "thermique (diesel)"
+  } else if (energie === "ESSENCE" || energie === "SUPERETHANOL") {
+    return "thermique (essence)"
   } else {
-    return "thermique"
+    return null
+  }
+}
+
+/**
+ * Copied from https://github.com/incubateur-ademe/nosgestesclimat/blob/d0ffc493557b1f3983cd4d26463915a1020c1a32/scripts/voiture/getConsoCarLabelling.ts#L74C1-L111C2
+ */
+const getSize = (
+  Gamme: Gamme,
+  Carosserie: Carrosserie,
+  poids: number,
+  motorisation: PublicodesMotorisation,
+  prix: number,
+): PublicodesSizes | null => {
+  const petiteTreshold =
+    motorisation === "électrique"
+      ? 1700
+      : motorisation === "hybride (HR)"
+        ? 1550
+        : 1400
+  const moyenneTreshold =
+    motorisation === "électrique"
+      ? 2000
+      : motorisation === "hybride (HR)"
+        ? 1750
+        : 1600
+  if (Carosserie === "COMBISPACE") {
+    return "VUL"
+  } else if (Gamme === "LUXE" || Gamme === "SUPERIEURE") {
+    if (
+      poids >= moyenneTreshold &&
+      prix <= 100000 &&
+      // Gamme !== "LUXE" &&
+      Carosserie !== "CABRIOLET" &&
+      Carosserie !== "COUPE"
+    ) {
+      return "SUV"
+    } else {
+      return null
+    }
+  } else if (poids < petiteTreshold) {
+    return "petite"
+  } else if (poids >= petiteTreshold && poids < moyenneTreshold) {
+    return "moyenne"
+  } else if (poids >= moyenneTreshold) {
+    return "berline"
+  } else {
+    return null
   }
 }
 
@@ -79,98 +139,112 @@ fs.createReadStream("./scripts/data/carlabelling/ademe-car-labelling.csv")
           Energie,
         } = car
 
-        // Ignore the LUXE gamme to avoid skewing the results
-        if (Gamme === "LUXE" || Gamme === "SUPERIEURE") {
+        const motorisation = getMotorisation(Energie)
+        if (!motorisation) {
           return acc
         }
-
-        const motorisation = getMotorisation(Energie)
-
-        if (poids < 1250) {
-          acc.prixParPoids["< 1250"][motorisation] += prix
-          acc.effectifParPoids["< 1250"][motorisation] += 1
-        } else if (poids < 1500) {
-          acc.prixParPoids["1250-1500"][motorisation] += prix
-          acc.effectifParPoids["1250-1500"][motorisation] += 1
-        } else if (poids < 1750) {
-          acc.prixParPoids["1500-1750"][motorisation] += prix
-          acc.effectifParPoids["1500-1750"][motorisation] += 1
-        } else if (poids < 2000) {
-          acc.prixParPoids["1750-2000"][motorisation] += prix
-          acc.effectifParPoids["1750-2000"][motorisation] += 1
-        } else {
-          acc.prixParPoids["> 2000"][motorisation] += prix
-          acc.effectifParPoids["> 2000"][motorisation] += 1
+        const size = getSize(Gamme, car.Carrosserie, poids, motorisation, prix)
+        if (!size) {
+          return acc
         }
+        // NOTE: nous faisons l'hypothèse que le prix d'achat réel est 10%
+        // inférieur au prix catalogue (selon le SGPE).
+        acc.prixParPoids[size][motorisation] += prix * 0.9
+        acc.effectifParPoids[size][motorisation] += 1
 
         return acc
       },
       {
         prixParPoids: {
-          "< 1250": {
-            thermique: 0,
+          petite: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
-          "1250-1500": {
-            thermique: 0,
+          moyenne: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
-          "1500-1750": {
-            thermique: 0,
+          VUL: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
-          "1750-2000": {
-            thermique: 0,
+          berline: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
-          "> 2000": {
-            thermique: 0,
+          SUV: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
         },
         effectifParPoids: {
-          "< 1250": {
-            thermique: 0,
+          petite: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
-          "1250-1500": {
-            thermique: 0,
+          moyenne: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
-          "1500-1750": {
-            thermique: 0,
+          VUL: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
-          "1750-2000": {
-            thermique: 0,
+          berline: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
-          "> 2000": {
-            thermique: 0,
+          SUV: {
+            "thermique (essence)": 0,
+            "thermique (diesel)": 0,
             électrique: 0,
-            hybride: 0,
+            "hybride (HR)": 0,
+            "hybride (HNR)": 0,
           },
         },
       },
     )
 
-    console.log("\nPrix moyen par poids:")
-    Object.entries(results.prixParPoids).forEach(([poids, prix]) => {
-      console.log()
-      Object.entries(prix).forEach(([motorisation, prix]) => {
-        const nb = results.effectifParPoids[poids][motorisation]
-        console.log(
-          `| ${poids} | ${motorisation} | ${Math.round(prix / nb).toLocaleString("fr-FR")} | ${nb} |`,
-        )
-      })
-    })
+    console.log("\nPrix moyen cat:")
+    console.table(
+      Object.entries(results.prixParPoids).flatMap(([poids, prix]) => {
+        return Object.entries(prix).map(([motorisation, prix]) => ({
+          poids,
+          motorisation,
+          prix:
+            Math.round(
+              prix / results.effectifParPoids[poids][motorisation],
+            ).toLocaleString("fr-FR") + " €",
+          nb: results.effectifParPoids[poids][motorisation],
+        }))
+      }),
+      ["poids", "motorisation", "prix", "nb"],
+    )
   })

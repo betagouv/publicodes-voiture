@@ -7,3 +7,6 @@ dist/
 publicodes-build/
 src/rules/alternatives.publicodes
 src/personas/personas.json
+
+!app/dist
+dist-doc
