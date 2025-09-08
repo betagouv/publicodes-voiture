@@ -515,7 +515,6 @@ voiture . thermique . prix carburant moyen:
     2025. Le site utilise les données de
     [prix-carburant.gouv.fr](https://www.prix-carburants.gouv.fr/).
 
-# FIXME: à supprimer une fois les KYCs migrées
 voiture . année de fabrication:
   titre: Année de fabrication de la voiture
   question: Quelle est son année de fabrication ?
@@ -524,7 +523,7 @@ voiture . année de fabrication:
     variations:
       - si: voiture . occasion = oui
         alors: commun . année courante - âge . âge moyen d'une voiture d'occasion
-      - sinon: commun . année courante - durée de détention moyenne
+      - sinon: commun . année courante - durée de détention totale
   plafond: commun . année courante
   plancher: 1900
   arrondi: oui
